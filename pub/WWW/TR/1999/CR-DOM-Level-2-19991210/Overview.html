@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Fri Dec 10 15:53:02 MET 1999 -->
+<html lang='en'>
+<head>
+  <title>Document Object Model (DOM) Level 2 Specification</title>
+  <link rel='stylesheet' type='text/css' href='/StyleSheets/TR/W3C-CR.css'>
+  <link rel='stylesheet' type='text/css' href='./spec.css'>
+<link rel='next' href='expanded-toc.html'>
+<link rel='contents' href='cover.html#contents'>
+<link rel='index' href='def-index.html'>
+<link rel='object-index' href='object-index.html'>
+</head>
+<body>
+<div class='noprint' align='center'>
+<a href='expanded-toc.html'>next</a>
+ &nbsp; <a href='cover.html#contents'>contents</a>
+ &nbsp; <a href='object-index.html'>objects</a>
+ &nbsp; <a href='def-index.html'>index</a>
+<hr>
+</div>
+
+<div class='head'>
+<p><a href='http://www.w3.org/'>
+<img border='0' align='left' height='48' width='72'
+  alt='W3C' src='/Icons/w3c_home'></a></p>
+<div align='center'>
+  <p class='hide'><br clear=left></p>
+  <h1>Document Object Model (DOM) Level 2 Specification</h1>
+  <h2>Version 1.0</h2>
+<!--h3 align=center>CR-DOM-Level-2-19991210
+</h3-->
+  <h2>W3C Candidate Recommendation <i>10 December, 1999</i></h2>
+  <p class='hide'><br clear='left'></p>
+</div>
+<dl><dt>This version:</dt>
+<dd><a href='http://www.w3.org/TR/1999/CR-DOM-Level-2-19991210'>http://www.w3.org/TR/1999/CR-DOM-Level-2-19991210</a><br>
+(<a href='http://www.w3.org/TR/1999/CR-DOM-Level-2-19991210/DOM2.ps'>PostScript file</a>, <a href='http://www.w3.org/TR/1999/CR-DOM-Level-2-19991210/DOM2.pdf'>PDF file</a>, <a href='http://www.w3.org/TR/1999/CR-DOM-Level-2-19991210/DOM2.txt'>plain text</a>, <a href='http://www.w3.org/TR/1999/CR-DOM-Level-2-19991210/DOM2.zip'>ZIP file</a>)</dd>
+<dt>Latest version:</dt>
+<dd><a href='http://www.w3.org/TR/DOM-Level-2'>http://www.w3.org/TR/DOM-Level-2</a></dd>
+<dt>Previous versions:</dt>
+<dd><a href='http://www.w3.org/TR/1999/WD-DOM-Level-2-19990923'>http://www.w3.org/TR/1999/WD-DOM-Level-2-19990923</a></dd>
+<dd><a href='http://www.w3.org/TR/1999/WD-DOM-Level-2-19990719'>http://www.w3.org/TR/1999/WD-DOM-Level-2-19990719</a></dd>
+</dl>
+<dl><dt>Editors:
+</dt><dd>Lauren Wood, 
+<i>SoftQuad Software Inc., chair</i></dd>
+<dd>Arnaud Le Hors, 
+<i>W3C, staff contact (until October 1999)</i></dd>
+<dd>Vidur Apparao, 
+<i>Netscape Communications Corporation</i></dd>
+<dd>Laurence Cable, 
+<i>Sun</i></dd>
+<dd>Mike Champion, 
+<i>Arbortext and Software AG</i></dd>
+<dd>Joe Kesselman, 
+<i>IBM</i></dd>
+<dd>Philippe Le Hégaret, 
+<i>W3C, staff contact (from November 1999)</i></dd>
+<dd>Tom Pixley, 
+<i>Netscape Communications Corporation</i></dd>
+<dd>Jonathan Robie, 
+<i>Texcel Research and Software AG</i></dd>
+<dd>Peter Sharpe, 
+<i>SoftQuad Software Inc.</i></dd>
+<dd>Chris Wilson, 
+<i>Microsoft</i></dd>
+</dl>
+ <p class='copyright'><a href='http://www.w3.org/Consortium/Legal/ipr-notice#Copyright'>
+ Copyright</a> &copy; 1999 <a href='http://www.w3.org/'>W3C</a><sup>&reg;</sup>
+ (<a href='http://www.lcs.mit.edu/'>MIT</a>,
+ <a href='http://www.inria.fr/'>INRIA</a>,
+ <a href='http://www.keio.ac.jp/'>Keio</a>), All Rights Reserved. W3C
+ <a href='http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer'>liability</a>,
+ <a href='http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks'>trademark</a>,
+ <a href='http://www.w3.org/Consortium/Legal/copyright-documents'>document
+ use</a> and
+ <a href='http://www.w3.org/Consortium/Legal/copyright-software'>software
+ licensing</a> rules apply.</div>
+<hr>
+<a name='id-abstract'></a>
+<h2>Abstract</h2>
+<div class='abstract'>
+<p>This specification defines the Document Object Model Level 2, a platform-
+and language-neutral interface that allows programs and scripts to dynamically
+access and update the content, structure and style of documents. The Document
+Object Model Level 2 builds on the Document Object Model Level 1.<p>The DOM Level 2 is made of a set of core interfaces to create and manipulate
+	the structure and contents of a document and a set of optional
+	modules. These modules contain specialized interfaces dedicated to XML,
+	HTML, an abstract view, generic stylesheets, Cascading Style Sheets,
+	Events, traversing the document structure, and a Range object.</div>
+<hr>
+<a name='Level-2-status'></a>
+<h2>Status of this document</h2>
+<div class='status'>
+<p>This specification is now in the Candidate Recommendation phase.  This means
+the specification is stable, and there will be a period to allow implementation
+of the specification. After this CR phase ends, on January 19, the
+specification will move into the Proposed Recommendation phase and it will be
+sent to the W3C membership for review.
+<p>
+Comments on this document are invited and are to be sent to the
+public mailing list <a href='mailto:www-dom@w3.org'>www-dom@w3.org</a>. An archive
+is available at <a href='http://lists.w3.org/Archives/Public/www-dom/'>http://lists.w3.org/Archives/Public/www-dom/</a>.<p>Should this specification prove impossible or very difficult to
+implement, the necessary changes to make it implementable will be made. If this
+specification is possible to implement, the only changes which will be made to
+this specification are minor editorial changes and clarifications.<p>This document has been produced as part of the <a href='http://www.w3.org/DOM/Activity.html'>W3C DOM Activity</a>. The authors
+of this document are the DOM WG members. Different modules of the Document
+Object Model have different editors.<p>A list of current W3C Recommendations and other technical documents can be
+found at <a href='http://www.w3.org/TR'>http://www.w3.org/TR</a>.</div>
+<p><h2><a name='contents'>Table of contents</a></h2>
+<ul class='toc'>
+<li class='tocline2'> <a class='tocxref' href='expanded-toc.html'>Expanded Table of Contents</a></li>
+<li class='tocline2'> <a class='tocxref' href='copyright-notice.html'>Copyright Notice</a></li>
+<li class='tocline2'> <a class='tocxref' href='introduction.html'>What is the Document Object Model?</a></li>
+</ul>
+<ul class='toc'>
+<li class='tocline2'> <a class='tocxref' href='core.html'>Chapter 1: Document Object Model Core</a></li>
+<li class='tocline2'> <a class='tocxref' href='html.html'>Chapter 2: Document Object Model HTML</a></li>
+<li class='tocline2'> <a class='tocxref' href='views.html'>Chapter 3: Document Object Model Views</a></li>
+<li class='tocline2'> <a class='tocxref' href='stylesheets.html'>Chapter 4: Document Object Model StyleSheets</a></li>
+<li class='tocline2'> <a class='tocxref' href='css.html'>Chapter 5: Document Object Model CSS</a></li>
+<li class='tocline2'> <a class='tocxref' href='events.html'>Chapter 6: Document Object Model Events</a></li>
+<li class='tocline2'> <a class='tocxref' href='traversal.html'>Chapter 7: Document Object Model Traversal</a></li>
+<li class='tocline2'> <a class='tocxref' href='range.html'>Chapter 8: Document Object Model Range</a></li>
+</ul>
+<ul class='toc'>
+<li class='tocline2'> <a class='tocxref' href='changes.html'>Appendix A: Changes</a></li>
+<li class='tocline2'> <a class='tocxref' href='i18n.html'>Appendix B: Accessing code point boundaries</a></li>
+<li class='tocline2'> <a class='tocxref' href='idl-definitions.html'>Appendix C: IDL Definitions</a></li>
+<li class='tocline2'> <a class='tocxref' href='java-binding.html'>Appendix D: Java Language Binding</a></li>
+<li class='tocline2'> <a class='tocxref' href='ecma-script-binding.html'>Appendix E: ECMA Script Language Binding</a></li>
+<li class='tocline2'> <a class='tocxref' href='acknowledgments.html'>Acknowledgments</a></li>
+<li class='tocline2'> <a class='tocxref' href='glossary.html'>Glossary</a></li>
+<li class='tocline2'> <a class='tocxref' href='references.html'>References</a></li>
+<li class='tocline2'> <a class='tocxref' href='object-index.html'>Objects Index</a></li>
+<li class='tocline2'> <a class='tocxref' href='def-index.html'>Index</a></li>
+</ul>
+
+<div class='noprint' align='center'>
+<hr>
+<a href='expanded-toc.html'>next</a>
+ &nbsp; <a href='cover.html#contents'>contents</a>
+ &nbsp; <a href='object-index.html'>objects</a>
+ &nbsp; <a href='def-index.html'>index</a>
+</div>
+<script src="https://www.w3.org/scripts/TR/fixup.js"></script></body>
+</html>

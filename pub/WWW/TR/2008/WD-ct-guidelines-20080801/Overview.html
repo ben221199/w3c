@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><title>Content Transformation Guidelines 1.0</title><style type="text/css">
+code           { font-family: monospace; }
+
+div.constraint,
+div.issue,
+div.note,
+div.notice     { margin-left: 2em; }
+
+ol.enumar      { list-style-type: decimal; }
+ol.enumla      { list-style-type: lower-alpha; }
+ol.enumlr      { list-style-type: lower-roman; }
+ol.enumua      { list-style-type: upper-alpha; }
+ol.enumur      { list-style-type: upper-roman; }
+
+
+div.exampleInner pre { margin-left: 1em;
+                       margin-top: 0em; margin-bottom: 0em}
+div.exampleOuter {border: 4px double gray;
+                  margin: 0em; padding: 0em}
+div.exampleInner { background-color: #d5dee3;
+                   border-top-width: 4px;
+                   border-top-style: double;
+                   border-top-color: #d3d3d3;
+                   border-bottom-width: 4px;
+                   border-bottom-style: double;
+                   border-bottom-color: #d3d3d3;
+                   padding: 4px; margin: 0em }
+div.exampleWrapper { margin: 4px }
+div.exampleHeader { font-weight: bold;
+                    margin: 4px}
+.ednote
+{
+    border: 1px dashed black;
+    background-color: #ddffdd;
+    color: inherit;
+}
+
+.new
+{
+    background-color: #FFFF80;
+    color: inherit;
+}
+
+.requirement
+{
+    background-color: #DDDD80;
+    color: inherit;
+    border: 1px black solid;
+    padding: 0.5em;
+}
+
+.requirement:before
+{
+    content: "Requirement: ";
+    font-weight: bold;
+}
+
+.image
+{
+    text-align: center;
+}
+
+.flow1
+{
+    font-family: monospace;
+    font-size:smaller
+}
+
+.flow2
+{
+    margin-left: 2em;
+    font-family: monospace;
+    font-size:smaller
+}
+
+.flow3
+{
+    margin-left: 4em;
+    font-family: monospace;
+    font-size:smaller
+}
+
+pre
+{
+    border:none;
+}</style><link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-WD.css"/></head><body><div class="head">
+<p><a href="http://www.w3.org/"><img src="http://www.w3.org/Icons/w3c_home" alt="W3C" height="48" width="72"/></a></p>
+<h1><a name="title" id="title"/>Content Transformation Guidelines 1.0</h1>
+<h2><a name="w3c-doctype" id="w3c-doctype"/>W3C Working Draft 1 August 2008</h2><dl><dt>This version:</dt><dd>
+            <a href="http://www.w3.org/TR/2008/WD-ct-guidelines-20080801/">http://www.w3.org/TR/2008/WD-ct-guidelines-20080801/</a>
+        </dd><dt>Latest version:</dt><dd>
+            <a href="http://www.w3.org/TR/ct-guidelines/">http://www.w3.org/TR/ct-guidelines/</a>
+        </dd><dt>Previous version:</dt><dd>
+	<a href="http://www.w3.org/TR/2008/WD-ct-guidelines-20080414/">http://www.w3.org/TR/2008/WD-ct-guidelines-20080414/</a></dd><dt>Editor:</dt><dd>Jo Rabin, mTLD Top Level Domain (dotMobi)</dd></dl><p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2008 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.org/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p></div><hr/><div>
+<h2><a name="abstract" id="abstract"/>Abstract</h2><p>This document provides guidance to content transformation proxies and content
+                providers as to how inter-work when delivering Web content.</p></div><div>
+<h2><a name="status" id="status"/>Status of this Document</h2>
+
+<p>
+  <em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em>
+</p>
+
+<p>
+  This is a Last Call Working Draft of Content Transformation Guidelines 1.0, expected to become a W3C Recommendation. The W3C Membership and other interested parties are invited to review the document and send comments to <a href="mailto:public-bpwg-comments@w3.org">public-bpwg-comments@w3.org</a>  (with <a href="http://lists.w3.org/Archives/Public/public-bpwg-comments/">public archive</a>) through <strong>16 September 2008</strong>.
+</p>
+
+<p>
+  Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.
+</p>
+
+<p>
+  This document has been produced by the <a href="http://www.w3.org/2005/MWI/BPWG/">Mobile Web Best Practices Working Group</a> as part of the <a href="http://www.w3.org/2005/MWI/Activity">Mobile Web Initiative</a>.
+</p>
+
+<p>
+  Since its publication as a First Public Working Draft on <a href="http://www.w3.org/TR/2008/WD-ct-guidelines-20080414/">14 April 2008</a>, the Content Transformation Guidelines 1.0 document has been almost entirely re-written. The guidelines were extended, precised and re-worded for clarity reasons. In particular:
+</p>
+<ul>
+  <li>The <a href="#sec-conformance">Conformance</a> section was added.</li>
+  <li>The statements were simplified, clarified and follow the same normative pattern.</li>
+  <li>The choice of the <a href="#sec-original-headers"><code>"X-Device-"&lt;original header name&gt;</code> HTTP header</a> was confirmed.</li>
+  <li>The possible uses of the <a href="#sec-use-of-link-element"><code>link</code> element</a> were detailed.</li>
+  <li>The notion of <a href="#term-web-site">Web Site</a> was introduced.</li>
+</ul>
+
+<p>
+  The Working Group notes that it has already identified a guideline considered to be <a href="http://www.w3.org/2005/10/Process-20051014/tr.html#at-risk-feature">at risk</a>: the notification of users as defined in <a href="#sec-serving-cached-responses">section 4.1.4 Serving Cached Responses</a> may turn out to be difficult to implement from a user experience's point of view and may be removed in future versions of the document based on the feedback received.
+</p>
+
+<p>
+  This document was produced by a group operating under the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</a>. W3C maintains a <a href="http://www.w3.org/2004/01/pp-impl/37584/status">public list of any patent disclosures</a> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>.
+</p>
+
+</div>
+
+<div class="toc">
+        <h2><a name="contents" id="contents"/>Table of Contents</h2><p class="toc">1 <a href="#sec-introduction">Introduction (Non-Normative)</a><br/>
+    1.1 <a href="#sec-purpose">Purpose</a><br/>
+    1.2 <a href="#sec-audience">Audience</a><br/>
+    1.3 <a href="#sec-scope">Scope</a><br/>
+    1.4 <a href="#d2e131">Summary of Requirements</a><br/>
+2 <a href="#sec-terminology">Terminology (Normative)</a><br/>
+    2.1 <a href="#sec-types-of-proxy">Types of Proxy</a><br/>
+    2.2 <a href="#sec-types-of-transformation">Types of Transformation</a><br/>
+3 <a href="#sec-conformance">Conformance (Normative)</a><br/>
+    3.1 <a href="#sec-classes-of-product">Classes of Product</a><br/>
+    3.2 <a href="#sec-normative-and-informative-parts">Normative and Informative Parts</a><br/>
+    3.3 <a href="#sec-rfc2119">Normative Language for Conformance Requirements</a><br/>
+    3.4 <a href="#sec-content-deployment-conformance">Content Deployment Conformance</a><br/>
+    3.5 <a href="#sec-transformation-deployment-conformance">Transformation Deployment Conformance</a><br/>
+4 <a href="#sec-Components">Behavior of Components (Normative)</a><br/>
+    4.1 <a href="#sec-ProxyReqest">Proxy Forwarding of Request</a><br/>
+        4.1.1 <a href="#sec-applicable-HTTP-mehtods">Applicable HTTP Methods</a><br/>
+        4.1.2 <a href="#sec-request-no-transform">no-transform directive in Request</a><br/>
+        4.1.3 <a href="#sec-non-web-browsers">Treatment of Requesters that are not Web browsers</a><br/>
+        4.1.4 <a href="#sec-serving-cached-responses">Serving Cached Responses</a><br/>
+        4.1.5 <a href="#sec-altering-header-values">Alteration of HTTP Header Values</a><br/>
+            4.1.5.1 <a href="#sec-content-tasting">Content Tasting</a><br/>
+            4.1.5.2 <a href="#sec-avoiding-request-unacceptable">Avoiding "Request Unacceptable" Responses</a><br/>
+            4.1.5.3 <a href="#sec-user-selection">User Selection of Restructured Experience</a><br/>
+            4.1.5.4 <a href="#sec-sequence-of-requests">Sequence of Requests</a><br/>
+            4.1.5.5 <a href="#sec-original-headers">Original Headers</a><br/>
+        4.1.6 <a href="#sec-additional-headers">Additional HTTP Headers</a><br/>
+            4.1.6.1 <a href="#sec-via-headers">Proxy Treatment of Via Header</a><br/>
+    4.2 <a href="#sec-ServerResponse">Server Response to Proxy</a><br/>
+        4.2.1 <a href="#sec-server-use-of-406">Use of HTTP 406 Status</a><br/>
+        4.2.2 <a href="#sec-cache-control-no-transform">Server Origination of Cache-Control: no-transform</a><br/>
+        4.2.3 <a href="#sec-varying-representations">Varying Representations</a><br/>
+            4.2.3.1 <a href="#sec-use-of-vary-header">Use of Vary HTTP Header</a><br/>
+            4.2.3.2 <a href="#sec-use-of-link-element">Indication of Intended Presentation Media Type of Representation</a><br/>
+    4.3 <a href="#sec-Proxy-Response">Proxy Forwarding of Response to User Agent</a><br/>
+        4.3.1 <a href="#sec-receipt-of-cache-control-no-transform">Receipt of Cache-Control: no-transform</a><br/>
+        4.3.2 <a href="#sec-receipt-of-warning-214">Receipt of Warning: 214 Transformation Applied</a><br/>
+        4.3.3 <a href="#sec-unacceptable-response">Server Rejection of HTTP Request</a><br/>
+        4.3.4 <a href="#sec-receipt-of-vary-header">Receipt of Vary HTTP Header</a><br/>
+        4.3.5 <a href="#sec-receipt-of-link-to-handheld">Link to "handheld" Representation</a><br/>
+        4.3.6 <a href="#sec-proxy-decision-to-transform">Proxy Decision to Transform</a><br/>
+            4.3.6.1 <a href="#sec-alteration-of-response">Alteration of Response</a><br/>
+            4.3.6.2 <a href="#sec-https-link-rewriting">HTTPS Link Re-writing</a><br/>
+5 <a href="#sec-testing">Testing (Normative)</a><br/>
+</p>
+          <h3><a name="appendices" id="appendices"/>Appendices</h3><p class="toc">A <a href="#sec-references">References</a><br/>
+B <a href="#sec-example-transformation-interactions">Example Transformation Interactions</a> (Non-Normative)<br/>
+    B.1 <a href="#d2e1125">Basic Content Tasting by Proxy</a><br/>
+    B.2 <a href="#sec-proxy-a-priori-knowledge">Optimization based on Previous Server Interaction</a><br/>
+    B.3 <a href="#d2e1189">Optimization based on Previous Server Interaction, Server has Changed its
+                    Operation</a><br/>
+    B.4 <a href="#d2e1207">Server Response Indicating that this Representation is Intended for the Target
+                    Device</a><br/>
+    B.5 <a href="#d2e1225">Server Response Indicating that another Representation is Intended for the
+                    Target Device</a><br/>
+C <a href="#sec-applicability">Applicability to Transforming Solutions which are Out of Scope</a> (Non-Normative)<br/>
+D <a href="#sec-scope-for-future-work">Scope for Future Work</a> (Non-Normative)<br/>
+    D.1 <a href="#d2e1257">POWDER</a><br/>
+    D.2 <a href="#d2e1267">link HTTP Header</a><br/>
+    D.3 <a href="#d2e1280">Sources of Device Information</a><br/>
+    D.4 <a href="#d2e1285">Inter Proxy Communication</a><br/>
+    D.5 <a href="#d2e1290">Amendment to and Refinement of HTTP</a><br/>
+E <a href="#sec-administrative-arrangements">Administrative Arrangements</a> (Non-Normative)<br/>
+F <a href="#sec-acknowledgements">Acknowledgments</a> (Non-Normative)<br/>
+</p></div><hr/><div class="body"><div class="div1">
+<h2><a name="sec-introduction" id="sec-introduction"/>1 Introduction (Non-Normative)</h2><div class="div2">
+<h3><a name="sec-purpose" id="sec-purpose"/>1.1 Purpose</h3><p>From the point of view of this document, Content Transformation is the
+                    manipulation in various ways, by proxies, of requests made to and content
+                    delivered by an origin server with a view to making it more suitable for mobile
+                    presentation.</p><p>The W3C Mobile Web Best Practices Working Group neither approves nor disapproves of Content Transformation, but
+                    recognizes that is being deployed widely across mobile data access networks. The
+                    deployments are widely divergent to each other, with many non-standard HTTP
+                    implications, and no well-understood means either of identifying the presence of
+                    such transforming proxies, nor of controlling their actions. This document
+                    establishes a framework to allow that to happen.</p><p>The overall objective of this document is to provide a means, as far as is
+                    practical, for users to be provided with at least a <a href="http://www.w3.org/TR/di-gloss/#def-functional-user-experience">"functional user experience"</a>
+                    <a href="#ref-DIGLOSS">[Device Independence Glossary]</a> of the Web, when mobile, taking into account the
+                    fact that an increasing number of content providers create experiences specially
+                    tailored to the mobile context which they do not wish to be altered by third
+                    parties. Equally it takes into account the fact that there remain a very large
+                    number of Web sites that do not provide a <em>functional user
+                    experience</em> when perceived on many mobile devices.</p></div><div class="div2">
+<h3><a name="sec-audience" id="sec-audience"/>1.2 Audience</h3><p>The audience for this document is creators of Content Transformation proxies,
+                    purchasers and operators of such proxies and content providers whose services
+                    may be accessed by means of such proxies.</p></div><div class="div2">
+<h3><a name="sec-scope" id="sec-scope"/>1.3 Scope</h3><p>The recommendations in this document refer only to "Web browsing" - i.e. access
+                    by user agents that are intended primarily for interaction by users with HTML
+                    Web pages (Web browsers) using HTTP. Clients that interact with proxies using
+                    mechanisms other than HTTP (and that typically involve the download of a special
+                    client) are out of scope, and are considered to be a distributed user agent.
+                    Proxies which are operated in the control of or under the direction of the
+                    operator of an origin server are similarly considered to be a distributed origin
+                    server and hence out of scope.</p><p>The BPWG is not chartered to create new technology - its role is to advise on
+                    best practice for use of existing technology. In satisfying Content
+                    Transformation requirements, existing HTTP headers, directives and behaviors
+                    must be respected, and as far as is practical, no extensions to <a href="#ref-HTTP">[RFC 2616 HTTP]</a> are to be used.</p></div><div class="div2">
+<h3><a name="d2e131" id="d2e131"/>1.4 Summary of Requirements</h3><p>This section summarizes the communication requirements of actors (users, user
+                    agents, transforming proxies and origin servers) to communicate with each other.
+                    It is recognised that several transformation proxies may be present but their
+                    interactions are not discussed in detail. The relevant scenario is as follows:</p><p class="image">
+                    <img src="Interactions.png" alt="Interactions between actors"/>
+                </p><p>The needs of these actors are as follows:</p><ol class="enumar"><li><p>The user agent needs to be able to tell the Content Transformation proxy
+                            and the origin server:</p><ol class="enumla"><li><p>what type of mobile device and which user agent is being
+                                used;</p></li><li><p>that all Content Transformation should be avoided.</p></li></ol></li><li><p>The Content Transformation proxy needs to be able to tell the origin
+                            server:</p><ol class="enumla"><li><p>that some degree of Content Transformation (<a title="restructuring" href="#term-restructuring">restructuring</a> and
+                                        <a title="recoding" href="#term-recoding">recoding</a>) can be
+                                    performed;</p></li><li><p>that content is being requested on behalf of something else and
+                                    what that something else is;</p></li><li><p>that the request headers have been altered and what the original
+                                    ones were.</p></li></ol></li><li><p>The origin server needs to be able to tell the Content Transformation
+                            proxy:</p><ol class="enumla"><li><p>that it varies the representation of its responses according to
+                                    device type and other factors;</p></li><li><p>that it is not permissible to perform Content Transformation;</p></li><li><p>that it has media-specific representations;</p></li><li><p>that is unable or unwilling to deal with the request in its
+                                    present form.</p></li></ol></li><li><p>The Content Transformation proxy needs to be able to tell the user agent:</p><ol class="enumla"><li><p>that it has applied transformations of various kinds to the
+                                    content.</p></li></ol></li><li><p>The Content Transformation proxy needs to be able to interact with the
+                            user:</p><ol class="enumla"><li><p>to allow the user to disable its features;</p></li><li><p>to alert the user to the fact that it has transformed content and
+                                    to allow access to an untransformed representation of the
+                                    content.</p></li></ol></li></ol><div class="note"><p class="prefix"><b>Note:</b></p><p>A more extensive discussion of the requirements for these guidelines can be
+                        found in "Content Transformation Landscape" <a href="#ref-CT-Landscape">[CT Landscape]</a>.</p></div></div></div><div class="div1">
+<h2><a name="sec-terminology" id="sec-terminology"/>2 Terminology (Normative)</h2><div class="div2">
+<h3><a name="sec-types-of-proxy" id="sec-types-of-proxy"/>2.1 Types of Proxy</h3><p>Alteration of HTTP requests and responses is not prohibited by HTTP other than in
+                    the circumstances referred to in <a href="#ref-HTTP">[RFC 2616 HTTP]</a>
+                    <a href="http://tools.ietf.org/html/rfc2616#section-13.5.2">Section 13.5.2</a>. </p><p>HTTP defines two types of proxy: transparent proxies and non-transparent proxies.
+                    As discussed in <a href="#ref-HTTP">[RFC 2616 HTTP]</a>
+                    <a href="http://tools.ietf.org/html/rfc2616#section-1.3">Section 1.3, Terminology</a>:</p><p>
+                    <a name="term-transparent" id="term-transparent" title="transparent proxy">"A <b>transparent
+                            proxy</b> is a proxy that does not modify the request or response
+                        beyond what is required for proxy authentication and identification.</a>
+                    <a name="term-non-transparent" id="term-non-transparent" title="non-transparent proxy">A
+                            <b>non-transparent proxy</b> is a proxy that modifies the request
+                        or response in order to provide some added service to the user agent, such
+                        as group annotation services, media type transformation, protocol reduction,
+                        or anonymity filtering.</a> Except where either transparent or
+                    non-transparent behavior is explicitly stated, the HTTP proxy requirements apply
+                    to both types of proxies." </p><p>This document elaborates the behavior of non-transparent proxies, when used for
+                    Content Transformation in the context discussed in <a href="#ref-CT-Landscape">[CT Landscape]</a>.</p></div><div class="div2">
+<h3><a name="sec-types-of-transformation" id="sec-types-of-transformation"/>2.2 Types of Transformation</h3><p>Transforming proxies can carry out a wide variety of operations. In this document
+                    we categorize these operations as follows: </p><ol class="enumar"><li><p>Alteration of Requests</p><p>Transforming proxies process requests in a number of ways, especially
+                            replacement of various request headers to avoid HTTP 406 Status
+                            responses (if a server can not provide content that is compatible with
+                            the original HTTP request headers) and at user request.</p></li><li><p>Alteration of Responses</p><p>There are three classes of operation on responses:</p><ol class="enumla"><li><p>Restructuring content </p><p>
+                                    <a name="term-restructuring" id="term-restructuring" title="restructuring"><b>Restructuring</b> content is a process whereby
+                                        the original layout is altered so that content is added or
+                                        removed or where the spatial or navigational relationship of
+                                        parts of content is altered, e.g. by linearization or
+                                        pagination. It includes also rewriting of URIs so that
+                                        subsequent requests route via the proxy handling this
+                                        response.</a>
+                                </p></li><li><p>Recoding content</p><p>
+                                    <a name="term-recoding" id="term-recoding" title="recoding"><b>Recoding</b> content is a process whereby the
+                                        layout of the content remains the same, but details of its
+                                        encoding may be altered. Examples include re-encoding HTML
+                                        as XHTML, correcting invalid markup in HTML, conversion of
+                                        images between formats (but not, for example, reducing
+                                        animations to static images). </a>
+                                </p></li><li><p>Optimizing content</p><p>
+                                    <a name="term-optimizing" id="term-optimizing" title="optimizing"><b>Optimizing</b> content includes removing redundant
+                                        white space, re-compressing images (without loss of
+                                        fidelity) and compressing for transfer.</a>
+                                </p></li></ol></li></ol></div></div><div class="div1">
+<h2><a name="sec-conformance" id="sec-conformance"/>3 Conformance (Normative)</h2><div class="div2">
+<h3><a name="sec-classes-of-product" id="sec-classes-of-product"/>3.1 Classes of Product</h3><p>The Content Transformation Guidelines specification has two classes of products:</p><dl><dt class="label">Content Deployment</dt><dd><p>A Content Deployment is the provision of resources intended for
+                                retrieval by user agents. Provisions that are applicable to a
+                                Content Deployment are identified in this document by use of the
+                                terms "origin server", "server" and "Web site" in the singular or plural.</p></dd><dt class="label">Transformation Deployment</dt><dd><p>A Transformation Deployment is the provision of <a title="non-transparent proxy" href="#term-non-transparent">non-transparent</a> components
+                                in the path of HTTP requests and responses. Provisions that are
+                                applicable to a Transformation Deployment are identified in this
+                                document by use of the term "transforming proxy" or "proxy" in the
+                                singular or plural.</p></dd></dl></div><div class="div2">
+<h3><a name="sec-normative-and-informative-parts" id="sec-normative-and-informative-parts"/>3.2 Normative and Informative Parts</h3><p>Normative parts of this document are identified by the use of "(Normative)"
+                    following the section name. Informative parts are identified by use of
+                    "(Non-Normative)" following the section name.</p></div><div class="div2">
+<h3><a name="sec-rfc2119" id="sec-rfc2119"/>3.3 Normative Language for Conformance Requirements</h3><p>The key words <strong>must</strong>, <strong>must not</strong>,
+                        <strong>required</strong>, <strong>shall</strong>, <strong>shall
+                    not</strong>, <strong>should</strong>, <strong>should not</strong>,
+                        <strong>recommended</strong>, <strong>may</strong>, and
+                        <strong>optional</strong> in this Recommendation have the meaning defined
+                    in <a href="#ref-rfc-2119">[RFC 2119]</a>.</p></div><div class="div2">
+<h3><a name="sec-content-deployment-conformance" id="sec-content-deployment-conformance"/>3.4 Content Deployment Conformance</h3><p>A Content Deployment conforms to these guidelines if it follows the statements in
+                        <a href="#sec-ServerResponse"><span>4.2 Server Response to Proxy</span></a>.</p></div><div class="div2">
+<h3><a name="sec-transformation-deployment-conformance" id="sec-transformation-deployment-conformance"/>3.5 Transformation Deployment Conformance</h3><p>A Transformation Deployment conforms to these guidelines if it follows the
+                    statements in <a href="#sec-ProxyReqest"><span>4.1 Proxy Forwarding of Request</span></a>, <a href="#sec-Proxy-Response"><span>4.3 Proxy Forwarding of Response to User Agent</span></a> and <a href="#sec-testing"><span>5 Testing (Normative)</span></a>.</p></div></div><div class="div1">
+<h2><a name="sec-Components" id="sec-Components"/>4 Behavior of Components (Normative)</h2><div class="div2">
+<h3><a name="sec-ProxyReqest" id="sec-ProxyReqest"/>4.1 Proxy Forwarding of Request</h3><div class="div3">
+<h4><a name="sec-applicable-HTTP-mehtods" id="sec-applicable-HTTP-mehtods"/>4.1.1 Applicable HTTP Methods</h4><p>Proxies <strong>should not</strong> intervene in methods other than GET,
+                        POST, HEAD and PUT.</p><p>User agents sometimes issue HTTP HEAD requests in order to determine if a
+                        resource is of a type and/or size that they are capable of handling. A
+                        transforming proxy <strong>may</strong> convert a HEAD request into a GET
+                        request (in order to determine the characteristics of a transformed response
+                        that it would return if the user agent subsequently issued a GET request for
+                        the same resource).</p><p>If the HTTP method is altered from HEAD to GET, proxies
+                        <strong>should</strong> (providing such action is in accordance with
+                        normal HTTP caching rules) cache the response so that a second GET request
+                        for the same content is not required (see also <a href="#sec-serving-cached-responses"><span>4.1.4 Serving Cached Responses</span></a>).</p></div><div class="div3">
+<h4><a name="sec-request-no-transform" id="sec-request-no-transform"/>4.1.2 <code>no-transform</code> directive in Request</h4><p>If the request contains a <code>Cache-Control: no-transform</code> directive
+                        proxies <strong>must</strong> forward the request unaltered to the server,
+                        other than to comply with <a title="transparent proxy" href="#term-transparent">transparent</a> HTTP behavior and as noted below (see <a href="#sec-additional-headers"><span>4.1.6 Additional HTTP Headers</span></a>).</p><div class="note"><p class="prefix"><b>Note:</b></p><p>An example of the use of <code>Cache-Control: no-transform</code> is the
+                            issuing of asynchronous HTTP requests, perhaps by means of
+                            XMLHTTPRequest <a href="#ref-XHR">[XHR]</a>, which may include such a
+                            directive in order to prevent transformation of both the request and the
+                            response.</p></div></div><div class="div3">
+<h4><a name="sec-non-web-browsers" id="sec-non-web-browsers"/>4.1.3 Treatment of Requesters that are not Web browsers</h4><p>Proxies <strong>must</strong> act as though a <code>no-transform</code>
+                        directive is present (see <a href="#sec-request-no-transform"><span>4.1.2 no-transform directive in Request</span></a>) unless
+                        they are able positively to determine that the user agent is a Web browser.
+                        The mechanism by which a proxy recognizes the user agent as a Web browser
+                            <strong>should</strong> use evidence from the HTTP request, in
+                        particular the <code>User-Agent</code> and <code>Accept</code> headers.</p></div><div class="div3">
+<h4><a name="sec-serving-cached-responses" id="sec-serving-cached-responses"/>4.1.4 Serving Cached Responses</h4><p>Proxies <strong>should</strong> follow standard HTTP procedures in respect
+                        of caching and <strong>should</strong> use cached copies of resources
+                        where this is in accordance with those procedures.</p><p>In some circumstances, proxies <strong>may</strong> paginate responses and
+                        where this is the case a request may be for a subsequent page of a
+                        previously requested resource. In this case proxies <strong>may</strong>
+                        for the sake of consistency of representation serve stale data but when
+                        doing so <strong>should</strong> notify the user that this is the case and
+                            <strong>should</strong> provide a simple means of retrieving a fresh
+                        copy.</p></div><div class="div3">
+<h4><a name="sec-altering-header-values" id="sec-altering-header-values"/>4.1.5 Alteration of HTTP Header Values</h4><p>Other than to comply with <a title="transparent proxy" href="#term-transparent">transparent</a> HTTP operation, proxies <strong>should not</strong>
+                        modify request headers unless: </p><ol class="enumar"><li><p>the user would be prohibited from accessing content as a result of
+                                the server responding that the request is "unacceptable" (see
+                                    <a href="#sec-unacceptable-response"><span>4.3.3 Server Rejection of HTTP Request</span></a>);</p></li><li><p>the user has specifically requested a restructured desktop
+                                experience;</p></li><li><p>the request is part of a sequence of requests to the same Web site
+                                and either it is technically infeasible not to adjust the request
+                                because of earlier interaction, or because doing so preserves
+                                consistency of user experience.</p></li></ol><p>These circumstances are detailed in the following sections.</p><div class="note"><p class="prefix"><b>Note:</b></p><p id="term-web-site">In this section, the concept of "Web site" is used
+                            (rather than "origin server") as some origin servers host many different
+                            Web sites. Since the concept of "Web site" is not strictly defined,
+                            proxies <strong>should</strong> use heuristics including comparisons
+                            of domain name to assess whether resources form part of the same "Web
+                            site".</p></div><div class="div4">
+<h5><a name="sec-content-tasting" id="sec-content-tasting"/>4.1.5.1 Content Tasting</h5><p>The theoretical idempotency of GET requests is not always respected by
+                            servers. In order, as far as possible, to avoid mis-operation of such
+                            content, proxies <strong>should</strong> avoid issuing duplicate
+                            requests and specifically <strong>should not</strong> issue duplicate
+                            requests for comparison purposes.</p></div><div class="div4">
+<h5><a name="sec-avoiding-request-unacceptable" id="sec-avoiding-request-unacceptable"/>4.1.5.2 Avoiding "Request Unacceptable" Responses</h5><p>A proxy <strong>may</strong> reissue a request with altered HTTP header
+                            values if a previous request with unaltered values resulted in the
+                            origin server rejecting the request as "unacceptable" (see <a href="#sec-unacceptable-response"><span>4.3.3 Server Rejection of HTTP Request</span></a>). A proxy may apply heuristics of
+                            various kinds to assess, in advance of sending unaltered header values,
+                            whether the request is likely to cause a "request unacceptable"
+                            response. If it determines that this is likely then it
+                            <strong>may</strong> alter header values without sending unaltered
+                            values in advance, providing that it subsequently assesses the response
+                            as described under <a href="#sec-receipt-of-vary-header"><span>4.3.4 Receipt of Vary HTTP Header</span></a> below,
+                            and is prepared to reissue the request with unaltered headers, and alter
+                            its subsequent behavior in respect of the Web site so that unaltered
+                            headers are sent.</p><p>A proxy <strong>must not</strong> re-issue a POST/PUT request with
+                            altered headers when the response to the unaltered POST/PUT request has
+                            HTTP status code 200 (in other words, it may only send the altered
+                            request for a POST/PUT request when the unaltered one resulted in an
+                            HTTP 406 response, and not a "request unacceptable" response).</p></div><div class="div4">
+<h5><a name="sec-user-selection" id="sec-user-selection"/>4.1.5.3 User Selection of Restructured Experience</h5><p>Proxies <strong>may</strong> offer users an option to choose to view a
+                            restructured experience even when a Web site offers a choice of user
+                            experience. If a user has made such a choice then proxies
+                            <strong>may</strong> alter header values when requesting resources in
+                            order to reflect that choice, but <strong>must</strong>, on receipt of
+                            an indication from a Web site that it offers alternative representations
+                            (see <a href="#sec-use-of-link-element"><span>4.2.3.2 Indication of Intended Presentation Media Type of Representation</span></a>), inform the user of that
+                            and allow them to select an alternative representation.</p><p>Proxies <strong>should</strong> assume that by default users will wish
+                            to receive a representation prepared by the Web site. Proxies
+                                <strong>must</strong> assess whether a user's expressed preference
+                            for a restructured representation is still valid if a Web site changes
+                            its choice of representations (see <a href="#sec-receipt-of-vary-header"><span>4.3.4 Receipt of Vary HTTP Header</span></a>).</p></div><div class="div4">
+<h5><a name="sec-sequence-of-requests" id="sec-sequence-of-requests"/>4.1.5.4 Sequence of Requests</h5><p>When requesting resources that form part of the representation of a
+                            resource (e.g. style sheets, images), proxies <strong>should</strong>
+                            make the request for such resources with the same headers as the request
+                            for the resource from which they are referenced.</p><p>For the purpose of consistency of representation, proxies
+                            <strong>may</strong> request linked resources (e.g. those referenced
+                            using the <code>a</code> element) that form part of the same Web site as
+                            a previously requested resource with the same headers as the resource
+                            from which they are referenced.</p><p>When requesting linked resources that do not form part of the same Web
+                            site as the resource from which they are linked, proxies <strong>should
+                                not</strong> base their choice of headers on a consistency of
+                            presentation premise.</p></div><div class="div4">
+<h5><a name="sec-original-headers" id="sec-original-headers"/>4.1.5.5 Original Headers</h5><p>When forwarding an HTTP request with altered HTTP headers proxies
+                                <strong>must</strong> include in the request copies of the
+                            unaltered header values in the form <code>"X-Device-"&lt;original
+                                header name&gt;</code>. For example, the <code>User-Agent</code>
+                            header has been altered, an <code>X-Device-User-Agent</code> header
+                                <strong>must</strong> be added with the value of the received
+                                <code>User-Agent</code> header.</p><div class="note"><p class="prefix"><b>Note:</b></p><p>The <code>X-Device-</code> prefix was chosen primarily on the basis
+                                that this is a already existing convention. It is noted that the
+                                values encoded in such header may not ultimately derive from a
+                                device, they are merely received headers. The treatment of received
+                                    <code>X-Device</code> headers, which may happen where there are
+                                multiple transforming proxies, is undefined (see <a href="#sec-scope-for-future-work"><span>D Scope for Future Work</span></a>).</p></div></div></div><div class="div3">
+<h4><a name="sec-additional-headers" id="sec-additional-headers"/>4.1.6 Additional HTTP Headers</h4><p>Irrespective of the presence of a <code>no-transform</code> directive:</p><ul><li><p>proxies <strong>should</strong> add the IP address of the initiator
+                                of the request to the end of a comma separated list in an
+                                    <code>X-Forwarded-For</code> HTTP header;</p></li><li><p>proxies <strong>must</strong> include a <code>Via</code> HTTP
+                                header (see <a href="#sec-via-headers"><span>4.1.6.1 Proxy Treatment of Via Header</span></a>).</p></li></ul><div class="div4">
+<h5><a name="sec-via-headers" id="sec-via-headers"/>4.1.6.1 Proxy Treatment of <code>Via</code> Header</h5><p>Proxies <strong>must</strong> (in accordance with compliance to RFC
+                            2616) include a <code>Via</code> HTTP header indicating their presence
+                            and <strong>should</strong> indicate their conformance to this
+                            Recommendation by including a comment in the <code>Via</code> HTTP
+                            header consisting of the URI "http://www.w3.org/ns/ct".</p><p>When forwarding <code>Via</code> headers proxies <strong>should
+                            not</strong> alter them in any way.</p><div class="note"><p class="prefix"><b>Note:</b></p><p>According to <a href="#ref-HTTP">[RFC 2616 HTTP]</a>
+                                <a href="http://tools.ietf.org/html/rfc2616#section-14.45">Section 14.45</a>
+                                <code>Via</code> header comments "<strong>may</strong> be removed
+                                by any recipient prior to forwarding the message". However, the
+                                justification for removing such comments is based on memory
+                                limitations of early proxies, most modern proxies do not suffer such
+                                limitations.</p></div></div></div></div><div class="div2">
+<h3><a name="sec-ServerResponse" id="sec-ServerResponse"/>4.2 Server Response to Proxy</h3><div class="div3">
+<h4><a name="sec-server-use-of-406" id="sec-server-use-of-406"/>4.2.1 Use of HTTP 406 Status</h4><p>Servers <strong>should</strong> respond with an HTTP 406 Status (and not an
+                        HTTP 200 Status) if a request cannot be satisfied with content that meets
+                        the criteria specified by values of the HTTP request headers.</p></div><div class="div3">
+<h4><a name="sec-cache-control-no-transform" id="sec-cache-control-no-transform"/>4.2.2 Server Origination of <code>Cache-Control: no-transform</code></h4><p>Servers <strong>must</strong> include a <code>Cache-Control:
+                        no-transform</code> directive if one is received in the HTTP request.</p><p>Servers <strong>should</strong> include a <code>Cache-Control:
+                        no-transform</code> directive if, for any reason, they wish to inhibit
+                        transformation of the response.</p><div class="note"><p class="prefix"><b>Note:</b></p><p id="wml-no-transform-note">Including a <code>Cache-Control:
+                            no-transform</code> directive can disrupt the behavior of WAP/WML
+                            proxies, because it can inhibit such proxies from converting WML to
+                            WMLC.</p></div></div><div class="div3">
+<h4><a name="sec-varying-representations" id="sec-varying-representations"/>4.2.3 Varying Representations</h4><p>Servers <strong>should</strong> take account of user agent capabilities and
+                        formulate an appropriate experience according to those capabilities. Servers
+                            <strong>should</strong> provide a means for users to select among
+                        available representations, <strong>should</strong> default to the last
+                        selected representation and <strong>should</strong> provide a means of
+                        changing the selection.</p><div class="div4">
+<h5><a name="sec-use-of-vary-header" id="sec-use-of-vary-header"/>4.2.3.1 Use of <code>Vary</code> HTTP Header</h5><p>If a server varies its representation according to examination of
+                            received HTTP headers then it <strong>must</strong> include a
+                                <code>Vary</code> HTTP header indicating this to be the case. If, in
+                            addition to, or instead of HTTP headers, a server varies its
+                            representation based on other factors (e.g. source IP Address) then it
+                                <strong>must</strong>, in accordance with <a href="#ref-HTTP">[RFC 2616 HTTP]</a>, include a <code>Vary</code> header containing the value '*'.</p><p>Servers <strong>may</strong> base their actions on knowledge of
+                            behavior of specific transforming proxies, as identified in a
+                            <code>Via</code> header, but <strong>should not</strong> choose an
+                            Internet content type for a response based on an assumption or
+                            heuristics about behavior of any intermediaries. (e.g. a server should
+                            not choose <code>Content-Type: application/vnd.wap.xhtml+xml</code>
+                            solely on the basis that it suspects that proxies will not transform
+                            content of this type). </p></div><div class="div4">
+<h5><a name="sec-use-of-link-element" id="sec-use-of-link-element"/>4.2.3.2 Indication of Intended Presentation Media Type of Representation</h5><p>If a server has distinct representations that vary according to the
+                            target presentation media type, it <strong>should</strong> inhibit
+                            transformation of the response by including a <code>Cache-Control:
+                                no-transform</code> directive (see <a href="#sec-cache-control-no-transform"><span>4.2.2 Server Origination of Cache-Control: no-transform</span></a>).</p><p>In HTML content it <strong>should</strong> indicate the medium for
+                            which the representation is intended by including a <code>link</code>
+                            element identifying in its <code>media</code> attribute the target
+                            presentation media types of this representation and setting the
+                                <code>href</code> attribute to a valid local reference (i.e. use the
+                            fragment identifier (see <a href="#ref-rfc-3986">[RFC 3986]</a>
+                            <a href="http://www.tools.ietf.org/html/rfc3986.html#section-3.5">section 3.5</a>) added to
+                            the URI of the document being served to point to a valid target within
+                            the document).</p><p>In addition it <strong>should</strong> include <code>link</code>
+                            elements identifying the target presentation media types of other
+                            available representations by setting the <code>media</code> attribute to
+                            indicate those representations and the <code>href</code> attribute to a
+                            URI without a fragment identifier.</p><div class="note"><p class="prefix"><b>Note:</b></p><p>The presence of <code>link</code> elements which do not contain a
+                                valid local reference does not indicate one way or another whether
+                                this representation is formatted for the presentation media types
+                                listed.</p></div><div class="note"><p class="prefix"><b>Note:</b></p><p>Some examples of the use of the <code>link</code> element are
+                                included below in <a href="#sec-example-transformation-interactions"><span>B Example Transformation Interactions</span></a>.</p></div></div></div></div><div class="div2">
+<h3><a name="sec-Proxy-Response" id="sec-Proxy-Response"/>4.3 Proxy Forwarding of Response to User Agent</h3><div class="div3">
+<h4><a name="sec-receipt-of-cache-control-no-transform" id="sec-receipt-of-cache-control-no-transform"/>4.3.1 Receipt of <code>Cache-Control: no-transform</code></h4><p>If the response includes a <code>Cache-Control: no-transform</code> directive
+                        then proxies <strong>must not</strong> alter it other than to comply with
+                            <a title="transparent proxy" href="#term-transparent">transparent</a> HTTP behavior and
+                        other than as follows.</p><p>If a proxy determines that a resource as currently represented is likely to
+                        cause serious mis-operation of the user agent then it <strong>may</strong>
+                        advise the user that this is the case and <strong>must</strong> provide
+                        the option for the user to continue with unaltered content.</p></div><div class="div3">
+<h4><a name="sec-receipt-of-warning-214" id="sec-receipt-of-warning-214"/>4.3.2 Receipt of <code>Warning: 214 Transformation Applied</code></h4><p>If the response includes a <code>Warning: 214 Transformation Applied</code>
+                        HTTP header, proxies <strong>must not</strong> apply further
+                        transformation. </p></div><div class="div3">
+<h4><a name="sec-unacceptable-response" id="sec-unacceptable-response"/>4.3.3 Server Rejection of HTTP Request</h4><p>For compatibility with servers that do not implement this Recommendation (see
+                            <a href="#sec-server-use-of-406"><span>4.2.1 Use of HTTP 406 Status</span></a>), a proxy <strong>may</strong>
+                        treat responses with an HTTP 200 Status as though they were responses with
+                        an HTTP 406 Status if it has determined that the content (e.g. "Your browser
+                        is not supported") is equivalent to a response with an HTTP 406 Status.</p></div><div class="div3">
+<h4><a name="sec-receipt-of-vary-header" id="sec-receipt-of-vary-header"/>4.3.4 Receipt of <code>Vary</code> HTTP Header</h4><p>If, in response to an HTTP request with altered headers that was not preceded
+                        by an HTTP request with unaltered headers, a proxy receives a response
+                        containing a <code>Vary</code> header referring to one of the altered
+                        headers then it <strong>should</strong> request the resource again with
+                        unaltered headers, it <strong>should</strong> update whatever heuristics
+                        it uses so that unaltered headers are presented first in subsequent requests
+                        for this resource and it <strong>should</strong> resume the behavior
+                        described under <a href="#sec-avoiding-request-unacceptable"><span>4.1.5.2 Avoiding "Request Unacceptable" Responses</span></a> to avoid
+                        rejection of subsequent requests.</p></div><div class="div3">
+<h4><a name="sec-receipt-of-link-to-handheld" id="sec-receipt-of-link-to-handheld"/>4.3.5 Link to "handheld" Representation</h4><p>If the response is an HTML response and it contains a <code>&lt;link
+                            rel="alternate" media="handheld" /&gt;</code> element, the CT-proxy
+                            <strong>should</strong> request and process the referenced resource,
+                        unless the resource referenced is the current resource as determined by the
+                        presence of <code>link</code> elements as discussed under <a href="#sec-use-of-link-element"><span>4.2.3.2 Indication of Intended Presentation Media Type of Representation</span></a>.</p></div><div class="div3">
+<h4><a name="sec-proxy-decision-to-transform" id="sec-proxy-decision-to-transform"/>4.3.6 Proxy Decision to Transform</h4><p>In the absence of a <code>Vary</code> or <code>no-transform</code> directive
+                        (or a <code>meta HTTP-Equiv</code> element containing <code>Cache-Control:
+                            no-transform</code>) proxies <strong>should</strong> apply heuristics
+                        to the response to determine whether it is appropriate to <a title="restructuring" href="#term-restructuring">restructure</a> or <a title="recoding" href="#term-recoding">recode</a> it (in the presence of such
+                        directives, heuristics <strong>should not</strong> be used.) </p><p>Examples of heuristics:</p><ul><li><p>The Web site (see <a href="#term-web-site">note</a>) has previously shown that it is
+                                contextually aware, even if the present response does not indicate
+                                this;</p></li><li><p>a claim of mobileOK Basic <a href="#ref-mobileOK">[mobileOK Basic Tests]</a> conformance
+                                is indicated;</p></li><li><p>the <code>Content-Type</code> or other aspects of the response (such
+                                as the DOCTYPE) are known to be specific to the device or class of
+                                device;</p><p>Examples of mobile specific DOCTYPEs:</p><div class="exampleInner"><pre>-//OMA//DTD XHTML Mobile 1.2//EN</pre></div><div class="exampleInner"><pre>-//WAPFORUM//DTD XHTML Mobile 1.1//EN </pre></div><div class="exampleInner"><pre>-//WAPFORUM//DTD XHTML Mobile 1.0//EN</pre></div><div class="exampleInner"><pre>-//W3C//DTD XHTML Basic 1.1//EN</pre></div><div class="exampleInner"><pre>-//W3C//DTD XHTML Basic 1.0//EN)</pre></div></li><li><p>the user agent has linearization or zoom capabilities or other
+                                features which allow it to present the content unaltered;</p></li><li><p>the URI of the response (following redirection or as indicated by the
+                                    <code>Content-Location</code> HTTP header) indicates that the
+                                resource is intended for mobile use (e.g. the domain is *.mobi,
+                                wap.*, m.*, mobile.* or the leading portion of the path is /m/ or
+                                /mobile/);</p></li><li><p>the response contains client-side scripts that may mis-operate if the
+                                resource is restructured;</p></li><li><p>the response is an HTML response and it includes
+                                    <code>&lt;link&gt;</code> elements specifying
+                                alternatives according to presentation media type.</p></li></ul><div class="div4">
+<h5><a name="sec-alteration-of-response" id="sec-alteration-of-response"/>4.3.6.1 Alteration of Response</h5><p>A proxy <strong>should</strong> strive for the best possible user
+                            experience that the user agent supports. It <strong>should</strong>
+                            only alter the format, layout, dimensions etc. to match the specific
+                            capabilities of the user agent. For example, when resizing images, they
+                            should only be reduced so that they are suitable for the specific user
+                            agent, and this <strong>should not</strong> be done on a generic
+                            basis.</p><p>If a proxy alters the response then:</p><ol class="enumar"><li><p>It <strong>must</strong> add a <code>Warning 214 Transformation
+                                        Applied</code> HTTP header;</p></li><li><p>The altered content <strong>should</strong> validate according
+                                    to an appropriate published formal grammar;</p></li><li><p>It <strong>should</strong> indicate to the user that the
+                                    content has been transformed for mobile presentation and provide
+                                    an option to view the original, unmodified content.</p></li></ol></div><div class="div4">
+<h5><a name="sec-https-link-rewriting" id="sec-https-link-rewriting"/>4.3.6.2 HTTPS Link Re-writing</h5><p>If the response contains links whose URIs have the scheme
+                            <code>https</code> proxies <strong>may</strong> only rewrite them
+                            so that they can transform the content of linked resources, if the
+                            following provision is met. If a proxy does rewrite such links, it
+                                <strong>must</strong> advise the user of the security implications
+                            of doing so and <strong>must</strong> provide the option to avoid
+                            decryption and transformation of the resources the links refer to.</p><p>If a proxy re-writes HTTPS links, replacement links
+                            <strong>must</strong> have the scheme <code>https</code>.</p><div class="note"><p class="prefix"><b>Note:</b></p><p>For clarity it is emphasized that it is not possible for a
+                                transforming proxy to transform content accessed via an HTTPS link
+                                without breaking end to end security.</p></div></div></div></div></div><div class="div1">
+<h2><a name="sec-testing" id="sec-testing"/>5 Testing (Normative)</h2><p>Operators of transforming proxies <strong>should</strong> make available interfaces
+                that facilitate testing of Web sites accessed through them and
+                <strong>should</strong> make such interfaces available through normal Internet
+                access paths.</p></div></div><div class="back"><div class="div1">
+<h2><a name="sec-references" id="sec-references"/>A References</h2><dl><dt class="label"><a name="ref-CT-Landscape" id="ref-CT-Landscape"/>CT Landscape</dt><dd>Content
+                    Transformation Landscape 1.0, Jo Rabin, Andrew Swainston (eds), W3C Working
+                    Draft 25 October 2007  (See <a href="http://www.w3.org/TR/ct-landscape/">http://www.w3.org/TR/ct-landscape/</a>)</dd><dt class="label"><a name="ref-rfc-2119" id="ref-rfc-2119"/>RFC 2119</dt><dd>Key words for use in RFCs to Indicate
+                    Requirement Levels, , Request for Comments: 2119, S. Bradner, March 1997  (See <a href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a>)</dd><dt class="label"><a name="ref-HTTP" id="ref-HTTP"/>RFC 2616 HTTP</dt><dd> Hypertext Transfer Protocol --
+                    HTTP/1.1 Request for Comments: 2616, R. Fielding, J. Gettys, J. Mogul, H.
+                    Frystyk, L. Masinter, P. Leach, T. Berners-Lee, June 1999  (See <a href="http://tools.ietf.org/html/rfc2616">http://tools.ietf.org/html/rfc2616</a>)</dd><dt class="label"><a name="ref-rfc-3986" id="ref-rfc-3986"/>RFC 3986</dt><dd>Uniform Resource Identifier (URI):
+                    Generic Syntax, Request for Comments: 3986, T. Berners-Lee, R. Fielding, L.
+                    Masinter, January 2005   (See <a href="http://tools.ietf.org/html/rfc3986">http://tools.ietf.org/html/rfc3986</a>)</dd><dt class="label"><a name="ref-DIGLOSS" id="ref-DIGLOSS"/>Device Independence Glossary</dt><dd>W3C Glossary of Terms for Device Independence, Rhys Lewis
+                    (ed), W3C Working Draft 18 January 2005</dd><dt class="label"><a name="ref-BestPractices" id="ref-BestPractices"/>Best Practices</dt><dd>Mobile Web Best
+                    Practices 1.0 Basic Guidelines, Jo Rabin, Charles McCathieNevile (eds), W3C
+                    Recommendation, 29 July 2008 (See <a href="http://www.w3.org/TR/2008/REC-mobile-bp-20080729/">http://www.w3.org/TR/2008/REC-mobile-bp-20080729/</a>)</dd><dt class="label"><a name="ref-mobileOK" id="ref-mobileOK"/>mobileOK Basic Tests</dt><dd>W3C mobileOK
+                    Basic Tests, Sean Owen, Jo Rabin (eds), W3C Working Draft, 10 June 2008 <span class="ednote">1l: To update</span>  (See <a href="http://www.w3.org/TR/mobileOK-basic10-tests/">http://www.w3.org/TR/mobileOK-basic10-tests/</a>)</dd><dt class="label"><a name="ref-XHR" id="ref-XHR"/>XHR</dt><dd>The XMLHttpRequest Object, Anne van
+                    Kesteren (ed), W3C Working Draft, 15 April 2008  (See <a href="http://www.w3.org/TR/XMLHttpRequest/">http://www.w3.org/TR/XMLHttpRequest/</a>)</dd></dl></div><div class="div1">
+<h2><a name="sec-example-transformation-interactions" id="sec-example-transformation-interactions"/>B Example Transformation Interactions (Non-Normative)</h2><div class="note"><p class="prefix"><b>Note:</b></p><p>The following examples refer to requests with the GET method.</p></div><div class="div2">
+<h3><a name="d2e1125" id="d2e1125"/>B.1 Basic Content Tasting by Proxy</h3><div class="exampleOuter"><p class="flow1">Request resource with original headers</p><p class="flow1">If the response is a 406 response:</p><p class="flow2">If the response contains <code>Cache-Control:
+                        no-transform</code>, forward it</p><p class="flow2">Otherwise re-request with altered headers</p><p class="flow1">If the response is a 200 response:</p><p class="flow2">If the response contains <code>Vary: User-Agent</code>, an
+                        appropriate <code>link</code> element or header, or <code>Cache-Control:
+                            no-transform</code>, forward it</p><p class="flow2">Otherwise assess whether the 200 response is a form of "Request
+                        Unacceptable"</p><p class="flow3">If it is not, forward it</p><p class="flow3">If it is, re-request with altered headers</p></div></div><div class="div2">
+<h3><a name="sec-proxy-a-priori-knowledge" id="sec-proxy-a-priori-knowledge"/>B.2 Optimization based on Previous Server Interaction</h3><div class="exampleOuter"><p class="flow1">Proxy receives a request for resource P that it has not
+                        encountered before</p><p class="flow1">Proxy forwards this request</p><p class="flow1">Response is 200 OK containing the text "Unsupported browser.
+                        Please get a different one or use a CT proxy."</p><p class="flow1">Proxy determines that this equates to a 406 Status and
+                        re-requests the resource from the origin server with altered headers
+                        (emulating a well known desktop browser)</p><p class="flow1">Response is a desktop oriented representation of the resource</p><p class="flow1">Proxy transforms this response into content that the user agent
+                        can display well and forwards it</p><p class="flow1">Proxy receives a further request for the resource P</p><p class="flow1">Based on evidence from the previous interaction (e.g. that there
+                        was no <code>Vary</code> header, that the response was not targeted at only
+                        the previous user in that there was no <code>Cache-Control: private</code>
+                        directive) the CT proxy forwards the request with altered headers</p><p class="flow1">Response is a desktop oriented representation of the resource</p><p class="flow1">Proxy transforms this response into content that the user agent
+                        can display well and forwards it</p></div></div><div class="div2">
+<h3><a name="d2e1189" id="d2e1189"/>B.3 Optimization based on Previous Server Interaction, Server has Changed its
+                    Operation</h3><div class="exampleOuter"><p class="flow1">Proxy receives a request for resource P, that it has previously
+                        encountered as in <a href="#sec-proxy-a-priori-knowledge"><span>B.2 Optimization based on Previous Server Interaction</span></a></p><p class="flow1">Proxy forwards request with altered headers</p><p class="flow1">Response is 200 OK containing a <code>Vary: User-Agent</code>
+                        header</p><p class="flow1">Proxy notices that behavior has changed and re-issues request
+                        with original headers</p><p class="flow1">Response is 200 OK and proxy forwards it</p></div></div><div class="div2">
+<h3><a name="d2e1207" id="d2e1207"/>B.4 Server Response Indicating that this Representation is Intended for the Target
+                    Device</h3><div class="exampleOuter"><p class="flow1">Proxy receives a request for resource P</p><p class="flow1">Proxy forwards request with original headers</p><p class="flow1">Response is 200 OK with <code>Vary: User-Agent</code> and
+                            <code>&lt;link type="alternate" media="handheld" href="P#id"
+                            /&gt;</code> where id is a document local reference</p><p class="flow1">Proxy forwards response as designed specifically for the
+                        requesting device</p></div></div><div class="div2">
+<h3><a name="d2e1225" id="d2e1225"/>B.5 Server Response Indicating that another Representation is Intended for the
+                    Target Device</h3><div class="exampleOuter"><p class="flow1">Proxy receives a request for resource P</p><p class="flow1">Proxy forwards request with original headers</p><p class="flow1">Response is 200 OK with <code>&lt;link type="alternate"
+                            media="handheld" href="Q" /&gt;</code> and Q is not P</p><p class="flow1">Proxy requests Q with original headers</p><p class="flow1">Response is 200 OK and proxy forwards it</p></div></div></div><div class="div1">
+<h2><a name="sec-applicability" id="sec-applicability"/>C Applicability to Transforming Solutions which are Out of Scope (Non-Normative)</h2><p>There are a number of well-known examples of solutions that seem to their users as
+                though they are using a browser, but because the client software communicates with
+                using proprietary protocols and techniques, it is the combination of the client and
+                the in-network component that is regarded as the HTTP User Agent. The communication
+                between the client and the in-network component is therefore out of scope of this
+                document.</p><p>Additionally, where some kind of administrative arrangement exists between a
+                transforming proxy and an origin server for the purposes of transforming content on
+                the origin server's behalf, this is also out of scope of this document.</p><p>In both of the above cases, it is <strong>recommended</strong> that when forwarding
+                requests to origin servers that proxies adhere to the provisions of this document in
+                respect of providing information about the device and the original IP address.</p></div><div class="div1">
+<h2><a name="sec-scope-for-future-work" id="sec-scope-for-future-work"/>D Scope for Future Work (Non-Normative)</h2><div class="div2">
+<h3><a name="d2e1257" id="d2e1257"/>D.1 POWDER</h3><p>The BPWG believes that <a href="http://www.w3.org/2007/powder/">POWDER</a>
+                     will represent a powerful mechanism by which
+                    a server may express transformation preferences. Future work in this area may
+                    recommend the use of POWDER to provide a mechanism for origin servers to
+                    indicate more precisely which alternatives they have and what transformation
+                    they are willing to allow on them, and in addition to provide for Content
+                    Transformation proxies to indicate which services they are able to perform.</p></div><div class="div2">
+<h3><a name="d2e1267" id="d2e1267"/>D.2 <code>link</code> HTTP Header</h3><p>The BPWG believes that the <code>link</code> HTTP header which was removed from
+                    recent drafts of HTTP, and which is under discussion for re-introduction, would
+                    represent a more general and flexible mechanism than use of the HTML
+                    <code>link</code> element, as discussed in this recommendation.</p></div><div class="div2">
+<h3><a name="d2e1280" id="d2e1280"/>D.3 Sources of Device Information</h3><p>The process of adapting content at the origin server, or transforming it in a
+                    proxy is likely to have a dependency on a repository of device descriptions. An
+                    origin server's willingness to allow a transforming proxy to transform content
+                    may depend on its evaluation of the trustworthiness of device description data
+                    that is being used. There is scope for enhancement of the trust relationship by
+                    some means of indicating this.</p></div><div class="div2">
+<h3><a name="d2e1285" id="d2e1285"/>D.4 Inter Proxy Communication</h3><p>There is scope for further work to define how multiple proxies may inter-operate.
+                    A common case of multiple proxies is where a network provider transforming proxy
+                    and a search engine transforming proxy are both present.</p></div><div class="div2">
+<h3><a name="d2e1290" id="d2e1290"/>D.5 Amendment to and Refinement of HTTP</h3><p>The BPWG believes that amendments to HTTP are needed to improve the inter
+                    operability of transforming proxies. For example, HTTP does not provide a way to
+                    distinguish between prohibition of any kind of transformation and the
+                    prohibition only of restructuring (and not recoding or compression).</p><p>At present HTTP does not provide a mechanism for communicating original header
+                    values (hence the use of <code>X-Device-</code> headers as discussed under
+                        <a href="#sec-altering-header-values"><span>4.1.5 Alteration of HTTP Header Values</span></a>).</p><p>A number of mechanisms exist in HTTP which might be exploited given more precise
+                    definition of their operation - for example the <code>OPTIONS</code> method and
+                    the HTTP 300 (Multiple Choices) Status.</p></div></div><div class="div1">
+<h2><a name="sec-administrative-arrangements" id="sec-administrative-arrangements"/>E Administrative Arrangements (Non-Normative)</h2><p>It is noted that there are means which fall outside of the scope of this document for
+                establishing user preferences with content transformation proxies. It is anticipated
+                that proxies will maintain preferences on a user by user and Web site by Web site
+                basis, and will change their behavior in the light of changing circumstances as
+                discussed under <a href="#sec-receipt-of-vary-header"><span>4.3.4 Receipt of Vary HTTP Header</span></a>.</p></div><div class="div1">
+<h2><a name="sec-acknowledgements" id="sec-acknowledgements"/>F Acknowledgments (Non-Normative)</h2><p>The editor acknowledges contributions of various kinds from members of the <a href="http://www.w3.org/2005/MWI/BPWG/">Mobile Web Best Practices Working Group</a>
+                <a href="http://www.w3.org/2005/MWI/BPWG/Group/TaskForces/CT/">Content Transformation Task
+                Force</a>.</p><p>The editor acknowledges significant written contributions from:</p><ul><li>François Daoust (Task Force Leader), W3C</li><li>Magnus Lönnroth, Ericsson (and previously at Drutt)</li><li>Bryan Sullivan, AT&amp;T</li><li>Sean Patterson, Novarra</li><li>Aaron Kemp, Google</li><li>Rob Finean, Openwave</li><li>Heiko Gerlach, Vodafone</li><li>Martin Jones, Volantis</li></ul></div></div><script type="application/javascript" src="https://www.w3.org/scripts/TR/fixup.js"></script></body></html>

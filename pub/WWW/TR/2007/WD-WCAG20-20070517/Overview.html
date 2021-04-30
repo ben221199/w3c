@@ -1,0 +1,1004 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"><head><title>Web Content Accessibility Guidelines  2.0</title><style type="text/css">
+code           { font-family: monospace; }
+
+div.constraint,
+div.issue,
+div.note,
+div.notice,
+div.example    { margin-left: 1.5em; margin-bottom: .5em; }
+
+ol.enumar      { list-style-type: decimal; margin-top: 0; }
+ol.enumla      { list-style-type: lower-alpha; }
+ol.enumlr      { list-style-type: lower-roman; }
+ol.enumua      { list-style-type: upper-alpha; }
+ol.enumur      { list-style-type: upper-roman; }
+
+	li p {
+		margin-top: 0;                  
+		margin-bottom: 0; 
+	}
+
+p {
+		margin-top: 0;                  
+		margin-bottom: .5em; 
+	}
+	
+p.prefix, p.sctxt {
+    margin-top: .25em;  
+    margin-bottom: 0;
+}
+
+strong.sc-handle {
+  font-size: .9em;
+}
+
+dd.prefix p {
+		margin-bottom: 0;                  
+}
+      	dd {
+		margin-bottom: .5em;                  
+	}
+	dt.label {padding-top: .5em;}
+div.sc ul {
+		margin-top: 0;                  
+}
+
+h4, h5 {margin-bottom: .5em;}
+
+    .revnote {
+        background-color : #adff2f;
+        color : black;
+      }
+    p.revnote , div.revnote {
+        padding : 0.5em;
+        margin : 0;
+      }
+    .informative {
+        color : #000000;
+        background : #ffffff;
+        padding-bottom : 0.5em;
+        padding-left : 1em;
+        margin-top : 0.5em;
+        margin-left : 2em;
+        padding-right : 0.5em;
+        border-style : solid;
+        border-width : thin;
+        border-color : #f1f1f1;
+      }
+      
+    .principle { 	
+		padding: .5em; 	
+		border: thin solid #666666; 	
+		background-color: #FFFFFF; 	
+		color: #000000; 	
+		font-weight: bold; 
+	}
+       
+    .guideline {
+        border: thin solid #000066; 	
+        background-color: #CFE8EF; 	
+        padding: .5em .5em .5em .5em; 	
+        margin-bottom: 0; 	
+        color: #000000;   
+      }
+      
+    .req, .bp, .additional, .terms, .section {      	    
+		  display: block; 
+		  border-bottom: thin solid #666666;
+		  margin-left: 1em;
+		  padding-bottom: .5em;
+		 } 
+		 
+		 .terms, .section {      	    
+		  display: block; 
+		  border-bottom: thin solid #666666;
+		  margin-left: 0;
+		 } 
+		 
+	div.sc {
+		 margin-left: 1em;
+	}	
+  
+    .bigger {
+        font-weight : bold;
+      }
+    .smaller {
+        font-size : 75%;
+      }
+    .termref {
+        color : #006400;
+        background : white;
+      }
+    a.termref:link {
+        color : #006400;
+        background : transparent;
+      }
+    a.termref:hover {
+        background-color : #fafad2;
+        color : #006400;
+      }
+	table.checklist {
+		empty-cells: show;
+		width: 94%;
+		margin-bottom: 1em;
+	}
+					 	
+	.termref { 	
+		color: #006400; 	
+		background: white;
+	} 
+	
+	 a:link.termref { 	
+		 color: #006400; 	
+		 background: transparent; 	
+	}   
+	
+	a:hover.termref { 	
+		background-color: #FAFAD2; 	
+		color: #006400;
+	}
+      .sorethumb {color: red
+   }
+	table.checklist {
+		empty-cells: show;
+		width: 94%;
+		margin-bottom: 1em;
+	}
+					 
+p.sc {font-size: 100%; font-weight: bold; display: inline;}
+
+p.i, p.v {display: inline;}
+
+tr.scrule {
+font-size: 95%; 
+}
+
+tr.scrule:hover {
+background-color: #DCDCDC;
+}
+
+tr.scrule {
+background-color: #98FB98;
+}
+
+tbody.reqcl {
+	background-color: #CFE8EF;
+}
+tbody.bpcl {
+	background-color: #FFFFCC;
+}
+tbody.additionalcl {
+	background-color: #DDFDDF;
+}
+
+th.reqcl {
+	background-color: #CFE8EF;
+}
+th.bpcl {
+	background-color: #FFFFCC;
+}
+th.additionalcl {
+	background-color: #DDFDDF;
+}
+
+th {
+background-color: #E0E0E0;
+}
+
+hr.divider {
+	background-color: #000066;
+	height: 30px;
+}
+
+ p.instructions {
+    padding: 1em;
+    border: 1px dashed #2f6fab;
+    color: Black;
+    background-color: #f9f9f9;
+    line-height: 1.1em;
+    margin-left: 1em;
+    margin-right: 1em;
+   }
+       caption.guideline {
+        border : thin solid #000066;
+        background-color : #ffffff;
+        border-bottom-width : 3px;
+		border-top-width: 0px;
+		border-left-width: 0px;
+		border-right-width: 0px;
+	    color : #000000;
+		font-size: 1.25em;
+		font-weight: bold;
+		text-align: left;
+		margin-top: 1em;
+		margin-bottom: .5em;
+		width: 100%;
+      }
+      
+ ul.nobullet {
+  list-style-type: none;
+ }
+ /* BBC - There are some experimental images in the sources/output directory that may be of use below at some point down the road */
+a.HTMlink, a.HTMlink:visited { 
+	display: inline;
+	font: .9em Arial, Helvetica, sans-serif;
+	padding: 0px 0px 2px 15px;
+/*		background: url(images/BG_li.gif) top left no-repeat; */
+	}
+a.HTMlink:hover { 
+	display: inline;
+	font: .9em Arial, Helvetica, sans-serif;
+	padding: 0px 0px 2px 15px;
+	background-color: transparent;
+/*	background: url(images/BG_li_hover.gif) top left no-repeat; */
+	}
+
+
+</style><link href="print.css" rel="stylesheet" type="text/css" media="print" /><link type="text/css" rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/W3C-WD.css" /></head><body><p align="center">[<a href="#contents">contents</a>] </p><div class="head"><p><a href="http://www.w3.org/"><img width="72" height="48" alt="W3C" src="http://www.w3.org/Icons/w3c_home" /></a></p>
+<h1><a id="title" name="title"> </a>Web Content Accessibility Guidelines  2.0</h1>
+<h2><a id="w3c-doctype" name="w3c-doctype"> </a>W3C Working Draft 17 May 2007</h2><dl><dt>This version:</dt><dd>
+      <a href="http://www.w3.org/TR/2007/WD-WCAG20-20070517/">http://www.w3.org/TR/2007/WD-WCAG20-20070517/</a>
+    </dd><dt>Latest version:</dt><dd>
+      <a href="http://www.w3.org/TR/WCAG20/">http://www.w3.org/TR/WCAG20/</a>
+    </dd><dt>Previous version:</dt><dd>
+      <a href="http://www.w3.org/TR/2006/WD-WCAG20-20060427/">http://www.w3.org/TR/2006/WD-WCAG20-20060427/</a>
+    </dd><dt>Editors:</dt><dd>Ben Caldwell, Trace R&amp;D Center, University of
+Wisconsin-Madison</dd><dd>Michael Cooper, W3C</dd><dd>Loretta Guarino Reid, Google, Inc.</dd><dd>Gregg Vanderheiden, Trace R&amp;D Center, University of
+Wisconsin-Madison</dd><dt>Previous Editors:</dt><dd>Wendy Chisholm (until July 2006 while at W3C)</dd><dd>John Slatin (until June 2006 while at Accessibility Institute, University of Texas at
+Austin)</dd><dd>Jason White (until June 2005 while at University of Melbourne)</dd></dl><p>This document is also available in these non-normative formats: </p><ul><li><a href="Overview-diff.html">Diff-marked version showing revisions since 27 April 2006</a></li></ul><p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2007 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.org/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p></div><hr /><div>
+<h2><a id="abstract" name="abstract"> </a>Abstract</h2><p>Web Content Accessibility Guidelines 2.0 (WCAG 2.0) covers a wide range of recommendations for making Web content more accessible. 
+        <span>Following these guidelines will make content accessible to a wider range of</span> people with disabilities, including blindness and low vision, deafness and hearing loss, learning <span>disabilities</span>, cognitive limitations, limited movement, speech difficulties, photosensitivity and combinations of these. Following these guidelines will also make your Web content more accessible to the vast majority of users, including <span>some 
+        </span> older users. 
+        <span>These guidelines however are not able to address the needs of all people with disabilities.</span>
+      </p><p>WCAG 2.0 success criteria are written as testable statements that are not technology-specific. Guidance about satisfying the success criteria in specific technologies as well as general information about interpreting the success criteria are provided in separate documents. An <a href="http://www.w3.org/WAI/intro/wcag20">Overview of Web Content Accessibility Guidelines (WCAG) 2.0 Last Call Documents</a> is also available.
+</p><p>Until WCAG 2.0 advances to W3C Recommendation, the current and referenceable document is <a href="http://www.w3.org/TR/WCAG10/">Web Content Accessibility Guidelines 1.0</a>
+        <a href="#WCAG10">[WCAG10]</a>, published as a W3C Recommendation May 1999.</p></div><div>
+<h2><a id="status" name="status"> </a>Status of this Document</h2><div class="div2"> <h3><a id="N100B5" name="N100B5"> </a>May be Superseded </h3><p>
+          <em>This section describes the status of this document at  the time of its publication. Other documents may supersede this  document. A list of current W3C publications and the latest revision of  this technical report can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at <a href="http://www.w3.org/TR/">http://www.w3.org/TR/</a>.</em>
+        </p></div><div class="div2"> <h3><a id="N100CE" name="N100CE"> </a>Public Working Draft of WCAG 2.0 </h3><p>This Public Working Draft from the <a href="http://www.w3.org/WAI/GL/">Web Content Accessibility Guidelines Working Group</a> integrates changes to the "Web Content Accessibility Guidelines 2.0" (WCAG 2.0) in response to comments received on the <a href="http://www.w3.org/TR/2006/WD-WCAG20-20060427/">27 April 2006 Last Call Working Draft</a>. Because there were a number of substantive changes, WCAG 2.0 has been returned to Public Working Draft status, and we expect to advance WCAG 2.0 to a second Last Call Working Draft after this Working Draft. See <a href="http://www.w3.org/WAI/intro/w3c-process">How WAI Develops Accessibility Guidelines through the W3C Process</a> for more background on document maturity levels.</p><p>A <a href="http://www.w3.org/WAI/GL/2007/05/change-summary">summary  of changes</a> to the previous draft based on comments received and responses made is available. Also available is a <a href="Overview-diff.html">diff-marked version of WCAG 2.0</a> and <a href="http://www.w3.org/WAI/GL/WCAG20/change-history.html">History of Changes to WCAG 2.0 Working Drafts</a>.</p></div><div class="div2"> <h3><a id="N10106" name="N10106"> </a>Please comment by 29 June 2007 </h3><p>The Working Group seeks feedback on the following points for this draft:</p><ul><li><p>Are the guidelines and success criteria clear? If not, can you suggest clearer wording?</p></li><li><p>Are there any success criteria that you feel are not implementable or testable? If so, how could they be improved?</p></li><li><p>Are there any success criteria that you feel would not improve accessibility as written, or that might hinder it? If so, how could they be improved?</p></li></ul><p>Comments on this working draft are due <strong>on or before 29 June 2007</strong>. The Working Group requests that comments be made using  the provided <a href="http://www.w3.org/WAI/WCAG20/comments/">online or downloadable comment form</a>. If this is not possible, comments  can also be sent to <a href="mailto:public-comments-wcag20@w3.org">public-comments-wcag20@w3.org</a>. The <a href="http://lists.w3.org/Archives/Public/public-comments-wcag20/">archives for the public comments list</a> are publicly available.  Archives of the <a href="http://lists.w3.org/Archives/Public/w3c-wai-gl/">WCAG WG mailing list discussions</a> are also publicly available.</p></div><div class="div2"> <h3><a id="N1013C" name="N1013C"> </a>Web Accessibility Initiative</h3><p>This document has been produced as part of the W3C <a href="http://www.w3.org/WAI/">Web Accessibility Initiative</a> (WAI). The goals of the WCAG Working Group are discussed in the <a href="http://www.w3.org/WAI/GL/new-charter-2000.html">WCAG Working Group charter</a>. The WCAG Working Group is part of the <a href="http://www.w3.org/WAI/Technical/Activity">WAI Technical Activity</a>.</p></div><div class="div2"> <h3><a id="N1015A" name="N1015A"> </a>No Endorsement </h3><p>Publication as a Working Draft does not imply endorsement by the W3C  Membership. This is a draft document and may be updated, replaced or  obsoleted by other documents at any time. It is inappropriate to cite  this document as other than work in progress.</p></div><div class="div2"> <h3><a id="N10160" name="N10160"> </a>Patents</h3><p>This document was produced by a group operating under the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</a>. W3C maintains a <a href="http://www.w3.org/2004/01/pp-impl/35422/status">public list of any patent  disclosures</a> made in connection with the deliverables of the group; that page also  includes instructions for disclosing a patent. An individual who has  actual knowledge of a patent which the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>.</p></div></div><div class="toc">
+<hr /><h2><a id="contents" name="contents"> </a>Table of Contents</h2><ul class="toc"><li><a href="#intro">Introduction </a><ul class="toc"><li><a href="#N10223">Components of Web Accessibility</a></li><li><a href="#intro-related-docs">
+          WCAG 2.0 Supporting Documents
+        </a></li><li><a href="#organization-of-wcag2">Organization of the WCAG 2.0 Document</a></li><li><a href="#new-terms">Important New Terms Used in WCAG 2.0</a></li></ul></li><li><a href="#guidelines">WCAG 2.0 Guidelines</a><ul class="toc"><li><a href="#perceivable">1 Perceivable</a><ul class="toc"><li>1.1 <a href="#text-equiv">
+            Provide text alternatives for any non-text content so that it can be changed into other forms people need such as large print, braille, speech, symbols or simpler language
+          </a></li><li>1.2 <a href="#media-equiv">
+            Provide synchronized alternatives for multimedia
+          </a></li><li>1.3 <a href="#content-structure-separation">
+            Create content that can be presented in different ways (for example spoken aloud, simpler layout, etc.) without losing information or structure
+              
+            
+          </a></li><li>1.4 <a href="#visual-audio-contrast">
+            Make it easier for people with disabilities to see and hear content including separating foreground from background
+          </a></li></ul></li><li><a href="#operable">2 Operable</a><ul class="toc"><li>2.1 <a href="#keyboard-operation">
+            Make all functionality available from a keyboard
+          </a></li><li>2.2 <a href="#time-limits">
+            Provide users with disabilities enough time to read and use content
+          </a></li><li>2.3 <a href="#seizure">
+            Do not create content that is known to cause seizures
+          </a></li><li>2.4 <a href="#navigation-mechanisms">
+            Provide ways to help users with disabilities navigate, find content and determine where they are
+          </a></li></ul></li><li><a href="#understandable">3 Understandable</a><ul class="toc"><li>3.1 <a href="#meaning">
+            Make text content readable and understandable
+          </a></li><li>3.2 <a href="#consistent-behavior">
+            Make Web pages appear and operate in predictable ways
+          </a></li><li>3.3 <a href="#minimize-error">
+            Help users avoid and correct mistakes
+             that do occur
+          </a></li></ul></li><li><a href="#robust">4 Robust</a><ul class="toc"><li>4.1 <a href="#ensure-compat">
+            Maximize compatibility with current and future user agents, including assistive technologies
+          </a></li></ul></li></ul></li><li><a href="#conformance">Conformance</a><ul class="toc"><li><a href="#accessibility-support"> Accessibility Support of Web Technologies</a></li><li><a href="#conformance-reqs">Conformance Requirements</a></li><li><a href="#conformance-claims">Conformance claims 
+        </a></li></ul></li></ul>
+<h3><a id="appendices" name="appendices"> </a>Appendices</h3><ul class="toc"><li>Appendix A: <a href="#glossary">Glossary</a> (Normative)</li> <li>Appendix B: <a href="#acknowledgments">Acknowledgments</a></li> <li>Appendix C: <a href="#conformance-referencing">How to refer to WCAG 2.0 from other documents</a></li> <li>Appendix D: <a href="#references">References</a></li> </ul></div><hr /><div class="front"><div class="div1">
+<h2><a id="intro" name="intro"> </a>Introduction </h2><p>This section is <a title="definition: informative" href="#informativedef" class="termref">informative</a>. </p><p>This is a Working Draft of the Web Content Accessibility Guidelines (WCAG) version 2.0. WCAG is developed through the W3C process in cooperation with individuals and organizations around the world, with a goal of providing a single shared standard for Web accessibility that meets the needs of individuals, organizations, and governments internationally. </p><p>WCAG 2.0 builds upon the work of WCAG 1.0 <a href="#WCAG10">[WCAG10]</a> with provisions that are more testable and that extend to a broader range of technologies including many that are new and evolving.  WCAG 2.0 has been created to be technology independent.  That is, the guidelines and success criteria in WCAG 2.0 can be applied across a wide range of existing and emerging Web technologies. Rather than specifying what technologies to use, WCAG 2.0 lays out general guidelines for using technologies along with specific testable success criteria for guiding and evaluating the use of the technologies. </p><p>
+        
+        <span>WCAG 2.0 provides</span> requirements for making <a title="definition: content (Web content)" href="#contentdef" class="termref">Web content</a>
+        <span>more</span> accessible to a wide range of people with disabilities, including blindness and low vision, deafness and hearing loss, learning <span>disabilities</span>, cognitive limitations, limited movement, speech <span>disabilities</span>, and others. <span>Because many people develop vision, hearing, <span>cognitive</span> or motion impairments as they age,</span> following these guidelines will make your Web content more usable by many  older users. 
+        <span>However, even content that completely conforms to WCAG may not be fully accessible to every person with a disability. </span>
+        
+      </p><p>WCAG 2.0 covers a wide range of recommendations for making Web content more accessible. The guidelines do not include standard usability recommendations except where they have 
+        <span>a significantly greater impact on people with disabilities than on other people. 
+        </span>
+      </p><p>Although some of the accessibility issues of people with cognitive, language, and learning disabilities are addressed by WCAG 2.0, either directly or through assistive technologies, the WCAG 2.0 guidelines do not address many areas of need for people with these disabilities. There is a need for more research and development in this important area.
+      </p><div class="div2"> <h3><a id="N10223" name="N10223"> </a>Components of Web Accessibility</h3><p>It is important to note that Web content is just one aspect of accessibility.  Just as important as accessible Web content is the availability of accessible browsers (and other user agents) that can adapt and present the content in the best form for the user.  Accessible Web technologies and accessible tools for creating Web content are also important.   For an overview of the different components of accessibility and how they work together see:</p><ul><li><p>
+              <strong>
+                <a href="http://www.w3.org/WAI/intro/components">Essential Components of Web Accessibility</a>
+              </strong> - Explains how the Web Content Accessibility Guidelines work with the other WAI guidelines  and with assistive technologies to provide access to the Web by people with disabilities.</p></li><li><p>
+              <strong>
+                <a href="http://www.w3.org/WAI/intro/uaag.php">User Agent Accessibility Guidelines (UAAG) Overview</a>
+              </strong> - Introduces guidelines on the design of accessible Browsers and other user agents.</p></li><li><p>
+              <strong>
+                <a href="http://www.w3.org/WAI/intro/atag.php">Authoring Tool Accessibility Guidelines (ATAG) Overview</a>
+              </strong> - Introduces guidelines on the design of authoring and evaluation tools.</p></li></ul></div><div class="div2"> <h3><a id="intro-related-docs" name="intro-related-docs"> </a>
+          <span>WCAG 2.0 Supporting Documents</span>
+        </h3><p>WCAG 2.0 itself is a technical standard designed primarily for Web developers and designers, authoring tool developers, evaluation tool developers, and others who need a technical standard for Web accessibility. Due to the technical and technology-independent nature of the guidelines and success criteria, and because they say what needs to be done rather than how to do it, it may sometimes be difficult to use the guidelines or success criteria for specific advice for a particular technology (e.g. HTML, XHTML, JavaScript etc).  </p><p>In order to provide more concrete examples as well as specific techniques for meeting each of the success criteria, three support documents or collections have been developed by the working group to accompany the guidelines. These documents provide very specific guidance that can be used directly to meet the WCAG 2.0 guidelines. </p><p>The overall set of documents from the working group consists of:
+</p><ol class="enumar"><li><p>
+              <strong>The WCAG 2.0 Guidelines</strong> - (this document) - This document provides the guidelines, success criteria, conformance specifications as well as the definitions of terms used in the guidelines.  The actual guidelines (including success criteria) are only 9 pages long. </p></li><li><p>
+              <strong>
+                <a href="/WAI/WCAG20/quickref/">WCAG 2.0 Quick Reference</a>
+              </strong> -  A concise summary that includes all of the WCAG 2.0 guidelines and success criteria (from above) along with a listing of different techniques that are sufficient to meet every success criterion.  It also optionally lists advisory techniques and provides links to further information on each guideline and success criterion (in Understanding WCAG 2.0).  Web authors may find this the most useful document when trying to make accessible Web sites and it is a good place to start if looking for practical guidance on all of the WCAG 2.0 requirements and specific techniques to meet them.
+            </p></li><li><p>
+              <strong>
+                <a href="/TR/UNDERSTANDING-WCAG20/">Understanding WCAG 2.0</a>
+              </strong> - A collection of  short (two to four page) "Understanding" documents for each section, guideline and success criterion in WCAG 2.0. Each of these short documents focuses on one guideline or success criterion.  It provides the intent of the success criterion, definitions of key words, people who benefit, how to meet the success criteria, links to sufficient techniques and additional advisory techniques and examples.   This collection is equivalent to an applications manual or book on WCAG 2.0.  </p><div class="revnote"><p><strong>Editorial Note</strong>: For this release, the collection is only available as a single long document.  With the next release, the individual short documents will be available as well as the full collection as one large document if desired.</p></div></li><li><p>
+              <strong>
+                <a href="/TR/WCAG20-TECHS/">Techniques and Failures for WCAG 2.0</a>
+              </strong> - A collection of documents each detailing one of the techniques (or known common failures) that have been documented so far.  The techniques collection is continually expanding, with new techniques being added as they are completed. Due to the design of WCAG 2.0, the techniques collection can continue to grow even after the guidelines are released. The "Quick Reference" and "Understanding" documents tie the guidelines to the new techniques as they are created. Each technique document provides an overview of a single technique, notes about user agent (including assistive technology) support, examples (sometimes including code) and a test methodology for sufficient techniques (advisory techniques do not all have tests).  </p><div class="revnote"><p><strong>Editorial Note</strong>: For this release, the Techniques collection is also only available as a single long document.  With the next release, the individual technique documents will be available as well as the full collection as one large document if desired.</p></div></li></ol><div class="div3"><h4><a id="additional-resources" name="additional-resources"> </a>Additional Resource Documents on WCAG 2.0 and Web Accessibility</h4><p>In addition to WCAG and its primary reference documents prepared by the WCAG Working group, there are a number of additional resource documents available on WCAG 2.0 and its relationship to Web accessibility. This set of documents will continue to grow even after the WCAG 2.0 is released.  Documents available at the time of this document's release include:</p><ul><li><p>
+                <strong>
+                  <a href="http://www.w3.org/WAI/intro/wcag20">Overview of Web Content Accessibility Guidelines (WCAG) 2.0 Documents</a>
+                </strong> -  Provides an overview of WCAG 2.0 and its various informative support documents</p></li><li><p>
+                <strong>
+                  <a href="http://www.w3.org/WAI/WCAG20/wcag2faq.html">WCAG 2 FAQ</a>
+                </strong> - Provides key information on the most commonly asked questions around WCAG 2.0.</p></li><li><p>
+                <strong>
+                  <a href="http://www.w3.org/WAI/gettingstarted/">WAI Resources on Introducing Web Accessibility</a>
+                </strong> - Provides basic information for people who are new to Web accessibility.
+              </p></li></ul><p>Other documents under development include:</p><ul><li><p>
+                <strong>Transitioning from WCAG 1.0 to 2.0</strong> - Information to facilitate transitioning from use of WCAG 1.0 to WCAG 2.0.</p></li><li><p>
+                <strong>Application Notes</strong> - Provides detailed application information in different areas such as "Designing Accessible Web Forms," or "Creating Basic HTML Web Pages that are Accessible." </p></li></ul></div></div><div class="div2"> <h3><a id="organization-of-wcag2" name="organization-of-wcag2"> </a>Organization of the WCAG 2.0 Document</h3><div class="div3"><h4><a id="overview-design-principles" name="overview-design-principles"> </a>The Four Principles</h4><p>The guidelines and success criteria are organized around the following four principles. These four principles lay the foundation necessary for anyone to access and use Web content. Anyone who wants to use the Web must have content that is:</p><ol class="enumar"><li><p>
+                <strong>Perceivable</strong> - Information and user interface components must be perceivable by users;</p></li><li><p>
+                <strong>Operable</strong> - User interface components must be operable by users;</p></li><li><p>
+                <strong>Understandable</strong> - Information and operation of user interface must be understandable by users;</p></li><li><p>
+                <strong>Robust</strong> - Content must be robust enough that it can be interpreted reliably by a wide variety of user agents, including assistive technologies.</p></li></ol></div><div class="div3"><h4><a id="overview-guidelines" name="overview-guidelines"> </a>The Guidelines</h4><p>Under each principle there is a list of guidelines that address the principle. There are a total of 12 guidelines. A convenient list of just the guidelines can be found in the <a href="#contents">table of contents</a>. </p></div><div class="div3"><h4><a id="overview-sc" name="overview-sc"> </a>Success Criteria</h4><p>Under each guideline, there are success criteria that describe specifically what must be achieved in order to <a title="definition: conformance" href="#conformancedef" class="termref">conform</a> to this standard. They are similar to the "checkpoints" in WCAG 1.0. Each success criterion is written as a statement that will be either true or false when specific Web content is tested against it.</p><p>All WCAG 2.0 success criteria are written to be testable. While some can be tested by computer programs, others require human testers for part or all of the test. The same results
+should be obtained with a high level of confidence when people who understand how people with different types of disabilities use the Web test the same content. </p><p>Each success criterion for a guideline has a link to the section of the Quick Reference document that provides:</p><ul><li><p>sufficient techniques for meeting the success criterion,</p></li><li><p>optional advisory techniques, and</p></li><li><p>links to descriptions of the intent of the success criteria, including benefits, and examples.</p></li></ul></div><div class="div3"><h4><a id="overview-levels" name="overview-levels"> </a>Three levels of conformance </h4><p>WCAG 2.0 success criteria are organized into three levels of conformance.</p><ul><li><p>
+                <strong>"A" (single-A) conformance:</strong> all Level A success criteria must be satisfied in order to achieve A (single-A) conformance.</p></li><li><p>
+                <strong>"AA" (double-A) conformance:</strong> all Level A and Level AA success criteria must be satisfied in order to achieve AA (double-A) conformance.</p></li><li><p>
+                <strong>"AAA" (triple-A) conformance:</strong> all Level A, AA, and AAA must be satisfied in order to achieve AAA (triple-A) conformance. </p></li></ul><p>The word "levels" does not mean that some success criteria are more important than others. Each success criterion in WCAG 2.0 is essential to some users, and the levels build upon each other. <span>However, even content that conforms at AAA (triple-A) may not be fully accessible to every person with a disability or combination of disabilities, especially certain types of severe disabilities.
+              
+            </span>
+          </p><ul><li><p>In general, Level A success criteria achieve accessibility by supporting assistive technology while putting the fewest possible limits on presentation. Thus people with a wide range of disabilities using a wide range of assistive technologies, from voice input and eye-tracking devices to screen readers and screen magnifiers, are able to access content in different ways. In other words, Level A success criteria support the ability of both mainstream and specialized user agents to adapt content to formats that meet their users' needs.</p></li><li><p>The success criteria in Level AA provide additional support for assistive technology. At the same time, they also support direct access to content by the many people who use conventional user agents without assistive technology. In general, Level AA success criteria place more limits on visual presentation and other aspects of content than the success criteria in Level A.</p></li><li><p>Level AAA success criteria increase both direct access and access through assistive technology. They place tighter limits on both presentation and content, which means that some types of content may not be able to satisfy this level of conformance.</p></li></ul><p>It is recommended that even if content does not conform at a specific level, that it conform to the extent possible. </p></div></div><div class="div2"> <h3><a id="new-terms" name="new-terms"> </a>Important New Terms Used in WCAG 2.0</h3><p>WCAG 2.0 includes several important new terms. <span>In some cases, these terms are just clarifications of concepts that have been in use but have not been clearly defined in the past.  In other cases, they are terms that match new concepts that have been developed to cope with the new technologies that are continually emerging and with the accessibility issues and strategies that are emerging to address them.</span>
+          
+        </p><dl><dt class="label">Sufficient Techniques</dt><dd><p>For each success criterion, there is a list of techniques deemed by the Working Group to be sufficient to meet the requirement. For each sufficient technique, there is a test to determine whether the technique has been successfully implemented. If the test(s) for a "sufficient" technique (or combination of techniques) are passed, then that success criterion has been <span>satisfied</span>. </p><p>Passing all tests for all sufficient techniques is not necessary. Most success criteria have multiple "sufficient techniques" listed.  Any of the listed "sufficient techniques" can be used to meet the success criterion. </p><p>Note that it is not necessary to meet a success criterion using one of the sufficient techniques that have been documented by the WCAG working group. There may be other techniques which are not documented by the working group that would also meet the success criterion. The working group went through the effort to document these "sufficient techniques" in order to make it easy for authors to identify techniques that meet each success criterion and to have confidence (and evidence) that the techniques meet the success criterion.  When using other externally-provided techniques to meet WCAG 2.0 requirements, it is important that they be created by individuals or organizations who are knowledgeable about the requirements of WCAG 2.0 and the needs of people with disabilities.  The working group will continue to add new "sufficient techniques" as they are identified, developed, or made effective by advances in user agents including assistive technologies.</p></dd><dt class="label">Advisory Techniques</dt><dd><p>In addition to the sufficient techniques, there are a number of techniques that may enhance accessibility that did not qualify as sufficient techniques because they are not testable, are not sufficient to meet the full requirements of the success criteria, and/or are good and effective techniques in some circumstances but not effective (and therefore sufficient) in others.   These are listed as "Advisory Techniques."  Authors are encouraged to use these techniques where appropriate. Although using them does not affect conformance, it can enhance accessibility for some users. Many of the advisory techniques are particularly helpful for people with cognitive, language, and learning disabilities, and use of these techniques will improve the accessibility of the content to people with these disabilities.</p></dd><dt class="label">Web Page</dt><dd><p>While not an entirely new term, it is important to note that, in this standard, the term "Web page" includes much more than static HTML pages.  It also includes the increasingly dynamic Web pages that are emerging on the Web, including "pages" that can present entire virtual interactive communities.  Technically a Web page, as defined in the glossary, is "a resource that is referenced by a URI and is not embedded in another resource, plus any other resources that are used in the rendering or intended to be rendered together with it."  What this means is that a Web page is whatever you find at the end of a Web address that you visit.  It includes Web applications, Webcasts, multimedia objects and other types of interactive content to which the word "page" may not typically apply. It is in this evolved sense of the concept that the term is used in WCAG 2.0. </p><p>For example, the term "Web page" would include a movie-like interactive shopping environment where the user visually moves about a store dragging products off of the shelves around them into a visual shopping cart in front of them where clicking on a product causes it to be demonstrated with a specification sheet alongside.</p></dd><dt class="label">Programmatically Determined</dt><dd><p>Several success criteria require that content (or certain aspects of content) can be "programmatically determined." This means that the content is delivered in such a way that user agents, including assistive technologies, can access the information.  A critical element in having anything be "programmatically determined" is that assistive technologies are able to retrieve and use the information.  This lets <a title="definition: user agent" href="#useragentdef" class="termref">user agents</a> and <a title="definition: Assistive technology (as used in this document 732&#10;            )" href="#atdef" class="termref">assistive technologies</a> transform the content and present it to the user in different sensory modalities (e.g. vision, hearing) or styles of presentation. If assistive technologies cannot do this, then the information can not be said to be programmatically determined.  </p><p>The term was created in order to allow the working group to clearly identify those places where information had to be accessible to assistive technologies (and other user agents acting as accessibility aids) without specifying exactly how this needed to be done.  This is important because of the continually changing nature of the technologies.   It is important neither to declare things as accessible because they might be in the future (when they aren't now) nor to declare things as inaccessible in a permanent way when they may very well become accessible in the future.  </p><p>The use of the term allows the guidelines to identify what needs to be "programmatically determined"  in order to meet the guidelines, and then have separate, updateable documents (the Quick Reference, Understanding, and  Technique documents) list those techniques and technologies that meet the requirements over time. </p></dd><dt class="label">Accessibility Supported</dt><dd><p>In order for content created with Web technologies (such as HTML, CSS, PDF, GIF, MPEG, Flash etc.) to be accessible to people with different types of disabilities, it is essential that the technologies work with assistive technologies and the accessibility features of browsers and other user agents.  In order for something to meet a success criterion that requires it to be  "programmatically determined" for example, it would need to be implemented using a technology that has assistive technology support.  </p><p>
+                <strong>"Accessibility supported" means supported by users' assistive technologies as well as the accessibility features in browsers and other user agents. </strong>
+              </p><p>Authors who don't know which technologies <span>or which aspects and features of a technology</span> have support from assistive technologies should  consult documented lists of technologies that are known to have accessibility support.  Such lists can make it easier than it is today for an author to identify technologies or features of different technologies that are supported by assistive technologies and can be used to meet the success criteria that require assistive technology support (i.e. require that content can be programmatically determined.) </p><div class="revnote"><p><strong>Editorial Note</strong>: The W3C WAI will be compiling existing information on its technologies.  It is expected that other organizations will compile such information for their technologies.  There will undoubtedly be others who create documented lists as well.</p></div><div class="revnote"><p><strong>Editorial Note</strong>:  The Baseline concept has been replaced by the "accessibility support" of Web technologies and "Documented lists of Web technologies that have accessibility support."  </p></div><div class="note"><p class="prefix">Note:  The requirements for "accessibility support" of Web technologies are provided in the conformance section of these guidelines (See also <a href="#conformance">Conformance</a>.)</p></div><p>For more information, see <a href="http://www.w3.org/TR/2007/WD-UNDERSTANDING-WCAG20-20070517/Overview.html#uc-accessibility-support-head">Understanding accessibility support</a> in Understanding WCAG 2.0. </p></dd></dl></div></div></div><div class="body"><div class="div1">
+<h2><a id="guidelines" name="guidelines"> </a>WCAG 2.0 Guidelines</h2><p>This section is <a title="definition: normative" href="#normativedef" class="termref">normative</a>.</p><div class="div2"> <h2 class="principle"><a id="perceivable" name="perceivable"> </a>
+          <span>Principle 1: Perceivable - Information and user interface components must be perceivable by users
+          </span>
+        </h2><div class="div3"><h3 class="guideline"><a id="text-equiv" name="text-equiv"> </a> 	Guideline 1.1 
+            <span>Provide text alternatives for any non-text content so that it can be changed into other forms people need such as large print, braille, speech, symbols or simpler language</span>
+           <a class="HTMlink" href="/TR/UNDERSTANDING-WCAG20/Overview.html#text-equiv">Understanding Guideline 1.1</a></h3><div class="req"><div id="text-equiv-all" class="sc"><p class="sctxt"><strong class="sc-handle">1.1.1 Non-text Content:</strong> All <a title="definition: non-text content" href="#non-text-contentdef" class="termref">non-text content</a> has a <a title="definition: text alternative" href="#text-altdef" class="termref">text alternative</a> that presents equivalent information, except for the situations listed below. 
+                
+                
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#text-equiv-all">How to meet 1.1.1</a></p><ul><li><p>
+                    <strong class="sc-handle">Controls-Input: </strong> If non-text content is a control or accepts user input, then it has a <a title="definition: name" href="#namedef" class="termref">name</a> that describes its purpose. (See also <a href="#ensure-compat">Guideline 4.1</a>.)
+                  </p></li><li><p>
+                    <strong class="sc-handle">Media, Test, Sensory: </strong>If non-text content is <a title="definition: multimedia" href="#multimediadef" class="termref">multimedia</a>
+                    <span>,</span>
+                    <a title="definition: live audio-only" href="#live-audio-onlydef" class="termref">live audio-only</a> or <a title="definition: live video-only" href="#live-video-onlydef" class="termref">live video-only</a> content<span>,</span> a <span>test or exercise that <a title="definition: must be presented in non-text format" href="#must-nontextdef" class="termref">must be presented in non-text format</a>
+                      
+                    </span>
+                    <span>,</span> or primarily intended to create a <a title="definition: specific sensory experience" href="#sensoryexpdef" class="termref">specific sensory experience</a>
+                    <span>,</span> then text alternatives at least identify the non-text content with a descriptive text <a title="definition: label" href="#labeldef" class="termref">label</a>.  (For multimedia, see also <a href="#media-equiv">Guideline 1.2</a>.) 
+                  </p></li><li><p>
+                    <strong class="sc-handle">
+                      <a title="definition: CAPTCHA" href="#CAPTCHAdef" class="termref">CAPTCHA</a>: </strong>If the purpose of non-text content is to confirm that content is being accessed by a person rather than a computer, <span>then
+                      
+                    </span>
+                    <span>text alternatives that identify and describe the purpose of the non-text content are provided and alternative</span> forms <span>in different modalities are</span> provided to accommodate <span>different 
+                      
+                    </span> disabilities.</p></li><li><p>
+                    <strong class="sc-handle">Decoration, Formatting, Invisible: </strong>If non-text content is <a title="definition: pure decoration" href="#puredecdef" class="termref">pure decoration</a>, or used only for visual formatting, or if it is not presented to users, <span>then
+                    </span> it is implemented such that it can be ignored by <a title="definition: Assistive technology (as used in this document 732&#10;            )" href="#atdef" class="termref">assistive technology</a>.</p></li></ul></div></div></div><div class="div3"><h3 class="guideline"><a id="media-equiv" name="media-equiv"> </a> 	Guideline 1.2 
+            <span>Provide synchronized alternatives for multimedia</span>
+           <a class="HTMlink" href="/TR/UNDERSTANDING-WCAG20/Overview.html#media-equiv">Understanding Guideline 1.2</a></h3><div class="req"><div id="media-equiv-captions" class="sc"><p class="sctxt"><strong class="sc-handle">1.2.1 Captions (Prerecorded):</strong> 
+                <a title="definition: captions" href="#captionsdef" class="termref">Captions</a> are provided for prerecorded <a title="definition: multimedia" href="#multimediadef" class="termref">multimedia</a>,
+                <span>except for <a title="definition: multimedia alternatives to text" href="#multimedia-alt-textdef" class="termref">multimedia alternatives to text</a> that are clearly labeled as such.
+                </span>
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#media-equiv-captions">How to meet 1.2.1</a></p></div><div id="media-equiv-audio-desc" class="sc"><p class="sctxt"><strong class="sc-handle">1.2.2 Audio Description or Full Text Alternative:</strong> 
+                <a title="definition: audio description" href="#audiodescdef" class="termref">Audio description</a> of video, or a <a title="definition: &#10;            full text alternative for multimedia including any interaction 810&#10;            &#10;          " href="#fullmultaltdef" class="termref">
+                  <span>full text alternative for multimedia including any interaction</span>
+                </a>, is provided for prerecorded <a title="definition: multimedia" href="#multimediadef" class="termref">multimedia</a>.
+							 
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#media-equiv-audio-desc">How to meet 1.2.2</a></p><div class="note"><p class="prefix">Note: 
+                  <span>For 1.2.2, 1.2.4, and 1.2.7, if all of the information in the video track is already provided in the audio track, no audio description is necessary. 
+                  </span>
+                </p></div></div></div><div class="bp"><div id="media-equiv-real-time-captions" class="sc"><p class="sctxt"><strong class="sc-handle">1.2.3 Captions (Live):</strong> 
+                <a title="definition: captions" href="#captionsdef" class="termref">Captions</a> are provided for <em>live</em>
+                <a title="definition: multimedia" href="#multimediadef" class="termref">multimedia</a>. 
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#media-equiv-real-time-captions">How to meet 1.2.3</a></p><div class="note"><p class="prefix">Note: 
+                  <span>If multimedia is completely computer generated, it is not live and is subject to the requirements for pre-recorded multimedia in WCAG 2.0. 
+                  </span>
+                </p></div></div><div id="media-equiv-audio-desc-only" class="sc"><p class="sctxt"><strong class="sc-handle">1.2.4 Audio Description:</strong> 
+                <a title="definition: audio description" href="#audiodescdef" class="termref">Audio description</a> of video is provided for prerecorded <a title="definition: multimedia" href="#multimediadef" class="termref">multimedia</a>.
+							 
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#media-equiv-audio-desc-only">How to meet 1.2.4</a></p></div></div><div class="additional"><div id="media-equiv-sign" class="sc"><p class="sctxt"><strong class="sc-handle">1.2.5 Sign Language:</strong> 
+                <a title="definition: sign language interpretation" href="#sign-languageinterpdef" class="termref">Sign language interpretation</a> is provided for <a title="definition: multimedia" href="#multimediadef" class="termref">multimedia</a>.
+							 
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#media-equiv-sign">How to meet 1.2.5</a></p></div><div id="media-equiv-extended-ad" class="sc"><p class="sctxt"><strong class="sc-handle">1.2.6 Audio Description (Extended):</strong> 
+                <a title="definition: extended audio description" href="#extended-addef" class="termref">Extended audio description</a> of video is provided for prerecorded <a title="definition: multimedia" href="#multimediadef" class="termref">multimedia</a>. 
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#media-equiv-extended-ad">How to meet 1.2.6</a></p></div><div id="media-equiv-text-doc" class="sc"><p class="sctxt"><strong class="sc-handle">1.2.7 Full Text Alternative:</strong> 
+                A <a title="definition: &#10;            full text alternative for multimedia including any interaction 810&#10;            &#10;          " href="#fullmultaltdef" class="termref">
+                  <span>full text alternative for multimedia including any interaction</span>
+                </a> is provided <span>for all prerecorded multimedia
+                </span>,
+                <span>except for <a title="definition: multimedia alternatives to text" href="#multimedia-alt-textdef" class="termref">multimedia alternatives to text</a> that are clearly labeled as such
+                </span>. 
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#media-equiv-text-doc">How to meet 1.2.7</a></p></div></div></div><div class="div3"><h3 class="guideline"><a id="content-structure-separation" name="content-structure-separation"> </a> 	Guideline 1.3 
+            <span>Create content that can be presented in different ways (for example spoken aloud, simpler layout, etc.) without losing information or structure
+              
+            </span>
+           <a class="HTMlink" href="/TR/UNDERSTANDING-WCAG20/Overview.html#content-structure-separation">Understanding Guideline 1.3</a></h3><div class="req"><div id="content-structure-separation-programmatic" class="sc"><p class="sctxt"><strong class="sc-handle">1.3.1 Info and Relationships:</strong> Information and <a title="definition: relationships" href="#relationshipsdef" class="termref">relationships</a> conveyed through <a title="definition: presentation" href="#presentationdef" class="termref">presentation</a> can be <a title="definition: programmatically determined" href="#programmaticallydetermineddef" class="termref">programmatically determined</a>
+                <span>or are available in text
+                </span>, and notification of changes to these is available to <a title="definition: user agent" href="#useragentdef" class="termref">user agents</a>, including <a title="definition: Assistive technology (as used in this document 732&#10;            )" href="#atdef" class="termref">assistive technologies</a>.   
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#content-structure-separation-programmatic">How to meet 1.3.1</a></p></div><div id="content-structure-separation-sequence" class="sc"><p class="sctxt"><strong class="sc-handle">1.3.2 Meaningful Sequence:</strong> 
+                <span>When the sequence in which content is presented affects its meaning, a correct reading sequence</span> can be <a title="definition: programmatically determined" href="#programmaticallydetermineddef" class="termref">programmatically determined</a>
+                <span>and sequential navigation of interactive components is consistent with that sequence</span>. 
+                
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#content-structure-separation-sequence">How to meet 1.3.2</a></p></div><div id="content-structure-separation-understanding" class="sc"><p class="sctxt"><strong class="sc-handle">1.3.3 Size, Shape, Location:</strong> 
+                
+                <span>Instructions provided for understanding and operating content do</span> not rely on shape, size, visual location, or orientation of components.
+                
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#content-structure-separation-understanding">How to meet 1.3.3</a></p></div></div></div><div class="div3"><h3 class="guideline"><a id="visual-audio-contrast" name="visual-audio-contrast"> </a> 	Guideline 1.4 
+            <span>Make it easier for people with disabilities to see and hear content including separating foreground from background</span>
+           <a class="HTMlink" href="/TR/UNDERSTANDING-WCAG20/Overview.html#visual-audio-contrast">Understanding Guideline 1.4</a></h3><div class="req"><div id="visual-audio-contrast-without-color" class="sc"><p class="sctxt"><strong class="sc-handle">1.4.1 Use of Color:</strong> Any <a title="definition: information that is conveyed by color differences&#10;          " href="#informationbycolordef" class="termref">information that is conveyed by color <span>differences</span>
+                </a> is also <span>simultaneously</span> visually evident without 
+                <span>the color differences</span>.
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#visual-audio-contrast-without-color">How to meet 1.4.1</a></p></div><div id="visual-audio-contrast-dis-audio" class="sc"><p class="sctxt"><strong class="sc-handle">1.4.2 Audio Turnoff:</strong> 
+                <span>If any audio plays automatically for more than 3 seconds, <span>either a <a title="definition: mechanism" href="#mechanismdef" class="termref">mechanism</a> is available to pause or stop the audio, or a mechanism is available to control audio volume which can be set independently of the system volume.</span>
+                  
+                  
+                  
+                  
+                  
+                </span>
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#visual-audio-contrast-dis-audio">How to meet 1.4.2</a></p></div></div><div class="bp"><div id="visual-audio-contrast-contrast" class="sc"><p class="sctxt"><strong class="sc-handle">1.4.3 Contrast (Minimum):</strong> 
+                <a title="definition: text" href="#textdef" class="termref">Text</a> (and images of text) have a <a title="definition: contrast ratio" href="#contrast-ratiodef" class="termref">contrast ratio</a> of at least 5:1, except if the text is <a title="definition: pure decoration" href="#puredecdef" class="termref">pure decoration</a>. <a title="definition: larger scale (text)" href="#larger-scaledef" class="termref">Larger-scale</a> text or images of text can have a contrast ratio of 3:1.
+               
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#visual-audio-contrast-contrast">How to meet 1.4.3</a></p></div><div id="visual-audio-contrast-scale" class="sc"><p class="sctxt"><strong class="sc-handle">1.4.4 Resize text:</strong> Visually rendered text can be resized without <a title="definition: Assistive technology (as used in this document 732&#10;            )" href="#atdef" class="termref">assistive technology</a> up to 200 percent and down to 50 percent without loss of content or functionality. 
+               
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#visual-audio-contrast-scale">How to meet 1.4.4</a></p></div></div><div class="additional"><div id="visual-audio-contrast7" class="sc"><p class="sctxt"><strong class="sc-handle">1.4.5 Contrast (Enhanced):</strong> 
+                <a title="definition: text" href="#textdef" class="termref">Text</a> (and images of text) have a <a title="definition: contrast ratio" href="#contrast-ratiodef" class="termref">contrast ratio</a> of at least 7:1, except if the text is <a title="definition: pure decoration" href="#puredecdef" class="termref">pure decoration</a>. <a title="definition: larger scale (text)" href="#larger-scaledef" class="termref">Larger-scale</a> text or images of text can have a contrast ratio of 5:1.
+               
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#visual-audio-contrast7">How to meet 1.4.5</a></p></div><div id="visual-audio-contrast-noaudio" class="sc"><p class="sctxt"><strong class="sc-handle">1.4.6 Low or No Background Audio:</strong> Audio content <span>that contains speech in the foreground</span> does not contain background sounds, background sounds can be turned off, or background sounds are at least 20 decibels lower than the foreground 
+                <span>speech</span> content, with the exception of occasional sound effects. 
+               
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#visual-audio-contrast-noaudio">How to meet 1.4.6</a></p><div class="note"><p class="prefix">Note: 
+                  
+                  <span>Background sound that meets this requirement will be approximately one quarter as loud as the foreground speech content. 
+                    
+                  </span>
+                </p></div></div><div id="visual-audio-contrast-horiz-scale" class="sc"><p class="sctxt"><strong class="sc-handle">1.4.7 Resize and Wrap:</strong> Visually rendered text can be resized without <a title="definition: Assistive technology (as used in this document 732&#10;            )" href="#atdef" class="termref">assistive technology</a> up to 200 percent and down to 50 percent without loss of content or functionality and in a way that does not require the user to scroll horizontally. 
+               
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#visual-audio-contrast-horiz-scale">How to meet 1.4.7</a></p></div></div></div></div><div class="div2"> <h2 class="principle"><a id="operable" name="operable"> </a>
+          <span>Principle 2: Operable - User interface components must be operable by users 
+          </span>
+        </h2><div class="div3"><h3 class="guideline"><a id="keyboard-operation" name="keyboard-operation"> </a> 	Guideline 2.1 
+            <span>Make all functionality available from a keyboard</span>
+           <a class="HTMlink" href="/TR/UNDERSTANDING-WCAG20/Overview.html#keyboard-operation">Understanding Guideline 2.1</a></h3><div class="req"><div id="keyboard-operation-keyboard-operable" class="sc"><p class="sctxt"><strong class="sc-handle">2.1.1 Keyboard:</strong> All <a title="definition: functionality" href="#functiondef" class="termref">functionality</a> of the content is operable <span>through a <a title="definition: keyboard interface" href="#keybrd-interfacedef" class="termref">keyboard interface</a> without requiring specific timings for individual keystrokes, except where the <span>underlying function</span> requires <span>input that depends on the path of the user's movement and not just the endpoints.</span>
+                  
+                </span>
+                
+                
+                
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#keyboard-operation-keyboard-operable">How to meet 2.1.1</a></p><div class="note"><p class="prefix">Note 1:
+					This exception relates to the underlying function, not the input technique. For example, if using handwriting to enter text, the input technique (handwriting) requires path dependent input but the underlying function (text input) does not.</p><p class="prefix">Note 2:
+					This does not forbid and should not discourage providing mouse input or other input methods in addition to keyboard operation.</p></div></div></div><div class="additional"><div id="keyboard-operation-all-funcs" class="sc"><p class="sctxt"><strong class="sc-handle">2.1.2 Keyboard (No Exception):</strong> All <a title="definition: functionality" href="#functiondef" class="termref">functionality</a> of the content is operable through a <a title="definition: keyboard interface" href="#keybrd-interfacedef" class="termref">keyboard interface</a> without requiring specific timings for individual keystrokes. 
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#keyboard-operation-all-funcs">How to meet 2.1.2</a></p></div></div></div><div class="div3"><h3 class="guideline"><a id="time-limits" name="time-limits"> </a> 	Guideline 2.2 
+            <span>Provide users with disabilities enough time to read and use content</span>
+           <a class="HTMlink" href="/TR/UNDERSTANDING-WCAG20/Overview.html#time-limits">Understanding Guideline 2.2</a></h3><div class="req"><div id="time-limits-required-behaviors" class="sc"><p class="sctxt"><strong class="sc-handle">2.2.1 Timing:</strong> For each <span>time limit</span> that is 
+                <span>set by the content
+                </span>, at least one of the following is true:
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#time-limits-required-behaviors">How to meet 2.2.1</a></p><ul><li><p>
+                    <strong class="sc-handle">Turn off: </strong>the user is allowed to turn off the <span>time limit</span>
+                    <span>before encountering it; or
+                    </span>
+                  </p></li><li><p>
+                    <strong class="sc-handle">Adjust: </strong>the user is allowed to adjust the <span>time limit</span>
+                    <span>before encountering it
+                    </span> over a wide range that is at least ten times the length of the default setting; or</p></li><li><p>
+                    <strong class="sc-handle">Extend: </strong>the user is warned before time expires and given at least 20 seconds to extend the <span>time limit</span> with a simple action (for example, "hit any key"), and the user is allowed to extend the <span>time limit</span> at least ten times; or</p></li><li><p>
+                    <strong class="sc-handle">Real-time Exception: </strong>the <span>time limit</span> is a
+                    <span>required
+                    </span> part of a real-time event (for example, an auction), and no alternative to the <span>time limit</span> is possible; or</p></li><li><p>
+                    <strong class="sc-handle">Essential Exception: </strong>the <span>time limit</span> is part of an <a title="definition: activity where timing is essential" href="#activity-timingdef" class="termref">activity where timing is essential</a> (for example, time-based testing) and time limits can not be extended further without  invalidating the activity.</p></li></ul></div></div><div class="bp"><div id="time-limits-blink" class="sc"><p class="sctxt"><strong class="sc-handle">2.2.2 Blinking:</strong> Content does not <a title="definition: blink" href="#blinksdef" class="termref">blink</a> for more than three seconds, or a method is available to stop all blinking content in the <a title="definition: Web page" href="#webpagedef" class="termref">Web page</a>.
+                
+                
+               
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#time-limits-blink">How to meet 2.2.2</a></p><div class="note"><p class="prefix">Note: For requirements related to flickering or flashing content, refer to <a href="#seizure">Guideline 2.3</a>.</p></div></div><div id="time-limits-pause" class="sc"><p class="sctxt"><strong class="sc-handle">2.2.3 Pausing:</strong> 
+                <span>Moving, blinking, scrolling, or auto-updating information can be <a title="definition: paused" href="#pauseddef" class="termref">paused</a> by the user unless it is part of an <a title="definition: activity where timing is essential" href="#activity-timingdef" class="termref">activity where timing or movement is essential</a>. Moving content that is pure decoration can be stopped by the user.</span>
+                
+                
+               
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#time-limits-pause">How to meet 2.2.3</a></p></div></div><div class="additional"><div id="time-limits-no-exceptions" class="sc"><p class="sctxt"><strong class="sc-handle">2.2.4 Timing:</strong> Timing is not an essential part of the event or activity presented by the content, except for <span>non-interactive <a title="definition: multimedia" href="#multimediadef" class="termref">multimedia</a> and</span>
+                <a title="definition: real-time event" href="#real-time-eventsdef" class="termref">real-time events</a>.
+                
+                
+               
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#time-limits-no-exceptions">How to meet 2.2.4</a></p></div><div id="time-limits-postponed" class="sc"><p class="sctxt"><strong class="sc-handle">2.2.5 Interruptions:</strong> Interruptions, such as updated content, can be postponed or suppressed by the user, except interruptions involving an <a title="definition: emergency" href="#emergencydef" class="termref">emergency</a>. 
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#time-limits-postponed">How to meet 2.2.5</a></p></div><div id="time-limits-server-timeout" class="sc"><p class="sctxt"><strong class="sc-handle">2.2.6 Re-authenticating:</strong> When an authenticated session expires, the user can continue the activity without loss of data after re-authenticating. 
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#time-limits-server-timeout">How to meet 2.2.6</a></p></div></div></div><div class="div3"><h3 class="guideline"><a id="seizure" name="seizure"> </a> 	Guideline 2.3 
+            <span>Do not create content that is known to cause seizures</span>
+           <a class="HTMlink" href="/TR/UNDERSTANDING-WCAG20/Overview.html#seizure">Understanding Guideline 2.3</a></h3><div class="req"><div id="seizure-does-not-violate" class="sc"><p class="sctxt"><strong class="sc-handle">2.3.1 Three Flashes or Below Threshold:</strong> Content does <span>not contain anything that flashes more than three times in any one second period, or the flash is below the <a title="definition: general flash and red flash thresholds" href="#general-thresholddef" class="termref">general flash and red flash thresholds</a>.
+                  
+                </span>
+                
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#seizure-does-not-violate">How to meet 2.3.1</a></p></div></div><div class="additional"><div id="seizure-three-times" class="sc"><p class="sctxt"><strong class="sc-handle">2.3.2 Three Flashes:</strong> 
+                <span>Content does not contain anything that flashes more than three times in any one second period. </span>
+                
+               
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#seizure-three-times">How to meet 2.3.2</a></p></div></div></div><div class="div3"><h3 class="guideline"><a id="navigation-mechanisms" name="navigation-mechanisms"> </a> 	Guideline 2.4 
+            <span>Provide ways to help users with disabilities navigate, find content and determine where they are</span>
+           <a class="HTMlink" href="/TR/UNDERSTANDING-WCAG20/Overview.html#navigation-mechanisms">Understanding Guideline 2.4</a></h3><div class="req"><div id="navigation-mechanisms-skip" class="sc"><p class="sctxt"><strong class="sc-handle">2.4.1 Bypass Blocks:</strong> A mechanism is available to bypass blocks of content that are repeated on multiple <a title="definition: Web page" href="#webpagedef" class="termref">Web pages</a>.  
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#navigation-mechanisms-skip">How to meet 2.4.1</a></p></div><div id="navigation-mechanisms-title" class="sc"><p class="sctxt"><strong class="sc-handle">2.4.2 Page Titled:</strong> 
+                <a title="definition: Web page" href="#webpagedef" class="termref">Web pages</a> have <span>descriptive</span> titles. 
+                
+                
+                
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#navigation-mechanisms-title">How to meet 2.4.2</a></p></div><div id="navigation-mechanisms-focus" class="sc"><p class="sctxt"><strong class="sc-handle">2.4.3 Focus Order:</strong> If a <a title="definition: Web page" href="#webpagedef" class="termref">Web page</a>
+                 can be <a title="definition: navigated sequentially" href="#nav-seqdef" class="termref">navigated sequentially</a>, <span>focusable components receive focus in an order that follows information and relationships conveyed through <a title="definition: presentation" href="#presentationdef" class="termref">presentation</a>.</span>
+                
+                
+                
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#navigation-mechanisms-focus">How to meet 2.4.3</a></p></div><div id="navigation-mechanisms-refs" class="sc"><p class="sctxt"><strong class="sc-handle">2.4.4 Link Purpose (Context):</strong> 
+                
+                <span>The purpose of each link can be determined from the link text and its <a title="definition: programmatically determined link context" href="#pdlinkcontextdef" class="termref">programmatically determined link context</a>.
+                </span>
+                
+                
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#navigation-mechanisms-refs">How to meet 2.4.4</a></p><div class="revnote"><p><strong>Editorial Note</strong>: There is debate about whether pages that fail this success criterion in fact present a problem for assistive technology. The status of this item as a Level A success criterion is therefore "at risk" as a Level A success criterion depending on AT support and relative need for this provision.</p></div></div></div><div class="bp"><div id="navigation-mechanisms-mult-loc" class="sc"><p class="sctxt"><strong class="sc-handle">2.4.5 Multiple Ways:</strong> More than one way is available to locate content within a <a title="definition: set of Web pages" href="#set-of-web-pagesdef" class="termref">set of Web pages</a> where content is not the result of, or a step in, a <a title="definition: process" href="#processdef" class="termref">process</a>.
+                
+               
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#navigation-mechanisms-mult-loc">How to meet 2.4.5</a></p></div><div id="navigation-mechanisms-descriptive" class="sc"><p class="sctxt"><strong class="sc-handle">2.4.6 Labels Descriptive:</strong> 
+                Headings and <a title="definition: label" href="#labeldef" class="termref">labels</a> are descriptive.
+                
+               
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#navigation-mechanisms-descriptive">How to meet 2.4.6</a></p></div></div><div class="additional"><div id="navigation-mechanisms-location" class="sc"><p class="sctxt"><strong class="sc-handle">2.4.7 Location:</strong> Information about the user's location within a <a title="definition: set of Web pages" href="#set-of-web-pagesdef" class="termref">set of Web pages</a> is available. 
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#navigation-mechanisms-location">How to meet 2.4.7</a></p></div><div id="navigation-mechanisms-link" class="sc"><p class="sctxt"><strong class="sc-handle">2.4.8 Link Purpose (Link Text):</strong> The purpose of each link can be 
+                <span>identified</span> from the link text.
+               
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#navigation-mechanisms-link">How to meet 2.4.8</a></p></div><div id="navigation-mechanisms-headings" class="sc"><p class="sctxt"><strong class="sc-handle">2.4.9 Section Headings:</strong> Where content is organized into sections, the sections are indicated with headings. 
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#navigation-mechanisms-headings">How to meet 2.4.9</a></p></div></div></div></div><div class="div2"> <h2 class="principle"><a id="understandable" name="understandable"> </a>
+          <span>Principle 3: Understandable - Information and operation of user interface must be understandable by users
+            
+          </span>
+        </h2><div class="div3"><h3 class="guideline"><a id="meaning" name="meaning"> </a> 	Guideline 3.1 
+            <span>Make text content readable and understandable</span>
+           <a class="HTMlink" href="/TR/UNDERSTANDING-WCAG20/Overview.html#meaning">Understanding Guideline 3.1</a></h3><div class="req"><div id="meaning-doc-lang-id" class="sc"><p class="sctxt"><strong class="sc-handle">3.1.1 Language of Page:</strong> The <span>default</span>
+                <a title="definition: human language" href="#human-langdef" class="termref">human language</a>
+                 of <span>each</span>
+                <a title="definition: Web page" href="#webpagedef" class="termref">Web page</a>
+                <span>within the content</span> can be <a title="definition: programmatically determined" href="#programmaticallydetermineddef" class="termref">programmatically determined</a>. 
+                
+                
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#meaning-doc-lang-id">How to meet 3.1.1</a></p></div></div><div class="bp"><div id="meaning-other-lang-id" class="sc"><p class="sctxt"><strong class="sc-handle">3.1.2 Language of Parts:</strong> The <a title="definition: human language" href="#human-langdef" class="termref">human language</a> of each passage or phrase in the 
+                <span>content</span> can be <a title="definition: programmatically determined" href="#programmaticallydetermineddef" class="termref">programmatically determined</a>.
+                
+               
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#meaning-other-lang-id">How to meet 3.1.2</a></p><div class="note"><p class="prefix">Note: This requirement does not apply to individual words. It also does not apply to proper names, to technical terms or to phrases that have become part of the language of the context in which they are used.
+                  
+                </p></div></div></div><div class="additional"><div id="meaning-idioms" class="sc"><p class="sctxt"><strong class="sc-handle">3.1.3 Unusual Words:</strong> A <a title="definition: mechanism" href="#mechanismdef" class="termref">mechanism</a> is available for identifying specific definitions of words or phrases <a title="definition: used in an unusual or restricted way" href="#unusual-restricteddef" class="termref">used in an unusual or restricted way</a>, including <a title="definition: idiom" href="#idiomsdef" class="termref">idioms</a> and <a title="definition: jargon" href="#jargondef" class="termref">jargon</a>.  
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#meaning-idioms">How to meet 3.1.3</a></p></div><div id="meaning-located" class="sc"><p class="sctxt"><strong class="sc-handle">3.1.4 Abbreviations:</strong> A <a title="definition: mechanism" href="#mechanismdef" class="termref">mechanism</a> for finding the expanded form <span>or meaning</span> of <a title="definition: abbreviation" href="#abbreviationsdef" class="termref">abbreviations</a> is available. 
+               
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#meaning-located">How to meet 3.1.4</a></p></div><div id="meaning-supplements" class="sc"><p class="sctxt"><strong class="sc-handle">3.1.5 Reading Level:</strong> When text requires reading ability more advanced than the <a title="definition: lower secondary education level" href="#lowseceddef" class="termref">lower secondary education level</a>,  <a title="definition: supplemental content" href="#suppcontentdef" class="termref">supplemental content</a>
+                <span>or an <a title="definition: alternate version" href="#alternate-versiondef" class="termref">alternate version</a>
+                </span> is available  that does not require reading ability more advanced than the lower secondary education level. 
+               
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#meaning-supplements">How to meet 3.1.5</a></p></div><div id="meaning-pronunciation" class="sc"><p class="sctxt"><strong class="sc-handle">3.1.6 Pronunciation:</strong> A <a title="definition: mechanism" href="#mechanismdef" class="termref">mechanism</a> is available for identifying specific pronunciation of words where meaning 
+                <span>is ambiguous without knowing the pronunciation</span>.
+               
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#meaning-pronunciation">How to meet 3.1.6</a></p></div></div></div><div class="div3"><h3 class="guideline"><a id="consistent-behavior" name="consistent-behavior"> </a> 	Guideline 3.2 
+            <span>Make Web pages appear and operate in predictable ways</span>
+           <a class="HTMlink" href="/TR/UNDERSTANDING-WCAG20/Overview.html#consistent-behavior">Understanding Guideline 3.2</a></h3><div class="req"><div id="consistent-behavior-receive-focus" class="sc"><p class="sctxt"><strong class="sc-handle">3.2.1 On Focus:</strong> When any component receives focus, it does not 
+                <span>initiate</span> a <a title="definition: changes of context" href="#context-changedef" class="termref">change of context</a>. 
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#consistent-behavior-receive-focus">How to meet 3.2.1</a></p></div><div id="consistent-behavior-unpredictable-change" class="sc"><p class="sctxt"><strong class="sc-handle">3.2.2 On Input:</strong> Changing the setting of any <span>
+                  <a title="definition: user interface component" href="#user-interface-componentdef" class="termref">user interface component</a>
+                </span> does not automatically cause a <a title="definition: changes of context" href="#context-changedef" class="termref">change of context</a>
+                 unless the <span>user has been advised of the behavior before using the component.</span>
+                
+                
+                
+                
+                
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#consistent-behavior-unpredictable-change">How to meet 3.2.2</a></p></div></div><div class="bp"><div id="consistent-behavior-consistent-locations" class="sc"><p class="sctxt"><strong class="sc-handle">3.2.3 Consistent Navigation:</strong> Navigational mechanisms that are repeated on multiple <a title="definition: Web page" href="#webpagedef" class="termref">Web pages</a> within a <a title="definition: set of Web pages" href="#set-of-web-pagesdef" class="termref">set of Web pages</a>
+                 occur in the <a title="definition: same relative order" href="#samerelorderdef" class="termref">same relative order</a> each time they are repeated, unless a change is initiated by the user. 
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#consistent-behavior-consistent-locations">How to meet 3.2.3</a></p></div><div id="consistent-behavior-consistent-functionality" class="sc"><p class="sctxt"><strong class="sc-handle">3.2.4 Consistent Identification:</strong> Components that have the <a title="definition: same functionality " href="#samefunctionalitydef" class="termref">same functionality</a> within a set of <a title="definition: Web page" href="#webpagedef" class="termref">Web pages</a> are identified consistently. 
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#consistent-behavior-consistent-functionality">How to meet 3.2.4</a></p></div></div><div class="additional"><div id="consistent-behavior-no-extreme-changes-context" class="sc"><p class="sctxt"><strong class="sc-handle">3.2.5 Change on Request:</strong> 
+                <a title="definition: changes of context" href="#context-changedef" class="termref">Changes of context</a> are initiated only by user request. 
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#consistent-behavior-no-extreme-changes-context">How to meet 3.2.5</a></p></div></div></div><div class="div3"><h3 class="guideline"><a id="minimize-error" name="minimize-error"> </a> 	Guideline 3.3 
+            <span class="chg">Help users avoid and correct mistakes</span>
+            
+           <a class="HTMlink" href="/TR/UNDERSTANDING-WCAG20/Overview.html#minimize-error">Understanding Guideline 3.3</a></h3><div class="req"><div id="minimize-error-identified" class="sc"><p class="sctxt"><strong class="sc-handle">3.3.1 Error Identification:</strong> If an <a title="definition: input error" href="#input-errordef" class="termref">input error</a> is <span>automatically</span> detected, <span>the item that is in error </span> is identified and described to the user in text. 
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#minimize-error-identified">How to meet 3.3.1</a></p></div></div><div class="bp"><div id="minimize-error-suggestions" class="sc"><p class="sctxt"><strong class="sc-handle">3.3.2 Error Suggestion:</strong> If an <a title="definition: input error" href="#input-errordef" class="termref">input error</a> is detected and suggestions for correction are known<span>, then the suggestions are provided to the user, unless it would jeopardize the security or purpose of the content.</span>
+                
+               
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#minimize-error-suggestions">How to meet 3.3.2</a></p></div><div id="minimize-error-reversible" class="sc"><p class="sctxt"><strong class="sc-handle">3.3.3 Error Prevention (Legal, Financial, Data):</strong> For forms that cause <a title="definition: &#10;            legal commitments 1471&#10;            &#10;          " href="#legalcommitmentsdef" class="termref">legal <span>commitments</span>
+                </a> or financial transactions to occur, that modify or delete <a title="definition: user-controllable" href="#user-controllabledef" class="termref">
+                  <span>user-controllable</span>
+                </a> data in data storage systems, or that submit test responses, at
+least one of the following is true: 
+                
+               
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#minimize-error-reversible">How to meet 3.3.3</a></p><ol class="enumar"><li><p>
+                    <strong class="sc-handle">Reversible: </strong>
+                    <span>Transactions</span>
+                     are reversible.
+                  </p></li><li><p>
+                    <strong class="sc-handle">Checked: </strong>
+                    <span>Submitted data is checked for</span>
+                    
+                    <a title="definition: input error" href="#input-errordef" class="termref">input errors</a> before going on to the next step in the <a title="definition: process" href="#processdef" class="termref">process</a>.
+                  </p></li><li><p>
+                    <strong class="sc-handle">Confirmed: </strong>
+                    <span>A <a title="definition: mechanism" href="#mechanismdef" class="termref">mechanism</a> is available for reviewing, confirming, and correcting information before finalizing the transaction.</span>
+                    
+                    
+                    
+                  </p></li></ol></div><div id="minimize-error-cues" class="sc"><p class="sctxt"><strong class="sc-handle">3.3.4 Labels or Instructions:</strong> 
+                <a title="definition: label" href="#labeldef" class="termref">Labels</a> or instructions are provided when content requires user input. 
+(Level AA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#minimize-error-cues">How to meet 3.3.4</a></p></div></div><div class="additional"><div id="minimize-error-context-help" class="sc"><p class="sctxt"><strong class="sc-handle">3.3.5 Help:</strong> 
+                <a title="definition: context-sensitive help" href="#context-sensitivehelpdef" class="termref">Context-sensitive help</a> is available. 
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#minimize-error-context-help">How to meet 3.3.5</a></p></div><div id="minimize-error-reversible-all" class="sc"><p class="sctxt"><strong class="sc-handle">3.3.6 Error Prevention (All):</strong> For forms that require the user to submit information, at least one of the following is true:
+               
+(Level AAA)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#minimize-error-reversible-all">How to meet 3.3.6</a></p><ol class="enumar"><li><p>
+                    <strong class="sc-handle">Reversible: </strong>Transactions are reversible.</p></li><li><p>
+                    <strong class="sc-handle">Checked: </strong>Submitted data is checked for <a title="definition: input error" href="#input-errordef" class="termref">input errors</a> before going on to the next step in the <a title="definition: process" href="#processdef" class="termref">process</a>.</p></li><li><p>
+                    <strong class="sc-handle">Confirmed: </strong> A <a title="definition: mechanism" href="#mechanismdef" class="termref">mechanism</a> is available for reviewing, confirming, and correcting information before finalizing the transaction.</p></li></ol></div></div></div></div><div class="div2"> <h2 class="principle"><a id="robust" name="robust"> </a>
+          <span>Principle 4: Robust - Content must be robust enough that it can be interpreted reliably by a wide variety of user agents, including assistive technologies 
+            
+          </span>
+        </h2><div class="div3"><h3 class="guideline"><a id="ensure-compat" name="ensure-compat"> </a> 	Guideline 4.1 
+            <span>Maximize compatibility with current and future user agents, including assistive technologies</span>
+           <a class="HTMlink" href="/TR/UNDERSTANDING-WCAG20/Overview.html#ensure-compat">Understanding Guideline 4.1</a></h3><div class="req"><div id="ensure-compat-parses" class="sc"><p class="sctxt"><strong class="sc-handle">4.1.1 Parsing:</strong> 
+                
+                <span>Content implemented using markup languages has elements with complete start and end tags, except as allowed by their specifications, and are nested according to their specifications.</span>
+                
+                
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#ensure-compat-parses">How to meet 4.1.1</a></p><div class="note"><p class="prefix">Note: Start and end tags that are missing a critical character in their formation, such as a closing angle bracket or a mismatched attribute value quotation mark are not complete.</p></div></div><div id="ensure-compat-rsv" class="sc"><p class="sctxt"><strong class="sc-handle">4.1.2 Name, Role, Value:</strong> For all <a title="definition: user interface component" href="#user-interface-componentdef" class="termref">user interface components</a>, the <a title="definition: name" href="#namedef" class="termref">name</a> and <a title="definition: role" href="#roledef" class="termref">role</a> can be <a title="definition: programmatically determined" href="#programmaticallydetermineddef" class="termref">programmatically determined</a>; <span>states, properties, and</span> values that can be set by the user can be programmatically determined and <a title="definition: programmatically set" href="#programmaticallysetdef" class="termref">programmatically set</a>; and notification of changes to these items is available to <a title="definition: user agent" href="#useragentdef" class="termref">user agents</a>, including <a title="definition: Assistive technology (as used in this document 732&#10;            )" href="#atdef" class="termref">assistive technologies</a>.
+							
+               
+(Level A)      
+       <a class="HTMlink" href="http://www.w3.org/WAI/WCAG20/quickref/20070517/Overview.php#ensure-compat-rsv">How to meet 4.1.2</a></p><div class="note"><p class="prefix">Note: This success criterion is primarily for Web authors who develop or script their own user interface controls. For example, standard HTML controls already meet this provision when used according to specification.</p></div></div></div></div></div></div><div class="div1">
+<h2><a id="conformance" name="conformance"> </a>Conformance</h2><p>This section is <a title="definition: normative" href="#normativedef" class="termref">normative</a>. </p><p>Conformance means that Web content <a title="definition: satisfies a success criterion" href="#satisfiesdef" class="termref">satisfies</a> the success criteria. <span>This conformance section describes conformance, lists the conformance requirements as well as how to make optional conformance claims, and explains the important role of accessibility support of Web technologies.</span>
+      </p><div class="div2"> <h3><a id="accessibility-support" name="accessibility-support"> </a> Accessibility Support of Web Technologies</h3><p>In choosing Web technologies (HTML, scripting, etc.) that will be used when creating content that will meet the WCAG 2.0 success criteria, authors must use technologies that are supported by users' assistive technologies as well as the accessibility features in browsers and other <a title="definition: user agent" href="#useragentdef" class="termref">user agents</a>.  Such technologies are referred to as "<a title="definition: accessibility supported" href="#accessibility-supporteddef" class="termref">accessibility supported</a>." </p><div class="div3"><h4><a id="accessibility-support-lists" name="accessibility-support-lists"> </a>Using public documented lists of technologies that have accessibility support</h4><p>The easiest way to be sure that the technologies and features being used have the necessary AT support is to use technologies from documented lists of Web technologies that are "accessibility supported." (See <a href="http://www.w3.org/TR/2007/WD-UNDERSTANDING-WCAG20-20070517/Overview.html#uc-documented-lists-head">Documented lists of Web technologies with accessibility support</a> in Understanding WCAG 2.0.)</p></div><div class="div3"><h4><a id="accessibility-support-created-lists" name="accessibility-support-created-lists"> </a>Creating your own list of technologies that have accessibility support</h4><p>Authors, companies or others may wish to create and use their own lists of accessibility-supported technologies. </p></div><div class="div3"><h4><a id="accessibility-support-rules" name="accessibility-support-rules"> </a>Rules for Supported Technologies</h4><p>To qualify as an accessibility-supported technology, the following must be true for a technology:</p><ol class="enumar"><li><p>
+                <strong>The Web technology must be supported by users' assistive technology (AT).</strong> This means that <span>either the technology implements and tests accessibility <a title="definition: Application Programming Interface (API)" href="#apidef" class="termref">APIs</a> that are required in order for the users' assistive technology to make the technology accessible, or the technology has been tested for interoperability with users' assistive technology in the <a title="definition: human language" href="#human-langdef" class="termref">human language(s)</a> of the content.</span>
+                
+              </p></li><li><p>
+                <strong>The <span>Web technology must have accessibility-supported</span>
+                  user agents that are available to users.</strong>
+              </p><p>This means that at least one of the following is true: </p><ol class="enumla"><li><p>The technology is supported natively in widely-distributed user agents that are also accessibility supported (such as HTML and CSS); OR </p></li><li><p>The technology is supported in a widely-distributed plug-in that is also accessibility supported; OR </p></li><li><p>The content is available in a closed environment, such as a university or corporate network, where the user agent required by the technology and used by the organization is also accessibility supported; OR </p></li><li><p>The user agent(s) that support the technology are also accessibility supported and available for download or purchase in a way that does not disadvantage people with disabilities.</p></li></ol></li></ol><div class="note"><p class="prefix">Note 1:
+					Web technologies that are not accessibility supported can be used as long as <a href="#cc5">conformance requirement 5 (Accessibility-Supported Technologies)</a> and <a href="#cc6">conformance requirement 6 (Non-Interference)</a> are met. </p><p class="prefix">Note 2:
+					When a Web Technology is "accessibility supported," it does not imply that the entire technology must be supported. Most technologies lack support for at least one feature. When referring to "accessibility support" for a technology, the support for specific aspects, features, and extensions should be cited if the technology as a whole is not accessibility supported. A profile of a technology may be used to give a name to the set of aspects, features, or extensions of a technology that are "accessibility supported."</p><p class="prefix">Note 3:
+					When citing technologies that have multiple versions, the version(s) supported should be specified.
+            </p></div></div></div><div class="div2"> <h3><a id="conformance-reqs" name="conformance-reqs"> </a>Conformance Requirements</h3><p>In order to conform to WCAG 2.0 all of the following conformance <span>requirements</span> must be <span>met</span> for each Web page:</p><div class="div3"><a id="cc1" name="cc1"> </a><p class="sctxt"><strong class="sc-handle">1.) Level A Conformance:</strong> For level A conformance (the minimum level of conformance), the Web page <a title="definition: satisfies a success criterion" href="#satisfiesdef" class="termref">satisfies</a> all the Level A success criteria, or the page satisfies conformance requirement 4. </p></div><div class="div3"><a id="cc2" name="cc2"> </a><p class="sctxt"><strong class="sc-handle">2.) Level AA Conformance:</strong> For level AA conformance, the Web page satisfies all the Level A and Level AA success criteria, or the page satisfies conformance requirement 4.
+           </p></div><div class="div3"><a id="cc3" name="cc3"> </a><p class="sctxt"><strong class="sc-handle">3.) Level AAA Conformance:</strong> For level AAA conformance, the Web page satisfies all the Level A, Level AA and Level AAA success criteria, or the page satisfies conformance requirement 4.
+           </p></div><div class="div3"><a id="cc4" name="cc4"> </a><p class="sctxt"><strong class="sc-handle">4.) Alternate Versions:</strong>  If <span>the</span> Web page does not meet all of the success criteria <span>for a specified</span> level, then a <a title="definition: mechanism" href="#mechanismdef" class="termref">mechanism</a> to obtain an  <a title="definition: alternate version" href="#alternate-versiondef" class="termref">alternate version</a> that meets <span>all of </span>the success criteria can be derived from the nonconforming content or its <acronym title="Uniform Resource Identifier">URI</acronym>, and that mechanism meets all success criteria for the <span>specified level of conformance</span>. The alternate version does not need to be matched page for page with the original (e.g. the alternative to a page may consist of multiple pages). If multiple language versions are available, then conforming versions are required for each language offered. 
+           </p><div class="revnote"><p><strong>Editorial Note</strong>: As currently worded, requirement #4 ensures that a mechanism is available to find a conforming version from any nonconforming version. The working group is concerned that it has not identified enough supported mechanisms to meet the needs and constraints of different technologies or the limitations authors may have in their content or server. <strong>Requirement #4 is therefore "at risk" in its current form</strong>. If there are not sufficient techniques to meet the current language, it would have to change. The two options under consideration if that happens both have disadvantages. The options are:</p><ul><li><p>Fallback option #1: <strong>Requiring an accessible link from the nonconforming content</strong>, which would block use of some current and future technologies if they do not support WCAG conforming links, or </p></li><li><p>Fallback option #2: <strong>Allowing the requirement to be met by a single page with links to the conforming and non-conforming pages, or other techniques that may provide an option to find the conforming version when browsing</strong>, but that would leave the user with no way to find the conforming page after reaching a non-conforming page via search, or a link from a blog, email, article, other page etc. </p></li></ul><p>Further discussion of this topic is available at <a href="http://www.w3.org/WAI/GL/2007/05/alternate-versions.html">Alternate Versions Conformance Requirement</a>. <strong>The working group seeks suggestions for additional sufficient techniques that would allow us to keep the current language as well as comments, input, and thoughts on the two alternatives should we fail to identify enough</strong>.</p></div></div><div class="div3"><a id="cc5" name="cc5"> </a><p class="sctxt"><strong class="sc-handle">5.) Accessibility-Supported Technologies Only:</strong> Only documented accessibility-supported Web technologies are <a title="definition: relied upon (technologies that are)" href="#reliedupondef" class="termref">relied upon</a> to meet success criteria. Any information or functionality that is implemented in technologies that are not accessibility supported must also be available via technologies that are accessibility supported. 
+           </p></div><div class="div3"><a id="cc6" name="cc6"> </a><p class="sctxt"><strong class="sc-handle">6.) Non-Interference:</strong> If Web technologies that are not accessibility supported are used on a page, or accessibility-supported technologies are used in a non-conforming way, then they do not block the ability of the users to access the rest of the page. Specifically: 
+            
+           </p><ol class="enumar"><li><p>
+                <em>No Keyboard Trap: </em>If focus can be moved to technologies that are not accessibility supported using a keyboard interface, then focus can be moved away from that content using only a keyboard interface, and the method for doing so is described before the content is encountered and in a way that meets all Level A success criteria.</p></li><li><p>
+                <em>Three Flashes or Below Threshold: </em>
+                <span>To minimize the risk of seizures due to photosensitivity, content does not contain anything that flashes more than three times in any one second period, or the flash is below the general flash and red flash thresholds (see <a href="http://www.w3.org/TR/2007/WD-WCAG20-20070517/Overview.html#seizure-does-not-violate">Success Criterion 2.3.1</a>).
+                </span>
+              </p></li><li><p>
+                <em>Non support: </em>The content continues to meet the conformance requirements when the (non accessibility-supported) technology is turned on, turned off, or is not supported by a user agent.</p></li></ol></div><div class="div3"><a id="cc7" name="cc7"> </a><p class="sctxt"><strong class="sc-handle">7.) Full pages:</strong> Conformance is for full Web page(s) only, and cannot be achieved if part of a Web page is excluded. 
+           </p></div><div class="div3"><a id="cc8" name="cc8"> </a><p class="sctxt"><strong class="sc-handle">8.) Supplemental Information:</strong> For the purpose of determining conformance, a conforming alternative to part of a page's content is considered part of the page. </p></div><div class="div3"><a id="cc9" name="cc9"> </a><p class="sctxt"><strong class="sc-handle">9.) Complete processes:</strong> If a Web page that is part of a <a title="definition: process" href="#processdef" class="termref">process</a> does not conform at some level, then no conformance claim is made at that level for any Web pages in that process. 
+           </p><div class="example"><p class="prefix">Example: An online store has a series of pages that are used to select and purchase products. All pages in the series from start to finish (checkout) must conform in order to claim conformance for any page that is part of the sequence.</p></div><p>For more information, see <a href="http://www.w3.org/TR/2007/WD-UNDERSTANDING-WCAG20-20070517/Overview.html#uc-conformance-requirements-head">Understanding Conformance Requirements</a>.
+          </p></div></div><div class="div2"> <h3><a id="conformance-claims" name="conformance-claims"> </a>Conformance claims 
+        </h3><p>Conformance claims apply to <a title="definition: Web page" href="#webpagedef" class="termref">Web pages</a>, and sets of Web pages.</p><div class="div3"><h4><a id="conformance-required" name="conformance-required"> </a>Required components of a conformance claim</h4><p>
+            Conformance claims are not required. However, if a conformance claim is made, then the conformance claim <strong>must</strong> include the following information:</p><ol class="enumar"><li><p>The <strong>date</strong> of the claim</p></li><li><p>The <strong>guidelines title, version <span>and URI</span>
+                </strong> "Web Content Accessibility Guidelines 2.0 <span>at {URI of final document}"</span>
+              </p></li><li><p>The <strong>conformance level</strong> satisfied: (Level A, AA or AAA) 
+</p></li><li><p>A <strong>description of the URIs</strong> that the claim is being made for, including whether subdomains are included in the claim. </p></li><li><p>A list of <span>accessibility-supported</span>
+                 technologies<span> that</span>
+                 includes all of the <strong>technologies 
+                  <a title="definition: relied upon (technologies that are)" href="#reliedupondef" class="termref">relied upon</a>
+                </strong>.</p><div class="note"><p class="prefix">Note: When citing technologies that have multiple versions, the version(s) supported must be specified.
+                </p></div></li></ol></div><div class="div3"><h4><a id="conformance-optional" name="conformance-optional"> </a>Optional components of a conformance claim </h4><p>In addition to the required components of a conformance claim above, consider providing additional information to assist users. Recommended additional information includes:</p><ol class="enumar"><li><p>A list of success criteria beyond the level of conformance claimed that have been met. This information should be provided in a form that consumers can use, preferably machine-readable metadata.
+              </p></li><li><p>A list of the specific technologies that are "<em>used but not <a title="definition: relied upon (technologies that are)" href="#reliedupondef" class="termref">relied upon</a>
+                </em>."</p><div class="note"><p class="prefix">Note: If a technology is "<em>used but not relied upon</em>," the content would still meet WCAG 2.0 at the stated conformance level even if that technology is turned off or not supported.</p></div></li><li><p>A list of user agents, including assistive technologies, that the content with which the content has been tested.
+              </p></li><li><p>Information about any additional steps taken that go beyond the success criteria to enhance accessibility.</p></li><li><p>The list of specific technologies that are <a title="definition: relied upon (technologies that are)" href="#reliedupondef" class="termref">relied upon</a>, in machine-readable metadata. 
+              </p></li><li><p>A machine-readable metadata version of the conformance claim.</p></li></ol><div class="note"><p class="prefix">Note 1:
+					If pages can not conform (for example, conformance test pages or example pages) they would not be included in the conformance claim.
+            </p><p class="prefix">Note 2:
+					Refer to <a href="http://www.w3.org/TR/2007/WD-UNDERSTANDING-WCAG20-20070517/Overview.html#uc-239-head">Examples of Conformance Claims</a> in Understanding Conformance for examples.</p></div></div><div class="div3"><h4><a id="conformance-partial" name="conformance-partial"> </a>Statement of partial conformance</h4><p>Sometimes, Web pages are created that will later have additional content added to them. For example, an email program, a blog, an article that allows users to add comments to the bottom, <span>or applications supporting user contributed content</span>. Another example would be a page composed of content aggregated from multiple contributors, such as in portals and news sites. Sometimes, the content from the other sources is automatically inserted into the page over time.</p><p>In both of these cases, it is not possible to know at the time of original posting what the content of the pages will be. Two options are available:</p><ol class="enumar"><li><p>A conformance claim is made based on best knowledge. If a page of this type is monitored and kept conforming (non-conforming content is immediately removed or made conforming) then a conformance claim can be made since, except for error periods, the page conforms. No conformance claim should be made if it is not possible to monitor or correct non-conforming content; OR</p></li><li><p>A "statement of partial conformance" is made. A statement that the page does not conform, but could conform if certain parts were removed can be made. The form of that statement would be, "This page would conform to WCAG 2.0 at level X if the following parts from uncontrolled sources were removed."</p><ol class="enumla"><li><p>The content that is excluded in the statement of partial conformance cannot be content that is under the author's control.</p></li><li><p>The content that is excluded in the statement of partial conformance would be described in terms that users can understand. (e.g. they can't be described as "all parts that we do not have control of" unless they are clearly marked as such.)</p></li></ol></li></ol></div></div></div></div><div class="back"><div class="div1">
+<h2><a id="glossary" name="glossary"> </a>Appendix A: Glossary</h2><p>This section is <a title="definition: normative" href="#normativedef" class="termref">normative</a>. </p><dl><dt class="label"><a id="abbreviationsdef" name="abbreviationsdef"> </a>abbreviation</dt><dd><p>shortened form of a word, phrase, or name</p><div class="note"><p class="prefix">Note: This includes initialisms and acronyms where:</p><ol class="enumar"><li><p>
+                    <strong>initialisms</strong> are shortened forms of a name or phrase made from the initial letters of words or syllables contained in that name or phrase</p><div class="note"><p class="prefix">Note 1:
+					Not defined in all languages. </p></div><div class="example"><p class="prefix">Example 1:
+					SNCF is a French initialism that contains the initial letters of the <span lang="fr" xml:lang="fr">Société Nationale des Chemins de Fer</span>, the French national railroad. </p><p class="prefix">Example 2:
+					ESP is an initialism for extrasensory perception.</p></div></li><li><p>
+                    <strong>acronyms</strong>
+                    <span>are abbreviated forms made from the initial letters or parts of other words (in a name or phrase) which may be pronounced as a word</span>
+                    
+                    
+                  </p><div class="example"><p class="prefix">Example: NOAA is an acronym made from the initial letters of the National Oceanic and Atmospheric Administration in the United States.</p></div></li></ol></div></dd><dt class="label"><a id="accessibility-supporteddef" name="accessibility-supporteddef"> </a>accessibility supported</dt><dd><p>supported by users' <a title="definition: Assistive technology (as used in this document 732&#10;            )" href="#atdef" class="termref">assistive technologies</a> as well as the accessibility features in browsers and other <a title="definition: user agent" href="#useragentdef" class="termref">user agents</a>
+            </p><div class="note"><p class="prefix">Note: When a Web Technology is "accessibility supported," it does not imply that the entire technology must be supported. Most technologies lack support for at least one feature. When referring to "accessibility support" for a technology, the support for specific aspects, features, and extensions should be cited if the technology as a whole is not accessibility supported. A profile of a technology may be used to give a name to the set of aspects, features, or extensions of a technology that are "accessibility supported."</p></div></dd><dt class="label"><a id="activity-timingdef" name="activity-timingdef"> </a>activity where timing is essential</dt><dd><p>activity where timing is part of the design of the activity and removal of the time dependency would change the functionality of the content</p></dd><dt class="label"><a id="alternate-versiondef" name="alternate-versiondef"> </a>alternate version</dt><dd><p>version that provides all of the same information and <a title="definition: functionality" href="#functiondef" class="termref">functionality</a>
+              <span>in the same <a title="definition: human language" href="#human-langdef" class="termref">human language</a>
+              </span> and is as up to date as 
+              <span>the</span> non-conforming content 
+              
+            </p></dd><dt class="label"><a id="apidef" name="apidef"> </a>Application Programming Interface (API)</dt><dd><p>definitions of how communication may take place between applications</p><div class="note"><p class="prefix">Note 1:
+					Implementing APIs that are independent of a particular operating environment (as are the W3C DOM Level 2 specifications) may reduce implementation costs for multi-platform <a title="definition: user agent" href="#useragentdef" class="termref">user agents</a> and promote the development of multi-platform <a title="definition: Assistive technology (as used in this document 732&#10;            )" href="#atdef" class="termref">assistive technologies</a>. Implementing conventional APIs for a particular operating environment may reduce implementation costs for assistive technology developers who wish to interoperate with more than one piece of software running on that operating environment.</p><p class="prefix">Note 2:
+					A "device API" defines how communication may take place with an input or output device such as a keyboard, mouse, or video card.</p><p class="prefix">Note 3:
+					In this document, an "input/output API" defines how applications or devices communicate with a user agent. As used in this document, input and output APIs include, but are not limited to, device APIs. Input and output APIs also include more abstract communication interfaces than those specified by device APIs. A "conventional input/output API" is one that is expected to be implemented by software running on a particular operating environment. For example, the conventional input APIs of the user agent are for the mouse and keyboard. For touch screen devices or mobile devices, conventional input APIs may include stylus, buttons, and voice. The graphical display and sound card are considered conventional output devices for a graphical desktop computer environment, and each has an associated API.</p><p class="prefix">Note 4:
+					This definition is based on <a href="http://www.w3.org/TR/WAI-USERAGENT/glossary.html">User Agent Accessibility Guidelines 1.0 Glossary</a>.</p></div></dd><dt class="label"><a id="asciiartdef" name="asciiartdef"> </a>ASCII art</dt><dd><p>picture created by a spatial arrangement of characters <span>or glyphs</span> (typically from the 95 printable characters defined by ASCII).
+            </p></dd><dt class="label"><a id="atdef" name="atdef"> </a>Assistive technology (<span>as used in this document 
+            </span>)</dt><dd><p>a <a title="definition: user agent" href="#useragentdef" class="termref">user agent</a> that <span>both</span>:</p><ol class="enumar"><li><p>provides services to meet the requirements of users with disabilities that go beyond those offered by the mainstream user agents. Such services include alternative presentations (e.g., as synthesized speech or magnified content), alternative input methods (e.g., voice), additional navigation or orientation mechanisms, and content transformations (e.g., to make tables more accessible)<span>, and</span>
+                  
+                </p></li><li><p>usually relies on services (such as retrieving Web content and parsing markup) provided by one or more other mainstream user agents. Assistive technologies communicate data and messages with mainstream user agents by using and monitoring <a title="definition: Application Programming Interface (API)" href="#apidef" class="termref">APIs</a>
+                </p></li></ol><div class="note"><p class="prefix">Note 1:
+					
+                <span>In this definition, user agents are user agents in the general sense of the term. That is, any software that retrieves and <span>presents</span> Web content for users. The mainstream user agent may provide important services to assistive technologies like retrieving Web content from program objects or parsing markup into identifiable bundles. 
+                </span>
+              </p><p class="prefix">Note 2:
+					
+                <span>Mainstream user agents may also provide services directly that meet the requirements of users with disabilities.
+                </span>
+              </p><p class="prefix">Note 3:
+					This definition is based on <a href="http://www.w3.org/TR/WAI-USERAGENT/glossary.html">User Agent Accessibility Guidelines 1.0 Glossary</a>.</p></div><div class="example"><p class="prefix">Example: Examples of assistive technologies that are important in the context of this document include the following:</p><ul><li><p>screen magnifiers, <span>and other visual reading assistants, which are used by people with visual, perceptual and physical print disabilities to change text font, size, spacing, color, synchronization with speech, etc in order 
+                    </span> improve the visual readability of rendered text and images;</p></li><li><p>screen readers, which are used by people who are blind <span>to read textual information through synthesized speech or braille</span>;</p></li><li><p>text-to-speech software, which is used by some people with cognitive, language, and learning disabilities to convert text into synthetic speech;</p></li><li><p>voice recognition software, which may be used by people who have some physical disabilities;</p></li><li><p>alternative keyboards, which are used by people with certain physical disabilities to simulate the keyboard;</p></li><li><p>alternative pointing devices, which are used by people with certain physical disabilities to simulate mouse pointing and button activations.</p></li></ul></div></dd><dt class="label"><a id="audiodescdef" name="audiodescdef"> </a>audio description</dt><dd><p>narration added to the soundtrack to describe important visual details that cannot be understood from the main soundtrack alone </p><div class="note"><p class="prefix">Note 1:
+					
+                <span>Audio description of <a title="definition: video" href="#videodef" class="termref">video</a> provides information about actions, characters, scene changes, on-screen text, and other visual content. 
+                </span>
+              </p><p class="prefix">Note 2:
+					In standard audio description, narration is added during existing pauses in dialogue. (See also <a title="definition: extended audio description" href="#extended-addef" class="termref">extended audio description</a>.)</p><p class="prefix">Note 3:
+					Also called "video description" and "descriptive narration."</p></div></dd><dt class="label"><a id="blinksdef" name="blinksdef"> </a>blink</dt><dd><p>turn on and off between 0.5 and 3 times per second</p><div class="note"><p class="prefix">Note: The slower blink is in contrast with flashing, which refers to rapid changes in brightness which can cause seizures. See <a title="definition: general flash and red flash thresholds" href="#general-thresholddef" class="termref">general flash and red flash thresholds</a>.
+              </p></div></dd><dt class="label"><a id="CAPTCHAdef" name="CAPTCHAdef"> </a>CAPTCHA</dt><dd><p>initialism for "Completely Automated Public Turing test to tell Computers and Humans Apart"</p><div class="note"><p class="prefix">Note 1:
+					CAPTCHA tests often involve asking the user to type in text that is displayed in an obscured image or audio file.</p><p class="prefix">Note 2:
+					A Turing test is any system of tests designed to differentiate a human from a computer. It is named after famed computer scientist Alan Turing. The term was coined by researchers at Carnegie Mellon University. <a href="#CAPTCHA">[CAPTCHA]</a>
+              </p></div></dd><dt class="label"><a id="captionsdef" name="captionsdef"> </a>captions</dt><dd><p>text presented and synchronized with <a title="definition: multimedia" href="#multimediadef" class="termref">multimedia</a> to provide not only the speech, but also <span>non-speech information conveyed through sound, including meaningful sound effects and identification of speakers 
+              </span>
+            </p><div class="note"><p class="prefix">Note: In some countries, the term "subtitle" is used  to refer to dialogue only and "captions" is used as the term for dialogue plus sounds and speaker identification. In other countries, subtitle (or its translation) is used to refer to both. </p></div></dd><dt class="label"><a id="context-changedef" name="context-changedef"> </a>changes of context</dt><dd><p>change of:</p><ol class="enumar"><li><p>
+                  <a title="definition: user agent" href="#useragentdef" class="termref">user agent</a>;</p></li><li><p>
+                  <a title="definition: viewport" href="#viewportdef" class="termref">viewport</a>;</p></li><li><p>focus;</p></li><li><p>
+                  <a title="definition: content (Web content)" href="#contentdef" class="termref">content</a> that changes the meaning of the <a title="definition: Web page" href="#webpagedef" class="termref">Web page</a>.</p></li></ol><div class="note"><p class="prefix">Note: A change of content is not always a change of context. Small changes in content, such as an expanding outline or dynamic menu, do not change the context.</p></div></dd><dt class="label"><a id="conformancedef" name="conformancedef"> </a>conformance</dt><dd><p>
+              <span>satisfying all the requirements of a given standard, guideline or specification 
+              </span>
+            </p></dd><dt class="label"><a id="contentdef" name="contentdef"> </a>content (Web content)</dt><dd><p>
+              <span>information and sensory experience to be communicated to the user by means of a <a title="definition: user agent" href="#useragentdef" class="termref">user agent</a>, as well as code or markup that define the <a title="definition: structure" href="#structuredef" class="termref">structure</a>, <a title="definition: presentation" href="#presentationdef" class="termref">presentation</a>, and interactions associated with those elements 
+              </span>
+            </p></dd><dt class="label"><a id="context-sensitivehelpdef" name="context-sensitivehelpdef"> </a>context-sensitive help</dt><dd><p>help text that provides information related to the function currently being performed</p></dd><dt class="label"><a id="contrast-ratiodef" name="contrast-ratiodef"> </a>contrast ratio</dt><dd><p>(L1 + 0.05) / (L2 + 0.05), where</p><ul><li><p>L1 is the <span>
+                    <a title="definition: relative luminance" href="#relativeluminancedef" class="termref">relative luminance</a>
+                    
+                  </span> of the lighter of the <span>foreground
+                  </span> or background colors, and</p></li><li><p>L2 is the <span>
+                    <a title="definition: relative luminance" href="#relativeluminancedef" class="termref">relative luminance</a>
+                    
+                  </span> of the darker of the <span>foreground
+                  </span> or background colors.</p></li></ul><div class="note"><p class="prefix">Note 1:
+					Contrast ratios can range from 1 to 21 (commonly written 1:1 to 21:1).</p><p class="prefix">Note 2:
+					For dithered colors, use the average values of the colors that are dithered (average R, average G, and average B).</p><p class="prefix">Note 3:
+					Text can be evaluated with anti-aliasing turned off.</p><p class="prefix">Note 4:
+					Background color is the specified color of content over which the text is to be rendered in normal usage. If no background color is specified, then white is assumed.</p><p class="prefix">Note 5:
+					For text displayed over gradients and background images, authors should ensure that sufficient contrast exists for each part of each character in the content.</p></div></dd><dt class="label"><a id="emergencydef" name="emergencydef"> </a>emergency</dt><dd><p>a sudden, unexpected situation or occurrence that requires immediate action to preserve health, safety, or property </p></dd><dt class="label"><a id="extended-addef" name="extended-addef"> </a>extended audio description</dt><dd><p>audio description that is added to an audiovisual presentation by pausing the <a title="definition: video" href="#videodef" class="termref">video</a> so that there is time to add additional description</p><div class="note"><p class="prefix">Note: This technique is only used when the sense of the <a title="definition: video" href="#videodef" class="termref">video</a> would be lost without the additional <a title="definition: audio description" href="#audiodescdef" class="termref">audio description</a>.</p></div></dd><dt class="label"><a id="fullmultaltdef" name="fullmultaltdef"> </a>
+            <span>full text alternative for multimedia including any interaction 
+            </span>
+          </dt><dd><p>document including correctly sequenced text descriptions of all visual settings, actions, speakers, and non-speech sounds, and transcript of all dialogue combined with a means of achieving any outcomes that are achieved using interaction (if any) during the <a title="definition: multimedia" href="#multimediadef" class="termref">multimedia</a>
+            </p><div class="note"><p class="prefix">Note: A screenplay used to create the multimedia content would meet this definition only if it was corrected to accurately represent the final multimedia after editing.</p></div></dd><dt class="label"><a id="functiondef" name="functiondef"> </a>functionality</dt><dd><p>
+              <a title="definition: process" href="#processdef" class="termref">processes</a> and outcomes achievable through user action</p></dd><dt class="label"><a id="general-thresholddef" name="general-thresholddef"> </a>general flash and red flash thresholds</dt><dd><p>a sequence of flashes or rapidly changing image sequences where all three of the following occur:</p><ol class="enumar"><li><p>there are more than three flashes within any one-second period; and</p></li><li><p>the flashing is below 50 Hz; and</p></li><li><p>the combined area of flashes occurring concurrently and contiguously occupies more than a total of .006 steradians (25% of any 10 degree visual field on the screen). </p></li></ol><p>For the <strong>general flash threshold</strong>, a flash is defined as a pair of opposing changes in <a title="definition: relative luminance" href="#relativeluminancedef" class="termref">relative luminance</a> of 10% or more and the relative luminance of the darker image is below 0.80. An "opposing change" is an increase followed by a decrease, or a decrease followed by an increase.</p><p>For the <strong>red flash threshold</strong>, a flash is defined as any transition to or from a saturated red.</p><div class="note"><p class="prefix">Note 1:
+					For general Web content, using a 341 x 256 pixel rectangle anywhere on the displayed screen area when the content is viewed at 1024 x 768 pixels will provide a good estimate of a 10 degree visual field for standard screen sizes and viewing distances.</p></div></dd><dt class="label"><a id="human-langdef" name="human-langdef"> </a>human language</dt><dd><p>
+              <span>language that is spoken, written or signed (visually or tactilely) by humans to communicate with one another</span>
+              
+              
+              
+            </p><div class="note"><p class="prefix">Note: See also <a title="definition: sign language" href="#sign-languagedef" class="termref">sign language</a>.</p></div></dd><dt class="label"><a id="idiomsdef" name="idiomsdef"> </a>idiom</dt><dd><p>phrase whose meaning cannot be deduced from the meaning of the individual words and the specific words cannot be changed without losing the meaning</p><div class="example"><p class="prefix">Example 1:
+					In English, "kicking the bucket" means "dying," but the phrase cannot be changed to "kicking the buckets" or "kicking the tub" or "booting the bucket" or "knocking over the bucket" without losing its meaning.</p><p class="prefix">Example 2:
+					In English, "spilling the beans" means "revealing a secret." However, "knocking over the beans" or "spilling the vegetables" does not mean the same thing.</p><p class="prefix">Example 3:
+					In Japanese, the phrase "<span lang="ja" xml:lang="ja">さじを投げる</span>
+                " literally translates into "he <span>throws</span> a spoon," but it means that there is nothing he <span>can</span> do and finally he <span>gives</span> up.
+                
+              </p><p class="prefix">Example 4:
+					In Dutch, "<span lang="nl" xml:lang="nl">Hij ging met de kippen op stok</span>" literally translates into "He went to roost with the chickens," but it means that he went to bed early.</p></div></dd><dt class="label"><a id="informationbycolordef" name="informationbycolordef"> </a>information that is conveyed by color <span>differences</span>
+          </dt><dd><p>information presented in a manner that depends entirely on the ability to perceive color</p></dd><dt class="label"><a id="informativedef" name="informativedef"> </a>informative</dt><dd><p>for information purposes and not required for conformance</p><div class="note"><p class="prefix">Note: Content required for <a title="definition: conformance" href="#conformancedef" class="termref">conformance</a> is referred to as "<a title="definition: normative" href="#normativedef" class="termref">normative</a>."</p></div></dd><dt class="label"><a id="input-errordef" name="input-errordef"> </a>input error</dt><dd><p>information provided by the user that is not accepted</p><div class="note"><p class="prefix">Note:  This includes:</p><ol class="enumar"><li><p>Information that is required by the <a title="definition: Web page" href="#webpagedef" class="termref">Web page</a> but omitted by the user</p></li><li><p>Information that is provided by the user but that falls outside the required data format or values</p></li></ol></div></dd><dt class="label"><a id="jargondef" name="jargondef"> </a>jargon</dt><dd><p>words used in a particular way by people in a particular field</p><div class="example"><p class="prefix">Example: The word StickyKeys is jargon from the field of assistive technology/accessibility.</p></div></dd><dt class="label"><a id="keybrd-interfacedef" name="keybrd-interfacedef"> </a>keyboard interface</dt><dd><p>interface used by software to obtain keystroke input</p><div class="note"><p class="prefix">Note 1:
+					Allows users to provide keystroke input to programs even if the native technology does not contain a keyboard.</p><div class="example"><p class="prefix">Example: A touch screen PDA has a keyboard interface built into its operating system as well as a connector for external keyboards.  Applications on the PDA can use the interface to obtain keyboard input either from an external keyboard or from other applications that provide simulated keyboard output, such as handwriting interpreters or speech-to-text applications with "keyboard emulation" functionality.</p></div><p class="prefix">Note 2:
+					Operation of the application (or parts of the application) through a keyboard-operated mouse emulator, such as MouseKeys, does not qualify as operation through a keyboard interface because operation of the program is through its pointing device interface, not through its keyboard interface.</p></div></dd><dt class="label"><a id="labeldef" name="labeldef"> </a>label</dt><dd><p>
+              <a title="definition: text" href="#textdef" class="termref">text</a>
+              
+              <span>or other component with a <a title="definition: text alternative" href="#text-altdef" class="termref">text alternative</a>
+              </span> that is presented to a user to identify a component within Web <a title="definition: content (Web content)" href="#contentdef" class="termref">content</a>
+            </p><div class="note"><p class="prefix">Note: 
+                <span>See also <a title="definition: name" href="#namedef" class="termref">name</a>. 
+                </span>
+              </p></div></dd><dt class="label"><a id="larger-scaledef" name="larger-scaledef"> </a>larger scale (text)</dt><dd><p>at least 18 point or 14 point bold</p><div class="note"><p class="prefix">Note 1:
+					Fonts with extraordinarily thin strokes or unusual features and characteristics that reduce the familiarity of their letter forms are harder to read, especially at lower contrast levels.</p><p class="prefix">Note 2:
+					Font size is the size when the content is delivered. It does not include resizing that may be done by a user.</p></div></dd><dt class="label"><a id="legalcommitmentsdef" name="legalcommitmentsdef"> </a>
+            <span>legal commitments 
+            </span>
+          </dt><dd><p>transactions where the person incurs a legally binding obligation or benefit</p><div class="example"><p class="prefix">Example: A marriage license, a stock trade (financial and legal), a will, a loan, adoption, signing up for the army, a contract of any type, etc.</p></div></dd><dt class="label"><a id="live-audio-onlydef" name="live-audio-onlydef"> </a>live audio-only</dt><dd><p> A time-based live presentation that contains only audio (no <a title="definition: video" href="#videodef" class="termref">video</a> and no interaction)</p></dd><dt class="label"><a id="live-video-onlydef" name="live-video-onlydef"> </a>live video-only</dt><dd><p> A time-based live presentation that contains only <a title="definition: video" href="#videodef" class="termref">video</a> (no audio and no interaction)</p></dd><dt class="label"><a id="lowseceddef" name="lowseceddef"> </a>lower secondary education level</dt><dd><p>the two or three year period of education that begins after completion of six years of school and ends nine years after the beginning of <a title="definition: primary education level" href="#primseceddef" class="termref">primary education</a>
+            </p><div class="note"><p class="prefix">Note: This definition is based on <a href="#UNESCO">[UNESCO]</a>.</p></div></dd><dt class="label"><a id="mechanismdef" name="mechanismdef"> </a>mechanism</dt><dd><p>
+              <a title="definition: process" href="#processdef" class="termref">process</a> or technique for achieving a result</p><div class="note"><p class="prefix">Note 1:
+					The mechanism may be explicitly provided in the content, or may be relied on to be provided by either the platform or by user agents, including assistive technologies.</p><p class="prefix">Note 2:
+					The mechanism must meet all success criteria for the conformance level claimed. 
+              </p></div></dd><dt class="label"><a id="multimediadef" name="multimediadef"> </a>multimedia</dt><dd><p>audio or <a title="definition: video" href="#videodef" class="termref">video</a> synchronized with another 
+              <span>format for presenting information</span> and/or with time-based interactive components 
+            </p></dd><dt class="label"><a id="multimedia-alt-textdef" name="multimedia-alt-textdef"> </a>multimedia alternatives to text</dt><dd><p>multimedia that presents no more information than is already presented in text (directly or via text alternatives) 
+            </p><div class="note"><p class="prefix">Note: Multimedia alternatives to text are provided for those who benefit from alternate representations of text. </p></div></dd><dt class="label"><a id="must-nontextdef" name="must-nontextdef"> </a>must be presented in non-text format</dt><dd><p>
+              <span>would be invalid if presented in <a title="definition: text" href="#textdef" class="termref">text</a>
+              </span>
+              
+            </p><div class="example"><p class="prefix">Example: Color blindness test, hearing test, vision exercise, spelling test.</p></div></dd><dt class="label"><a id="namedef" name="namedef"> </a>name</dt><dd><p>text by which software can identify a component within Web content to the user</p><div class="note"><p class="prefix">Note 1:
+					The name may be hidden and only exposed by assistive technology, whereas a <a title="definition: label" href="#labeldef" class="termref">label</a> is presented <span>to all users.</span>
+                 In many (but not all) cases, the label <span>and the name are the same.</span>
+                
+              </p><p class="prefix">Note 2:
+					This is unrelated to the name attribute in HTML.</p></div></dd><dt class="label"><a id="nav-seqdef" name="nav-seqdef"> </a>navigated sequentially</dt><dd><p>navigated in the order defined for advancing focus from one element to the next with the keyboard 
+            </p></dd><dt class="label"><a id="non-text-contentdef" name="non-text-contentdef"> </a>non-text content</dt><dd><p>any content that is not a sequence of characters that can be <a title="definition: programmatically determined" href="#programmaticallydetermineddef" class="termref">programmatically determined</a> or where the sequence is not expressing something in <a title="definition: human language" href="#human-langdef" class="termref">human language</a>
+              
+            </p><div class="note"><p class="prefix">Note: This includes <a title="definition: ASCII art" href="#asciiartdef" class="termref">ASCII Art</a> (which is a pattern of characters) <span>and leetspeak (which is character substitution).
+                </span>
+              </p></div></dd><dt class="label"><a id="normativedef" name="normativedef"> </a>normative</dt><dd><p>required for conformance</p><div class="note"><p class="prefix">Note 1:
+					One may conform in a variety of well-defined ways to this document.</p><p class="prefix">Note 2:
+					Content identified as "<a title="definition: informative" href="#informativedef" class="termref">informative</a>" or "non-normative" is never required for conformance.</p></div></dd><dt class="label"><a id="pauseddef" name="pauseddef"> </a>paused</dt><dd><p>stopped by user request and not restarted until requested by user</p></dd><dt class="label"><a id="presentationdef" name="presentationdef"> </a>presentation</dt><dd><p>
+              
+              <span>rendering of the <a title="definition: content (Web content)" href="#contentdef" class="termref">content</a> in a form to be perceived by users
+                
+              </span>
+            </p></dd><dt class="label"><a id="primseceddef" name="primseceddef"> </a>primary education level</dt><dd><p>six year time period that begins between the ages of five and seven, possibly without any previous education</p><div class="note"><p class="prefix">Note: This definition is based on <a href="#UNESCO">[UNESCO]</a>.</p></div></dd><dt class="label"><a id="processdef" name="processdef"> </a>process</dt><dd><p>series of user actions where each action is required in order to complete an activity</p><div class="example"><p class="prefix">Example 1:
+					Successful use of a series of Web pages on a shopping site requires users to view alternative products, prices and offers, select products, submit an order, provide shipping information and provide payment information.</p><p class="prefix">Example 2:
+					An account registration page requires successful completion of a Turing test before the registration form can be accessed.</p></div></dd><dt class="label"><a id="programmaticallydetermineddef" name="programmaticallydetermineddef"> </a>programmatically determined</dt><dd><p>determined by software from <span>author-supplied</span> data provided in a  
+              <span>way that different</span>
+              <a title="definition: user agent" href="#useragentdef" class="termref">user agents</a>, including <a title="definition: Assistive technology (as used in this document 732&#10;            )" href="#atdef" class="termref">assistive technologies</a>, can extract and present this information to users in different modalities 
+              
+            </p><div class="example"><p class="prefix">Example: Determined in a mark-up language from elements and attributes that are accessed directly by commonly available assistive technology.</p></div><div class="example"><p class="prefix">Example: Determined from technology-specific data structures in a non-mark-up language and exposed to assistive technology via an accessibility API that is supported by commonly available assistive technology. </p></div></dd><dt class="label"><a id="pdlinkcontextdef" name="pdlinkcontextdef"> </a>programmatically determined link context</dt><dd><p>additional information that can be <a title="definition: programmatically determined" href="#programmaticallydetermineddef" class="termref">programmatically determined</a> from <a title="definition: relationships" href="#relationshipsdef" class="termref">relationships</a> with a link<span>, combined with the link text, and presented to users in different modalities</span>
+            </p><div class="example"><p class="prefix">Example 1:
+					In HTML, information that is programmatically determinable from a link in English includes text that is in the same sentence, paragraph, list, or table cell as the link or in a table header cell that is associated with the table cell that contains the link.</p><p class="prefix">Example 2:
+					A screen reader provides commands to read the current sentence when focus is on a link in that sentence.</p></div></dd><dt class="label"><a id="programmaticallysetdef" name="programmaticallysetdef"> </a>programmatically set</dt><dd><p>set by software using methods that are <span>supported by user agents, including assistive technologies </span>
+              
+            </p></dd><dt class="label"><a id="puredecdef" name="puredecdef"> </a>pure decoration</dt><dd><p>serving only an aesthetic purpose, providing no information, and having no functionality</p><div class="note"><p class="prefix">Note: Text is only purely decorative if the words can be rearranged or substituted without changing their purpose.</p></div><div class="example"><p class="prefix">Example: The cover page of a dictionary has random words in very light text in the background.</p></div></dd><dt class="label"><a id="real-time-eventsdef" name="real-time-eventsdef"> </a>real-time event</dt><dd><p>event that a) occurs at the same time as the viewing and b) is not completely generated by the content</p><div class="example"><p class="prefix">Example 1:
+					A Webcast of a live performance <span>(occurs at the same time as the viewing and is not pre-recorded)</span>.</p><p class="prefix">Example 2:
+					An on-line auction with people bidding <span>(occurs at the same time as the viewing).</span>
+              </p><p class="prefix">Example 3:
+					Live humans interacting in a fantasy world using avatars <span>(is not completely generated by the content and occurs at the same time as the viewing).</span>
+                
+              </p></div></dd><dt class="label"><a id="relationshipsdef" name="relationshipsdef"> </a>relationships</dt><dd><p>
+              <span>meaningful associations between distinct pieces of content 
+              </span>
+            </p></dd><dt class="label"><a id="relativeluminancedef" name="relativeluminancedef"> </a>relative luminance</dt><dd><p>the relative perceived brightness of any point, normalized to 0 for black and 1 for maximum white</p><div class="note"><p class="prefix">Note 1:
+					The relative luminance of an sRGB color is defined as L = 0.2126 * <strong>R</strong> + 0.7152 * <strong>G</strong> + 0.0722 * <strong>B</strong> where <strong>R</strong>, <strong>G</strong> and <strong>B</strong> are defined as:</p><ul><li><p>if R<sub>sRGB</sub> &lt;= 0.03928 then <strong>R</strong> = R<sub>sRGB</sub>/12.92 else <strong>R</strong> = ((R<sub>sRGB</sub>+0.055)/1.055) ^ 2.4</p></li><li><p>if G<sub>sRGB</sub> &lt;= 0.03928 then <strong>G</strong> = G<sub>sRGB</sub>/12.92 else <strong>G</strong> = ((G<sub>sRGB</sub>+0.055)/1.055) ^ 2.4</p></li><li><p>if B<sub>sRGB</sub> &lt;= 0.03928 then <strong>B</strong> = B<sub>sRGB</sub>/12.92 else <strong>B</strong> = ((B<sub>sRGB</sub>+0.055)/1.055) ^ 2.4</p></li></ul><div class="note"><p class="prefix">and R<sub>sRGB</sub>, G<sub>sRGB</sub>, and B<sub>sRGB</sub> are defined as:</p></div><ul><li><p>R<sub>sRGB</sub> = R<sub>8bit</sub>/255</p></li><li><p>G<sub>sRGB</sub> = G<sub>8bit</sub>/255</p></li><li><p>B<sub>sRGB</sub> = B<sub>8bit</sub>/255</p></li></ul><div class="note"><p class="prefix">The "^" character is the exponentiation operator. (Formula taken from <a href="#sRGB">[sRGB]</a> and <a href="#IEC-4WD">[IEC-4WD]</a>).</p></div><p class="prefix">Note 2:
+					Almost all systems used today to view Web content assume sRGB encoding. Unless it is known that another color space will be used to process and display the content, authors should evaluate using sRGB colorspace. If using other color spaces, see <a href="http://www.w3.org/TR/2007/WD-UNDERSTANDING-WCAG20-20070517/Overview.html#visual-audio-contrast-contrast">Understanding Success Criterion 1.4.3</a>.</p><p class="prefix">Note 3:
+					For dithered colors, use average values of the colors used (average R, average G, and average B).</p><p class="prefix">Note 4:
+					Tools are available that automatically do the calculations when testing contrast and flash.</p><p class="prefix">Note 5:
+					
+                <span>A <a href="relative-luminance.xml">MathML version of the relative luminance definition</a> is available. 
+                  
+                </span>
+              </p></div></dd><dt class="label"><a id="reliedupondef" name="reliedupondef"> </a>relied upon (technologies that are)</dt><dd><p>the content would not <a title="definition: conformance" href="#conformancedef" class="termref">conform</a> if that technology is turned off or not supported</p></dd><dt class="label"><a id="roledef" name="roledef"> </a>role</dt><dd><p>text or a number by which software can identify the function of a component within Web content</p><div class="example"><p class="prefix">Example: A number that indicates whether an image functions as a hyperlink, command button, or check box.</p></div></dd><dt class="label"><a id="samefunctionalitydef" name="samefunctionalitydef"> </a>same functionality </dt><dd><p>
+              
+              <span>same</span> result when used 
+            </p><div class="example"><p class="prefix">Example: A submit "search" button on one Web page and a "find" button on another Web page may both have a field to enter a term and list topics in the Web site related to the term submitted. In this case, they would have the same functionality but would not be labeled consistently.</p></div></dd><dt class="label"><a id="samerelorderdef" name="samerelorderdef"> </a>same relative order</dt><dd><p>same position relative to other items</p><div class="note"><p class="prefix">Note: Items are considered to be in the same relative order even if other items are inserted or removed from the original order. For example, expanding navigation menus may insert an additional level of detail or a secondary navigation section may be inserted into the reading order.</p></div></dd><dt class="label"><a id="satisfiesdef" name="satisfiesdef"> </a>satisfies a success criterion</dt><dd><p>the success criterion does not evaluate to 'false' when applied to all of the content on the page</p></dd><dt class="label"><a id="set-of-web-pagesdef" name="set-of-web-pagesdef"> </a>set of Web pages</dt><dd><p>collection of <a title="definition: Web page" href="#webpagedef" class="termref">Web pages</a> that have a specific relationship to each other and that are created as a body of work by an author, group or organization 
+              
+            </p><div class="note"><p class="prefix">Note: Different language versions would be considered different bodies of work. </p></div><div class="example"><p class="prefix">Example: A set of Web pages that make up a report, a test, an exercise, a catalog, or an application. </p></div></dd><dt class="label"><a id="sign-languagedef" name="sign-languagedef"> </a>sign language</dt><dd><p>a visual language using combinations of movements of the hands and arms, facial expressions, and body positions to convey meaning 
+            </p></dd><dt class="label"><a id="sign-languageinterpdef" name="sign-languageinterpdef"> </a>sign language interpretation</dt><dd><p>translation of one language, generally a spoken language, into a <a title="definition: sign language" href="#sign-languagedef" class="termref">sign language</a>
+              
+            </p><div class="note"><p class="prefix">Note: 
+                
+                <span>True</span> sign languages are independent languages that are unrelated to the spoken language(s) of the same country or region. 
+              </p></div></dd><dt class="label"><a id="sensoryexpdef" name="sensoryexpdef"> </a>specific sensory experience</dt><dd><p>a sensory experience that is not purely decorative and does not primarily convey important information or perform a function</p><div class="example"><p class="prefix">Example: 
+                <span>Examples include a performance of a flute solo, works of visual art etc. 
+                </span>
+              </p></div></dd><dt class="label"><a id="structuredef" name="structuredef"> </a>structure</dt><dd><ol class="enumar"><li><p>The way the parts of <span>a <a title="definition: Web page" href="#webpagedef" class="termref">Web page</a>
+                  </span> are organized in relation to each other; and 
+                </p></li><li><p>The way a collection of <a title="definition: Web page" href="#webpagedef" class="termref">Web pages</a> is organized</p></li></ol></dd><dt class="label"><a id="suppcontentdef" name="suppcontentdef"> </a>supplemental content</dt><dd><p>additional <a title="definition: content (Web content)" href="#contentdef" class="termref">content</a> that illustrates or clarifies the <span>primary</span> content 
+            </p><div class="example"><p class="prefix">Example 1:
+					
+                
+                <span>An audio version of a <a title="definition: Web page" href="#webpagedef" class="termref">Web page</a>. </span>
+              </p><p class="prefix">Example 2:
+					
+                <span>An illustration of a complex <a title="definition: process" href="#processdef" class="termref">process</a>.</span>
+              </p><p class="prefix">Example 3:
+					
+                <span>A paragraph describing the major outcomes and recommendations made in a research study. </span>
+              </p></div></dd><dt class="label"><a id="technologydef" name="technologydef"> </a>technology</dt><dd><p>markup language, programming language, style sheet, data format, or <a title="definition: Application Programming Interface (API)" href="#apidef" class="termref">API</a>
+            </p></dd><dt class="label"><a id="textdef" name="textdef"> </a>text</dt><dd><p>sequence of characters <span>that can be <a title="definition: programmatically determined" href="#programmaticallydetermineddef" class="termref">programmatically determined</a>, where the sequence is expressing something in <a title="definition: human language" href="#human-langdef" class="termref">human language</a>
+                
+              </span>
+            </p></dd><dt class="label"><a id="text-altdef" name="text-altdef"> </a>text alternative</dt><dd><p>programmatically determined <a title="definition: text" href="#textdef" class="termref">text</a> that is used in place of <a title="definition: non-text content" href="#non-text-contentdef" class="termref">non-text content</a>, or text that is used in addition to non-text content and referred to from the <a title="definition: programmatically determined" href="#programmaticallydetermineddef" class="termref">programmatically determined</a> text</p><div class="example"><p class="prefix">Example: An image of a chart is described in text in the paragraph after the chart. The short text-alternative for the chart indicates that a description follows.
+              </p></div></dd><dt class="label"><a id="unusual-restricteddef" name="unusual-restricteddef"> </a>used in an unusual or restricted way</dt><dd><p>words used in such a way that users must know exactly 
+              <span>which</span> definition to apply in order to understand the content correctly</p><div class="example"><p class="prefix">Example: 
+                
+                <span>The term "gig" means something <span>different</span> if it occurs in a discussion of music concerts <span>than it does in</span> article about computer hard drive space, but the appropriate definition can be determined from context.</span> By contrast, the word "text" is used in a very specific way in WCAG 2.0, so a definition is supplied in the glossary.
+              </p></div></dd><dt class="label"><a id="useragentdef" name="useragentdef"> </a>user agent</dt><dd><p>any software that retrieves and <span>presents</span> Web content for users</p><div class="example"><p class="prefix">Example: Web browsers, media players, plug-ins, and other programs — including <a title="definition: Assistive technology (as used in this document 732&#10;            )" href="#atdef" class="termref">assistive technologies</a> — that help in retrieving<span>, rendering, and interacting with </span>Web content.
+              </p></div></dd><dt class="label"><a id="user-controllabledef" name="user-controllabledef"> </a>user-controllable</dt><dd><p>data that is intended to be accessed by users</p><div class="note"><p class="prefix">Note: This does not refer such things as internet logs and search engine monitoring data.</p></div><div class="example"><p class="prefix">Example:  Name and address fields for a user's account.</p></div></dd><dt class="label"><a id="user-interface-componentdef" name="user-interface-componentdef"> </a>user interface component</dt><dd><p>a part of the content that is perceived by users as a single control for a distinct function</p><div class="note"><p class="prefix">Note: Multiple user interface components may be implemented as a single programmatic element. Components here is not tied to programming techniques but rather to what the user perceives as separate controls. </p></div><div class="example"><p class="prefix">Example: An applet has a "control" that can be used to move through content by line or page or random access. Since each of these would need to have a name and be setable independently, they would each be a "user interface component." </p></div></dd><dt class="label"><a id="videodef" name="videodef"> </a>video</dt><dd><p>the technology of moving pictures or images</p><div class="note"><p class="prefix">Note: Video can be made up of animated or photographic images, or both.</p></div></dd><dt class="label"><a id="viewportdef" name="viewportdef"> </a>viewport</dt><dd><p>
+              <span>object in which the user agent <span>presents</span> content
+              </span>
+            </p><div class="note"><p class="prefix">Note 1:
+					The <a title="definition: user agent" href="#useragentdef" class="termref">user agent</a>
+                <span>presents</span> content through one or more viewports. Viewports include windows, frames, loudspeakers, and virtual magnifying glasses. A viewport may contain another viewport (e.g., nested frames). User agent user interface controls such as prompts, menus, and alerts are not viewports. </p><p class="prefix">Note 2:
+					This definition is based on <a href="http://www.w3.org/TR/WAI-USERAGENT/glossary.html">User Agent Accessibility Guidelines 1.0 Glossary</a>.</p></div></dd><dt class="label"><a id="webpagedef" name="webpagedef"> </a>Web page</dt><dd><p>a resource that is referenced by a URI and is not embedded in another resource, plus any other resources that are used in the rendering or intended to be rendered together with it
+            </p><div class="note"><p class="prefix">Note: Although any "other resources" would be rendered together with the primary resource, they would not necessarily be rendered simultaneously with each other.</p></div><div class="example"><p class="prefix">Example 1:
+					When you enter http://shopping.example.com/ in your browser you enter a movie-like interactive shopping environment where you visually move about a store dragging products off of the shelves around you into a visual shopping cart in front of you. Clicking on a product causes it to be demonstrated with a specification sheet floating alongside.</p><p class="prefix">Example 2:
+					A Web resource including all embedded images and media.</p><p class="prefix">Example 3:
+					A Web mail program built using Asynchronous JavaScript and XML (AJAX). The program lives entirely at http://mail.example.com, but includes an inbox, a contacts area and a calendar. Links or buttons are provided that cause the the inbox, contacts, or calendar to display, but do not change the URL of the page as a whole.</p><p class="prefix">Example 4:
+					A customizable portal site, where users can choose content to display from a set of different content modules.</p></div></dd></dl></div><div class="div1">
+<h2><a id="acknowledgments" name="acknowledgments"> </a>Appendix B: Acknowledgments</h2><p>This section is <a title="definition: informative" href="#informativedef" class="termref">informative</a>. </p><p>This publication has been funded in part with Federal funds from the U.S. Department of Education under contract number ED05CO0039. The content of this publication does not necessarily reflect the views or policies of the U.S. Department of Education, nor does mention of trade names, commercial products, or organizations imply endorsement by the U.S. Government. </p><p>Additional information about participation in the Web Content Accessibility Guidelines Working Group (WCAG WG) can be found on the <a href="http://www.w3.org/WAI/GL/">Working Group home page</a>. 
+      </p><div class="div2"> <h3><a id="N11D00" name="N11D00"> </a>Participants active in the WCAG WG at the time of publication</h3><ul><li><p>Bruce Bailey (US Access-Board)</p></li><li><p>Frederick Boland (NIST)</p></li><li><p>Judy Brewer (W3C / MIT)</p></li><li><p>Ben Caldwell (Trace R&amp;D Center, University of Wisconsin-Madison)</p></li><li><p>Sofia Celic (Vision Australia)</p></li><li><p>Michael Cooper (W3C / MIT)</p></li><li><p>Roberto Ellero (International Webmasters Association / HTML Writers Guild)</p></li><li><p>Donald Evans (AOL) </p></li><li><p>Bengt Farre (W3C Invited Expert)</p></li><li><p>Becky Gibson (IBM) </p></li><li><p>Loretta Guarino Reid (Google)</p></li><li><p>Katie Haritos-Shea (W3C Invited Expert) </p></li><li><p>Sean Hayes (Microsoft) </p></li><li><p>Andrew LaHart (IBM) </p></li><li><p>Gez Lemon (International Webmasters Association / HTML Writers Guild)</p></li><li><p>Alex Li (SAP AG)</p></li><li><p>Luca Mascaro (International Webmasters Association / HTML Writers                                  Guild)</p></li><li><p>David MacDonald (E-Ramp Inc.)</p></li><li><p>Sorcha Moore (Segala) </p></li><li><p>Roberto Scano (International Webmasters Association / HTML Writers Guild)</p></li><li><p>Cynthia Shelly (Microsoft)</p></li><li><p>John Slatin (Accessibility Institute, University of Texas at Austin)</p></li><li><p>Andi Snow-Weaver (IBM)</p></li><li><p>Christophe Strobbe (DoArch, K.U.Leuven)</p></li><li><p>Makoto Ueki (Infoaxia)</p></li><li><p>Gregg Vanderheiden (Trace R&amp;D Center, University of Wisconsin)</p></li></ul></div><div class="div2"> <h3><a id="N11D52" name="N11D52"> </a>Other previously active WCAG WG participants and other contributors to WCAG 2.0</h3><p>Jenae Andershonis, Avi Arditti, Aries Arditi, Mike Barta, Sandy Bartell, Kynn Bartlett, Marco Bertoni, Harvey Bingham, Paul Bohman, Dick Brown, Doyle Burnett, Roberto Castaldo, Jonathan Chetwynd, Wendy Chisholm, Alan Chuter, David M Clark, Joe Clark, Tom Croucher, Nir Dagan, Daniel Dardailler, Geoff Deering, Alan J. Flavell, Al Gilman, Kerstin Goldsmith, Jon Gunderson, Emmanuelle Gutiérrez y Restrepo, Donovan Hipke, Bjoern Hoehrmann, Yvette Hoitink, Ian Jacobs, Phill Jenkins, Leonard R. Kasday, Ken Kipness, Andrew Kirkpatrick, Marja-Riitta Koivunen, Scott Luebking, Tim Lacy, Jim Ley, William Loughborough, Greg Lowney, Mathew J Mirabella, Charles McCathieNevile , Matt May, Marti McCuller, Charles F. Munat, Robert Neff, Bruno von Niman, Tim Noonan, Sebastiano Nutarelli, Graham Oliver, Sean B. Palmer, Sailesh Panchang, Anne Pemberton, David Poehlman, Adam Victor Reed, Chris Ridpath, Lee Roberts, Gregory J. Rosmaita, Lisa Seeman, Justin Thorp, Gian Sampson-Wild, Joel Sanda, Neil Soiffer, Jim Thatcher, Takayuki Watanabe, Jason White.</p></div></div><div class="div1">
+<h2><a id="conformance-referencing" name="conformance-referencing"> </a>Appendix C: How to refer to WCAG 2.0 from other documents</h2><p>This section is <a title="definition: informative" href="#informativedef" class="termref">informative</a>. </p><div class="div2"> <h3><a id="N11D61" name="N11D61"> </a>Information references</h3><p>When referencing WCAG 2.0 in an informational fashion, the following format can be used.</p><p>
+          <em>Web Content Accessibility Guidelines 2.0, W3C World Wide Web Consortium Recommendation XX Month Year (http://www.w3.org/TR/200X/REC-WCAG20-YYYYMMDD/, Latest version at http://www.w3.org/TR/WCAG20/)</em>
+        </p></div><div class="div2"> <h3><a id="N11D6B" name="N11D6B"> </a>When referring to WCAG 2.0 from another standard with a "should" statement</h3><p>When referencing WCAG 2.0 from within a <strong>should</strong> statement in a standard (or advisory statement in a regulation), then the full WCAG 2.0 should be referenced. This would mean that all three levels of WCAG 2.0 should be considered but that none are required. The format for referencing WCAG 2.0 from a "should" statement therefore, is:</p><p>
+          <em>Web Content Accessibility Guidelines 2.0, W3C World Wide Web Consortium Recommendation XX Month Year. (http://www.w3.org/TR/200X/REC-WCAG20-YYYYMMDD/)</em>
+        </p></div><div class="div2"> <h3><a id="N11D79" name="N11D79"> </a>When referring to WCAG 2.0 from another standard with a "shall" statement</h3><p>When citing WCAG 2.0 as part of a requirement (e.g., a <strong>shall</strong> statement in a standard or regulation), the reference must include the specific parts of WCAG 2.0 that are intended to be required . When referencing WCAG 2.0 in this manner, the following rules apply:</p><ol class="enumar"><li><p>Conformance at any level of WCAG 2.0 requires that all of the Level 1 success criteria be met. References to WCAG 2.0 <span>conformance</span> can not be for any subset of Level 1.
+            </p></li><li><p>Beyond Level 1, a "shall" reference may include any subset of provisions in Levels 2 and 3. That is, it is possible to require "<em>all of Level 1 and [some specific list of success criteria in Level 2 and Level 3]</em>" be met.</p></li><li><p>If Double-A conformance to WCAG 2.0 is specified, then all Level 1 and all Level 2 success criteria must be met.</p></li><li><p>If Triple-A conformance to WCAG 2.0 is specified, then all Level 1, all Level 2, and all Level 3 success criteria must be met.</p></li></ol></div><div class="div2"> <h3><a id="N11D9C" name="N11D9C"> </a>Examples</h3><p>
+          <strong>To cite only the Level 1 success criteria (Single-A conformance):</strong>
+        </p><p>
+          <em>Web Content Accessibility Guidelines 2.0, W3C World Wide Web Consortium Recommendation XX Month Year, Level 1 success criteria. (http://www.w3.org/TR/200X/REC-WCAG20-YYYYMMDD/)</em>
+        </p><p>
+          <strong>To cite the Levels 1 and 2 success criteria (Double-A conformance):</strong>
+        </p><p>
+          <em>Web Content Accessibility Guidelines 2.0, W3C World Wide Web Consortium Recommendation XX Month Year, Level 1 &amp; Level 2 success criteria. (http://www.w3.org/TR/200X/REC-WCAG20-YYYYMMDD/)</em>
+        </p><p>
+          <strong>To cite Level 1 success criteria and selected success criteria from Level 2 and Level 3: </strong>
+        </p><p>
+          <em>Web Content Accessibility Guidelines 2.0, W3C World Wide Web Consortium Recommendation XX Month Year, Level 1 success criteria plus Success Criteria 1.x.x, 2.y.y, … 3.z.z. (http://www.w3.org/TR/200X/REC-WCAG20-YYYYMMDD/)</em>
+        </p><div class="note"><p class="prefix">Note: It is not recommended that Triple-A conformance ever be required for entire sites as a general policy because it is not possible to satisfy all Level 3 success criteria for some content.</p></div><p>
+          <strong>Example of use of a WCAG reference in a "shall" statement.</strong>
+        </p><p>All Web content on publicly available Web sites shall conform to Web Content Accessibility Guidelines 2.0, W3C World Wide Web Consortium Recommendation XX Month Year, Level 1 success criteria plus Success Criteria 1.3.3, 1.4.2, 2.4.2-6, 3.1.6 (http://www.w3.org/TR/200X/REC-WCAG20-YYYYMMDD/)</p></div><div class="div2"> <h3><a id="N11DCB" name="N11DCB"> </a>Referring to content from WCAG support documents</h3><p>Techniques, which are listed in Understanding WCAG 2.0 and described in other supporting documents, are not part of the normative WCAG 2.0 Recommendation and should not be cited using the citation for the WCAG 2.0 Recommendation itself. References to techniques in support documents should be cited separately.</p><p>Techniques can be cited based on the individual Technique document or on the master WCAG 2.0 Techniques document. For example, the technique "Using alt attributes on img elements" could be cited as</p><p>
+          <em>"Using alt attributes on img elements," W3C World Wide Web Consortium Note. (URL: {URL of technique}) </em>
+        </p><p>or</p><p>
+          <em>W3C World Wide Web Consortium (200x): WCAG2.0 HTML Techniques (URL: {URL of HTML Techniques})</em>
+        </p><div class="note"><p class="prefix">Note: Techniques are not designed to be referenced as "required" from any standard or regulation.</p></div></div></div><div class="div1">
+<h2><a id="references" name="references"> </a>Appendix D: References</h2><p>This section is <a title="definition: informative" href="#informativedef" class="termref">informative</a>. </p><dl><dt class="label"><a id="CAPTCHA" name="CAPTCHA" />CAPTCHA</dt><dd>The CAPTCHA Project, Carnegie Mellon University. The project is online at <a href="http://www.captcha.net">http://www.captcha.net</a>.</dd><dt class="label"><a id="I18N-CHAR-ENC" name="I18N-CHAR-ENC" />I18N-CHAR-ENC</dt><dd>
+"Tutorial: Character sets &amp; encodings in XHTML, HTML and CSS," R. Ishida, ed., This tutorial is available at <a href="http://www.w3.org/International/tutorials/tutorial-char-enc/">http://www.w3.org/International/tutorials/tutorial-char-enc/</a>. 
+</dd><dt class="label"><a id="IEC-4WD" name="IEC-4WD" />IEC-4WD</dt><dd>IEC/4WD 61966-2-1: Colour Measurement and Management in Multimedia Systems and Equipment - Part 2.1: Default Colour Space - sRGB. May 5, 1998.</dd><dt class="label"><a id="sRGB" name="sRGB" />sRGB</dt><dd>"A Standard Default Color Space for the Internet - sRGB," M. Stokes, M. Anderson, S. Chandrasekar, R. Motta, eds., Version 1.10, November 5, 1996. A copy of this paper is available at <a href="http://www.w3.org/Graphics/Color/sRGB.html">http://www.w3.org/Graphics/Color/sRGB.html</a>.</dd><dt class="label"><a id="UAAG10" name="UAAG10" />UAAG10</dt><dd>"User Agent Accessibility Guidelines 1.0,"  I. Jacobs, J. Gunderson, E. Hansen, eds., W3C Recommendation 17 December 2002. The latest version of UAAG 1.0 is available at <a href="http://www.w3.org/TR/UAAG10/">http://www.w3.org/TR/UAAG10/</a>.
+        </dd><dt class="label"><a id="UNESCO" name="UNESCO" />UNESCO</dt><dd>International Standard Classification of Education, 1997. A copy of the standard is available at <a href="http://www.unesco.org/education/information/nfsunesco/doc/isced_1997.htm">http://www.unesco.org/education/information/nfsunesco/doc/isced_1997.htm</a>.</dd><dt class="label"><a id="WCAG10" name="WCAG10" />WCAG10</dt><dd>Web Content Accessibility Guidelines 1.0, G. Vanderheiden, W. Chisholm, I. Jacobs,  Editors, W3C Recommendation, 5 May 1999, http://www.w3.org/TR/1999/WAI-WEBCONTENT-19990505/. The latest version of WCAG 1.0 is available at <a href="http://www.w3.org/TR/WAI-WEBCONTENT/">http://www.w3.org/TR/WAI-WEBCONTENT/</a>.</dd></dl></div></div><script type="application/javascript" src="https://www.w3.org/scripts/TR/fixup.js"></script></body></html>
