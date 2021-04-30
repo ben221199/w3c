@@ -1,0 +1,1553 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Wed Apr 15 21:06:50 PDT 1998 -->
+<html>
+<head>
+  <title> Document Object Model (XML) Level 1</title>
+</head>
+<body bgcolor='#FFFFFF' text='#000000'>
+<h1>3.  Document Object Model (XML) Level 1</h1>
+<h4>Editors</h4>
+<blockquote>Mike Champion, <i>ArborText</i><br>Gavin Nicol, <i>Inso EPS</i><br></blockquote>
+<hr>
+<a name=''></a>
+<p>
+<p>The DOM Level One (Core) specification defines a set of
+	object definitions that are sufficient to represent a document
+	instance (the objects that occur withing the document itself).
+	This specification is extends the DOM Level One (Core)
+	specification such that document type definitions, entities,
+	CDATA marked sections can also be represented.<p>The objects and interfaces defined within this document are
+	sufficient to allow validators and other applications that
+	make use of a DTD (<em>Document Type Definition</em>) to
+	be written. For editors, the interfaces defined here will
+	probably be insufficient for fine-grained editing, where
+	information about the <em>document type  declaration</em>
+	may be necessary, though structural isomorphism should be
+	easily accomplished.</p>
+<br><hr>
+
+<a name='ID-1187322934'></a>
+<h1 class='div1'>3.1. Introduction</h1><p>The DOM Level One (Core) specification defines a set of
+	object definitions that are sufficient to represent a document
+	instance (the objects that occur within the document itself).
+	This specification is extends the DOM Level One (Core)
+	specification such that document type definitions, entities,
+	CDATA marked sections can also be represented.<p>The objects and interfaces defined within this document are
+	sufficient to allow validators and other applications that
+	make use of a DTD (<em>Document Type Definition</em>) to
+	be written. For editors, the interfaces defined here will
+	probably be insufficient for fine-grained editing, where
+	information about the <em>document type  declaration</em>
+	may be necessary, though structural isomorphism should be
+	easily accomplished.<!--Many of the interfaces here are
+	  subject to change. In particular, the use of attributes
+	  rather than explicit methods will most likely change in a
+	  future draft.
+	-->
+<!--I still need to add a lot of
+	  hyperlinks to the document, and also diagrams illustrating
+	  the relationship between objects.-->
+<br>
+<a name='ID-630B41E3'></a>
+<h1 class='div1'>3.2. Descriptions of the basic XML objects</h1><p>This section describes the XML specialization of the Node objects.
+	used throughout the DOM.</p><a name='ID-A7C3192'></a>
+<font size='4'><b>Interface <i>XMLNode</i></b></font>
+<blockquote>
+<p>The XML implementation of the Node interface adds some methods
+  that are needed to manipulate specific features of XML documents<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface XMLNode {
+  Node                getParentXMLNode(in boolean expandEntities);
+  NodeIterator        getChildXMLNodes(in boolean expandEntities);
+  boolean             hasChildXMLNodes(in boolean expandEntities);
+  Node                getFirstXMLChild(in boolean expandEntities);
+  Node                getPreviousXMLSibling(in boolean expandEntities);
+  Node                getNextXMLSibling(in boolean expandEntities);
+  EntityReference     getEntityReference();
+  EntityDeclaration   getEntityDeclaration();
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-39CB84BE'></a>
+<h4>Method <code><i>getParentXMLNode()</i></code></h4>
+<blockquote>
+<p>Returns the parent of the given Node instance. If this
+	node is the root of the document object tree, or if this node
+        is not part of a document tree,
+	<code>null</code> is returned. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>expandEntities</b><td><p>TRUE if the view of the tree with parsed entities expanded 
+	should be navigated, FALSE if the view without parsed entities 
+	expanded should be navigated</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The parent of the node.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-408D94D6'></a>
+<h4>Method <code><i>getChildXMLNodes()</i></code></h4>
+<blockquote>
+<p>Returns a NodeIterator object that will enumerate all children of
+	this node. If there are no children, an iterator that will return
+        no nodes is
+	returned. The content of the returned NodeIterator is
+	"live" in the sense that changes to the children of
+	the Node object that it was created from will be immediately
+	reflected in the nodes returned by the iterator; it is not
+	a static snapshot of the content of the Node. Similarly,
+	changes made to the nodes returned by the iterator will be
+        immediately reflected in the tree, including
+	the set of children of the Node that the NodeIterator was created
+	from. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>expandEntities</b><td><p>TRUE if the view of the tree with parsed entities expanded 
+	should be navigated, FALSE if the view without parsed entities 
+	expanded should be navigated</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>NodeIterator</b></td><td>
+<p>An iterator through the children of the node.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-A58B84AA'></a>
+<h4>Method <code><i>hasChildXMLNodes()</i></code></h4>
+<blockquote>
+<p>Returns <code>true</code> if the node has any children,
+	<code>false</code> if the node has no children at all. This
+	method exists both for convenience as well as to allow
+	implementations to be able to bypass object allocation, which
+	may be required for implementing <code>getChildNodes()</code>.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>expandEntities</b><td><p>TRUE if the view of the tree with parsed entities expanded 
+	should be navigated, FALSE if the view without parsed entities 
+	expanded should be navigated</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>boolean</b></td><td>
+<p>True if the node has children.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-15C9849B'></a>
+<h4>Method <code><i>getFirstXMLChild()</i></code></h4>
+<blockquote>
+<p>Returns the first child of a node. If there is no such
+	node, <code>null</code> is returned. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>expandEntities</b><td><p>TRUE if the view of the tree with parsed entities expanded 
+	should be navigated, FALSE if the view without parsed entities 
+	expanded should be navigated</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The first child of the node, or null.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-35CB84B5'></a>
+<h4>Method <code><i>getPreviousXMLSibling()</i></code></h4>
+<blockquote>
+<p>Returns the node immediately preceding the current node
+	in a breadth-first traversal of the tree. If there is no such
+	node, <code>null</code> is returned. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>expandEntities</b><td><p>TRUE if the view of the tree with parsed entities expanded 
+	should be navigated, FALSE if the view without parsed entities 
+	expanded should be navigated</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The the node immediately preceeding, or
+	  null.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-3C4F9C86'></a>
+<h4>Method <code><i>getNextXMLSibling()</i></code></h4>
+<blockquote>
+<p>Returns the node immediately following the current node
+	in a  breadth-first traversal of the tree. If there is no such
+	node, <code>null</code> is returned.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>expandEntities</b><td><p>TRUE if the view of the tree with parsed entities expanded 
+	should be navigated, FALSE if the view without parsed entities 
+	expanded should be navigated</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The node immediately following, or null.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-AB2B9E8B'></a>
+<h4>Method <code><i>getEntityReference()</i></code></h4>
+<blockquote>
+<p>When navigating XML trees with expandedEntities set to TRUE,
+      the DOM programmer will on occasion get Nodes returned that are 
+      part of the expansion of an entity rather than actual nodes in the
+      tree.  This method returns the entity reference that generated
+      a particular node, or NULL if it was not part of an entity reference
+      expansion.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>EntityReference</b></td><td>
+<p>The entity reference whose expansion yields a given node,
+       or NULL if the node is not part of an entity expansion.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-232B9E81'></a>
+<h4>Method <code><i>getEntityDeclaration()</i></code></h4>
+<blockquote>
+<p>When navigating XML trees with expandedEntities set to TRUE,
+      the DOM programmer will on occasion get Nodes returned that are 
+      part of the expansion of an entity rather than actual nodes in the
+      tree.  This method returns the declaration for the entity
+      reference that generated
+      a particular node, or NULL if it was not part of an entity reference
+      expansion.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>EntityDeclaration</b></td><td>
+<p>The entity declaration for a reference whose expansion yields a given node,
+       or NULL if the node is not part of an entity expansion.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<br>
+<a name='ID-1045636394'></a>
+<h1 class='div1'>3.3. Document Type Definition support overview</h1><p>A Document Type Definition (DTD) defines three things:
+	<ol>
+<li>A definition of a grammar for a markup
+	      language.</li>
+<li>A (possibly empty) set of entity
+	      declarations.</li>
+<li>A (possibly empty) set of notation
+	      declarations.</li>
+</ol>
+ This specification gives access to all of these,
+	though only in the post-parse form.<p>From a practical point of view, this means that while all the
+	<em>information</em> contained within a DTD is available,
+	not all of the information about what created it is. Parameter
+	entity references, for example, are assumed to have been
+	already expanded, and hence, their boundaries are lost.<br>
+<a name='ID-263083055'></a>
+<h1 class='div1'>3.4. Descriptions of objects related to the Document Type
+	Definition</h1><p>This section describes the objects that are used to represent
+	the DTD of a document. The objects are not XML specific,
+	though some attributes are specific to HTML DTD's. Such cases
+	are clearly marked.</p><a name='ID-412266927'></a>
+<font size='4'><b>Interface <i>DocumentType</i></b></font>
+<blockquote>
+<p>Each document has a (possibly null) attribute that
+      contains a reference to a <code>DocumentType</code> object. The
+      <code>DocumentType</code> class provides an interface to access
+      all of the entity declarations, notation declarations, and all
+      the element type declarations.<!--There is no way currently of accessing
+	the list of entities declared within a DTD. This will be added
+	once discussion about entity representation is
+	completed.-->
+<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface DocumentType {
+  attribute wstring        name;
+  attribute Node           externalSubset;
+  attribute Node           internalSubset;
+  attribute Node           generalEntities;
+  attribute Node           parameterEntities;
+  attribute Node           notations;
+  attribute Node           elementTypes;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1844763134'></a>
+<h4>Attribute <code><i>name</i></code></h4>
+<blockquote>
+<p>The <code>name</code> attribute is a <code>wstring</code> that
+	holds the name of DTD; i.e. the name immediately
+	following the <code>DOCTYPE</code> keyword.</blockquote>
+
+<a name='ID-630595433'></a>
+<h4>Attribute <code><i>externalSubset</i></code></h4>
+<blockquote>
+<p>The <code>externalSubset</code> attribute's children reference
+	the list of nodes (definitions) that
+	occurred in the external subset of a document. In this example:
+<blockquote>
+<table border='1'>
+<tr><td bgcolor='#e9e9e9'><pre>
+&lt;!DOCTYPE ex SYSTEM "ex.dtd" [
+&lt;ex/&gt;</pre></td></tr>
+</table>
+</blockquote>
+
+
+	it would iterate over all of the declarations that occurred within
+	the <code>ex.dtd</code> external entity.
+	<i><b>Note: </b>An iterator interface is used so as to not constrain
+	    implementations</i><br></blockquote>
+
+<a name='ID-664378382'></a>
+<h4>Attribute <code><i>internalSubset</i></code></h4>
+<blockquote>
+<p>The internal subset's children constitute all the definitions that 
+	occurred within the internal subset of a document (the part that
+	appears within the document instance). For example 
+<blockquote>
+<table border='1'>
+<tr><td bgcolor='#e9e9e9'><pre>
+&lt;!DOCTYPE ex SYSTEM "ex.dtd" [
+&lt;!ENTITY ex "example"&gt;
+]&gt;
+&amp;lt;ex/&gt;</pre></td></tr>
+</table>
+</blockquote>
+
+
+	if would iterate over a single node: the definition of the
+	<code>ex</code> entity. 
+	<i><b>Note: </b>An iterator interface is used so as to not constrain
+	    implementations</i><br></blockquote>
+
+<a name='ID-1788794630'></a>
+<h4>Attribute <code><i>generalEntities</i></code></h4>
+<blockquote>
+<p>This is a <code>Node</code> whose children constitute
+	the set of general entites that were defined within
+	the external and the internal subset. For example in:
+<blockquote>
+<table border='1'>
+<tr><td bgcolor='#e9e9e9'><pre>
+&lt;!DOCTYPE ex SYSTEM "ex.dtd" [
+&lt;!ENTITY foo "foo"&gt;
+&lt;!ENTITY bar "bar"&gt;
+&lt;!ENTITY % baz "baz"&gt;
+]&gt;
+&lt;ex/&gt;</pre></td></tr>
+</table>
+</blockquote>
+
+  
+	the interface would provide access to <code>foo</code> and
+	<code>bar</code> but not <code>baz</code>. All objects supporting
+	the <code>Node</code> interface that are accessed though this
+	attribute, will also support the <code>Entity</code> interface
+	(defined below).</blockquote>
+
+<a name='ID-731944280'></a>
+<h4>Attribute <code><i>parameterEntities</i></code></h4>
+<blockquote>
+<p>This is a <code>Node</code> whose children constitute
+	the set of parameter entites that were defined
+	within the external and the internal subset. In the example
+	above,  the interface would provide access to <code>baz</code>
+	but not  <code>foo</code> or <code>bar</code>. All objects
+	supporting the <code>Node</code> interface that are accessed
+	though this attribute, will also support the
+	<code>Entity</code> interface (defined below).</blockquote>
+
+<a name='ID-1431300909'></a>
+<h4>Attribute <code><i>notations</i></code></h4>
+<blockquote>
+<p>This is a <code>Node</code> whose children constitute
+	the set of notations that were defined within
+	the external and the internal subset. All objects supporting
+	the <code>Node</code> interface that are accessed though this
+	attribute, will also support the <code>Notation</code>
+	interface (defined below).</blockquote>
+
+<a name='ID-457647270'></a>
+<h4>Attribute <code><i>elementTypes</i></code></h4>
+<blockquote>
+<p>This is a <code>Node</code> whose children constitute
+	the set of element types that were defined
+	within  the external and the internal subset. All objects
+	supporting the <code>Node</code> interface that are accessed
+	though this attribute, will also support the
+	<code>ElementDefinition</code> interface (defined
+	below).</blockquote>
+
+</blockquote>
+<a name='ID-675975776'></a>
+<font size='4'><b>Interface <i>ElementDefinition</i></b></font>
+<blockquote>
+<p>The definition of each element defined within the external or
+      internal subset (providing it is parsed), will be available through
+      the <code>elementTypes</code> attribute of the
+      <code>DocumentType</code> object. The name, attribute list, and
+      content model are all available for inspection.<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface ElementDefinition : Node {
+  // ContentType
+  const int            EMPTY                = 1;
+  const int            ANY                  = 2;
+  const int            PCDATA               = 3;
+  const int            MODEL_GROUP          = 4;
+
+  attribute wstring        name;
+  attribute int            contentType;
+  attribute ModelGroup     contentModel;
+  attribute Node           attributeDefinitions;
+  attribute Node           inclusions;
+  attribute Node           exceptions;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-138979148'></a>
+<h4>Definition group <code><i>ContentType</i></code></h4>
+<blockquote>
+<p><!--TBD-->
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Defined Constants</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>EMPTY</b></td><td>
+<p>The element is an empty element, and cannot have
+	  content.</tr>
+<tr><td width='30%'><b>ANY</b><td>
+<p>The element may have character data, or any of the other
+	  elements defined within the DTD as content, in any order and
+	  sequence.</tr>
+<tr><td width='30%'><b>PCDATA</b><td>
+<p>The element can have only PCDATA (<em>Parsed Character
+	    Data</em>) as content.</tr>
+<tr><td width='30%'><b>MODEL_GROUP</b><td>
+<p>The element has a specific content model associated with
+	  it. The model is accessible through the
+	  <code>contentModel</code> attribute (below).</td></tr>
+</table>
+</blockquote>
+<a name='ID-327558124'></a>
+<h4>Attribute <code><i>name</i></code></h4>
+<blockquote>
+<p>This is the name of the type of element being
+	defined.</blockquote>
+
+<a name='ID-111750943'></a>
+<h4>Attribute <code><i>contentType</i></code></h4>
+<blockquote>
+<p>This attribute specifies the type of content of the
+	element.</blockquote>
+
+<a name='ID-1904262195'></a>
+<h4>Attribute <code><i>contentModel</i></code></h4>
+<blockquote>
+<p>If the <code>contentType</code> is
+	<code>MODEL_GROUP</code>, then this will provide access to a
+	<code>ModelGroup</code> (below) object that is the root of the
+	content model object heirarchy for this element. For other
+	content types, this will be null.</blockquote>
+
+<a name='ID-1321885225'></a>
+<h4>Attribute <code><i>attributeDefinitions</i></code></h4>
+<blockquote>
+<p>The children of this <code>Node</code> 
+	consist of the attributes that were defined to be
+	on an <code>ElementDefinition</code>. Each object supporting
+	the <code>Node</code> interface that is accessed through this
+	attribute will also support the
+	<code>AttributeDefinition</code> interface.</blockquote>
+
+<a name='ID-1380375055'></a>
+<h4>Attribute <code><i>inclusions</i></code></h4>
+<blockquote>
+<p>The children of this define a list of element type
+	names that are included in the content model of this element
+	by the SGML inclusion/exception mechanism (not available from
+	XML, but used in HTML).</blockquote>
+
+<a name='ID-1047588215'></a>
+<h4>Attribute <code><i>exceptions</i></code></h4>
+<blockquote>
+<p>The children of this node define a list of element type
+	names that are excluded from the content model of this element
+	by the SGML inclusion/exception mechanism (not available from
+	XML, but used in HTML).</blockquote>
+
+</blockquote>
+<a name='ID-479895960'></a>
+<font size='4'><b>Interface <i>PCDATAToken</i></b></font>
+<blockquote>
+<p>Token type for the string #PCDATA<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface PCDATAToken : Node {
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<a name='ID-815204125'></a>
+<font size='4'><b>Interface <i>ElementToken</i></b></font>
+<blockquote>
+<p>Token for an element declaration.<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface ElementToken : Node {
+  // OccurrenceType
+  const int            OPT                  = 1;
+  const int            PLUS                 = 2;
+  const int            REP                  = 3;
+
+  attribute wstring        name;
+  attribute int            occurrence;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-208120275'></a>
+<h4>Definition group <code><i>OccurrenceType</i></code></h4>
+<blockquote>
+<p><!--TBD-->
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Defined Constants</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>OPT</b></td><td>
+<p>The <code>?</code> occurrence indicator.</tr>
+<tr><td width='30%'><b>PLUS</b><td>
+<p>The <code>+</code> occurrence indicator.</tr>
+<tr><td width='30%'><b>REP</b><td>
+<p>The <code>*</code> occurrence indicator.</td></tr>
+</table>
+</blockquote>
+<a name='ID-2124165930'></a>
+<h4>Attribute <code><i>name</i></code></h4>
+<blockquote>
+<p>The element type name.</blockquote>
+
+<a name='ID-1125805410'></a>
+<h4>Attribute <code><i>occurrence</i></code></h4>
+<blockquote>
+<p>The number of times this element can occur.</blockquote>
+
+</blockquote>
+<a name='ID-1942141698'></a>
+<font size='4'><b>Interface <i>ModelGroup</i></b></font>
+<blockquote>
+<!--This really needs to have a
+	diagram associated with it, and a few examples.-->
+<p>The <code>ModelGroup</code> object represents the content model of
+      an <code>ElementDefinition</code>. The content model is represented as
+      a tree, where each node specifies how its children are connected, and
+      the number of times that it can occur within its parent. Leaf nodes
+      in the tree are either <code>PCDATAToken</code> or
+      <code>ElementToken</code>.<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface ModelGroup : Node {
+  // OccurrenceType
+  const int            OPT                  = 1;
+  const int            PLUS                 = 2;
+  const int            REP                  = 3;
+
+  // ConnectionType
+  const int            OR                   = 1;
+  const int            SEQ                  = 2;
+  const int            AND                  = 3;
+
+  attribute int            occurrence;
+  attribute int            connector;
+  attribute Node           tokens;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-2014750246'></a>
+<h4>Definition group <code><i>OccurrenceType</i></code></h4>
+<blockquote>
+<p><!--TBD-->
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Defined Constants</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>OPT</b></td><td>
+<p>The <code>?</code> occurrence indicator.</tr>
+<tr><td width='30%'><b>PLUS</b><td>
+<p>The <code>+</code> occurrence indicator.</tr>
+<tr><td width='30%'><b>REP</b><td>
+<p>The <code>*</code> occurrence indicator.</td></tr>
+</table>
+</blockquote>
+<a name='ID-718897928'></a>
+<h4>Definition group <code><i>ConnectionType</i></code></h4>
+<blockquote>
+<p><!--TBD-->
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Defined Constants</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>OR</b></td><td>
+<p>The <code>|</code> connection indicator.</tr>
+<tr><td width='30%'><b>SEQ</b><td>
+<p>The <code>,</code> connection indicator.</tr>
+<tr><td width='30%'><b>AND</b><td>
+<p>The <code>??</code> connection indicator.</td></tr>
+</table>
+</blockquote>
+<a name='ID-8953137'></a>
+<h4>Attribute <code><i>occurrence</i></code></h4>
+<blockquote>
+<p>The number of times this model can occur.</blockquote>
+
+<a name='ID-345773396'></a>
+<h4>Attribute <code><i>connector</i></code></h4>
+<blockquote>
+<p>Describes how the <code>tokens</code> are connected
+	together.</blockquote>
+
+<a name='ID-1186816564'></a>
+<h4>Attribute <code><i>tokens</i></code></h4>
+<blockquote>
+<p>The children of this node define the 
+    list of tokens in this model group.</blockquote>
+
+</blockquote>
+<a name='ID-574187202'></a>
+<font size='4'><b>Interface <i>AttributeDefinition</i></b></font>
+<blockquote>
+<p>The <code>AttributeDefinition</code> interface is used to
+      access information about a particular attribute definition on a
+      given element. Object supporting this interface are available
+      from the <code>ElementDefinition</code> object through the
+      <code>attributeDefinitions</code> attribute.<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface AttributeDefinition : Node {
+  // DeclaredValueType
+  const int            CDATA                = 1;
+  const int            ID                   = 2;
+  const int            IDREF                = 3;
+  const int            IDREFS               = 4;
+  const int            ENTITY               = 5;
+  const int            ENTITIES             = 6;
+  const int            NMTOKEN              = 7;
+  const int            NMTOKENS             = 8;
+  const int            NOTATION             = 9;
+  const int            NAME_TOKEN_GROUP     = 10;
+
+  // DefaultValueType
+  const int            FIXED                = 1;
+  const int            REQUIRED             = 2;
+  const int            IMPLIED              = 3;
+
+  attribute wstring        name;
+  attribute StringList     allowedTokens;
+  attribute int            declaredType;
+  attribute int            defaultType;
+  attribute Node           defaultValue;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1165640240'></a>
+<h4>Definition group <code><i>DeclaredValueType</i></code></h4>
+<blockquote>
+<p><!--TBD-->
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Defined Constants</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>CDATA</b></td><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>ID</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>IDREF</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>IDREFS</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>ENTITY</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>ENTITIES</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>NMTOKEN</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>NMTOKENS</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>NOTATION</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>NAME_TOKEN_GROUP</b><td>
+<p><!--TBD-->
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-919271646'></a>
+<h4>Definition group <code><i>DefaultValueType</i></code></h4>
+<blockquote>
+<p><!--TBD-->
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Defined Constants</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>FIXED</b></td><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>REQUIRED</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>IMPLIED</b><td>
+<p><!--TBD-->
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-3407625'></a>
+<h4>Attribute <code><i>name</i></code></h4>
+<blockquote>
+<p>The name of the attribute.</blockquote>
+
+<a name='ID-1044627163'></a>
+<h4>Attribute <code><i>allowedTokens</i></code></h4>
+<blockquote>
+<p>The list of tokens that are allowed as values. For example,
+	in
+<blockquote>
+<table border='1'>
+<tr><td bgcolor='#e9e9e9'><pre>
+&amp;lt;!DOCTYPE ex [
+&amp;lt;!ELEMENT ex (#PCDATA) &gt;
+&amp;lt;!ATTLIST ex test (FOO|BAR) "FOO" &gt;
+]&gt;
+&amp;lt;ex&gt;&amp;lt;/ex&gt;</pre></td></tr>
+</table>
+</blockquote>
+
+
+	this would hold <code>FOO</code> and <code>BAR</code>.</blockquote>
+
+<a name='ID-644274425'></a>
+<h4>Attribute <code><i>declaredType</i></code></h4>
+<blockquote>
+<p>This attribute indicates the type of values the attribute
+	may contain.</blockquote>
+
+<a name='ID-1759614604'></a>
+<h4>Attribute <code><i>defaultType</i></code></h4>
+<blockquote>
+<p>This specifies whether the attribute must be specified in
+	the instance, and if it is not, what the attribute value will be 
+	if not provided.</blockquote>
+
+<a name='ID-727471135'></a>
+<h4>Attribute <code><i>defaultValue</i></code></h4>
+<blockquote>
+<p>This provides an interface to a
+	<code>Node</code> whose children make up the default value for an
+	attribute. This value is used if the attribute was not given
+	an explicit value in the document instance. <!--Need to work on specifying exactly what
+	    this may contain, and give some
+	    examples.-->
+</blockquote>
+
+</blockquote>
+<a name='ID-1771211997'></a>
+<font size='4'><b>Interface <i>Notation</i></b></font>
+<blockquote>
+<p>The <code>Notation</code> object is used to represent the
+      definition of a notation within a DTD.<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface Notation : Node {
+  attribute wstring        name;
+  attribute boolean        isPublic;
+  attribute string         publicIdentifier;
+  attribute string         systemIdentifier;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1123790454'></a>
+<h4>Attribute <code><i>name</i></code></h4>
+<blockquote>
+<p>This is the name of the notation.</blockquote>
+
+<a name='ID-1290183874'></a>
+<h4>Attribute <code><i>isPublic</i></code></h4>
+<blockquote>
+<p>If a public identifier was specified in the notation
+	declaration, this will be <code>TRUE</code>, and the
+	<code>publicIdentifier</code> attribute will contain the string
+	for the public identifier.</blockquote>
+
+<a name='ID-2014247384'></a>
+<h4>Attribute <code><i>publicIdentifier</i></code></h4>
+<blockquote>
+<p>If a public identifier was specified in the notation
+	declaration, this will hold the public identifier string,
+	otherwise it will be null.</blockquote>
+
+<a name='ID-507630535'></a>
+<h4>Attribute <code><i>systemIdentifier</i></code></h4>
+<blockquote>
+<p>If a system identifier was specified in the notation
+	declaration, this will hold the system identifier string,
+	otherwise it will be null.</blockquote>
+
+</blockquote>
+<br>
+<a name='ID-346279765'></a>
+<h1 class='div1'>3.5. Descriptions of objects related to Entities</h1><p>XML contains the notion of "entities" that are declared in
+	the DTD, defined in either internally in a document or in an
+	external file, and referenced one or more places  in the
+	document.  In any event, entities allow an abstract reference
+	to some arbitrarily large or complex piece of  text and
+	markup.</p><a name='ID-527DCFF2'></a>
+<font size='4'><b>Interface <i>EntityDeclaration</i></b></font>
+<blockquote>
+<p>.<!--Should replacement subtree be a node
+     or a DocumentFragment?-->
+<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface EntityDeclaration {
+  attribute wstring        replacementString;
+  attribute DocumentFragmentreplacementSubtree;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-D67DCFE0'></a>
+<h4>Attribute <code><i>replacementString</i></code></h4>
+<blockquote>
+<p>The string that a reference to this entity is replaced with.
+     It may contain markup and entity references.  It does not
+     apply to un-parsed entities.</blockquote>
+
+<a name='ID-4E3DCFE1'></a>
+<h4>Attribute <code><i>replacementSubtree</i></code></h4>
+<blockquote>
+<p>The parsed subtree that references to this entity would
+    logically point to. All markup in the replacement string
+    is represented as sub-trees, and
+    entity references are expanded.</blockquote>
+
+</blockquote>
+<a name='ID-11C98490'></a>
+<font size='4'><b>Interface <i>EntityReference</i></b></font>
+<blockquote>
+<p>EntityReference objects are inserted into the initial
+   structure model by the XML processor. XML does not mandate that a 
+   non-validating XML processor read and process entity declarations 
+   made in the external subset or that are declared in external 
+   parameter entities. This means that parsed entitiesthat are declared  
+   in the external subset need not be expanded by some classes of 
+   applications.<p>XML contains the notion of " parsed entities" that are declared in 
+   the DTD, defined in either internally in a document or in an external 
+   file, and referenced one or more places in the document. In any 
+   event, parsed entities allow an abstract reference to some 
+   arbitrarily large or complex piece of text and markup. Parsed 
+   entities are one type of general entity. The other type of general 
+   entity that XML defines is the unparsed entity, used for embedding 
+   data that is not in XML format in an XML document. it is commonly 
+   used for images.<p>Parameter entities are used in DTDs for similar purposes as parsed 
+  entities in document instances; namely they allow an abstract 
+  reference to some part of the DTD. XML defines a number of rules 
+  about the allowed content of a parameter entity; the reader is 
+  referred to the XML specification for details.<!--isExpanded, Declaration-->
+<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface EntityReference {
+  attribute boolean        isExpanded;
+  void                expand(in  );
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-767FCFD8'></a>
+<h4>Attribute <code><i>isExpanded</i></code></h4>
+<blockquote>
+<p>The default view of entities is to be expanded.</blockquote>
+
+<a name='ID-336B9E97'></a>
+<h4>Method <code><i>expand()</i></code></h4>
+<blockquote>
+<p> <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b></b><td><p></tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<p></td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<br>
+<a name='ID-1070343275'></a>
+<h1 class='div1'>3.6. Descriptions of additional objects in instances</h1><p>XML adds to the range of objects that are available in
+	document instances. These objects defined below.</p><a name='ID-667469212'></a>
+<font size='4'><b>Interface <i>CDATASection</i></b></font>
+<blockquote>
+<p>CDATA sections are used in the document instance, and
+      provide a region in which most of the XML delimiter recognition
+      does not take  place. The primary purpose is for including
+      material such as XML  fragments, without needing to escape all
+      the delimiters.<p>The <em>wstring</em> attribute of the
+      Text node holds the text that was contained by the CDATA
+      section. Note that this <em>may</em> contain characters
+      that need to be escaped outside of CDATA sections.<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface CDATASection : Text {
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<br>
+<a name='ID-1711210074'></a>
+<h1 class='div1'>3.7. IDL Interface Definitions</h1><blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9' width='80%'><pre>
+interface XMLNode {
+  Node                getParentXMLNode(in boolean expandEntities);
+  NodeIterator        getChildXMLNodes(in boolean expandEntities);
+  boolean             hasChildXMLNodes(in boolean expandEntities);
+  Node                getFirstXMLChild(in boolean expandEntities);
+  Node                getPreviousXMLSibling(in boolean expandEntities);
+  Node                getNextXMLSibling(in boolean expandEntities);
+  EntityReference     getEntityReference();
+  EntityDeclaration   getEntityDeclaration();
+};
+
+interface DocumentType {
+  attribute wstring        name;
+  attribute Node           externalSubset;
+  attribute Node           internalSubset;
+  attribute Node           generalEntities;
+  attribute Node           parameterEntities;
+  attribute Node           notations;
+  attribute Node           elementTypes;
+};
+
+interface ElementDefinition : Node {
+  // ContentType
+  const int            EMPTY                = 1;
+  const int            ANY                  = 2;
+  const int            PCDATA               = 3;
+  const int            MODEL_GROUP          = 4;
+
+  attribute wstring        name;
+  attribute int            contentType;
+  attribute ModelGroup     contentModel;
+  attribute Node           attributeDefinitions;
+  attribute Node           inclusions;
+  attribute Node           exceptions;
+};
+
+interface PCDATAToken : Node {
+};
+
+interface ElementToken : Node {
+  // OccurrenceType
+  const int            OPT                  = 1;
+  const int            PLUS                 = 2;
+  const int            REP                  = 3;
+
+  attribute wstring        name;
+  attribute int            occurrence;
+};
+
+interface ModelGroup : Node {
+  // OccurrenceType
+  const int            OPT                  = 1;
+  const int            PLUS                 = 2;
+  const int            REP                  = 3;
+
+  // ConnectionType
+  const int            OR                   = 1;
+  const int            SEQ                  = 2;
+  const int            AND                  = 3;
+
+  attribute int            occurrence;
+  attribute int            connector;
+  attribute Node           tokens;
+};
+
+interface AttributeDefinition : Node {
+  // DeclaredValueType
+  const int            CDATA                = 1;
+  const int            ID                   = 2;
+  const int            IDREF                = 3;
+  const int            IDREFS               = 4;
+  const int            ENTITY               = 5;
+  const int            ENTITIES             = 6;
+  const int            NMTOKEN              = 7;
+  const int            NMTOKENS             = 8;
+  const int            NOTATION             = 9;
+  const int            NAME_TOKEN_GROUP     = 10;
+
+  // DefaultValueType
+  const int            FIXED                = 1;
+  const int            REQUIRED             = 2;
+  const int            IMPLIED              = 3;
+
+  attribute wstring        name;
+  attribute StringList     allowedTokens;
+  attribute int            declaredType;
+  attribute int            defaultType;
+  attribute Node           defaultValue;
+};
+
+interface Notation : Node {
+  attribute wstring        name;
+  attribute boolean        isPublic;
+  attribute string         publicIdentifier;
+  attribute string         systemIdentifier;
+};
+
+interface EntityDeclaration {
+  attribute wstring        replacementString;
+  attribute DocumentFragmentreplacementSubtree;
+};
+
+interface EntityReference {
+  attribute boolean        isExpanded;
+  void                expand(in  );
+};
+
+interface CDATASection : Text {
+};
+
+</pre></td></tr>
+</table>
+</blockquote>
+<br>
+<a name='ID-1236736695'></a>
+<h1 class='div1'>3.8. Java XML API definitions</h1><blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9' width='80%'><pre>
+public interface XMLNode {
+   public Node              getParentXMLNode(boolean expandEntities);
+   public NodeIterator      getChildXMLNodes(boolean expandEntities);
+   public boolean           hasChildXMLNodes(boolean expandEntities);
+   public Node              getFirstXMLChild(boolean expandEntities);
+   public Node              getPreviousXMLSibling(boolean expandEntities);
+   public Node              getNextXMLSibling(boolean expandEntities);
+   public EntityReference   getEntityReference();
+   public EntityDeclaration getEntityDeclaration();
+}
+
+public interface DocumentType {
+   public String            getName();
+   public void              setName(String arg);
+
+   public Node              getExternalSubset();
+   public void              setExternalSubset(Node arg);
+
+   public Node              getInternalSubset();
+   public void              setInternalSubset(Node arg);
+
+   public Node              getGeneralEntities();
+   public void              setGeneralEntities(Node arg);
+
+   public Node              getParameterEntities();
+   public void              setParameterEntities(Node arg);
+
+   public Node              getNotations();
+   public void              setNotations(Node arg);
+
+   public Node              getElementTypes();
+   public void              setElementTypes(Node arg);
+
+}
+
+public interface ElementDefinition extends Node {
+   // ContentType
+   public static final int            EMPTY                = 1;
+   public static final int            ANY                  = 2;
+   public static final int            PCDATA               = 3;
+   public static final int            MODEL_GROUP          = 4;
+
+   public String            getName();
+   public void              setName(String arg);
+
+   public int               getContentType();
+   public void              setContentType(int arg);
+
+   public ModelGroup        getContentModel();
+   public void              setContentModel(ModelGroup arg);
+
+   public Node              getAttributeDefinitions();
+   public void              setAttributeDefinitions(Node arg);
+
+   public Node              getInclusions();
+   public void              setInclusions(Node arg);
+
+   public Node              getExceptions();
+   public void              setExceptions(Node arg);
+
+}
+
+public interface PCDATAToken extends Node {
+}
+
+public interface ElementToken extends Node {
+   // OccurrenceType
+   public static final int            OPT                  = 1;
+   public static final int            PLUS                 = 2;
+   public static final int            REP                  = 3;
+
+   public String            getName();
+   public void              setName(String arg);
+
+   public int               getOccurrence();
+   public void              setOccurrence(int arg);
+
+}
+
+public interface ModelGroup extends Node {
+   // OccurrenceType
+   public static final int            OPT                  = 1;
+   public static final int            PLUS                 = 2;
+   public static final int            REP                  = 3;
+
+   // ConnectionType
+   public static final int            OR                   = 1;
+   public static final int            SEQ                  = 2;
+   public static final int            AND                  = 3;
+
+   public int               getOccurrence();
+   public void              setOccurrence(int arg);
+
+   public int               getConnector();
+   public void              setConnector(int arg);
+
+   public Node              getTokens();
+   public void              setTokens(Node arg);
+
+}
+
+public interface AttributeDefinition extends Node {
+   // DeclaredValueType
+   public static final int            CDATA                = 1;
+   public static final int            ID                   = 2;
+   public static final int            IDREF                = 3;
+   public static final int            IDREFS               = 4;
+   public static final int            ENTITY               = 5;
+   public static final int            ENTITIES             = 6;
+   public static final int            NMTOKEN              = 7;
+   public static final int            NMTOKENS             = 8;
+   public static final int            NOTATION             = 9;
+   public static final int            NAME_TOKEN_GROUP     = 10;
+
+   // DefaultValueType
+   public static final int            FIXED                = 1;
+   public static final int            REQUIRED             = 2;
+   public static final int            IMPLIED              = 3;
+
+   public String            getName();
+   public void              setName(String arg);
+
+   public String            getAllowedTokens();
+   public void              setAllowedTokens(String arg);
+
+   public int               getDeclaredType();
+   public void              setDeclaredType(int arg);
+
+   public int               getDefaultType();
+   public void              setDefaultType(int arg);
+
+   public Node              getDefaultValue();
+   public void              setDefaultValue(Node arg);
+
+}
+
+public interface Notation extends Node {
+   public String            getName();
+   public void              setName(String arg);
+
+   public boolean           getIsPublic();
+   public void              setIsPublic(boolean arg);
+
+   public String            getPublicIdentifier();
+   public void              setPublicIdentifier(String arg);
+
+   public String            getSystemIdentifier();
+   public void              setSystemIdentifier(String arg);
+
+}
+
+public interface EntityDeclaration {
+   public String            getReplacementString();
+   public void              setReplacementString(String arg);
+
+   public DocumentFragment  getReplacementSubtree();
+   public void              setReplacementSubtree(DocumentFragment arg);
+
+}
+
+public interface EntityReference {
+   public boolean           getIsExpanded();
+   public void              setIsExpanded(boolean arg);
+
+   public void              expand( );
+}
+
+public interface CDATASection extends Text {
+}
+
+</pre></td></tr>
+</table>
+</blockquote>
+<br>
+<a name='ID-1319933405'></a>
+<h1 class='div1'>3.9. ECMAScript XML API definitions</h1><h2>Object XMLNode</h2>
+<blockquote>
+<p>The <b>XMLNode</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>entityReference</b></dt>
+<dd>This property is expected to be a <b>EntityReference</b></dd>
+<dt><b>entityDeclaration</b></dt>
+<dd>This property is expected to be a <b>EntityDeclaration</b></dd>
+</dl></blockquote>
+<p>The <b>XMLNode</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>getParentXMLNode(expandEntities)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>expandEntities</b> parameter is expected to be of type <b>boolean.</b>.
+</dd>
+<dt><b>getChildXMLNodes(expandEntities)</b></dt>
+<dd>This method returns a <b>NodeIterator</b>.
+ The <b>expandEntities</b> parameter is expected to be of type <b>boolean.</b>.
+</dd>
+<dt><b>hasChildXMLNodes(expandEntities)</b></dt>
+<dd>This method returns a <b>boolean</b>.
+ The <b>expandEntities</b> parameter is expected to be of type <b>boolean.</b>.
+</dd>
+<dt><b>getFirstXMLChild(expandEntities)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>expandEntities</b> parameter is expected to be of type <b>boolean.</b>.
+</dd>
+<dt><b>getPreviousXMLSibling(expandEntities)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>expandEntities</b> parameter is expected to be of type <b>boolean.</b>.
+</dd>
+<dt><b>getNextXMLSibling(expandEntities)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>expandEntities</b> parameter is expected to be of type <b>boolean.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object DocumentType</h2>
+<blockquote>
+<p>The <b>DocumentType</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>name</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+<dt><b>externalSubset</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>internalSubset</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>generalEntities</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>parameterEntities</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>notations</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>elementTypes</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object ElementDefinition</h2>
+<blockquote>
+<p><b>ElementDefinition</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>ElementDefinition</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>name</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+<dt><b>contentType</b></dt>
+<dd>This property is expected to be a <b>int</b></dd>
+<dt><b>contentModel</b></dt>
+<dd>This property is expected to be a <b>ModelGroup</b></dd>
+<dt><b>attributeDefinitions</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>inclusions</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>exceptions</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object PCDATAToken</h2>
+<blockquote>
+<p><b>PCDATAToken</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+</blockquote>
+<h2>Object ElementToken</h2>
+<blockquote>
+<p><b>ElementToken</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>ElementToken</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>name</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+<dt><b>occurrence</b></dt>
+<dd>This property is expected to be a <b>int</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object ModelGroup</h2>
+<blockquote>
+<p><b>ModelGroup</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>ModelGroup</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>occurrence</b></dt>
+<dd>This property is expected to be a <b>int</b></dd>
+<dt><b>connector</b></dt>
+<dd>This property is expected to be a <b>int</b></dd>
+<dt><b>tokens</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object AttributeDefinition</h2>
+<blockquote>
+<p><b>AttributeDefinition</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>AttributeDefinition</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>name</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+<dt><b>allowedTokens</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+<dt><b>declaredType</b></dt>
+<dd>This property is expected to be a <b>int</b></dd>
+<dt><b>defaultType</b></dt>
+<dd>This property is expected to be a <b>int</b></dd>
+<dt><b>defaultValue</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Notation</h2>
+<blockquote>
+<p><b>Notation</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>Notation</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>name</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+<dt><b>isPublic</b></dt>
+<dd>This property is expected to be a <b>boolean</b></dd>
+<dt><b>publicIdentifier</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+<dt><b>systemIdentifier</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object EntityDeclaration</h2>
+<blockquote>
+<p>The <b>EntityDeclaration</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>replacementString</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+<dt><b>replacementSubtree</b></dt>
+<dd>This property is expected to be a <b>DocumentFragment</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object EntityReference</h2>
+<blockquote>
+<p>The <b>EntityReference</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>isExpanded</b></dt>
+<dd>This property is expected to be a <b>boolean</b></dd>
+</dl></blockquote>
+<p>The <b>EntityReference</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>expand()</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b></b> parameter is expected to be of type <b>.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object CDATASection</h2>
+<blockquote>
+<p><b>CDATASection</b> has the all the properties and methods of <b>Text</b> as well as the properties and methods defined below.</p>
+</blockquote>
+<br></body>
+</html>

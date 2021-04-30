@@ -1,0 +1,3100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+  
+  <HEAD>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+    <TITLE>Document Object Model (HTML) Level 1</TITLE>
+  </HEAD>
+  
+  <BODY bgcolor='#FFFFFF' text='#000000'>
+    
+    <H1>4. Document Object Model (HTML) Level 1</H1>
+    
+    <DL>
+      <DT><TT>Editors:</TT></DT>
+      <DD>Mike Champion, ArborText</DD>
+      <DD>Vidur Apparao, Netscape</DD>
+      <DD>Scott Isaacs, Microsoft (until January 1998)</DD>
+      <DD>Chris Wilson, Microsoft (after January 1998)</DD>
+    </DL>
+    <hr>
+        <P>The Document Object Model (DOM) level one provides
+        a mechanism for software developers and web script authors to access and
+        manipulate parsed HTML and XML content. This document defines a set of
+        objects that extends the Document Object Model (Core) such that the
+        combination can represent all parts of a parsed HTML document. This
+        document is meant to be concurrent with the HTML version 4.0
+        specification.</p>
+    
+<br><hr>
+    
+    <H1>Introduction</H1>
+    
+    <P>This specification is part of the
+      <A HREF="cover.html">W3C Document Object
+        Model</A>, which defines a programming interface for manipulating HTML
+      and XML documents. Objects and methods which are used for both HTML and
+      XML documents are defined in the
+      <A HREF="level-one-core">W3C DOM Level One
+        Core </A>specification, which forms the basis for the W3C DOM Level One
+      HTML specification that you are now reading. This document extends the
+      Level One Core specification to describe objects and methods specific to
+      HTML documents. In general, the functionality needed to manipulate
+      hierarchical document structures, elements, and attributes will be found
+      in the core specification; functionality that depends on the specific
+      elements defined in HTML will be found in this document. Another document,
+      the <A HREF="level-one-xml">W3C DOM Level One
+        XML</A> specification, contains methods and objects specific to XML
+      documents. </P>
+    
+    <P>The goals of the HTML-specific DOM specification are: </P>
+    <UL>
+      <LI>to specialize and add functionality that relates specifically to HTML
+        documents and elements.</LI>
+      <LI>to address issues of backwards compatibility with the Level 0
+        Document Object Model.</LI>
+      <LI>to provide convenience mechanisms where appropriate for common and
+        frequent operations on HTML documents.</LI>
+    </UL>
+    
+    <P>The key differences between the core DOM and the HTML application of DOM
+      is that the HTML Document Object Model exposes a number of convenience
+      methods and properties that are consistent with the existing models and
+      are more appropriate to script writers. In many cases, these enhancements
+      are not applicable to a general DOM because they rely on the presence of a
+      predefined DTD. For DOM Level 1, the DTD for HTML 4.0 is assumed. </P>
+    
+    <P>The W3C DOM Working Group attempts, wherever possible, to maintain
+      compatibility with the DOM Level 0, which is defined as being the
+      functionality exposed in Netscape Navigator 3.0 and Microsoft Internet
+      Explorer 3.0. </P>
+    
+    <P>More specifically, this document includes the following specializations
+      for HTML: </P>
+    <UL>
+      <LI>An HTMLDocument interface, derived from the core Document interface.
+        HTMLDocument specifies the operations and queries that can be made on a
+        HTML document.</LI>
+      <LI>An HTMLElement interface, derived from the core Element interface.
+        HTMLElement specifies the operations and queries that can be made on any
+        HTML element. Methods on HTMLElement include those that allow for the
+        retrieval and modification of attributes that apply to all HTML element.</LI>
+      <LI>Specializations for all HTML elements that have attributes that
+        extend beyond those specified in the HTMLElement interface. For all such
+        attributes, the derived interface for the element contains explicit
+        methods for setting and getting the values.</LI>
+    </UL>
+    
+    <P>The Level 1 document does not include mechanisms to access and modify
+      style specified through CSS-1. Furthermore, it will not define an event
+      model for HTML documents. This functionality will be specified in a future
+      Level of this specification. The events that are supported in Level 0 are
+      given in the DOM Level 1 HTML ECMAScript binding for completeness; the
+      method of defining and handling events is expected to change. </P>
+    
+    <H1>HTML Application of Core DOM</H1>
+    
+    <H2>Naming Conventions</H2>
+    
+    <P>The HTML DOM follows a naming convention for properties, methods,
+      events, collections, and data types. All names are defined as one or more
+      English words concatenated together to form a single string. </P>
+    
+    <H3>Properties and Methods</H3>
+    
+    <P>The property or method name starts with the initial keyword in
+      lowercase, and each subsequent word starts with a capital letter. For
+      example, a property that returns document meta information such as the
+      date the file was created might be named &quot;fileDateCreated&quot;. In
+      the ECMAScript binding, properties are exposed as properties of a given
+      object. In Java, properties are exposed with get and set methods. </P>
+
+<!-- We don't have a list of events in this spec, so I've commented out this mention of them.
+
+<H3>Events</H3>
+
+<P>All attributes for supporting events are spelled entirely in lowercase letters. All events are prefixed with &quot;on&quot;. Events that are exposed as properties also follow this naming convention. For example, a click event is named &quot;onclick&quot; and is exposed as a property named &quot;onclick&quot; in the object model. </P>-->
+ <H1>HTML Document</H1>
+  <H2>HTMLDocument</H2>
+    <P>The HTMLDocument is the root of the HTML hierarchy and contains the
+      entire content as its descendants. </P>
+<!--
+<P><I>We are considering adding convenience accessors and ways to query all elements, in order to locate elements in the document easily.</I> </P>-->
+
+
+   <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>NamedNodeList images</TT></DT>
+      <DD>A collection of all the images in the document</DD>
+      <DT><TT>NamedNodeList applets</TT></DT>
+      <DD>A collection of all the &lt;APPLET&gt; (deprecated element) and &lt;OBJECT&gt;
+        elements in the document.</DD>
+      <DT><TT>NamedNodeList links</TT></DT>
+      <DD>A collection of all the &lt;AREA&gt; and &lt;A HREF=...&gt; elements
+        in the document.</DD>
+      <DT><TT>NamedNodeList forms</TT></DT>
+      <DD>A collection of all the forms in the document</DD>
+      <DT><TT>NamedNodeList anchors</TT></DT>
+      <DD>A collection of all the &lt;A NAME=...&gt; elements in the document.</DD>
+      <DT><TT>wstring title</TT></DT>
+      <DD>The title of a document as specified by the &lt;TITLE&gt; tag in the
+        head of the document.</DD>
+      <DT><TT>wstring referrer</TT></DT>
+      <DD>Returns the URL of the page that linked to this page. This property
+        is an empty string if the user navigated to the page directly (not
+        through a link, eg., from a bookmark).</DD>
+      <DT><TT>wstring cookie</TT></DT>
+      <DD>Assigning a cookie string is in the following format: name=value;
+        expires=date. Retrieving the cookie a semi-colon delimited list of name,
+        value pairs for all the cookies associated with the page.</DD>
+      <DT><TT>wstring fileSize</TT></DT>
+      <DD>The size of the document</DD>
+      <DT><TT>wstring fileCreatedDate</TT></DT>
+      <DD>A string representation of the date the document was created.</DD>
+      <DT><TT>wstring fileModifiedDate</TT></DT>
+      <DT><TT>wstring fileUpdatedDate</TT></DT>
+      <DD>The last update timestamp.</DD>
+      <DT><TT>wstring domain</TT></DT>
+      <DD>The domain name of the server that served the document.</DD>
+      <DT><TT>wstring URL</TT></DT>
+      <DD>The complete URL of the document.</DD>
+      <DT><TT>HTMLElement body</TT></DT>
+      <DD>The element that contains the content for the document. In documents
+        with BODY contents, returns the BODY element, and in frameset documents,
+        this returns the outermost FRAMESET element.</DD>
+    </DL>
+    
+    <P>The following properties have been deprecated in favor of the
+      corresponding ones for the BODY element: </P>
+    <DL>
+      <DD><TT>alinkColor</TT></DD>
+      <DD><TT>background</TT></DD>
+      <DD><TT>bgColor</TT></DD>
+      <DD><TT>fgColor</TT></DD>
+      <DD><TT>linkColor</TT></DD>
+      <DD><TT>vlinkColor</TT></DD>
+    </DL>
+    
+    <H4>Methods</H4>
+    
+    <P>The following methods allow a user to add to or replace the structure
+      model of a document using strings of unparsed HTML. The Working Group is
+      currently considering alternate methods for providing similar
+      functionality for both HTML and XML documents. The following methods may
+      be deprecated at some point in the future in favor of a more
+      general-purpose mechanism. </P>
+    <DL>
+      <DT><TT>void open();</TT></DT>
+      <DD>Open a document stream for writing.</DD>
+      <DT><TT>void write(in wstring text);</TT></DT>
+      <DD>Write a string of text to a document. The text is parsed into the
+        document's structure model.</DD>
+      <DT><TT>void writeln(in wstring text);</TT></DT>
+      <DD>Write a string of text followed by a newline character to a document.
+        The text is parsed into the document's structure model.</DD>
+      <DT><TT>void close();</TT></DT>
+      <DD>Closes a document stream and forces display.</DD>
+    </DL>
+    
+    <H2>LOCATION Object</H2>
+    
+    <P>The location object parses the URL for the current page into a number of
+      properties providing easy access. The Location object is included in the
+      HTML-specific interface (&quot;window&quot;) in Level 0. In a subsequent
+      level of the DOM, the DocumentContext object will be defined as part of
+      the core API and the Location object and its methods may be deprecated.
+
+<!--
+<H4>
+<TT>Properties</TT></H4>
+<DL>
+<DT><TT>wstring href</TT></DT>
+<DD>URL that acts as the base URL</DD>
+<DT><TT>wstring protocol</TT></DT>
+<DD>The protocol used to retrieve the document</DD>
+<DT><TT>wstring host</TT></DT>
+<DD>The host server address</DD>
+<DT><TT>wstring hostname</TT></DT>
+<DD>The host server name</DD>
+<DT><TT>wstring port</TT></DT>
+<DD>The IP port the server is on</DD>
+<DT><TT>wstring pathname</TT></DT>
+<DD>The document pathname</DD>
+<DT><TT>wstring search</TT></DT>
+<DT><TT>wstring hash</TT></DT>
+</DL>
+<H4>Methods</H4>
+<DL>
+<DT><TT>void reload(in boolean flag);</TT></DT>
+<DD>Reload the entire document</DD>
+<DT><TT>void replace(in string url);</TT></DT>
+</DL>
+-->
+      
+       </P>
+    
+    <H1>HTML Elements</H1>
+
+<PRE>Element
+
+&nbsp; |
+
+&nbsp; +--- HTMLElement
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +--- <I>Specific HTML
+
+<FONT COLOR="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT>Elements
+
+</I><B>HTMLElement Object Hierarchy</B></PRE>
+    
+    <H2>Property Attributes</H2>
+    
+    <P>All HTML attributes are exposed as properties on the element object. The
+      name of the exposed property always uses the naming conventions, and is
+      independent of the case of the attribute in the source document. The data
+      type of the property is determined by the type of the attribute as
+      determined by the HTML 4.0 DTD. The attributes have the semantics given in
+      the HTML 4.0 specification. </P>
+    
+    <P>The attributes are exposed as properties for compatibility with Level 0.
+      This usage is deprecated because it can not be generalised to all possible
+      attribute names, as is required both for XML and potentially for future
+      versions of HTML. We are considering how best to add, get, and remove
+      attributes in a simple and direct way.  </P>
+    <TABLE BORDER="0">
+      <TR>
+        <TH>DTD Data Type</TH>
+        <TH>Object Model Data Type</TH>
+      </TR>
+      <TR>
+        <TD>CDATA</TD>
+        <TD>String</TD>
+      </TR>
+      <TR>
+        <TD>Value list (e.g.. (left | right | center))</TD>
+        <TD>String</TD>
+      </TR>
+      <TR>
+        <TD>one-value Value list (e.g. (border))</TD>
+        <TD>Boolean</TD>
+      </TR>
+      <TR>
+        <TD>Number</TD>
+        <TD>Long Integer</TD>
+      </TR>
+    </TABLE>
+    
+    <P>The return value of an attribute that has data type that is a value list
+      is always capitalized, independent of the case of the value in the source
+      document. For example, if the value of the align attribute on a P element
+      is &quot;left&quot; then it is returned as &quot;Left&quot;. For
+      attributes with the CDATA data type, the value is returned with the
+      capitalization as in the source document. </P>
+    
+    <H3>Naming Exceptions</H3>
+    
+    <P>To avoid name-space conflicts, an attribute with the same name as a
+      keyword in one of our chosen binding languages will be prefixed. For HTML,
+      the prefix used is &quot;html&quot; and for CSS, the prefix used is &quot;css&quot;.
+      For example, the &quot;for&quot; attribute collides with loop construct
+      naming conventions and is named &quot;htmlFor&quot;, while the CSS float
+      attribute collides with the float data type and is named &quot;cssFloat&quot;.
+    </P>
+    
+    <H3>Exposing Element Type Names (tagName)</H3>
+    
+    <P>The property that exposes the element type name will return this in
+      uppercase. For example, the body element type name is exposed through the
+      &quot;tagName&quot; property as &quot;BODY&quot;. </P>
+    
+    <H2>HTMLElement</H2>
+    
+    <P>All HTML elements derive from this class. Elements that only expose the
+      core attributes are represented by the base HTMLElement class. These
+      elements are as follows: </P>
+    <UL>
+      <LI>HEAD</LI>
+      <LI>special: SUB, SUP, SPAN, BDO</LI>
+      <LI>font: TT, I, B, U, S, STRIKE, BIG, SMALL</LI>
+      <LI>phrase: EM, STRONG, DFN, CODE, SAMP, KBD, VAR, CITE, ACRONYM</LI>
+      <LI>list: DD</LI>
+      <LI>NOFRAMES, NOSCRIPT</LI>
+      <LI>ADDRESS, CENTER, PRE</LI>
+    </UL>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring title</TT></DT>
+      <DD>Advisory title.</DD>
+      <DT><TT>wstring lang</TT></DT>
+      <DD>Language code.</DD>
+      <DT><TT>wstring dir</TT></DT>
+      <DD>Direction for weak/neutral text.</DD>
+      <DT><TT>wstring className</TT></DT>
+      <DD>the class attribute of the element. This attribute has been renamed
+        due to conflicts with the class keyword exposed by many languages.</DD>
+      <DT><TT>HTMLStyle style</TT></DT>
+      <DD>RESERVED - For accessing the inline style of the element</DD>
+    </DL>
+    
+    <H1>Head Elements</H1>
+    
+    <H2>LINK Element</H2>
+    
+    <P>The LINK element specifies a link to an external resource, and defines
+      this document's relationship to that resource (or vice versa). </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring href</TT></DT>
+      <DD>The base URL</DD>
+      <DT><TT>wstring charset</TT></DT>
+      <DD>The character set encoding of the linked resource</DD>
+      <DT><TT>wstring hreflang</TT></DT>
+      <DD>Language code</DD>
+      <DT><TT>wstring target</TT></DT>
+      <DD>Render in this frame</DD>
+      <DT><TT>wstring rel</TT></DT>
+      <DD>Forward link type</DD>
+      <DT><TT>wstring rev</TT></DT>
+      <DD>Reverse link type</DD>
+      <DT><TT>wstring type</TT></DT>
+      <DD>Advisory content type</DD>
+      <DT><TT>wstring media</TT></DT>
+      <DD>Designed for use with specific media.</DD>
+      <DT><TT>bool disabled</TT></DT>
+      <DD>Enables/disables the link. This is currently only used for stylesheet
+        links, and may be used to activate or deactive stylesheets.</DD>
+
+<!--
+<DD><I>We are also considering a method that returns the current loading state of the external link if the link is being downloaded .</I></DD>-->
+      
+      
+    </DL>
+    
+    <H2>TITLE Element</H2>
+    
+    <P>The document title </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring title text</TT></DT>
+      <DD>The specified title as a string</DD>
+    </DL>
+    
+    <H2>META Element</H2>
+    
+    <P>This contains generic meta-information about the document. </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring httpEquiv</TT></DT>
+      <DD>HTTP response header name</DD>
+      <DT><TT>wstring content</TT></DT>
+      <DD>Associated information</DD>
+      <DT><TT>wstring name</TT></DT>
+      <DD>Meta-information name</DD>
+      <DT><TT>wstring scheme</TT></DT>
+      <DD>Select form of content</DD>
+    </DL>
+    
+    <H2>BASE Element</H2>
+    
+    <P>Document base URL </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring href</TT></DT>
+      <DD>The URL</DD>
+      <DT><TT>wstring target</TT></DT>
+      <DD>The default target frame</DD>
+    </DL>
+    
+    <H2>ISINDEX Element</H2>
+    
+    <P>Represents the deprecated ISINDEX element in HTML (used for single-line
+      text input). </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring prompt</TT></DT>
+      <DD>Prompt message</DD>
+    </DL>
+    
+    <H2>STYLE Element</H2>
+    
+    <P>Style information - a more detailed stylesheet object model will be
+      defined in a separate document. </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring type</TT></DT>
+      <DD>The style sheet language (Internet media type).</DD>
+      <DT><TT>bool disabled</TT></DT>
+      <DD>Enables/disables the stylesheet.</DD>
+      <DT><TT>wstring media</TT></DT>
+      <DD>The intended destination medium for the style sheet.</DD>
+    </DL>
+
+<!-- End of head elements -->
+    
+    
+    <H2>BODY Element</H2>
+    
+    <P>The HTML document body. This element is always present in the DOM API,
+      even if the tags are not present in the source document. </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring background</TT></DT>
+      <DD>URL of the background texture tile image</DD>
+      <DT><TT>wstring bgColor</TT></DT>
+      <DD>Background color code</DD>
+      <DT><TT>wstring text</TT></DT>
+      <DD>Document text color</DD>
+      <DT><TT>wstring link</TT></DT>
+      <DD>Color of links</DD>
+      <DT><TT>wstring vLink</TT></DT>
+      <DD>Color of visited links</DD>
+      <DT><TT>wstring aLink</TT></DT>
+      <DD>Color of active links</DD>
+    </DL>
+    
+    <H1>Form Elements</H1>
+    
+    <P>If any of the form control elements is not contained within a form, the
+      form property returns null. </P>
+    
+    <H2>FORM Element</H2>
+    
+    <P>The form element encompasses behavior similar to a collection and an
+      element. It provides direct access to the contained input elements as well
+      as the attributes of the form element.
+
+<!--<I>The WG is considering a method to retrieve an entry by name or index</I>-->
+      
+       </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring action</TT></DT>
+      <DD>Server-side form handler</DD>
+      <DT><TT>wstring method</TT></DT>
+      <DD>HTTP method used to submit form</DD>
+      <DT><TT>wstring target</TT></DT>
+      <DD>Render in this frame</DD>
+      <DT><TT>wstring name</TT></DT>
+      <DD>Name of frame for targeting</DD>
+      <DT><TT>long length</TT></DT>
+      <DD>Length (read-only)</DD>
+      <DT><TT>wstring enctype</TT></DT>
+      <DT><TT>wstring acceptCharset</TT></DT>
+      <DD>List of supported character sets</DD>
+      <DT><TT>NamedNodeList elements</TT></DT>
+      <DD>Returns a collection of all elements in the form</DD>
+    </DL>
+    
+    <H2>SELECT Element</H2>
+    
+    <P>The select element allows the selection of an option. The contained
+      options can be directly accessed through the select element as a
+      collection. </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring type</TT></DT>
+      <DD>The type of control created</DD>
+      <DT><TT>long size</TT></DT>
+      <DD>Number of rows visible</DD>
+      <DT><TT>boolean multiple</TT></DT>
+      <DD>May multiple items be selected?</DD>
+      <DT><TT>wstring name</TT></DT>
+      <DD>Field name</DD>
+      <DT><TT>NamedNodeList options</TT></DT>
+      <DD>The list of OPTION elements contained by this element.</DD>
+      <DT><TT>wstring type</TT></DT>
+      <DD>What kind of select element</DD>
+      <DT><TT>wstring value</TT></DT>
+      <DD>Property value</DD>
+      <DT><TT>boolean disabled</TT></DT>
+      <DD>Control unavailable in this context?</DD>
+      <DT><TT>long length</TT></DT>
+      <DD>Number of characters</DD>
+      <DT><TT>long tabIndex</TT></DT>
+      <DD>Position in tabbing order</DD>
+      <DT><TT>long selectedIndex</TT></DT>
+      <DD>The ordinal index of the selected item. -1 is returned if no element
+        is selected. For multi-select list boxes, the first selected item is
+        returned.</DD>
+      <DT><TT>HTMLFormElement form</TT></DT>
+      <DD>Returns the form the element is contained within. Returns null if not
+        within the context of a form. (read-only)</DD>
+    </DL>
+    
+    <H4>Methods</H4>
+    
+    <DL>
+      <DT><TT>void blur()</TT></DT>
+      <DD>Remove keyboard focus</DD>
+      <DT><TT>void focus()</TT></DT>
+      <DD>Set keyboard focus</DD>
+      <DT><TT>void add(in HTMLElement element, in HTMLElement before);</TT></DT>
+      <DD>Add a new element to the Select collection</DD>
+      <DT><TT>void remove(in long index)</TT></DT>
+      <DD>Remove an element from the Select collection</DD>
+    </DL>
+
+<!--
+<P><I>The WG is also considering adding methods that return specific items by element type name and/or ordinal index.</I> </P>-->
+    
+    
+    <H2>OPTION Element</H2>
+    
+    <P>A selectable choice </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring label</TT></DT>
+      <DD>For use in hierarchical menus</DD>
+      <DT><TT>boolean defaultSelected</TT></DT>
+      <DD>Specifies the initial selection of the option (the value of the
+        SELECTED attribute).</DD>
+      <DT><TT>boolean disabled</TT></DT>
+      <DD>Control unavailable in this context?</DD>
+      <DT><TT>boolean selected</TT></DT>
+      <DD>Specifies the current selection of the option.</DD>
+      <DT><TT>wstring value</TT></DT>
+      <DD>The current value of the option element.</DD>
+      <DT><TT>wstring text</TT></DT>
+      <DD>The text contained within the option element.</DD>
+      <DT><TT>HTMLFormElement form</TT></DT>
+      <DD>Returns the form the element is contained within. Returns null if not
+        within the context of a form. (read-only)</DD>
+      <DT><TT>long index</TT></DT>
+      <DD>The index of this OPTION in its parent SELECT.</DD>
+    </DL>
+    
+    <H2>INPUT Element</H2>
+    
+    <P>Form control </P>
+    
+    <P><I>Security Notes:</I> Depending upon the environment the page is being
+      viewed, the value property may be read-only for the file upload input
+      type. For the password input type, the actual value returned may be masked
+      to prevent unauthorized use. </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring value</TT></DT>
+      <DD>Used for radios and checkboxes</DD>
+      <DT><TT>wstring name</TT></DT>
+      <DD>Reflects the NAME attribute (for backwards compatibility).</DD>
+      <DT><TT>boolean disabled</TT></DT>
+      <DD>Control unavailable in this context?</DD>
+      <DT><TT>wstring defaultValue</TT></DT>
+      <DD>Value if not explicitly specified</DD>
+      <DT><TT>long size</TT></DT>
+      <DD>Size information - specific to each type of field</DD>
+      <DT><TT>long maxLength</TT></DT>
+      <DD>Maximum number of characters for text fields</DD>
+      <DT><TT>boolean readOnly</TT></DT>
+      <DD>For text and password</DD>
+      <DT><TT>boolean checked</TT></DT>
+      <DD>For radio buttons and check boxes - TRUE if explicitly set.
+        Represents the current state of the checkbox or radio button.</DD>
+      <DT><TT>boolean defaultChecked</TT></DT>
+      <DD>For radio buttons and check boxes. Represents the value of the
+        CHECKED HTML attribute.</DD>
+      <DT><TT>wstring type</TT></DT>
+      <DD>The type of control created (reflects the TYPE attribute).</DD>
+      <DT><TT>wstring src</TT></DT>
+      <DD>When the type attribute has the value &quot;image&quot;, this
+        attribute specifies the location of the image to be used to decorate the
+        graphical submit button.</DD>
+      <DT><TT>wstring alt</TT></DT>
+      <DD>Alternate text for user agents that can't display this element.</DD>
+      <DT><TT>wstring usemap</TT></DT>
+      <DD>Used to associate an image map with an element.</DD>
+      <DT><TT>wstring align</TT></DT>
+      <DD>The horizontal alignment of the element.</DD>
+      <DT><TT>long tabIndex</TT></DT>
+      <DD>Index used for tab navigation.</DD>
+      <DT><TT>wstring accessKey</TT></DT>
+      <DD>A single character access key for the form element.</DD>
+      <DT><TT>wstring accept</TT></DT>
+      <DD>A comma-separated list of content types that a server processing this
+        form will handle correctly</DD>
+      <DT><TT>HTMLFormElement form</TT></DT>
+      <DD>Returns the form the element is contained within. Returns null if not
+        within the context of a form. (read-only)</DD>
+    </DL>
+    
+    <H4>Methods</H4>
+    
+    <DL>
+      <DT><TT>void blur()</TT></DT>
+      <DD>Remove keyboard focus</DD>
+      <DT><TT>void focus()</TT></DT>
+      <DD>Set keyboard focus</DD>
+      <DT><TT>void select()</TT></DT>
+      <DD>Select the contents of the textarea (for elements with a TYPE
+        attribute of Text, File, Password)</DD>
+      <DT><TT>void click()</TT></DT>
+      <DD>Simulate a mouse-click (for elements with a TYPE attribute of Button,
+        Checkbox, Radio, Reset, Submit)</DD>
+    </DL>
+    
+    <H2>TEXTAREA Element</H2>
+    
+    <P>Multi-line text field </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring type</TT></DT>
+      <DD>The type of this form control.</DD>
+      <DT><TT>wstring value</TT></DT>
+      <DD>Property value</DD>
+      <DT><TT>wstring name</TT></DT>
+      <DD>Property name</DD>
+      <DT><TT>boolean disabled</TT></DT>
+      <DD>Control unavailable in this context?</DD>
+      <DT><TT>wstring defaultValue</TT></DT>
+      <DD>Value if no input from user</DD>
+      <DT><TT>boolean readOnly</TT></DT>
+      <DD>Can user change the value?</DD>
+      <DT><TT>long rows</TT></DT>
+      <DD>Number of text rows</DD>
+      <DT><TT>long cols</TT></DT>
+      <DD>Width in columns</DD>
+      <DT><TT>long tabIndex</TT></DT>
+      <DD>Position in tabbing order</DD>
+      <DT><TT>HTMLFormElement form</TT></DT>
+      <DD>Returns the form the element is contained within. Returns null if not
+        within the context of a form. (read-only).</DD>
+    </DL>
+    
+    <H4>Methods</H4>
+    
+    <DL>
+      <DT><TT>void blur()</TT></DT>
+      <DD>Remove keyboard focus</DD>
+      <DT><TT>void focus()</TT></DT>
+      <DD>Set keyboard focus</DD>
+      <DT><TT>void select()</TT></DT>
+      <DD>Select the contents of the textarea</DD>
+    </DL>
+    
+    <H2>BUTTON Element</H2>
+    
+    <P>Push button </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring type</TT></DT>
+      <DD>The type of this form control.</DD>
+      <DT><TT>wstring value</TT></DT>
+      <DD>Property value</DD>
+      <DT><TT>wstring name</TT></DT>
+      <DD>Property name</DD>
+      <DT><TT>boolean disabled</TT></DT>
+      <DD>Control unavailable in this context?</DD>
+      <DT><TT>long tabIndex</TT></DT>
+      <DD>Position in tabbing order</DD>
+      <DT><TT>wstring accessKey</TT></DT>
+      <DD>Accessibility key character</DD>
+      <DT><TT>HTMLFormElement form</TT></DT>
+      <DD>Returns the form the element is contained within. Returns null if not
+        within the context of a form. (read-only).</DD>
+    </DL>
+    
+    <H2>LABEL Element</H2>
+    
+    <P>Form field label text </P>
+    <DL>
+      <DT><TT>wstring htmlFor</TT></DT>
+      <DD>The HTML &quot;for&quot; needs to be named htmlFor. For as a property
+        name collides with the keywords of most languages.</DD>
+      <DT><TT>wstring accessKey</TT></DT>
+      <DD>Accessibility key character</DD>
+    </DL>
+    
+    <H2>LEGEND Element</H2>
+    
+    <P>Fieldset legend </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Text alignment relative to fieldset</DD>
+    </DL>
+    
+    <H1>List Elements</H1>
+    
+    <H2>UL Elements</H2>
+    
+    <P>Unordered list. </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>boolean compact</TT></DT>
+      <DD>Reduce inter-item spacing.</DD>
+      <DT><TT>wstring type</TT></DT>
+      <DD>Bullet style</DD>
+    </DL>
+    
+    <H2>OL Elements</H2>
+    
+    <P>Ordered list. </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>boolean compact</TT></DT>
+      <DD>Reduce inter-item spacing.</DD>
+      <DT><TT>wstring type</TT></DT>
+      <DD>Bullet style</DD>
+      <DT><TT>long start</TT></DT>
+      <DD>Starting sequence number (for OL)</DD>
+    </DL>
+    
+    <H2>DL, DIR, MENU Elements</H2>
+    
+    <P>Definition list, directory list, menu list </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>boolean compact</TT></DT>
+      <DD>Reduce inter-item spacing</DD>
+    </DL>
+    
+    <H2>LI Element</H2>
+    
+    <P>List item </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring type</TT></DT>
+      <DD>List item style</DD>
+      <DT><TT>long value</TT></DT>
+      <DD>Reset sequence number</DD>
+    </DL>
+    
+    <H1>Block Elements</H1>
+    
+    <H2>DIV Element</H2>
+    
+    <P>Generic container </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Text alignment</DD>
+    </DL>
+    
+    <H2>P Element</H2>
+    
+    <P>Paragraph </P>
+    <DL>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Text alignment</DD>
+    </DL>
+    
+    <H2>H1, H2, H3, H4, H5, H6 Elements</H2>
+    
+    <P>Headings </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Text alignment</DD>
+    </DL>
+    
+    <H2>Q, BLOCKQUOTE Elements</H2>
+    
+    <P>Quoted text </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring cite</TT></DT>
+      <DD>URL for source document or message</DD>
+    </DL>
+    
+    <H1>Phrase Elements</H1>
+    
+    <H2>BASEFONT Element</H2>
+    
+    <P>Base font </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring color</TT></DT>
+      <DD>Font color</DD>
+      <DT><TT>wstring face</TT></DT>
+      <DD>Font face id</DD>
+      <DT><TT>long size</TT></DT>
+      <DD>Font size</DD>
+    </DL>
+    
+    <H2>FONT Element</H2>
+    
+    <P>Local change to font </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring color</TT></DT>
+      <DD>Font color</DD>
+      <DT><TT>wstring face</TT></DT>
+      <DD>Font face</DD>
+      <DT><TT>long size</TT></DT>
+      <DD>Font size</DD>
+    </DL>
+    
+    <H2>INS &amp; DEL Elements</H2>
+    
+    <P>Inserted or deleted text </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring cite</TT></DT>
+      <DD>Reason for change</DD>
+      <DT><TT>wstring dateTime</TT></DT>
+      <DD>Date and time of change</DD>
+    </DL>
+    
+    <H2>A Element</H2>
+    
+    <P>Anchor </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring target</TT></DT>
+      <DD>Render in this frame</DD>
+      <DT><TT>wstring href</TT></DT>
+      <DD>URL for linked resource</DD>
+      <DT><TT>wstring rel</TT></DT>
+      <DD>Forward link type</DD>
+      <DT><TT>wstring rev</TT></DT>
+      <DD>Reverse link type</DD>
+      <DT><TT>wstring name</TT></DT>
+      <DD>Property name</DD>
+      <DT><TT>wstring accessKey</TT></DT>
+      <DD>Accessibility key character</DD>
+      <DT><TT>long tabIndex</TT></DT>
+      <DD>Position in tabbing order</DD>
+      <DT><TT>wstring charset</TT></DT>
+      <DD>Character encoding of linked resource</DD>
+    </DL>
+    
+    <H4>Methods</H4>
+    
+    <DL>
+      <DT><TT>void blur()</TT></DT>
+      <DD>Remove keyboard focus</DD>
+      <DT><TT>void focus()</TT></DT>
+      <DD>Set keyboard focus</DD>
+    </DL>
+    
+    <H1>Replaced Elements</H1>
+    
+    <H2>IMG Element</H2>
+    
+    <P>Embedded image </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>boolean isMap</TT></DT>
+      <DD>Use server-side image map</DD>
+      <DT><TT>wstring useMap</TT></DT>
+      <DD>Use client side image map</DD>
+      <DT><TT>wstring border</TT></DT>
+      <DD>Link border width</DD>
+      <DT><TT>long vspace</TT></DT>
+      <DD>Vertical gutter</DD>
+      <DT><TT>long hspace</TT></DT>
+      <DD>Horizontal gutter</DD>
+      <DT><TT>wstring alt</TT></DT>
+      <DD>Short description</DD>
+      <DT><TT>wstring src</TT></DT>
+      <DD>Source URL</DD>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Image alignment</DD>
+      <DT><TT>long width</TT></DT>
+      <DD>Override width</DD>
+      <DT><TT>long height</TT></DT>
+      <DD>Override height</DD>
+      <DT><TT>wstring name</TT></DT>
+      <DD>The NAME attribute of the element (for backward compatibility).</DD>
+    </DL>
+    
+    <H2>OBJECT Element</H2>
+    
+    <P>Generic embedded object </P>
+    
+    <P>Note: In principle, all properties on the object element are read-write
+      but in some environments some properties may be read-only once the
+      underlying object is instantiated. </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring classid</TT></DT>
+      <DD>Identifies an implementation</DD>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Vertical or horizontal alignment</DD>
+      <DT><TT>wstring name</TT></DT>
+      <DD>Submit as part of form</DD>
+      <DT><TT>wstring codeBase</TT></DT>
+      <DD>Base URL for classid, data, archive</DD>
+      <DT><TT>wstring codeType</TT></DT>
+      <DD>Content type for code</DD>
+      <DT><TT>wstring code</TT></DT>
+      <DD>Code file</DD>
+      <DT><TT>wstring type</TT></DT>
+      <DD>Content type for data</DD>
+      <DT><TT>long width</TT></DT>
+      <DD>Initial width</DD>
+      <DT><TT>long height</TT></DT>
+      <DD>Initial height</DD>
+      <DT><TT>wstring altHtml</TT></DT>
+      <DD>HTML contained within the OBJECT tag that is displayed by user agents
+        that cannot display the OBJECT itself.</DD>
+      <DT><TT>long vspace</TT></DT>
+      <DD>Vertical gutter</DD>
+      <DT><TT>long hspace</TT></DT>
+      <DD>Horizontal gutter</DD>
+      <DT><TT>long tabIndex</TT></DT>
+      <DD>Position in tab order</DD>
+      <DT><TT>HTMLFormElement form</TT></DT>
+      <DD>Returns the form the element is contained within. Returns null if not
+        within the context of a form. (read-only).</DD>
+      <DT><TT>wstring data</TT></DT>
+      <DD>The location of the object's data.</DD>
+    </DL>
+    
+    <H1>Image Maps</H1>
+    
+    <H2>MAP Element</H2>
+    
+    <P>Client side image map </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring name</TT></DT>
+      <DD>Name, for reference by usemap</DD>
+      <DT><TT>NamedNodeList areas</TT></DT>
+      <DD>Return a list of the areas in the map</DD>
+    </DL>
+    
+    <H2>AREA Element</H2>
+    
+    <P>Client side image map area </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring shape</TT></DT>
+      <DD>Controls interpretation of coordinates</DD>
+      <DT><TT>wstring coords</TT></DT>
+      <DD>Comma-separated list of lengths</DD>
+      <DT><TT>wstring href</TT></DT>
+      <DD>URL for linked resource</DD>
+      <DT><TT>wstring target</TT></DT>
+      <DD>Render in this frame</DD>
+      <DT><TT>wstring alt</TT></DT>
+      <DD>Short description</DD>
+      <DT><TT>boolean noHref</TT></DT>
+      <DD>This region has no action</DD>
+      <DT><TT>long tabIndex</TT></DT>
+      <DD>Position in tab order</DD>
+      <DT><TT>wstring accessKey</TT></DT>
+      <DD>Accessibility key character.</DD>
+    </DL>
+    
+    <H1>Table Elements</H1>
+    
+    <H2>TABLE Element</H2>
+    
+    <P>The create* and delete* methods on the table provide easy access to
+      construct and modify tables. HTML 4.0 defines that only 1 CAPTION, THEAD
+      and TFOOT can exist in a table. If one exists, and the createTHead() or
+      createTFoot() method is called, the method returns the THead or TFoot
+      element that already exists. </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>long cols</TT></DT>
+      <DD>Number of columns</DD>
+      <DT><TT>wstring border</TT></DT>
+      <DD>Border width</DD>
+      <DT><TT>wstring frame</TT></DT>
+      <DD>Which parts of table frame to include</DD>
+      <DT><TT>wstring rules</TT></DT>
+      <DD>Rulings between rows and cols</DD>
+      <DT><TT>long cellSpacing</TT></DT>
+      <DD>Spacing between cells</DD>
+      <DT><TT>long cellPadding</TT></DT>
+      <DD>Spacing within cells</DD>
+      <DT><TT>wstring bgColor</TT></DT>
+      <DD>Background color for cells</DD>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Position of the table with respect to the document</DD>
+      <DT><TT>long width</TT></DT>
+      <DD>The desired width of the table</DD>
+    </DL>
+    
+    <H4>Methods</H4>
+    
+    <DL>
+      <DT><TT>NamedNodeList getRows();</TT></DT>
+      <DD>Get all row elements</DD>
+      <DT><TT>HTMLTableSection getTHead();</TT></DT>
+      <DD>Select the table head</DD>
+      <DT><TT>HTMLTableSection getTFoot();</TT></DT>
+      <DD>Select the table footer</DD>
+      <DT><TT>NamedNodeList getTBodies();</TT></DT>
+      <DT><TT>HTMLTableCaption getCaption();</TT></DT>
+      <DD>Get the table caption</DD>
+      <DT><TT>HTMLElement createTHead();</TT></DT>
+      <DT><TT>void deleteTHead();</TT></DT>
+      <DD>Delete the table header</DD>
+      <DT><TT>HTMLElement createTFoot();</TT></DT>
+      <DD>Create a table footer</DD>
+      <DT><TT>void deleteTFoot();</TT></DT>
+      <DD>Delete the table footer</DD>
+      <DT><TT>HTMLTableCaption createCaption();</TT></DT>
+      <DD>Create a caption</DD>
+      <DT><TT>void deleteCaption();</TT></DT>
+      <DD>Delete the caption</DD>
+      <DT><TT>HTMLElement insertRow(in long index);</TT></DT>
+      <DD>Insert a new blank row</DD>
+      <DT><TT>void deleteRow(in long index);</TT></DT>
+      <DD>Delete a row</DD>
+    </DL>
+    
+    <H2>CAPTION Element</H2>
+    
+    <P>Table Caption </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Text alignment</DD>
+    </DL>
+    
+    <H2>COLGROUP Element</H2>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>long span</TT></DT>
+      <DD>Used to delimit column groups</DD>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Horizontal alignment in cells</DD>
+      <DT><TT>wstring vAlign</TT></DT>
+      <DD>Vertical alignment in cells</DD>
+      <DT><TT>long width</TT></DT>
+      <DD>Default width</DD>
+    </DL>
+    
+    <H2>THEAD, TBODY, TFOOT Elements</H2>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Horizontal alignment in cells</DD>
+      <DT><TT>wstring vAlign</TT></DT>
+      <DD>Vertical alignment in cells</DD>
+    </DL>
+    
+    <H4>Methods</H4>
+    
+    <DL>
+      <DT><TT>NamedNodeList getRows()</TT></DT>
+      <DT><TT>HTMLElement insertRow(in long index);</TT></DT>
+      <DT><TT>void deleteRow(in long index);</TT></DT>
+    </DL>
+    
+    <H2>TR Element</H2>
+    
+    <P>The rowIndex returns the index relative to the entire table, and
+      sectionRowIndex returns the index relative to the section the element is
+      scoped within (THead, TFoot, or TBody) </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Horizontal alignment in cells</DD>
+      <DT><TT>wstring vAlign</TT></DT>
+      <DD>Vertical alignment in cells</DD>
+      <DT><TT>wstring bgColor</TT></DT>
+      <DD>Background color for rows</DD>
+    </DL>
+    
+    <H4>Methods</H4>
+    
+    <DL>
+      <DT><TT>long getRowIndex();</TT></DT>
+      <DT><TT>long getSectionRowIndex();</TT></DT>
+      <DT><TT>NamedNodeList getCells();</TT></DT>
+      <DT><TT>HTMLElement insertCell(in long index);</TT></DT>
+      <DT><TT>void deleteCell(in long index);</TT></DT>
+    </DL>
+    
+    <H2>TH, TD Element</H2>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>abbr</TT></DT>
+      <DD>Abbreviation for header cells</DD>
+      <DT><TT>axis</TT></DT>
+      <DD>Names group of related headers</DD>
+      <DT><TT>headers</TT></DT>
+      <DD>List of ids for header cells</DD>
+      <DT><TT>scope</TT></DT>
+      <DD>Scope covered by header cells</DD>
+      <DT><TT>long rowSpan</TT></DT>
+      <DD>Number of rows spanned by cell</DD>
+      <DT><TT>long colSpan</TT></DT>
+      <DD>Number of columns spanned by cell</DD>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Horizontal alignment in cells</DD>
+      <DT><TT>wstring vAlign</TT></DT>
+      <DD>Vertical alignment in cells</DD>
+      <DT><TT>wstring bgColor</TT></DT>
+      <DD>Cell background color</DD>
+      <DT><TT>boolean noWrap</TT></DT>
+      <DD>Suppress word wrap</DD>
+      <DT><TT>long width</TT></DT>
+      <DD>Width for cell</DD>
+      <DT><TT>long height</TT></DT>
+      <DD>Height for cell</DD>
+    </DL>
+    
+    <H4>Methods</H4>
+    
+    <DL>
+      <DT><TT>long getCellIndex();</TT></DT>
+    </DL>
+    
+    <H1>Frame and related Elements</H1>
+    
+    <H2>FRAMESET Element</H2>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring rows</TT></DT>
+      <DD>List of lengths (default 100%, 1 row)</DD>
+      <DT><TT>wstring cols</TT></DT>
+      <DD>List of columns (default 100%, 1 col)</DD>
+    </DL>
+    
+    <H2>FRAME Element</H2>
+    
+    <P>Subwindow </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring src</TT></DT>
+      <DD>Source URL</DD>
+      <DT><TT>wstring name</TT></DT>
+      <DD>Name of frame, for targetting</DD>
+      <DT><TT>boolean noResize</TT></DT>
+      <DD>Forbid user from resizing frame?</DD>
+      <DT><TT>wstring scrolling</TT></DT>
+      <DD>Scrollbar or none</DD>
+      <DT><TT>wstring frameBorder</TT></DT>
+      <DD>Request frame borders?</DD>
+      <DT><TT>long marginWidth</TT></DT>
+      <DD>Margin width in pixels</DD>
+      <DT><TT>long marginHeight</TT></DT>
+      <DD>Margin height in pixels</DD>
+    </DL>
+    
+    <H2>IFRAME Element</H2>
+    
+    <P>Inline subwindows </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring src</TT></DT>
+      <DD>Source URL</DD>
+      <DT><TT>wstring name</TT></DT>
+      <DD>Name, for targetting</DD>
+      <DT><TT>wstring scrolling</TT></DT>
+      <DD>Scrollbar or none</DD>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Vertical or horizontal alignment</DD>
+      <DT><TT>long marginWidth;</TT></DT>
+      <DD>Margin width in pixels</DD>
+      <DT><TT>long marginHeight;</TT></DT>
+      <DD>Margin height in pixels</DD>
+      <DT><TT>long width</TT></DT>
+      <DD>Frame width</DD>
+      <DT><TT>long height</TT></DT>
+      <DD>Frame height</DD>
+      <DT><TT>long vspace</TT></DT>
+      <DD>Vertical gutter</DD>
+      <DT><TT>long hspace</TT></DT>
+      <DD>Horizontal gutter</DD>
+    </DL>
+    
+    <H1>Miscellaneous Elements</H1>
+    
+    <H2>BR Element</H2>
+    
+    <P>Forced line break </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring clear</TT></DT>
+      <DD>Control text flow</DD>
+    </DL>
+    
+    <H2>COMMENT Element</H2>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring text</TT></DT>
+      <DD>Comment text</DD>
+    </DL>
+    
+    <H2>SCRIPT Element</H2>
+    
+    <P>Script statements </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring src</TT></DT>
+      <DD>URL of external script</DD>
+      <DT><TT>wstring text</TT></DT>
+      <DD>The script contained by the element.</DD>
+      <DT><TT>wstring type</TT></DT>
+      <DD>Content type of script language</DD>
+      <DT><TT>wstring language</TT></DT>
+      <DD>Predefined script language name</DD>
+      <DT><TT>boolean defer</TT></DT>
+      <DD>Indicates that the user agent can defer processing of the script.</DD>
+    </DL>
+    
+    <H2>HR Element</H2>
+    
+    <P>Horizontal rule </P>
+    
+    <H4>Properties</H4>
+    
+    <DL>
+      <DT><TT>wstring align</TT></DT>
+      <DD>Text alignment</DD>
+      <DT><TT>boolean noShade</TT></DT>
+      <DD>Indicates to the user agent that there should be no shading in the
+        rendering of this element.</DD>
+      <DT><TT>long width</TT></DT>
+      <DD>Width of rule</DD>
+      <DT><TT>long size</TT></DT>
+      <DD>The height of the rule.</DD>
+    </DL>
+    
+    <H1>Appendix A: HTML IDL Interface definitions</H1>
+    
+    <P>This contains the complete IDL definitions for the HTML support provided
+      by the Document Object Model. </P>
+
+<PRE>//hb////-*-Mode: C++-*-////////////////////////////////////////////////////////
+//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+// NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+// DESCRIPTION :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+// HISTORY&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+//he///////////////////////////////////////////////////////////////////////////
+
+
+
+interface HTMLStyle {
+&nbsp; // Hook for later level
+};
+
+interface NamedNodeList {
+
+&nbsp; readonly attribute long length;
+&nbsp; Node item(in long index);
+&nbsp; Node namedItem(in wstring name);
+
+};
+
+interface HTMLDocument : Document
+{
+
+&nbsp; // These are all methods, because they do some processing
+&nbsp; // of the document
+&nbsp; NamedNodeList&nbsp; getImages();
+&nbsp; NamedNodeList&nbsp; getApplets();
+&nbsp; NamedNodeList&nbsp; getLinks();
+&nbsp; NamedNodeList&nbsp; getForms();
+&nbsp; NamedNodeList&nbsp; getAnchors();
+
+&nbsp; wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; getCookie();
+&nbsp; wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setCookie(in wstring cookie);
+
+&nbsp; readonly attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; referrer;
+&nbsp; readonly attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fileSize;
+&nbsp; readonly attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fileCreatedDate;
+&nbsp; readonly attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fileModifiedDate;
+&nbsp; readonly attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fileUpdatedDate;
+&nbsp; readonly attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title;
+&nbsp; readonly attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; domain;
+&nbsp; readonly attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; URL;
+
+&nbsp; attribute HTMLElement body;
+
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; open();
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; write(in wstring text);
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; writeln(in wstring text);
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; close();
+
+};
+
+interface HTMLElement : Element
+{
+
+&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; className;
+&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; id;
+&nbsp; attribute HTMLStyle&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; style;
+&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title;
+&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lang;
+&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dir;
+
+};
+
+interface HTMLLinkElement : HTMLElement
+{
+
+&nbsp; attribute wstring href;
+&nbsp; attribute wstring rel;
+&nbsp; attribute wstring rev;
+&nbsp; attribute wstring type;
+&nbsp; attribute wstring media;
+&nbsp; attribute wstring charset;
+&nbsp; attribute wstring hreflang;
+&nbsp; attribute wstring target;
+&nbsp; attribute boolean disabled;
+
+};
+
+interface HTMLTitleElement : HTMLElement
+{
+
+&nbsp; attribute wstring text;
+
+};
+
+interface HTMLMetaElement : HTMLElement
+{
+
+&nbsp; attribute wstring httpEquiv;
+&nbsp; attribute wstring content;
+&nbsp; attribute wstring name;
+<FONT COLOR="#000000">&nbsp; attribute wstring scheme;
+
+</FONT>};
+
+interface HTMLBaseElement : HTMLElement
+{
+
+&nbsp; attribute wstring href;
+<FONT COLOR="#000000">&nbsp; attribute wstring target;
+
+</FONT>};
+
+interface HTMLIsIndexElement : HTMLElement
+{
+
+&nbsp; attribute wstring&nbsp; prompt;
+
+};
+
+interface HTMLStyleElement : HTMLElement
+{
+
+&nbsp; attribute wstring type;
+<FONT COLOR="#000000">&nbsp; attribute boolean disabled;
+</FONT>&nbsp; attribute wstring media;
+
+};
+
+interface HTMLBodyElement : HTMLElement
+{
+
+&nbsp; attribute wstring background;
+&nbsp; attribute wstring bgColor;
+&nbsp; attribute wstring text;
+&nbsp; attribute wstring link;
+&nbsp; attribute wstring vlink;
+&nbsp; attribute wstring alink;
+
+};
+
+interface HTMLFormElement : HTMLElement
+{
+
+&nbsp; attribute wstring action;
+&nbsp; attribute wstring method;
+&nbsp; attribute wstring target;
+&nbsp; attribute wstring name;
+
+&nbsp; <FONT COLOR="#000000">readonly</FONT> attribute long&nbsp;&nbsp;&nbsp; length;
+
+<FONT COLOR="#000000">&nbsp; attribute wstring enctype;
+&nbsp; attribute wstring acceptCharset;
+</FONT>&nbsp; attribute <FONT COLOR="#000000">NamedNodeList</FONT> elements;
+
+};
+
+interface HTMLSelectElement : HTMLElement
+{
+
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; selectedIndex;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; size;
+&nbsp; attribute boolean&nbsp; multiple;
+&nbsp; attribute wstring&nbsp; name;
+
+&nbsp; <FONT COLOR="#000000">readonly</FONT><FONT COLOR="#FF0000"> </FONT>attribute wstring&nbsp; type;
+
+&nbsp; attribute wstring&nbsp; value;
+&nbsp; attribute boolean&nbsp; disabled;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; length;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; tabIndex;
+&nbsp; readonly attribute HTMLFormElement&nbsp; form;
+&nbsp; attribute NamedNodeList&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; options;
+
+&nbsp; void add(in HTMLElement element, in HTMLElement before);
+&nbsp; void remove(in long index);
+<FONT COLOR="#000000">&nbsp; void blur();
+&nbsp; void focus();
+
+</FONT>};
+
+interface HTMLOptionElement : HTMLElement
+{
+
+&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; text;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; index;
+&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value;
+&nbsp; attribute boolean&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; defaultSelected;
+<FONT COLOR="#000000">&nbsp; attribute boolean&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; disabled;</FONT></PRE>
+
+<PRE>&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; label;
+
+<FONT COLOR="#000000">&nbsp; readonly attribute boolean&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selected;
+
+</FONT>&nbsp; readonly attribute HTMLFormElement form;
+
+};
+
+interface HTMLFieldSetElement : HTMLElement
+{
+
+&nbsp; attribute wstring align;
+
+};
+
+interface HTMLLegendElement : HTMLElement
+{
+
+&nbsp; attribute wstring align;
+
+};
+
+interface <FONT COLOR="#000000">HTMLInputElement</FONT> : HTMLElement
+{
+
+<FONT COLOR="#000000">&nbsp; readonly&nbsp; attribute wstring type;
+
+</FONT>&nbsp; attribute wstring&nbsp; value;
+&nbsp; attribute wstring&nbsp; name;
+&nbsp; attribute boolean&nbsp; disabled;
+&nbsp; attribute wstring&nbsp; defaultValue;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; size;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; maxLength;
+&nbsp; attribute boolean&nbsp; readOnly;
+&nbsp; attribute boolean&nbsp; checked;
+&nbsp; attribute boolean&nbsp; defaultChecked;
+<FONT COLOR="#000000">&nbsp; attribute wstring&nbsp; src;
+&nbsp; attribute wstring&nbsp; alt;
+&nbsp; attribute wstring&nbsp; usemap;
+&nbsp; attribute wstring&nbsp; align;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; tabIndex;
+&nbsp; attribute wstring&nbsp; accessKey;
+&nbsp; attribute wstring&nbsp; accept;
+
+</FONT>&nbsp; readonly attribute HTMLFormElement form;
+
+<FONT COLOR="#000000">&nbsp; void blur();
+&nbsp; void focus();
+&nbsp; void select();
+&nbsp; void click();
+
+</FONT>};
+
+interface HTMLTextAreaElement : HTMLElement
+{
+
+&nbsp; <FONT COLOR="#000000">readonly</FONT><FONT COLOR="#FF0000"> </FONT>attribute wstring&nbsp; type;
+&nbsp; attribute wstring&nbsp; value;
+&nbsp; attribute wstring&nbsp; name;
+&nbsp; attribute boolean&nbsp; disabled;
+&nbsp; attribute wstring&nbsp; defaultValue;
+&nbsp; attribute boolean&nbsp; readOnly;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; rows;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; cols;
+<FONT COLOR="#000000">&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; tabIndex;
+
+</FONT>&nbsp; readonly attribute HTMLFormElement form;
+
+<FONT COLOR="#000000">&nbsp; void blur();
+&nbsp; void focus();
+&nbsp; void select();
+
+</FONT>};
+
+interface HTMLButtonElement : HTMLElement
+{
+
+&nbsp; <FONT COLOR="#000000">readonly</FONT><FONT COLOR="#FF0000"> </FONT>attribute wstring&nbsp; type;
+&nbsp; attribute wstring&nbsp; value;
+&nbsp; attribute wstring&nbsp; name;
+&nbsp; attribute boolean&nbsp; disabled;
+<FONT COLOR="#000000">&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; tabIndex;
+&nbsp; attribute wstring&nbsp; accessKey;
+
+</FONT>&nbsp; readonly attribute HTMLFormElement form;
+
+};
+
+interface HTMLLabelElement : HTMLElement
+{
+
+&nbsp; attribute wstring htmlFor;
+&nbsp; attribute wstring accessKey;
+
+};
+
+interface HTMLAnchorElement : HTMLElement
+{
+
+&nbsp; attribute wstring target;
+&nbsp; attribute wstring href;
+&nbsp; attribute wstring rel;
+&nbsp; attribute wstring rev;
+&nbsp; attribute wstring name;
+&nbsp; attribute wstring accessKey;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp; tabIndex;
+&nbsp; attribute wstring charset;
+
+};
+
+interface HTMLBaseFontElement : HTMLElement
+{
+
+&nbsp; attribute wstring color;
+&nbsp; attribute wstring face;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp; size;
+
+};
+
+interface HTMLBRElement : HTMLElement
+{
+
+&nbsp; attribute wstring clear;
+
+};
+
+interface <FONT COLOR="#000000">HTMLImageElement</FONT> : HTMLElement
+{
+
+&nbsp; attribute boolean&nbsp; isMap;
+&nbsp; attribute wstring&nbsp; useMap;
+&nbsp; attribute wstring&nbsp; border;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; vspace;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; hspace;
+&nbsp; attribute wstring&nbsp; alt;
+&nbsp; attribute wstring&nbsp; src;
+&nbsp; attribute wstring&nbsp; lowSrc;
+&nbsp; attribute wstring&nbsp; align;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; width;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; height;
+&nbsp; attribute wstring&nbsp; name;
+
+};
+
+interface HTMLFontElement : HTMLElement
+{
+
+&nbsp; attribute wstring color;
+&nbsp; attribute wstring face;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp; size;
+
+};
+
+interface HTMLModElement : HTMLElement
+{
+
+&nbsp; attribute wstring cite;
+&nbsp; attribute wstring dateTime;
+
+};
+
+interface HTMLObjectElement : HTMLElement
+{
+
+&nbsp; attribute wstring&nbsp;&nbsp; classId;
+&nbsp; attribute wstring&nbsp;&nbsp; data;
+&nbsp; attribute wstring&nbsp;&nbsp; align;
+&nbsp; attribute wstring&nbsp;&nbsp; name;
+&nbsp; attribute wstring&nbsp;&nbsp; codeBase;
+&nbsp; attribute wstring&nbsp;&nbsp; codeType;
+&nbsp; attribute wstring&nbsp;&nbsp; code;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; attribute wstring&nbsp;&nbsp; type;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; height;
+&nbsp; attribute wstring&nbsp;&nbsp; altHtml;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vspace;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hspace;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tabIndex;
+
+&nbsp; readonly attribute HTMLFormElement form;
+
+};
+
+interface HTMLQuoteElement : HTMLElement
+{
+
+&nbsp; attribute wstring cite;
+
+};
+
+interface HTMLScriptElement : HTMLElement
+{
+
+&nbsp; attribute wstring&nbsp; src;
+&nbsp; attribute wstring&nbsp; text;
+&nbsp; attribute wstring&nbsp; type;
+&nbsp; attribute wstring&nbsp; language;
+<FONT COLOR="#FF0000">&nbsp; </FONT><FONT COLOR="#000000">attribute boolean&nbsp; defer;
+
+</FONT>};
+
+interface HTMLUListElement : HTMLElement
+{
+
+&nbsp; attribute boolean compact;
+&nbsp; attribute wstring type;
+
+};
+
+interface HTMLOListElement : HTMLElement
+{
+
+&nbsp; attribute boolean compact;
+&nbsp; attribute wstring type;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp; start;
+
+};
+
+interface HTMLLIElement : HTMLElement
+{
+
+&nbsp; attribute wstring type;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp; value;
+
+};
+
+interface HTMLDListElement : HTMLElement {&nbsp;
+&nbsp; attribute boolean compact;
+
+};
+
+interface HTMLDivElement : HTMLElement
+{
+
+&nbsp; attribute wstring align;
+
+};
+
+interface HTMLHRElement : HTMLElement
+{
+
+&nbsp; attribute wstring&nbsp; align;
+&nbsp; attribute boolean&nbsp; noShade;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; width;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; size;
+
+};
+
+interface <FONT COLOR="#000000">HTMLParagraphElement</FONT> : HTMLElement
+{
+
+&nbsp; attribute wstring align;
+
+};
+
+interface <FONT COLOR="#000000">HTMLHeadingElement</FONT> : HTMLElement
+{
+
+&nbsp; attribute wstring align;
+
+};
+
+interface HTMLMapElement : HTMLElement
+{
+
+&nbsp; readonly attribute NamedNodeList areas;
+&nbsp; attribute wstring name;
+
+};
+
+interface HTMLAreaElement : HTMLElement
+{
+
+&nbsp; attribute wstring&nbsp; shape;
+&nbsp; attribute wstring&nbsp; coords;
+&nbsp; attribute wstring&nbsp; href;
+&nbsp; attribute wstring&nbsp; target;
+&nbsp; attribute wstring&nbsp; alt;
+&nbsp; attribute boolean&nbsp; noHref;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; tabIndex;
+<FONT COLOR="#000000">&nbsp; attribute wstring&nbsp; accessKey;
+
+</FONT>};
+
+interface HTMLTableCaption : HTMLElement
+{
+
+&nbsp; attribute wstring align;
+
+};
+
+interface HTMLTable : HTMLElement
+{
+
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cols;
+&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border;
+&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; frame;
+&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rules;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cellSpacing;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cellPadding;
+&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bgColor;
+&nbsp; attribute wstring&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; align;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width;
+&nbsp; attribute HTMLTableCaption&nbsp;&nbsp; caption;
+&nbsp; readonly attribute HTMLTableSection&nbsp;&nbsp; thead;
+&nbsp; readonly attribute HTMLTableSection&nbsp;&nbsp; tfoot;
+
+&nbsp; NamedNodeList&nbsp;&nbsp;&nbsp;&nbsp; getRows();
+&nbsp; NamedNodeList&nbsp;&nbsp;&nbsp;&nbsp; getTBodies();
+
+&nbsp; HTMLElement&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; createTHead();
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deleteTHead();
+
+&nbsp; HTMLElement&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; createTFoot();
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deleteTFoot();
+
+&nbsp; HTMLTableCaption&nbsp;&nbsp; createCaption();
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deleteCaption();
+
+&nbsp; HTMLElement&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; insertRow(in long index);
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deleteRow(in long index);
+
+};
+
+interface HTMLTableCol : HTMLElement
+{
+
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; span;
+&nbsp; attribute wstring&nbsp; align;
+&nbsp; attribute wstring&nbsp; valign;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; width;
+
+};
+
+interface HTMLTableSection : HTMLElement
+{
+
+&nbsp; NamedNodeList getRows();
+&nbsp; HTMLElement insertRow(in long index);
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deleteRow(in long index);
+&nbsp;&nbsp;
+&nbsp; attribute wstring align;
+&nbsp; attribute wstring valign;
+
+};
+
+interface HTMLTableRow : HTMLElement
+{
+
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; rowIndex;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; sectionRowIndex;
+&nbsp; attribute wstring&nbsp; align;
+&nbsp; attribute wstring&nbsp; valign;
+&nbsp; attribute wstring&nbsp; bgColor;
+
+&nbsp; NamedNodeList getCells();
+
+&nbsp; HTMLElement insertCell(in long index);
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deleteCell(in long index);
+
+};
+
+interface HTMLTableCell : HTMLElement
+{
+
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; cellIndex;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; rowSpan;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; colSpan;
+&nbsp; attribute wstring&nbsp; align;
+&nbsp; attribute wstring&nbsp; valign;
+&nbsp; attribute wstring&nbsp; bgColor;
+&nbsp; attribute boolean&nbsp; noWrap;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; width;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; height;
+
+};
+
+interface HTMLCommentElement : HTMLElement
+{
+
+&nbsp; attribute wstring text;
+
+};
+
+interface HTMLFrameSetElement : HTMLElement
+{
+
+&nbsp; attribute wstring rows;
+&nbsp; attribute wstring cols;
+
+};
+
+interface HTMLFrameElement : HTMLElement
+{
+
+&nbsp; attribute wstring&nbsp; src;
+&nbsp; attribute wstring&nbsp; name;
+&nbsp; attribute boolean&nbsp; noResize;
+&nbsp; attribute wstring&nbsp; scrolling;
+&nbsp; attribute wstring&nbsp; frameBorder;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; marginWidth;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; marginHeight;
+
+};
+
+interface HTMLIFrameElement : HTMLElement&nbsp;
+{
+
+&nbsp; attribute wstring&nbsp; src;
+&nbsp; attribute wstring&nbsp; name;
+&nbsp; attribute wstring&nbsp; scrolling;
+&nbsp; attribute wstring&nbsp; align;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; marginWidth;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; marginHeight;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; width;
+&nbsp; attribute long&nbsp;&nbsp;&nbsp;&nbsp; height;
+
+};</PRE>
+    
+    <HR>
+    
+    <H1>Appendix B: Java HTML API definitions</H1>
+    
+    <P>The Java API definitions will be added in the next public release of the
+      HTML DOM Level One.</P>
+
+<!--
+
+<PRE>public interface HTMLStyle {
+&nbsp; // Hook for level two
+};
+public interface NamedNodeList extends NodeList {
+&nbsp; Node namedItem(String name);
+};
+
+public interface HTMLDocument extends Document {
+&nbsp; NamedNodeList&nbsp; getImages();
+&nbsp; NamedNodeList&nbsp; getApplets();
+&nbsp; NamedNodeList&nbsp; getLinks();
+&nbsp; NamedNodeList&nbsp; getForms();
+&nbsp; NamedNodeList&nbsp; getAnchors();
+&nbsp; NamedNodeList&nbsp; getScripts();
+&nbsp; String&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; getCookie();
+&nbsp; String&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setCookie(String cookie);
+&nbsp; String getReferrer();
+&nbsp; String getFileSize();
+&nbsp; String getFileCreatedDate();
+&nbsp; String getFileModifiedDate();
+&nbsp; String getFileUpdatedDate();
+
+&nbsp; HTMLLocation getLocation();
+
+&nbsp; void setBody(HTMLElement body);
+
+&nbsp; HTMLElement getBody();
+
+};
+
+public interface HTMLLocation {
+
+&nbsp; void setHref(String href);
+
+&nbsp; String getHref();
+
+&nbsp; void setProtocol(String protocol);
+
+&nbsp; String getProtocol();
+
+&nbsp; void setHost(String host);
+
+&nbsp; String getHost();
+
+&nbsp; void setHostname(String hostname);
+
+&nbsp; String getHostname();
+
+&nbsp; void setPort(String port);
+
+&nbsp; String getPort();
+
+&nbsp; void setPathname(String pathname);
+
+&nbsp; String getPathname();
+
+&nbsp; void setQuery(String query);
+
+&nbsp; String getQuery();
+
+&nbsp; void setFragment(String fragment);
+
+&nbsp; String getFragment();
+
+&nbsp; void reload(boolean flag);
+
+&nbsp; void replace(String url);
+
+};
+
+public interface HTMLElement extends Element {
+
+&nbsp; void setTagName(String tagName);
+
+&nbsp; String getTagName();
+
+&nbsp; void setClassName(String className);
+
+&nbsp; String getClassName();
+
+&nbsp; void setId(String id);
+
+&nbsp; String getId();
+
+&nbsp; void setStyle(HTMLStyle style);
+
+&nbsp; HTMLStyle getStyle();
+
+&nbsp; void setParentElement(HTMLElement parentElement);
+
+&nbsp; HTMLElement getParentElement();
+
+&nbsp; void setTitle(String title);
+
+&nbsp; String getTitle();
+
+&nbsp; void setLang(String lang);
+
+&nbsp; String getLang();
+
+&nbsp; void setDir(String dir);
+
+&nbsp; String getDir();
+
+&nbsp; void setAll(NamedNodeList all);
+
+&nbsp; NamedNodeList getAll();
+
+&nbsp; HTMLDocument getDocument();
+
+&nbsp; boolean contains(HTMLElement pChild);
+
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp; addAttribute(String name, Object value, long lFlags);
+
+&nbsp; Object&nbsp;&nbsp; getAttribute(String name, long lFlags);
+
+&nbsp; boolean&nbsp; removeAttribute(String name, long lFlags);
+
+};
+
+public interface HTMLLinkElement extends HTMLElement {
+
+&nbsp; void setHref(String href);
+
+&nbsp; String getHref();
+
+&nbsp; void setRel(String rel);
+
+&nbsp; String getRel();
+
+&nbsp; void setRev(String rev);
+
+&nbsp; String getRev();
+
+&nbsp; void setType(String type);
+
+&nbsp; String getType();
+
+&nbsp; void setMedia(String media);
+
+&nbsp; String getMedia();
+
+&nbsp; String getReadyState();
+
+};
+
+public interface HTMLTitleElement extends HTMLElement {
+
+&nbsp; void setText(String text);
+
+&nbsp; String getText();
+
+};
+
+public interface HTMLMetaElement extends HTMLElement {
+
+&nbsp; void setHttpEquiv(String httpEquiv);
+
+&nbsp; String getHttpEquiv();
+
+&nbsp; void setContent(String content);
+
+&nbsp; String getContent();
+
+&nbsp; void setName(String name);
+
+&nbsp; String getName();
+
+&nbsp; void setText(String text);
+
+&nbsp; String getText();
+
+&nbsp; void setUrl(String url);
+
+&nbsp; String getUrl();
+
+&nbsp; void setCharset(String charset);
+
+&nbsp; String getCharset();
+
+};
+
+public interface HTMLBaseElement extends HTMLElement {
+
+&nbsp; void setHref(String href);
+
+&nbsp; String getHref();
+
+&nbsp; void setTarget(String target);
+
+&nbsp; String getTarget();
+
+};
+
+public interface HTMLIsIndexElement extends HTMLElement {
+
+&nbsp; void setPrompt(String prompt);
+
+&nbsp; String getPrompt();
+
+&nbsp; void setAction(String action);
+
+&nbsp; String getAction();
+
+};
+
+public interface HTMLStyleElement extends HTMLElement {
+
+&nbsp; void setType(String type);
+
+&nbsp; String getType();
+
+&nbsp; void setDisabled(boolean disabled);
+
+&nbsp; boolean getDisabled();
+
+&nbsp; void setMedia(String media);
+
+&nbsp; String getMedia();
+
+};
+
+public interface HTMLBodyElement extends HTMLElement {
+
+&nbsp; void setBackground(String background);
+
+&nbsp; String getBackground();
+
+&nbsp; void setBgColor(String bgColor);
+
+&nbsp; String getBgColor();
+
+&nbsp; void setText(String text);
+
+&nbsp; String getText();
+
+&nbsp; void setLink(String link);
+
+&nbsp; String getLink();
+
+&nbsp; void setVlink(String vlink);
+
+&nbsp; String getVlink();
+
+&nbsp; void setAlink(String alink);
+
+&nbsp; String getAlink();
+
+};
+
+public interface HTMLFormElement extends HTMLElement {
+
+&nbsp; void setAction(String action);
+
+&nbsp; String getAction();
+
+&nbsp; void setMethod(String method);
+
+&nbsp; String getMethod();
+
+&nbsp; void setTarget(String target);
+
+&nbsp; String getTarget();
+
+&nbsp; void setName(String name);
+
+&nbsp; String getName();
+
+&nbsp; void setLength(long length);
+
+&nbsp; long getLength();
+
+&nbsp; void setElements(HTMLFormElement elements);
+
+&nbsp; HTMLFormElement getElements();
+
+&nbsp; HTMLElement&nbsp;&nbsp;&nbsp; getItem(Object name,Object index);
+
+&nbsp;&nbsp;
+
+&nbsp; NamedNodeList getTags(String name);
+
+};
+
+public interface HTMLSelectElement extends HTMLElement {
+
+&nbsp; void setSelectedIndex(long selectedIndex);
+
+&nbsp; long getSelectedIndex();
+
+&nbsp; void setSize(long size);
+
+&nbsp; long getSize();
+
+&nbsp; void setMultiple(boolean multiple);
+
+&nbsp; boolean getMultiple();
+
+&nbsp; void setName(String name);
+
+&nbsp; String getName();
+
+&nbsp; void setType(String type);
+
+&nbsp; String getType();
+
+&nbsp; void setValue(String value);
+
+&nbsp; String getValue();
+
+&nbsp; void setDisabled(boolean disabled);
+
+&nbsp; boolean getDisabled();
+
+&nbsp; void setLength(long length);
+
+&nbsp; long getLength();
+
+&nbsp; HTMLFormElement getForm();
+
+&nbsp; void setOptions(NamedNodeList options);
+
+&nbsp; NamedNodeList getOptions();
+
+&nbsp; void add(HTMLElement element,HTMLElement before);
+
+&nbsp; void remove(long index);
+
+&nbsp; HTMLElement&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; getItem(String name);
+
+&nbsp; NamedNodeList&nbsp;&nbsp;&nbsp; getTags(String tagname);
+
+};
+
+public interface HTMLOptionElement extends HTMLElement {
+
+&nbsp; void setText(String text);
+
+&nbsp; String getText();
+
+&nbsp; void setIndex(long index);
+
+&nbsp; long getIndex();
+
+&nbsp; void setSelected(boolean selected);
+
+&nbsp; boolean getSelected();
+
+&nbsp; void setValue(String value);
+
+&nbsp; String getValue();
+
+&nbsp; void setDefaultSelected(boolean defaultSelected);
+
+&nbsp; boolean getDefaultSelected();
+
+&nbsp; HTMLFormElement getForm();
+
+};
+
+public interface HTMLFieldSetElement extends HTMLElement {
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+};
+
+public interface HTMLLegendElement extends HTMLElement {
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+};
+
+public interface HTMLInputTextElement extends HTMLElement {
+
+&nbsp; void setValue(String value);
+
+&nbsp; String getValue();
+
+&nbsp; void setName(String name);
+
+&nbsp; String getName();
+
+&nbsp; void setDisabled(boolean disabled);
+
+&nbsp; boolean getDisabled();
+
+&nbsp; void setDefaultValue(String defaultValue);
+
+&nbsp; String getDefaultValue();
+
+&nbsp; void setSize(long size);
+
+&nbsp; long getSize();
+
+&nbsp; void setMaxLength(long maxLength);
+
+&nbsp; long getMaxLength();
+
+&nbsp; void setReadOnly(boolean readOnly);
+
+&nbsp; boolean getReadOnly();
+
+&nbsp; void setChecked(boolean checked);
+
+&nbsp; boolean getChecked();
+
+&nbsp; void setDefaultChecked(boolean defaultChecked);
+
+&nbsp; boolean getDefaultChecked();
+
+&nbsp; HTMLFormElement getForm();
+
+};
+
+public interface HTMLTextAreaElement extends HTMLElement {
+
+&nbsp; void setType(String type);
+
+&nbsp; String getType();
+
+&nbsp; void setValue(String value);
+
+&nbsp; String getValue();
+
+&nbsp; void setName(String name);
+
+&nbsp; String getName();
+
+&nbsp; void setDisabled(boolean disabled);
+
+&nbsp; boolean getDisabled();
+
+&nbsp; void setDefaultValue(String defaultValue);
+
+&nbsp; String getDefaultValue();
+
+&nbsp; void setReadOnly(boolean readOnly);
+
+&nbsp; boolean getReadOnly();
+
+&nbsp; void setRows(long rows);
+
+&nbsp; long getRows();
+
+&nbsp; void setCols(long cols);
+
+&nbsp; long getCols();
+
+&nbsp; void setWrap(String wrap);
+
+&nbsp; String getWrap();
+
+&nbsp; HTMLFormElement getForm();
+
+};
+
+public interface HTMLButtonElement extends HTMLElement {
+
+&nbsp; void setType(String type);
+
+&nbsp; String getType();
+
+&nbsp; void setValue(String value);
+
+&nbsp; String getValue();
+
+&nbsp; void setName(String name);
+
+&nbsp; String getName();
+
+&nbsp; void setDisabled(boolean disabled);
+
+&nbsp; boolean getDisabled();
+
+&nbsp; HTMLFormElement getForm();
+
+};
+
+public interface HTMLLabelElement extends HTMLElement {
+
+&nbsp; void setHtmlFor(String htmlFor);
+
+&nbsp; String getHtmlFor();
+
+&nbsp; void setAccessKey(String accessKey);
+
+&nbsp; String getAccessKey();
+
+};
+
+public interface HTMLAnchorElement extends HTMLElement {
+
+&nbsp; void setTarget(String target);
+
+&nbsp; String getTarget();
+
+&nbsp; void setHref(String href);
+
+&nbsp; String getHref();
+
+&nbsp; void setRel(String rel);
+
+&nbsp; String getRel();
+
+&nbsp; void setRev(String rev);
+
+&nbsp; String getRev();
+
+&nbsp; void setName(String name);
+
+&nbsp; String getName();
+
+&nbsp; void setAccessKey(String accessKey);
+
+&nbsp; String getAccessKey();
+
+&nbsp; void setTabIndex(long tabIndex);
+
+&nbsp; long getTabIndex();
+
+&nbsp; void setCharset(String charset);
+
+&nbsp; String getCharset();
+
+};
+
+public interface HTMLBaseFontElement extends HTMLElement {
+
+&nbsp; void setColor(String color);
+
+&nbsp; String getColor();
+
+&nbsp; void setFace(String face);
+
+&nbsp; String getFace();
+
+&nbsp; void setSize(long size);
+
+&nbsp; long getSize();
+
+};
+
+public interface HTMLBRElement extends HTMLElement {
+
+&nbsp; void setClear(String clear);
+
+&nbsp; String getClear();
+
+};
+
+public interface HTMLImgElement extends HTMLElement {
+
+&nbsp; void setIsMap(boolean isMap);
+
+&nbsp; boolean getIsMap();
+
+&nbsp; void setUseMap(String useMap);
+
+&nbsp; String getUseMap();
+
+&nbsp; void setBorder(String border);
+
+&nbsp; String getBorder();
+
+&nbsp; void setVspace(long vspace);
+
+&nbsp; long getVspace();
+
+&nbsp; void setHspace(long hspace);
+
+&nbsp; long getHspace();
+
+&nbsp; void setAlt(String alt);
+
+&nbsp; String getAlt();
+
+&nbsp; void setSrc(String src);
+
+&nbsp; String getSrc();
+
+&nbsp; void setLowSrc(String lowSrc);
+
+&nbsp; String getLowSrc();
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+&nbsp; void setWidth(long width);
+
+&nbsp; long getWidth();
+
+&nbsp; void setHeight(long height);
+
+&nbsp; long getHeight();
+
+};
+
+public interface HTMLFontElement extends HTMLElement {
+
+&nbsp; void setColor(String color);
+
+&nbsp; String getColor();
+
+&nbsp; void setFace(String face);
+
+&nbsp; String getFace();
+
+&nbsp; void setSize(long size);
+
+&nbsp; long getSize();
+
+};
+
+public interface HTMLModElement extends HTMLElement {
+
+&nbsp; void setCite(String cite);
+
+&nbsp; String getCite();
+
+&nbsp; void setDateTime(String dateTime);
+
+&nbsp; String getDateTime();
+
+};
+
+public interface HTMLObjectElement extends HTMLElement {
+
+&nbsp; void setObject(Object object);
+
+&nbsp; Object getObject();
+
+&nbsp; void setClassId(String classId);
+
+&nbsp; String getClassId();
+
+&nbsp; void setData(String data);
+
+&nbsp; String getData();
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+&nbsp; void setName(String name);
+
+&nbsp; String getName();
+
+&nbsp; void setCodeBase(String codeBase);
+
+&nbsp; String getCodeBase();
+
+&nbsp; void setCodeType(String codeType);
+
+&nbsp; String getCodeType();
+
+&nbsp; void setCode(String code);
+
+&nbsp; String getCode();
+
+&nbsp; void setType(String type);
+
+&nbsp; String getType();
+
+&nbsp; void setWidth(long width);
+
+&nbsp; long getWidth();
+
+&nbsp; void setHeight(long height);
+
+&nbsp; long getHeight();
+
+&nbsp; void setAltHtml(String altHtml);
+
+&nbsp; String getAltHtml();
+
+&nbsp; void setVspace(long vspace);
+
+&nbsp; long getVspace();
+
+&nbsp; void setHspace(long hspace);
+
+&nbsp; long getHspace();
+
+&nbsp; void setTabIndex(long tabIndex);
+
+&nbsp; long getTabIndex();
+
+&nbsp; HTMLFormElement getForm();
+
+};
+
+public interface HTMLQuoteElement extends HTMLElement {
+
+&nbsp; void setCite(String cite);
+
+&nbsp; String getCite();
+
+};
+
+public interface HTMLScriptElement extends HTMLElement {
+
+&nbsp; void setSrc(String src);
+
+&nbsp; String getSrc();
+
+&nbsp; void setText(String text);
+
+&nbsp; String getText();
+
+&nbsp; void setType(String type);
+
+&nbsp; String getType();
+
+&nbsp; void setLanguage(String language);
+
+&nbsp; String getLanguage();
+
+};
+
+public interface HTMLUListElement extends HTMLElement {
+
+&nbsp; void setCompact(boolean compact);
+
+&nbsp; boolean getCompact();
+
+&nbsp; void setType(String type);
+
+&nbsp; String getType();
+
+};
+
+public interface HTMLOListElement extends HTMLElement {
+
+&nbsp; void setCompact(boolean compact);
+
+&nbsp; boolean getCompact();
+
+&nbsp; void setType(String type);
+
+&nbsp; String getType();
+
+&nbsp; void setStart(long start);
+
+&nbsp; long getStart();
+
+};
+
+public interface HTMLLIElement extends HTMLElement {
+
+&nbsp; void setType(String type);
+
+&nbsp; String getType();
+
+&nbsp; void setValue(long value);
+
+&nbsp; long getValue();
+
+};
+
+public interface HTMLDListElement extends HTMLElement {&nbsp;
+&nbsp; void setCompact(boolean compact);
+
+&nbsp; boolean getCompact();
+
+};
+
+public interface HTMLDivElement extends HTMLElement {
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+};
+
+public interface HTMLHRElement extends HTMLElement {
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+&nbsp; void setNoShade(boolean noShade);
+
+&nbsp; boolean getNoShade();
+
+&nbsp; void setWidth(long width);
+
+&nbsp; long getWidth();
+
+&nbsp; void setSize(long size);
+
+&nbsp; long getSize();
+
+};
+
+public interface HTMLParaElement extends HTMLElement {
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+};
+
+public interface HTMLHeaderElement extends HTMLElement {
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+};
+
+public interface HTMLMapElement extends HTMLElement {
+
+&nbsp; NamedNodeList getAreas();
+
+&nbsp; void setName(String name);
+
+&nbsp; String getName();
+
+};
+
+public interface HTMLAreaElement extends HTMLElement {
+
+&nbsp; void setShape(String shape);
+
+&nbsp; String getShape();
+
+&nbsp; void setCoords(String coords);
+
+&nbsp; String getCoords();
+
+&nbsp; void setHref(String href);
+
+&nbsp; String getHref();
+
+&nbsp; void setTarget(String target);
+
+&nbsp; String getTarget();
+
+&nbsp; void setAlt(String alt);
+
+&nbsp; String getAlt();
+
+&nbsp; void setNoHref(boolean noHref);
+
+&nbsp; boolean getNoHref();
+
+&nbsp; void setTabIndex(long tabIndex);
+
+&nbsp; long getTabIndex();
+
+};
+
+public interface HTMLTableCaption extends HTMLElement {
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+};
+
+public interface HTMLTable extends HTMLElement {
+
+&nbsp; void setCols(long cols);
+
+&nbsp; long getCols();
+
+&nbsp; void setBorder(String border);
+
+&nbsp; String getBorder();
+
+&nbsp; void setFrame(String frame);
+
+&nbsp; String getFrame();
+
+&nbsp; void setRules(String rules);
+
+&nbsp; String getRules();
+
+&nbsp; void setCellSpacing(long cellSpacing);
+
+&nbsp; long getCellSpacing();
+
+&nbsp; void setCellPadding(long cellPadding);
+
+&nbsp; long getCellPadding();
+
+&nbsp; void setBgColor(String bgColor);
+
+&nbsp; String getBgColor();
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+&nbsp; void setWidth(long width);
+
+&nbsp; long getWidth();
+
+&nbsp; void setCaption(HTMLTableCaption caption);
+
+&nbsp; HTMLTableCaption getCaption();
+
+&nbsp; void setHead(HTMLTableSection head);
+
+&nbsp; HTMLTableSection getHead();
+
+&nbsp; void setTfoot(HTMLTableSection tfoot);
+
+&nbsp; HTMLTableSection getTfoot();
+
+&nbsp; NamedNodeList&nbsp;&nbsp;&nbsp;&nbsp; getRows();
+
+&nbsp; NamedNodeList&nbsp;&nbsp;&nbsp;&nbsp; getBodies();
+
+&nbsp; HTMLElement&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; createTHead();
+
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deleteTHead();
+
+&nbsp; HTMLElement&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; createTFoot();
+
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deleteTFoot();
+
+&nbsp; HTMLTableCaption&nbsp;&nbsp; createCaption();
+
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deleteCaption();
+
+&nbsp; HTMLElement&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; insertRow(long index);
+
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deleteRow(long index);
+
+};
+
+public interface HTMLTableCol extends HTMLElement {
+
+&nbsp; void setSpan(long span);
+
+&nbsp; long getSpan();
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+&nbsp; void setValign(String valign);
+
+&nbsp; String getValign();
+
+&nbsp; void setWidth(long width);
+
+&nbsp; long getWidth();
+
+};
+
+public interface HTMLTableSection extends HTMLElement {
+
+&nbsp; NamedNodeList getRows();
+
+&nbsp; HTMLElement insertRow(long index);
+
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deleteRow(long index);
+
+&nbsp;&nbsp;
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+&nbsp; void setValign(String valign);
+
+&nbsp; String getValign();
+
+};
+
+public interface HTMLTableRow extends HTMLElement {
+
+&nbsp; void setRowIndex(long rowIndex);
+
+&nbsp; long getRowIndex();
+
+&nbsp; void setSectionRowIndex(long sectionRowIndex);
+
+&nbsp; long getSectionRowIndex();
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+&nbsp; void setValign(String valign);
+
+&nbsp; String getValign();
+
+&nbsp; void setBgColor(String bgColor);
+
+&nbsp; String getBgColor();
+
+&nbsp; NamedNodeList getCells();
+
+&nbsp; HTMLElement insertCell(long index);
+
+&nbsp; void&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deleteCell(long index);
+
+};
+
+public interface HTMLTableCell extends HTMLElement {
+
+&nbsp; void setCellIndex(long cellIndex);
+
+&nbsp; long getCellIndex();
+
+&nbsp; void setRowSpan(long rowSpan);
+
+&nbsp; long getRowSpan();
+
+&nbsp; void setColSpan(long colSpan);
+
+&nbsp; long getColSpan();
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+&nbsp; void setValign(String valign);
+
+&nbsp; String getValign();
+
+&nbsp; void setBgColor(String bgColor);
+
+&nbsp; String getBgColor();
+
+&nbsp; void setNoWrap(boolean noWrap);
+
+&nbsp; boolean getNoWrap();
+
+&nbsp; void setWidth(long width);
+
+&nbsp; long getWidth();
+
+&nbsp; void setHeight(long height);
+
+&nbsp; long getHeight();
+
+};
+
+public interface HTMLCommentElement extends HTMLElement {
+
+&nbsp; void setText(String text);
+
+&nbsp; String getText();
+
+};
+
+public interface HTMLFrameSetElement extends HTMLElement {
+
+&nbsp; void setRows(String rows);
+
+&nbsp; String getRows();
+
+&nbsp; void setCols(String cols);
+
+&nbsp; String getCols();
+
+};
+
+public interface HTMLFrameElement extends HTMLElement {
+
+&nbsp; void setSrc(String src);
+
+&nbsp; String getSrc();
+
+&nbsp; void setName(String name);
+
+&nbsp; String getName();
+
+&nbsp; void setNoResize(boolean noResize);
+
+&nbsp; boolean getNoResize();
+
+&nbsp; void setScrolling(String scrolling);
+
+&nbsp; String getScrolling();
+
+&nbsp; void setFrameBorder(String frameBorder);
+
+&nbsp; String getFrameBorder();
+
+&nbsp; void setMarginWidth(long marginWidth);
+
+&nbsp; long getMarginWidth();
+
+&nbsp; void setMarginHeight(long marginHeight);
+
+&nbsp; long getMarginHeight();
+
+};
+
+public interface HTMLIFrameElement extends HTMLElement {
+
+
+&nbsp; void setSrc(String src);
+
+&nbsp; String getSrc();
+
+&nbsp; void setName(String name);
+
+&nbsp; String getName();
+
+&nbsp; void setScrolling(String scrolling);
+
+&nbsp; String getScrolling();
+
+&nbsp; void setAlign(String align);
+
+&nbsp; String getAlign();
+
+&nbsp; void setMarginWidth(long marginWidth);
+
+&nbsp; long getMarginWidth();
+
+&nbsp; void setMarginHeight(long marginHeight);
+
+&nbsp; long getMarginHeight();
+
+&nbsp; void setWidth(long width);
+
+&nbsp; long getWidth();
+
+&nbsp; void setHeight(long height);
+
+&nbsp; long getHeight();
+
+};</PRE>-->
+    
+    <HR>
+    
+    <H1>Appendix C: ECMAScript HTML API definitions</H1>
+    
+    <HR>
+    
+    <P>This will contain the ECMAScript bindings for the HTML DOM. <BR> </P>
+ 
+  </BODY>
+</HTML>

@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Wed Apr 15 21:06:22 PDT 1998 -->
+<html>
+<head>
+  <title> Document Object Model Requirements</title>
+</head>
+<body bgcolor='#FFFFFF' text='#000000'>
+<h1>1.  Document Object Model Requirements</h1>
+<h4>Editors</h4>
+<blockquote>Jared Sorensen, <i>Novell, Inc.</i><br>Lauren Wood, <i>SoftQuad, Inc.</i><br></blockquote>
+<hr>
+<a name=''></a>
+<p>
+<p>This document defines the high-level requirements for the
+	Document Object Model (DOM). It is part of the <a href='http://www.w3.org/TR/WD-DOM'>Document Object Model
+	  Specification</a>
+.</p>
+<br><hr>
+
+<a name='ID-480972763'></a>
+<h1 class='div1'>1.1. General Requirements</h1><p><ol>
+<li>References to XML and HTML documents generally
+	      denote the physical files that contain structural
+	      markup.</li>
+<li>Some requirements are not implemented in DOM Level
+	      1. Those requirements are identified in this document
+	      with the notation <em> [After Level 1]</em>.
+	    </li>
+</ol>
+<p>Listed below are the general requirements of the Document
+	Object Model.
+ 	<ol>
+<li>The Object Model is language neutral and platform
+	      independent.
+	    </li>
+<li>There will be a core DOM that is applicable to
+	      HTML, CSS and XML documents.</li>
+<li>The Object Model can be used to construct and
+	      deconstruct the document. 	    </li>
+<li>The Object Model will not preclude use by either
+	      agents external to the document content, or scripts
+	      embedded within the document.</li>
+<li>Consistent naming conventions must be used through
+	      all levels of the Object Model.</li>
+<li>A visual UI component will not be required for a
+	      conforming implementation of the Object Model.</li>
+<li>The specific HTML, CSS or XML document object
+	      models will be driven by the underlying constructs of
+	      those languages.</li>
+<li>It must be possible to read in a document and
+	      write out a structurally isomorphic document. </li>
+<li>The Object Model will not expose the user to
+	      problems with security, validity, or privacy.</li>
+<li>The Object Model will not preclude other mechanisms
+	      for manipulating documents.</li>
+</ol>
+<br>
+<a name='ID-314579343'></a>
+<h1 class='div1'>1.2. Structure Navigation</h1><p>This refers to the navigation around a document, such as
+	finding the parent of a given element, or what children
+	elements a given parent element contains.
+      
+<a name='ID-2039524697'></a>
+<h2 class='div2'>1.2.1. General Requirements</h2><p><ol>
+<li>All document content, including elements and
+		attributes, will be programmatically accessible and
+		manipulable.</li>
+<li>Navigation from any element to any other
+		element will be possible, except where such
+		navigation would compromise security. </li>
+<li>There will be a way to uniquely and
+		reproducibly enumerate the structure of static
+		documents.</li>
+<li>There will be a way to query for elements and
+		attributes, subject to security and privacy
+		considerations.</li>
+<li>Basic low-level functions (get first, get next,
+		etc.) will be provided, along with convenience
+		functions that build upon them, but have a
+		consistent access method.</li>
+</ol>
+<br>
+<a name='ID-1398657898'></a>
+<h2 class='div2'>1.2.2. HTML Requirements</h2><p>These are specific to HTML documents.  	  <ol>
+<li>All elements known to the user agent are
+		exposed.</li>
+<li>Unknown tags and attributes are exposed.</li>
+<li>Implied elements are exposed even if not
+		explicitly defined in the document (e.g., HTML,
+		HEAD, BODY).</li>
+<li>There will be guidelines for the inclusion of
+		new elements and attributes in the object model.</li>
+</ol>
+<br><br>
+<a name='ID-1737999481'></a>
+<h1 class='div1'>1.3. Document Manipulation</h1><p><ol>
+<li>There will be a way to add, remove and change
+	      elements and/or tags (if permitted by the Document
+	      Type Definition and not precluded by security or
+	      validity considerations) in the document structure.
+	    </li>
+<li>There will be a way to add, remove and change
+	      attributes (if permitted by the Document Type
+	      Definition and not precluded by security or validity
+	      considerations) in the document structure.</li>
+<li>Operations (or a combination of operations) must
+	      restore consistency before they return.</li>
+<li>A valid static document acted upon by the DOM
+	      will deliver a consistent reproducible document
+	      structure.</li>
+</ol>
+<br>
+<a name='ID-1571606061'></a>
+<h1 class='div1'>1.4. Content Manipulation</h1><p><ol>
+<li>There will be a way to determine the containing
+	      element from any text part of the document (subject to
+	      security considerations).
+	    </li>
+<li>There will be a way to manipulate (add, change,
+	      delete) content.
+ 	    </li>
+<li>There will be a way to navigate content.</li>
+</ol>
+<br>
+<a name='ID-373069172'></a>
+<h1 class='div1'>1.5. Event Model <em>[After Level 1]</em></h1><p>The event model must be rich enough to create completely
+	interactive documents. This requires the ability to respond
+	to any user action that may occur on the document.
+	Therefore, many of these requirements only apply if a UI
+	component is involved. <ol>
+<li>All elements will be capable of generating
+	      events.</li>
+<li>There will be interaction events, update events,
+	      and change events.  	    </li>
+<li>The event model will allow responses to user
+	      interactions.
+	    </li>
+<li>The event delivery mechanism will allow for
+	      overriding of default behavior.</li>
+<li>The event model will provide a mechanism by which
+	      events for specific elements may be received by an 
+	      ancestor in the DOM hierarchy.</li>
+<li>Events are synchronous.</li>
+<li>Events will be defined in a platform independent
+	      and language neutral way.</li>
+<li>There will be an interface for binding to
+	      events.</li>
+</ol>
+<br>
+<a name='ID-1796489311'></a>
+<h1 class='div1'>1.6. Stylesheet Object Model <em>[After Level 1]</em></h1><p>Cascading Style Sheets (CSS) is one model for manipulating
+	the style of the document. The Stylesheet Object Model
+	exposes the ability to create, modify, and associate CSS
+	style sheets with the document. The stylesheet model will be
+	extensible to other stylesheet formats in the future.
+	<ol>
+<li>All style sheets will be represented in the object
+	      model.
+	    </li>
+<li>There will be a CSS stylesheet model. The CSS
+	      object model will be defined as part of a stylesheet
+	      embedding model, where the core part of the model may be
+	      applicable to other style languages.
+	    </li>
+<li>Selectors, rules and properties of individual style
+	      sheets can be added, removed and changed. </li>
+<li>All elements of a CSS style can be added, removed,
+	      and changed in the object model. This includes but is
+	      not limited to:  	      <ol>
+<li>linked style sheets</li>
+<li>imported style sheets</li>
+<li>alternative style sheets</li>
+<li>CSS pseudo-classes and CSS
+		    pseudo-elements</li>
+<li>contextual selectors</li>
+<li>inline styles</li>
+<li>all properties as defined in the CSS
+		    specification, including but not limited to font
+		    properties, colors, backgrounds, and box
+		    properties.</li>
+</ol>
+</li>
+</ol>
+<br>
+<a name='ID-1072425801'></a>
+<h1 class='div1'>1.7. DTD Manipulation</h1><p><ol>
+<li><em>[After Level 1]</em> There will be a way
+	      to determine the presence of a DTD. </li>
+<li>There will be a way to query declarations in the
+	      underlying DTD (if available).</li>
+<li><em>[After Level 1]</em> There will be a way
+	      to add, remove, and change declarations in the
+	      underlying DTD (if available). </li>
+<li><em>[After Level 1]</em> There will be a way
+	      to test conformance of all or part of the given
+	      document against a DTD (if available). (See Document
+	      Manipulation, item 3). </li>
+</ol>
+<br>
+<a name='ID-1463702471'></a>
+<h1 class='div1'>1.8. Error Reporting</h1><p><ol>
+<li>The DOM will provide a document-wide error
+	      logging and reporting mechanism.</li>
+<li>Error reporting will be primarily via
+	      exceptions.</li>
+<li>The DOM error state can be queried. </li>
+</ol>
+<br>
+<a name='ID-181968872'></a>
+<h1 class='div1'>1.9. Security, Validity and Privacy <em>[After Level 1]</em></h1><p>Security, validity, and privacy considerations are
+	interrelated and entwined. DOM will initially provide simple
+	"sandbox" security; subsequent levels are expected to
+	incorporate more sophisticated mechanisms.  	<ol>
+<li>Each object must be responsible for maintaining its
+	      own internal consistency.</li>
+<li>It must be safe to have multiple threads
+	      operating on the same object. 	    </li>
+<li>Object locking must be incorporated to ensure
+	      consistent results.
+	    </li>
+<li>It must be possible to prevent scripts on one
+	      page from accessing another page.</li>
+<li>Firewall boundaries must be respected.</li>
+<li>It must be possible to restrict access and
+	      navigation to specific elements.</li>
+<li>An external security
+	      API will be provided.  	    </li>
+</ol>
+<br>
+<a name='ID-1605389010'></a>
+<h1 class='div1'>1.10. Document Meta Information</h1><p>These are requirements for information about the
+	document. 
+	<ol>
+<li>There will be a way of obtaining relevant
+	      information about the document and 	      its
+	      embedded objects such as source location, date
+	      created, and associated cookies.</li>
+</ol>
+<br>
+<a name='ID-406852121'></a>
+<h1 class='div1'>1.11. UA Information</h1><p>These are requirements for information about the user agent
+	environment, if applicable.  	<ol>
+<li>There will be a way of obtaining relevant
+	      information about the display environment, including
+	      the UA brand information and version number, and,
+	      where appropriate, the HTTP header.</li>
+<li><em>[After Level 1]</em> A way of determining
+	      support for a MIME type will be available. </li>
+</ol>
+<br></body>
+</html>

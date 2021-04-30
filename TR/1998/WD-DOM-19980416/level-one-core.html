@@ -1,0 +1,3482 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Wed Apr 15 21:06:23 PDT 1998 -->
+<html>
+<head>
+  <title> Document Object Model (Core) Level 1</title>
+</head>
+<body bgcolor='#FFFFFF' text='#000000'>
+<h1>2.  Document Object Model (Core) Level 1</h1>
+<h4>Editors</h4>
+<blockquote>Mike Champion, <i>ArborText (from November 20, 1997)</i><br>Steve Byrne, <i>JavaSoft (until November 19, 1997)</i><br></blockquote>
+<hr>
+<a name=''></a>
+<p>
+<p>Level One of the Document Object Model (DOM) level one
+	provides a common API for software developers and web script
+	authors to access and manipulate parsed HTML and XML content
+	inside conforming products. All markup as well as any document
+	type declarations are made available. Level one also allows
+	creation "from scratch" of entire web documents in
+	memory; saving those documents persistently is left to the
+	programmer. DOM Level one is intentionally limited in scope to
+	methods to represent and manipulate document structure and
+	content; a standard API for controlling how documents are
+	rendered via stylesheets, validated against a DTD, accessed by
+	given users, etc. will be  specified in a subsequent revision
+	level of the DOM. </p>
+<br><hr>
+
+<a name='ID-1590626201'></a>
+<h1 class='div1'>2.1. Introduction</h1><p>This specification defines a minimal set of objects and
+	interfaces for accessing and manipulating document objects.
+	The functionality specified in this draft (the
+	"<em>core</em>" functionality) should be
+	sufficient to implement higher level operations, such as
+	querying, and filtering of a document; future drafts will add
+	"convenience" operations which can be implemented in
+	terms of the <em>core</em> operations, but which may be
+	implemented more efficiently using implementation-specific
+	mechanisms that fall outside of the scope of this
+	specification.<br>
+<a name='ID-1424232781'></a>
+<h1 class='div1'>2.2. Intended Audience</h1><p>The audience for this document is intended to be web script
+	authors, software developers, and DOM implementation
+	providers. This document presumes familiarity with concepts
+	and terminology from HTML and XML, as well as object oriented
+	programming. The actual DOM specification is provided in the
+	Object Management Group's Interface Definition Language (IDL);
+	experience with Java or C++ syntax should be sufficient to
+	allow comprehension.<br>
+<a name='ID-225695892'></a>
+<h1 class='div1'>2.3. Design goals for the DOM Level One specification</h1><p>It is important to note that the DOM is an
+	"abstraction", or an idealized model of how
+	documents are represented and manipulated in the products that
+	support the DOM interfaces. Or, even more ideally, one might
+	think of the DOM as the "abstract base classes" that
+	products supporting the DOM actually implement.  Thus, in
+	general, HTML and XML products that support the DOM merely
+	"expose" the DOM as a means of accessing and
+	manipulating their (possibly proprietary) internal data
+	structures and operations; there is no assumption that they
+	are internally built on the DOM APIs or that they do not
+	expose proprietary APIs that have no relationship to the W3C
+	DOM. <p>The DOM objects and interfaces are designed to be:
+	<ul>
+<li>high-fidelity: sufficient for representing the
+	      content of parsed HTML and XML documents without loss of
+	      [significant] information. The supported HTML version is
+	      4.0; the supported XML version is 1.0. </li>
+<li>isomorphic with XML: The DOM should be sufficient
+	      to construct an entirely new document instance
+	      programmatically that is identical to the parsed form of
+	      a given HTML or XML document. This means that it has
+	      sufficient constructive power to build any useful
+	      document object hierarchy, and that an implementation
+	      could be written such that the external document parser
+	      merely calls the methods specified in the level one
+	      specification to build the object hierarchy. </li>
+<li>extensible: The DOM core is the foundation for the
+	      rest  of the document object model levels, which means
+	      it must be simple, flexible, and extensible. </li>
+<li>thread-safe: The operations supported by the DOM
+	      will not corrupt the document object or return corrupted
+	      state (as far as this API is concerned). Higher level
+	      consistency support mechanisms such as explicit locks or
+	      transactions are outside of the scope of the level one
+	      specification. For level one of the DOM, the assumption
+	      is that only one thread operates on the document at a
+	      time.
+	    </li>
+</ul>
+<i><b>Note: </b>In the current specification, some operations can
+	  modify the document tree, but there is no model for handling
+	  concurrent access. The WG also recognises that in some
+	  situations, a document, or some of its components, will not
+	  be modifiable, and a method for dealing with such situations
+	  needs to be defined in a subsequent revision level of the
+	  DOM.</i><br>
+<a name='ID-1066739061'></a>
+<h2 class='div2'>2.3.1. Entities and the DOM Core</h2><p>In the DOM core, there are no objects representing
+	  entities. Numeric character references and references to the
+	  pre-defined entities in HTML and XML, are replaced by the
+	  single character that makes up the entitity's replacement.
+	  For example, in:   
+<blockquote>
+<table border='1'>
+<tr><td bgcolor='#e9e9e9'><pre>
+   &lt;p&gt;This is a dog &amp;amp; a cat&lt;/p&gt;</pre></td></tr>
+</table>
+</blockquote>
+
+     
+         the "&amp;amp;"
+	  will be replaced by the character "&amp;", and the
+	  text in the &lt;p&gt; element will form a single continuous
+	  sequence of characters. The representation of general
+	  entities, both internal and external, are defined within the
+	  XML-specific portion of the level one specification.<i><b>Note: </b>When a DOM representation of a document is serialized
+	    as XML or HTML text, applications will need to check each
+	    character in text data to see if it needs to be escaped
+	    using a numeric or pre-defined entity. Failing to do so
+	    could result in invalid HTML or XML.
+	  </i><br><br><br>
+<a name='ID-2015685820'></a>
+<h1 class='div1'>2.4. IDL Issues</h1><p>The primary Document Object Model type definitions are
+	presented using the Object Management Group's Interface
+	Definition Language (IDL, ISO standard 14750). While a
+	complete tutorial on the IDL language is beyond the scope of
+	this document, a few key items deserve explicit mentioning:
+	<ul>
+<li>In the DOM's IDL definition, within each interface
+	      there are primarily two kinds of things:
+	      <ol>
+<li>Attribute definitions </li>
+<li>Method (IDL calls them "operation")
+		    definitions </li>
+</ol>
+</li>
+<li>Attribute definitions are a <em>shorthand</em>
+	      notation for a pair of "get/set" or
+	      accessor/mutator methods, and should <em>not</em> be
+	      thought of, nor mapped in a particular language binding
+	      to, data members directly. </li>
+<li>The "constructor" methods for the various
+	      IDL objects are not specified explicitly. Specific
+	      programming language implementations of the DOM will
+	      provide suitable object creation methods; typically
+	      these will be simple with no argument constructors,
+	      although this is not a requirement. For the most part, DOM users will call the createXXX()
+		methods on the Document class to create instances of 
+                DOM objects that are associated with a given document.
+              </li>
+<li>IDL's <code>long</code> datatype represents 32
+	      signed bit integers. In other language bindings, for
+	      example Java, this would be mapped to the Java
+	      <code>int</code> datatype. </li>
+</ul>
+ 
+	More information on IDL is available from  <a href='http://www.omg.org/'>OMG</a>
+ and in chapter 3 of the  <a href='http://www.omg.org/corba/corbiiop.htm'>CORBA 2.0</a>
+ specification.<i><b>Note: </b>The Object Management Group Interface Definition
+	  Language (OMG IDL) was chosen as it was designed for
+	  specifying language and implementation-neutral interfaces.
+	  Various other IDLs could be used; the use of OMG IDL does
+	  not imply a requirement to use a specific object binding
+	  runtime.
+	</i><br><br>
+<a name='ID-1849292400'></a>
+<h1 class='div1'>2.5. Primary API Types</h1><p>The types described in this section are those that
+	application programmers using the DOM will encounter most
+	frequently. A good working knowledge of these types will be
+	sufficient to accomplish most tasks. 
+<a name='ID-1208425600'></a>
+<h2 class='div2'>2.5.1. Node</h2><p>Node is the base type of
+	  most objects in the Document Object Model. It may have an
+	  arbitrary number (including zero) of sequentially ordered
+	  child nodes. It usually has a parent Node; the exception
+	  being that the root Node in a document hierarchy has no
+	  parent.<br>
+<a name='ID-1125228890'></a>
+<h2 class='div2'>2.5.2. Element</h2><p>Element objects
+	  represent the elements in the HTML or XML document. Elements
+	  contain, as child nodes, all the content between the start
+	  tag, and the end tag of an element. Additionally, Element
+	  objects have a list of Attribute objects which represent the
+	  combination of those attributes explicitly specified in the
+	  document, and those defined in the document type definition
+	  which have default values.<br>
+<a name='ID-102CB08E'></a>
+<h2 class='div2'>2.5.3. DocFragment</h2><p>The DocFragment
+	  object represents the root of a lightweight document or
+	  document fragment.
+	<br>
+<a name='ID-1042032180'></a>
+<h2 class='div2'>2.5.4. Document</h2><p>The Document object
+	  extends the DocFragment interface to represent the root node
+	  of a  standalone document. 
+	<br><br>
+<a name='ID-2040392700'></a>
+<h1 class='div1'>2.6. Auxiliary types</h1><p>These types are "helpers" which can appear in
+	various parts of the DOM. Some of them occur quite frequently
+	in common usage; others are limited to the Document Type
+	Definition section of the document, and thus may be of little
+	interest to typical DOM users. Those types are marked
+	accordingly. 
+<a name='ID-10420321803'></a>
+<h2 class='div2'>2.6.1. NodeIterator</h2><p>The NodeIterator
+	  object is used for iterating over a set of nodes specified
+	  by a "filter". Iterators are described in detail in the book
+	  <em>Design Patterns</em>, pages 257-271, from which the
+	  following sections are quoted:
+	  <dl>
+<dt><b>Intent</b></dt>
+<dd>Provide a way to access elements of an aggregate
+		  object sequentially without exposing it's underlying
+		  representation.</dd><dt><b>Applicability</b></dt>
+<dd>Use the Iterator pattern
+		  <ul>
+<li>to access an aggregate object's content
+			without exposing it's internal
+			representation.</li>
+<li>to support multiple traversals of
+			aggregate objects.</li>
+<li>to provide a uniform interface for
+			traversing different aggregate structures
+			(that is, to support polymorphic
+			iteration).</li>
+</ul>
+</dd></dl>
+
+	<br>
+<a name='ID-10420321804'></a>
+<h2 class='div2'>2.6.2. AttributeList</h2><p>The AttributeList object
+	  represents a collection  of Attribute objects, indexed by
+	  attribute name.
+	<br>
+<a name='ID-10420321805'></a>
+<h2 class='div2'>2.6.3. DocumentContext</h2><p>The DocumentContext object
+	  is repository for meta-data about a document, such as
+	  source, creation date, and other creation context
+	  information. This object will be fully specified in the
+	  level two DOM specification.
+	<br>
+<a name='ID-10420321806'></a>
+<h2 class='div2'>2.6.4. DOM</h2><p>The DOM object provides
+	  document  basic operations such as creating new top-level
+	  HTML or XML documents, or making inquiries about specific
+	  supported versions of HTML and XML within a particular
+	  document object model implementation.
+	<br>
+<a name='ID-10420321808'></a>
+<h2 class='div2'>2.6.5. Range</h2><p>The Range object
+	  <em>[Being discussed for possible inclusion in a later
+	    draft of level one]</em> represents a part of the
+	  document, potentially including markup.
+	<br><br>
+<a name='ID-401165381'></a>
+<h1 class='div1'>2.7. Typical operation</h1><p>Normally, a DOM-compliant implementation will make the main
+	Document instance available to the application through some
+	implementation-specific mechanism. For example, a typical
+	implementation would pass the application a reference to a
+	<code>DocumentContext</code> object. From the
+	<code>DocumentContext</code>, the application may retrieve the
+	<code>Document</code> object, which is the root of the
+	document object hierarchy.<p>Once the application has access to the root of the document
+	object hierarchy, it can use the methods defined herein for
+	accessing individual nodes, selection of specific node types
+	such as all images, and so on.<br>
+<a name='ID-1907782229'></a>
+<h1 class='div1'>2.8. Document Object Model APIs</h1><p>This section defines the complete set of objects and methods
+	which are defined by the Document Object Model. The general
+	structure of these object definitions is: 
+	<ul>
+<li>A brief overview of the semantics of the object and
+	      how it relates to other objects in the DOM. </li>
+<li>A sequence of &lt;method signature, description&gt;
+	      pairs for each method that is defined for the object.
+	    </li>
+</ul>
+
+      <a name='ID-102161490'></a>
+<font size='4'><b>Interface <i>DOM</i></b></font>
+<blockquote>
+<p>The "DOM" interface provides a number of methods
+      for performing operations that are independent of any particular
+      instance of the document object model.
+      Although
+      IDL does not provide a mechanism for expressing the concept, the
+      methods supplied by the DOM interface will be implemented as
+      "static", or instance independent, methods. This means
+      that a client application using the DOM does not have to locate
+      a specific instance of the DOM object; rather, the methods are
+      will be available directly on the DOM class itself and so are
+      directly accessible from any execution context.<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface DOM {
+  Document            createDocument(in wstring type);
+  boolean             hasFeature(in wstring feature);
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1051108249'></a>
+<h4>Method <code><i>createDocument()</i></code></h4>
+<blockquote>
+<p>Creates a document of the specified type <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>type</b><td><p>The type of document to create, i.e., 
+        "HTML" or "XML".</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Document</b></td><td>
+<p>An instance of an HTML or XML document is created. Documents
+      are a special type of DOM object because other objects (such as
+      Elements, DocumentFragments, etc.) can only exist within the context
+      of a Document.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-5CED94D7'></a>
+<h4>Method <code><i>hasFeature()</i></code></h4>
+<blockquote>
+<p> Returns TRUE if the current DOM implements a given
+          feature, FALSE otherwise. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>feature</b><td><p>      The package name of the feature to test.</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>boolean</b></td><td>
+<p>	  </td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<a name='ID-444024398'></a>
+<font size='4'><b>Interface <i>DocumentContext</i></b></font>
+<blockquote>
+<p>The DocumentContext object represents information that is
+      not strictly related to a document's content; rather, it
+      provides the information about where the document came from, and
+      any additional meta-data about the document. For example, the
+      DocumentContext for a document retrieved using HTTP would
+      provide access to the HTTP headers which were retrieved with the
+      document, the URL that the document came from, etc.<p>For documents which were not retrieved via HTTP, or for those
+      which were created directly in memory, there may be no
+      DocumentContext.<i><b>Note: </b>The DocumentContext interface described here is expected
+	to be significantly expanded in the level two specification of
+	the Document Object Model. </i><br><h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface DocumentContext {
+  attribute Document       document;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name=''></a>
+<h4>Attribute <code><i>document</i></code></h4>
+<blockquote>
+<p>This is the root node of a Document Object Model. Any
+	iteration, enumeration or other traversal of the entire
+	document's content should begin with this node.
+      </blockquote>
+
+</blockquote>
+<a name='ID-B63ED1A3'></a>
+<font size='4'><b>Interface <i>DocumentFragment</i></b></font>
+<blockquote>
+<p>DocumentFragment is the "lightweight" or "minimal" document object,
+  or the handle for a "fragment" as returned by the Range operations,
+  and it (as the superclass of Document) anchors the XML/HTML tree in a
+  full-fledged document.<p>The children of a DocumentFragment node are zero or more nodes 
+        representing the tops of any sub-trees defining the structure of the
+	document, including the actual root element of the XML or HTML document,
+        as well as the XML prolog, comments, PIs, etc.
+        For a document fragment, there could be a number of 
+        subtrees, since fragments do not need to be well-formed XML documents
+        (although they do need to be well-formed XML parsed entities, which
+        can have multiple top nodes). Criteria for "well-formedness" are 
+        much looser in the HTML world, and the DOM will not attempt to impose
+        any constraints here.
+        For a complete HTML document, this will contain an Element instance whose
+	tagName is <code>"HTML"</code>; for a complete XML document
+        this will contain the
+	outermost element, i.e. the element non-terminal
+	in production <em>[41]</em> in <a href='http://www.w3.org/TR/PR-xml.html#sec3'>Section 3</a>
+
+	of the XML-lang specification. <h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface DocumentFragment : Node {
+  attribute Document       masterDoc;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-8D898481'></a>
+<h4>Attribute <code><i>masterDoc</i></code></h4>
+<blockquote>
+<p>This provides access to the Document 
+	object asssociated with this DocumentFragment. 
+	</blockquote>
+
+</blockquote>
+<a name='ID-1491798679'></a>
+<font size='4'><b>Interface <i>Document</i></b></font>
+<blockquote>
+<p>The Document object represents the entire HTML or XML
+      document. Conceptually, it is the root of the document tree, and
+      provides the  primary access to the document's data.
+      Since Document inherits
+      from DocumentFragment, its children are contents of the Document, 
+      e.g., the root Element, the XML prolog, any processing instructions
+      and or comments, etc.  <p>Since Elements, Text nodes, Comments, PIs, etc. cannot exist outside
+     a Document, the Document interface also anchors the "factory" methods
+     that create these objects. <h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface Document : DocumentFragment {
+  attribute Node           documentType;
+  attribute Element        documentElement;
+  attribute DocumentContextcontextInfo;
+  DocumentContext     createDocumentContext();
+  Element             createElement(in wstring tagName, 
+                                    in AttributeList attributes);
+  Text                createTextNode(in wstring data);
+  Comment             createComment(in wstring data);
+  PI                  createPI(in wstring name, 
+                               in wstring data);
+  Attribute           createAttribute(in wstring name, 
+                                      in Node value);
+  AttributeList       createAttributeList();
+  TreeIterator        createTreeIterator(in Node node);
+  NodeIterator        getElementsByTagName(in wstring tagname);
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-B63ED1A31'></a>
+<h4>Attribute <code><i>documentType</i></code></h4>
+<blockquote>
+<p>For XML, this provides access to the Document Type
+	Definition (see DocumentType) associated
+	with this XML document. For HTML documents and XML documents
+	without a document type definition this returns the value
+	<code>null</code>.</blockquote>
+
+<a name='ID-87CD092'></a>
+<h4>Attribute <code><i>documentElement</i></code></h4>
+<blockquote>
+<p>This is a "convenience" attribute to jump directly to
+	the child node that is the root element of 
+        the document.</blockquote>
+
+<a name='ID-1325405259'></a>
+<h4>Attribute <code><i>contextInfo</i></code></h4>
+<blockquote>
+<p>Detailed information on where this document came from and any 
+   additional information we need to define.</blockquote>
+
+<a name='ID-635124699'></a>
+<h4>Method <code><i>createDocumentContext()</i></code></h4>
+<blockquote>
+<p>Create and return a new DocumentContext.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>DocumentContext</b></td><td>
+<p>A new <code>DocumentContext</code>
+	  object.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-2141741547'></a>
+<h4>Method <code><i>createElement()</i></code></h4>
+<blockquote>
+<p>Create an element based on the tagName. Note that the
+	instance returned may implement an interface derived from
+	<code>Element</code>. The attributes parameter can be null if
+	no attributes are specified for the new
+	<code>Element</code>.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>tagName</b><td><p>The name of the element type to
+	    instantiate.</tr><tr><td width='30%'><b>attributes</b><td><p>The set of attributes for the element.</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Element</b></td><td>
+<p>A new <code>Element</code> object with a set of
+	  attributes identical to those spoecified in the parametert
+	  list.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1975348127'></a>
+<h4>Method <code><i>createTextNode()</i></code></h4>
+<blockquote>
+<p>Create a <code>Text</code> node given the specified
+	string.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>data</b><td><p>The data for the node.</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Text</b></td><td>
+<p>The new <code>Text</code> object.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1334481328'></a>
+<h4>Method <code><i>createComment()</i></code></h4>
+<blockquote>
+<p>Create a <code>Comment</code> node given the specified
+	string.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>data</b><td><p>The data for the node.</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Comment</b></td><td>
+<p>The new <code>Comment</code> object.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-135944439'></a>
+<h4>Method <code><i>createPI()</i></code></h4>
+<blockquote>
+<p>Create a <code>PI</code> node given the specified name
+	and data strings.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>name</b><td><p>The name part of the PI.</tr><tr><td width='30%'><b>data</b><td><p>The data for the node.</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>PI</b></td><td>
+<p>The new <code>PI</code> object.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1084891198'></a>
+<h4>Method <code><i>createAttribute()</i></code></h4>
+<blockquote>
+<p>Create an Attribute of the given name and specified
+	value. Note that the Attribute instance can then be set on an
+	Element using the setAttribute method.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>name</b><td><p>The name of the attribute.</tr><tr><td width='30%'><b>value</b><td><p>The value of the attribute.</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Attribute</b></td><td>
+<p>A new <code>Attribute</code> object.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-527D6FF0'></a>
+<h4>Method <code><i>createAttributeList()</i></code></h4>
+<blockquote>
+<p>Create an empty AttributeList.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>AttributeList</b></td><td>
+<p>A new <code>AttributeList</code> object.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-B91A91A1'></a>
+<h4>Method <code><i>createTreeIterator()</i></code></h4>
+<blockquote>
+<p>Create a TreeIterator anchored on a given node.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>node</b><td><p>The "root" node of this tree iterator.</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>TreeIterator</b></td><td>
+<p>A new <code>TreeIterator</code> object.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-A6C9094'></a>
+<h4>Method <code><i>getElementsByTagName()</i></code></h4>
+<blockquote>
+<p>Returns an iterator through all subordinate Elements with
+      a given tag name.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>tagname</b><td><p>The name of the tag to match on</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>NodeIterator</b></td><td>
+<p>A new <code>NodeIterator</code> object.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<a name='ID-1950641247'></a>
+<font size='4'><b>Interface <i>Node</i></b></font>
+<blockquote>
+<p>The Node object is the primary datatype for the entire
+      Document Object Model. It represents a single node in the
+      document tree. Nodes may have, but are not required to have, an
+      arbitrary number of child nodes. <h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface Node {
+  // NodeType
+  const int            DOCUMENT             = 1;
+  const int            ELEMENT              = 2;
+  const int            ATTRIBUTE            = 3;
+  const int            PI                   = 4;
+  const int            COMMENT              = 5;
+  const int            TEXT                 = 6;
+
+  int                 getNodeType();
+  Node                getParentNode();
+  NodeIterator        getChildNodes();
+  boolean             hasChildNodes();
+  Node                getFirstChild();
+  Node                getPreviousSibling();
+  Node                getNextSibling();
+  Node                insertBefore(in Node newChild, 
+                                   in Node refChild)  interface NotMyChildException {};
+;
+  Node                replaceChild(in Node newChild, 
+                                   in Node oldChild)  interface NotMyChildException {};
+;
+  Node                removeChild(in Node oldChild)  interface NotMyChildException {};
+;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1841493061'></a>
+<h4>Definition group <code><i>NodeType</i></code></h4>
+<blockquote>
+<p><!--TBD-->
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Defined Constants</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>DOCUMENT</b></td><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>ELEMENT</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>ATTRIBUTE</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>PI</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>COMMENT</b><td>
+<p><!--TBD-->
+</tr>
+<tr><td width='30%'><b>TEXT</b><td>
+<p><!--TBD-->
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-111237558'></a>
+<h4>Method <code><i>getNodeType()</i></code></h4>
+<blockquote>
+<p>Returns an indication of the underlying Node object's
+	type. The actual type of the returned data is language binding
+	dependent; the IDL specification uses an <code>enum</code>,
+	and it is expected that most language bindings will represent
+	this runtime-queryable Node type using an integral data type.
+	The names of the node type enumeration literals are
+	straightforwardly derived from the names of the actual Node
+	subtypes, and are fully specified in the IDL definition of
+	Node in the IDL definition in Appendix A. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>int</b></td><td>
+<p>The type of the node.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1060184317'></a>
+<h4>Method <code><i>getParentNode()</i></code></h4>
+<blockquote>
+<p>Returns the parent of the given Node instance. If this
+	node is the root of the document object tree, or if the node has
+        not been added to a document tree,
+	<code>null</code> is returned. [Note: because in ECMAScript
+	get/set method pairs are surfaced as properties, Parent would
+	conflict with the pre-defined Parent property, so we
+	disambiguate this with "ParentNode" even though it
+	is inconsistent with the naming convention of the other
+	methods that do not include "Node"]. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The parent of the node.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1451460987'></a>
+<h4>Method <code><i>getChildNodes()</i></code></h4>
+<blockquote>
+<p>Returns a NodeIterator object that will enumerate all children of
+	this node. If there are no children, an iterator that will return
+        no nodes is
+	returned. The content of the returned NodeIterator is
+	"live" in the sense that changes to the children of
+	the Node object that it was created from will be immediately
+	reflected in the nodes returned by the iterator; it is not
+	a static snapshot of the content of the Node. Similarly,
+	changes made to the nodes returned by the iterator will be
+        immediately reflected in the tree, including
+	the set of children of the Node that the NodeIterator was created
+	from. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>NodeIterator</b></td><td>
+<p>An iterator through the children of the node.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-810594187'></a>
+<h4>Method <code><i>hasChildNodes()</i></code></h4>
+<blockquote>
+<p>Returns <code>true</code> if the node has any children,
+	<code>false</code> if the node has no children at all. This
+	method exists both for convenience as well as to allow
+	implementations to be able to bypass object allocation, which
+	may be required for implementing <code>getChildNodes()</code>.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>boolean</b></td><td>
+<p>True if the node has children.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-169727388'></a>
+<h4>Method <code><i>getFirstChild()</i></code></h4>
+<blockquote>
+<p>Returns the first child of a node. If there is no such
+	node, <code>null</code> is returned. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The first child of the node, or null.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1676344236'></a>
+<h4>Method <code><i>getPreviousSibling()</i></code></h4>
+<blockquote>
+<p>Returns the node immediately preceding the current node
+	in a breadth-first traversal of the tree. If there is no such
+	node, <code>null</code> is returned. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The the node immediately preceeding, or
+	  null.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1035477437'></a>
+<h4>Method <code><i>getNextSibling()</i></code></h4>
+<blockquote>
+<p>Returns the node immediately following the current node
+	in a  breadth-first traversal of the tree. If there is no such
+	node, <code>null</code> is returned.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The node immediately following, or null.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-952280727'></a>
+<h4>Method <code><i>insertBefore()</i></code></h4>
+<blockquote>
+<p>Inserts a child node (newChildbefore the
+	existing child node refChild. If
+	refChild is <code>null</code>, insert
+	newChild at the end of the list of children. If
+	refChild is not a child of the Node that
+	<code>insertBefore</code> is being invoked on, a
+	<code>NotMyChildException</code> is thrown.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>newChild</b><td><!--TBD.-->
+</tr><tr><td width='30%'><b>refChild</b><td><!--TBD.-->
+</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The node being inserted.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>NotMyChildException</b><td><p>Thrown if <code>refChild</code> is not a child
+	    of the node.</td></tr>
+</table>
+</blockquote>
+<a name='ID-785887307'></a>
+<h4>Method <code><i>replaceChild()</i></code></h4>
+<blockquote>
+<p>Replaces the child node oldChild with
+	newChild in the set of children of the given
+	node, and return the oldChild node. If
+	oldChild was not already a child of the node that
+	the <code>replaceChild</code> method is being invoked on, a
+	<code>NotMyChildException</code> is thrown.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>newChild</b><td><!--TBD.-->
+</tr><tr><td width='30%'><b>oldChild</b><td><!--TBD.-->
+</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The node being replaced.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>NotMyChildException</b><td><p>Thrown if <code>oldChild</code> is not a child
+	    of the node.</td></tr>
+</table>
+</blockquote>
+<a name='ID-1734834066'></a>
+<h4>Method <code><i>removeChild()</i></code></h4>
+<blockquote>
+<p>Removes the child node indicated by
+	oldChild from the list of children and returns
+	it. If oldChild was not a child of the given
+	node, a <code>NotMyChildException</code> is thrown.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>oldChild</b><td><!--TBD.-->
+</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The node being removed.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>NotMyChildException</b><td><p>Thrown if <code>oldChild</code> is not a child of
+	    the node.</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<a name='ID-47480238'></a>
+<font size='4'><b>Interface <i>NodeIterator</i></b></font>
+<blockquote>
+<p>A NodeIterator is a simple iterator interface
+that can be used to provide a  linear view of the document
+hierarchy. The NodeIterator is similar in concept to a the Java
+"Enumeration" interface, but has a much richer set of methods: Java
+enumerators objects implementing the java.util.Enumeration interface)
+iterate across a set of Objects; the first element in the set is
+retrieved by the first call to a nextElement() method, and subsequent
+calls to nextElement() return each dditional element in the set in
+succession. A boolean hasMoreElements() method may be called to
+determine whether there are more elements in the set that have not
+been returned yet. <p>The DOM NodeIterator interface allows the same basic
+operation: The first Node in a set of nodes defined by
+a NodeIterator is returned by a call to the getNextNode()
+method, and subsequent calls to getNextNode() will return
+the rest of the set. The NodeIterator, however, lets 
+the caller re-position the iterator to the beginning or
+the end of the set of Nodes, to determine how many
+members of the set there are,  position the iterator to an arbitrary
+point in the set (either by position or by looking up
+a particular Node), to get the current position, and
+to iterate either forwards or backwards
+through the set from the current position.<p>The "current position" and how it changes as the 
+iterator is used to traverse the set of defined nodes OR the set
+of defined nodes changes needs to be defined more rigorously.
+The "current" position is not ON a node, but at a spot in the 
+set just previous to the node that getNextNode() will return. 
+The initial position of the iterator is just before the 
+first node, so the first call to getNextNode() will return
+the first node; if getPreviousNode() is called at the initial
+position, <em>null</em> is returned..  If a node
+is inserted before the node just after the iterator position,
+it will be returned by getNextNode(); likewise if a node is
+inserted after the node just previous to the iterator
+position, it will be return by the next getPrevNode() call. <h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface NodeIterator {
+  unsigned long       getLength();
+  unsigned long       getCurrentPos();
+  boolean             atFirst();
+  boolean             atLast();
+  Node                toNextNode();
+  Node                toPrevNode();
+  Node                toFirstNode();
+  Node                toLastNode();
+  Node                moveTo(in int n);
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-847682852'></a>
+<h4>Method <code><i>getLength()</i></code></h4>
+<blockquote>
+<p>This method returns the number of items that
+		  will be iterated over if the iterator is started at
+		  the beginning, and <code>toNext()</code> is called
+		  repeatedly until the end of the sequence is
+		  encountered. <i><b>Note: </b>This may be an expensive
+		  operation.</i><br><br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>unsigned long</b></td><td>
+<p>This method will always return the correct
+		    number of items in a single threaded environment,
+		    but may return misleading results in
+		    multithreaded, multiuser situations..</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-276A11AB'></a>
+<h4>Method <code><i>getCurrentPos()</i></code></h4>
+<blockquote>
+<p>This method returns the current position of the
+		  iterator, where "0" is the initial position before the
+		  first node in the set.  <i><b>Note: </b>This may be an expensive
+		  operation.</i><br><br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>unsigned long</b></td><td>
+<p>This method will always return the correct
+		    position in a single threaded environment,
+		    but may return misleading results in
+		    multithreaded, multiuser situations..</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-65C509D'></a>
+<h4>Method <code><i>atFirst()</i></code></h4>
+<blockquote>
+<p>Returns TRUE if the iterator is positioned
+		at the beginning of the set of nodes it will iterate over.
+               <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>boolean</b></td><td>
+<p>This method will always return the correct
+		    value in a single threaded environment,
+		    but may return misleading results in
+		    multithreaded, multiuser situations..</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-2E6E11B4'></a>
+<h4>Method <code><i>atLast()</i></code></h4>
+<blockquote>
+<p>Returns TRUE if the iterator is positioned at the
+		 end of the set of nodes it will iterate over.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>boolean</b></td><td>
+<p>This method will always return the correct
+		    value in a single threaded environment,
+		    but may return misleading results in
+		    multithreaded, multiuser situations..</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-18984'></a>
+<h4>Method <code><i>toNextNode()</i></code></h4>
+<blockquote>
+<p>This method returns the next node after the
+		"current" position and resets the current position
+	        to be after the node returned. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>This method returns the node that has been
+		    traversed to, or <code>null</code> when it is not
+		    possible to iterate any further.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-383E70AA'></a>
+<h4>Method <code><i>toPrevNode()</i></code></h4>
+<blockquote>
+<p>This method returns the node before the
+		"current" position and resets the current position
+	        to be before the node returned. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>This method returns the node that has been
+		    traversed to, or <code>null</code> when it is not
+		    possible to iterate any further.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-294046181'></a>
+<h4>Method <code><i>toFirstNode()</i></code></h4>
+<blockquote>
+<p>This method positions the iterator so that 
+		the current position is just before the first node
+		in the set being iterated over.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>Returns the first node in the set.
+                    This method will only return
+		    <code>null</code> when there are no items to
+		    iterate over.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-503298618'></a>
+<h4>Method <code><i>toLastNode()</i></code></h4>
+<blockquote>
+<p>This method positions the iterator so that the
+		current position is after the last node in the set being
+		iterated over.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>Returns the last node in the set.
+                    This method will only return
+		    <code>null</code> when there are no items to
+		    iterate over.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1216773966'></a>
+<h4>Method <code><i>moveTo()</i></code></h4>
+<blockquote>
+<p>This method alters the internal state of
+		  the iterator such that the current position is before the
+		  <em>Nth</em> node in the sequence the iterator
+		  is presenting relative to the current position.
+		 <i><b>Note: </b>This may be a slow
+		  operation.</i><br><br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>n</b><td><p>The index of the element in the set to 
+		position the iterator before.</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>Returns the nth node. This method will return
+		    <code>null</code> when position specified is out
+		    of the range of legal values.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<a name='ID-835582596'></a>
+<font size='4'><b>Interface <i>TreeIterator</i></b></font>
+<blockquote>
+<p>A <code>TreeIterator</code> is a
+		<code>NodeIterator</code> that has additional methods that
+		are specific to tree navigation.<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface TreeIterator : NodeIterator {
+  unsigned long       numChildren();
+  unsigned long       numPreviousSiblings();
+  unsigned long       numNextSiblings();
+  Node                toParent();
+  Node                toPreviousSibling();
+  Node                toNextSibling();
+  Node                toFirstChild();
+  Node                toLastChild();
+  Node                toNthChild(in int n)  interface NoSuchNodeException {};
+;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1582840893'></a>
+<h4>Method <code><i>numChildren()</i></code></h4>
+<blockquote>
+<p>This method returns the number of children
+		  that lie below the current node.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>unsigned long</b></td><td>
+<p>This method will always return the correct
+		    number of items in a single threaded environment,
+		    but may return misleading results in
+		    multithreaded, multiuser situations..</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1841507091'></a>
+<h4>Method <code><i>numPreviousSiblings()</i></code></h4>
+<blockquote>
+<p>This method returns the number of siblings
+		  that lie previous to the current node.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>unsigned long</b></td><td>
+<p>This method will always return the correct
+		    number of items in a single threaded environment,
+		    but may return misleading results in
+		    multithreaded, multiuser situations..</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-735242981'></a>
+<h4>Method <code><i>numNextSiblings()</i></code></h4>
+<blockquote>
+<p>This method returns the number of siblings
+		  that lie after to the current node.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>unsigned long</b></td><td>
+<p>This method will always return the correct
+		    number of items in a single threaded environment,
+		    but may return misleading results in
+		    multithreaded, multiuser situations..</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1155259949'></a>
+<h4>Method <code><i>toParent()</i></code></h4>
+<blockquote>
+<p>Move the iterator to the parent of the current
+		  node, if there is a parent.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>This method will return
+		    <code>null</code> when there is no parent for the
+		    current node.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1186521573'></a>
+<h4>Method <code><i>toPreviousSibling()</i></code></h4>
+<blockquote>
+<p>Move the iterator to the previous sibling of
+		  the current node, if there is one.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>This method will return
+		    <code>null</code> when there is no previous
+		    sibling for the current node.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1404850079'></a>
+<h4>Method <code><i>toNextSibling()</i></code></h4>
+<blockquote>
+<p>Move the iterator to the next sibling of
+		  the current node, if there is one.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>This method will return
+		    <code>null</code> when there is no next
+		    sibling for the current node.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-797766229'></a>
+<h4>Method <code><i>toFirstChild()</i></code></h4>
+<blockquote>
+<p>Move the iterator to the first child of
+		  the current node, if there is one.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>This method will return
+		    <code>null</code> when there is no children
+		    for the current node.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-2030086067'></a>
+<h4>Method <code><i>toLastChild()</i></code></h4>
+<blockquote>
+<p>Move the iterator to the last child of
+		  the current node, if there is one.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>This method will return
+		    <code>null</code> when there is no children
+		    for the current node.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-674231826'></a>
+<h4>Method <code><i>toNthChild()</i></code></h4>
+<blockquote>
+<p>This method alters the internal state of
+		  the iterator such that the node it references is the
+		  <em>Nth</em> child of the current node.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>n</b><td><p>The index of the child  to 
+		position the iterator before.</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>This method will return
+		    <code>null</code> when position specified is out
+		    of the range of legal values.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>NoSuchNodeException</b><td><p>Thrown if the value specified is greater
+		      than the number that would be returned from
+		      <code>numChildren()</code>.</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<a name='ID-637646024'></a>
+<font size='4'><b>Interface <i>Attribute</i></b></font>
+<blockquote>
+<p>The Attribute object represents an attribute in an Element
+      object.  Typically the allowable values for the attribute are
+      defined in a document type definition. <p>The attribute's
+	effective value is determined as follows: if this attribute
+	has been explicitly assigned any value, that value is the
+	attribute's effective value; otherwise, if there is a
+	declaration for this attribute, and that declaration includes
+	a default value, then that default value is the attribute's
+	effective value; otherwise, the attribute has no effective
+	value.) Note, in particular, that an effective value of the
+	null string would be returned as a Text node instance whose
+	<code>toString</code> method will return a zero length string
+	(as will <code>toString</code> invoked directly on this
+	Attribute instance). If the attribute has no effective value,
+	then this method will return <code>null</code>. Note the
+	<code>toString</code> method on the Attribute instance can
+	also be used to retrieve the string version of the attribute's
+	value(s).<p>NOTE - In XML, the value of an attribute is represented by the
+        child nodes of an attribute node, since the value can be
+        and arbitrarily complex list of entity references.  In HTML,
+        the value can only be a string; whether implementations must
+        expose this as  Node is under discussion.
+        <h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface Attribute {
+  wstring             getName();
+  wstring             getValue();
+  attribute boolean        specified;
+  wstring             toString();
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1112119403'></a>
+<h4>Method <code><i>getName()</i></code></h4>
+<blockquote>
+<p>Returns the name of this attribute. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>wstring</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-6D6AC0F8'></a>
+<h4>Method <code><i>getValue()</i></code></h4>
+<blockquote>
+<p>Returns the string value of this attribute. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>wstring</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-862529273'></a>
+<h4>Attribute <code><i>specified</i></code></h4>
+<blockquote>
+<p>If this attribute was explicitly given a value in the
+	original document, this will be true; otherwise, it will be
+	false.</blockquote>
+
+<a name='ID-221662474'></a>
+<h4>Method <code><i>toString()</i></code></h4>
+<blockquote>
+<p>Returns the value of the attribute as a string.
+	Character and general entity references will have been
+	replaced wit their values in the returned string.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>wstring</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<a name='ID-1411123294'></a>
+<font size='4'><b>Interface <i>AttributeList</i></b></font>
+<blockquote>
+<p>AttributeList objects are used to represent collections of
+      Attribute objects which can be accessed by name. The Attribute
+      objects contained in a AttributeList may also be accessed by
+      ordinal index. In most cases, AttributeList objects are created
+      from Element objects.
+    <h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface AttributeList {
+  Attribute           getAttribute(in wstring attrName);
+  Attribute           setAttribute(in Attribute attr);
+  Attribute           remove(in wstring attrName)  interface NoSuchAttributeException {};
+;
+  Attribute           item(in unsigned long index)  interface NoSuchAttributeException {};
+;
+  unsigned long       getLength();
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1885596674'></a>
+<h4>Method <code><i>getAttribute()</i></code></h4>
+<blockquote>
+<p>Retrieve an Attribute instance from the list by its
+	name. If it's not present, <code>null</code> is returned.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>attrName</b><td><!--TBD.-->
+</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Attribute</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1719203254'></a>
+<h4>Method <code><i>setAttribute()</i></code></h4>
+<blockquote>
+<p>Add a new attribute to the end of the list and associate
+	it with the given name. If the name already exists, the
+	previous Attribute object is replaced, and returned. If no
+	object of the same name exists, <code>null</code> is returned,
+	and the named Attribute is added to the end of the
+	AttributeList object; that is, it is accessible via the
+	<code>item</code> method using the index one less than the
+	value returned by <code>getLength</code>. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>attr</b><td><!--TBD.-->
+</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Attribute</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-520666365'></a>
+<h4>Method <code><i>remove()</i></code></h4>
+<blockquote>
+<p>Removes the Attribute instance named name
+	from the list and returns it. If the name provided does not
+	exist, the <code>NoSuchAttributeException</code> is thrown.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>attrName</b><td><!--TBD.-->
+</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Attribute</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>NoSuchAttributeException</b><td><!--TBD.-->
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-2027283213'></a>
+<h4>Method <code><i>item()</i></code></h4>
+<blockquote>
+<p>Returns the (zero-based) indexth Attribute
+	item in the collection. If index is greater than
+	or equal to the number of nodes in the list, a
+	<code>NoSuchAttributeException</code> is thrown.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>index</b><td><!--TBD.-->
+</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Attribute</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>NoSuchAttributeException</b><td><!--TBD.-->
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-828746324'></a>
+<h4>Method <code><i>getLength()</i></code></h4>
+<blockquote>
+<p>Returns the number of Attributes in the AttributeList
+	instance. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>unsigned long</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<a name='ID-745549614'></a>
+<font size='4'><b>Interface <i>Element</i></b></font>
+<blockquote>
+<p>By far the vast majority (apart from text) of node types
+      that authors will generally encounter when traversing a document
+      will be Element nodes.  These objects represent both the element
+      itself, as well as any contained nodes. For example (in XML):
+<blockquote>
+<table border='1'>
+<tr><td bgcolor='#e9e9e9'><pre>
+&lt;elementExample&gt; id="demo"&gt;
+  &lt;subelement1/&gt;
+  &lt;subelement2&gt;&lt;subsubelement/&gt;&lt;/subelement2&gt;
+&lt;/elementExample&gt;  </pre></td></tr>
+</table>
+</blockquote>
+
+
+    <p>When represented using DOM, the top node would be
+      "elementExample", which contains two child Element
+      nodes (and some space), one for "subelement1" and one
+      for "subelement2". "subelement1" contains no
+      child nodes of its own.<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface Element : Node {
+  wstring             getTagName();
+  NodeIterator        getAttributes();
+  wstring             getAttribute(in name name);
+  void                setAttribute(in string name, 
+                                   in string value);
+  void                removeAttribute(in wstring name);
+  Attribute           getAttributeNode(in name name);
+  void                setAttributeNode(in Attribute newAttr);
+  void                removeAttributeNode(in Attribute oldAttr);
+  void                getElementsByTagName(in wstring tagname);
+  void                normalize();
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-104682815'></a>
+<h4>Method <code><i>getTagName()</i></code></h4>
+<blockquote>
+<p>This method returns the string that is the element's
+	name. For  example, in:  
+<blockquote>
+<table border='1'>
+<tr><td bgcolor='#e9e9e9'><pre>
+&lt;elementExample id="demo"&gt; 
+        ... 
+&lt;/elementExample&gt; </pre></td></tr>
+</table>
+</blockquote>
+
+
+	This would have the value
+	<code>"elementExample"</code>. Note that this is
+	case-preserving, as are all of the operations of the DOM. See
+	Name case in the DOM for a
+	description of why the DOM preserves case.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>wstring</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-495959484'></a>
+<h4>Method <code><i>getAttributes()</i></code></h4>
+<blockquote>
+<p>The attributes for this element. In the
+	<code>elementExample</code> example above, the attributes list
+	would consist of the <code>id</code> attribute, as well as any
+	attributes which were defined by the document type definition
+	for this element which have default values. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>NodeIterator</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-666EE0F9'></a>
+<h4>Method <code><i>getAttribute()</i></code></h4>
+<blockquote>
+<p>Retrieves an Attribute value by name from an Element.
+	object. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>name</b><td><p>The name of the attribute to retrieve</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>wstring</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-F68F082'></a>
+<h4>Method <code><i>setAttribute()</i></code></h4>
+<blockquote>
+<p>Adds a new attribute/value pair to an Element node
+	object. If an attribute by that name is already present in the
+	element, it's value is changed to be that of the value
+	parameter.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>name</b><td><!--TBD.-->
+</tr><tr><td width='30%'><b>value</b><td><!--TBD.-->
+</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-6D6AC0F9'></a>
+<h4>Method <code><i>removeAttribute()</i></code></h4>
+<blockquote>
+<p>Removes the specified  attribute from an Element node
+	object.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>name</b><td><!--TBD.-->
+</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-217A91B8'></a>
+<h4>Method <code><i>getAttributeNode()</i></code></h4>
+<blockquote>
+<p>Retrieves an Attribute node by name from an Element.
+	object. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>name</b><td><p>The name of the attribute to retrieve</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Attribute</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-887236154'></a>
+<h4>Method <code><i>setAttributeNode()</i></code></h4>
+<blockquote>
+<p>Adds a new attribute/value pair to an Element node
+	object. If an attribute by that name is already present in the
+	element, it's value is changed to be that of the Attribute
+	instance.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>newAttr</b><td><!--TBD.-->
+</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-D589198'></a>
+<h4>Method <code><i>removeAttributeNode()</i></code></h4>
+<blockquote>
+<p>Removes the specified  attribute/value pair from an Element node
+	object.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>oldAttr</b><td><!--TBD.-->
+</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1938918D'></a>
+<h4>Method <code><i>getElementsByTagName()</i></code></h4>
+<blockquote>
+<p>Returns an iterator through all subordinate elements
+     with a given tag name.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>tagname</b><td><p>The name of the tag to match on</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-162CF083'></a>
+<h4>Method <code><i>normalize()</i></code></h4>
+<blockquote>
+<p>Puts all Tet nodes in the sub-tree underneath this
+     Element into a "normal" form where only markup (e.g., tags,
+     comments, PIs, CDATASections, and
+     and entity references separates Text nodes.<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<!--TBD.-->
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<a name='ID-1312295772'></a>
+<font size='4'><b>Interface <i>Text</i></b></font>
+<blockquote>
+<p>The Text object contains the non-markup content of an
+      Element. If there is no markup inside an Element's content, the text
+      will be contained in a single Text object that is the child of the 
+      Element.  Any markup will parse into child elements that are siblings
+      of the Text nodes on either side of it, and whose content will be
+      represented as Text node children of the markup element.
+      <h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface Text : Node {
+  attribute wstring        data;
+  void                append(in wstring data);
+  void                insert(in int offset, 
+                             in wstring data);
+  void                delete(in int offset, 
+                             in int count);
+  void                replace(in int offset, 
+                              in int count, 
+                              in wstring data);
+  void                splice(in Element element, 
+                             in int offset, 
+                             in int count);
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-113758883'></a>
+<h4>Attribute <code><i>data</i></code></h4>
+<blockquote>
+<p>This holds the actual content of the text node. Text
+	nodes contain just plain text, without markup and without
+	entities, both of which are represented as separate objects
+	in the DOM. </blockquote>
+
+<a name='ID-B9CA41A6'></a>
+<h4>Method <code><i>append()</i></code></h4>
+<blockquote>
+<p>Append the string to the end of the character data in this 
+             Text node <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>data</b><td><p>String to append</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<p>This method returns nothing.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-904C59A8'></a>
+<h4>Method <code><i>insert()</i></code></h4>
+<blockquote>
+<p>Insert the string at the specified character offset. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>offset</b><td><p>Offset at which to insert</tr><tr><td width='30%'><b>data</b><td><p>String to insert</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<p>This method returns nothing.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-904C59A9'></a>
+<h4>Method <code><i>delete()</i></code></h4>
+<blockquote>
+<p>Insert characters starting at the specified character offset.
+        <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>offset</b><td><p>Offset at which to delete</tr><tr><td width='30%'><b>count</b><td><p>Number of characters to delete</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<p>This method returns nothing.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-904C59A7'></a>
+<h4>Method <code><i>replace()</i></code></h4>
+<blockquote>
+<p>Replace the characters starting at the specified character 
+    offset with the specified string. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>offset</b><td><p>Offset at which to start replacing</tr><tr><td width='30%'><b>count</b><td><p>Number of characters to replace</tr><tr><td width='30%'><b>data</b><td><p>String to replace previous content with.</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<p>This method returns nothing.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-38853C1D'></a>
+<h4>Method <code><i>splice()</i></code></h4>
+<blockquote>
+<p>Insert the specified element in the tree as a sibling of the 
+	Text node. The 	result of this operation may be the creation of up to 
+	2 new Text nodes: the character data specified by the offset and count will form one Text node that
+	will become the child of the inserted element and the remainder of the character
+	data (after the offset and count) will form another Text node become a sibling
+	of the original Text node.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>element</b><td><p>Element to insert into the tree.</tr><tr><td width='30%'><b>offset</b><td><p>Offset at which to insert.</tr><tr><td width='30%'><b>count</b><td><p>Number of characters to copy to child Text node of element.</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<p>This method returns nothing.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<a name='ID-1728279322'></a>
+<font size='4'><b>Interface <i>Comment</i></b></font>
+<blockquote>
+<p>Represents the content of a comment, i.e. all the
+      characters between the starting '<code>&lt;!--</code>' and
+      *ending '<code>--&gt;</code>'. Note that this is the definition
+      of a comment in XML, and, in practice, HTML, although some HTML
+      tools may implement the full SGML comment structure.<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface Comment : Node {
+  attribute wstring        data;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1645082612'></a>
+<h4>Attribute <code><i>data</i></code></h4>
+<blockquote>
+<p>The content of the comment, exclusive of the comment
+	begin and end sequence. </blockquote>
+
+</blockquote>
+<a name='ID-1004215813'></a>
+<font size='4'><b>Interface <i>PI</i></b></font>
+<blockquote>
+<p>A PI node is a "processing instruction". The
+      content of the PI node is the entire content between the
+      delimiters of the processing instruction.<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface PI : Node {
+  attribute wstring        name;
+  attribute wstring        data;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-1478689192'></a>
+<h4>Attribute <code><i>name</i></code></h4>
+<blockquote>
+<p>XML defines a name as the first token following the
+	markup that begins the processing instruction, and this
+	attribute returns that name. For HTML, the returned value
+	is <code>null</code>. </blockquote>
+
+<a name='ID-837822393'></a>
+<h4>Attribute <code><i>data</i></code></h4>
+<blockquote>
+<p>The content of the processing instruction, from the
+	character immediately after the <code>&lt;?</code> (after
+	the name in XML) to the character immediately preceding
+	the <code>?&gt;</code>. </blockquote>
+
+</blockquote>
+<br>
+<a name='ID-2094849111'></a>
+<h1 class='div1'>2.9. IDL Interface definitions</h1><p>This section contains the IDL definitions for the objects in
+	the core Document Object Model. The HTML IDL definition is
+	<a href='level-one-html.html'>here</a>
+, and the XML IDL
+	definition, including the types to represent the document type
+	definition is <a href='level-one-xml.html'>here</a>
+. 
+      <blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9' width='80%'><pre>
+interface DOM {
+  Document            createDocument(in wstring type);
+  boolean             hasFeature(in wstring feature);
+};
+
+interface DocumentContext {
+  attribute Document       document;
+};
+
+interface DocumentFragment : Node {
+  attribute Document       masterDoc;
+};
+
+interface Document : DocumentFragment {
+  attribute Node           documentType;
+  attribute Element        documentElement;
+  attribute DocumentContextcontextInfo;
+  DocumentContext     createDocumentContext();
+  Element             createElement(in wstring tagName, 
+                                    in AttributeList attributes);
+  Text                createTextNode(in wstring data);
+  Comment             createComment(in wstring data);
+  PI                  createPI(in wstring name, 
+                               in wstring data);
+  Attribute           createAttribute(in wstring name, 
+                                      in Node value);
+  AttributeList       createAttributeList();
+  TreeIterator        createTreeIterator(in Node node);
+  NodeIterator        getElementsByTagName(in wstring tagname);
+};
+
+interface Node {
+  // NodeType
+  const int            DOCUMENT             = 1;
+  const int            ELEMENT              = 2;
+  const int            ATTRIBUTE            = 3;
+  const int            PI                   = 4;
+  const int            COMMENT              = 5;
+  const int            TEXT                 = 6;
+
+  int                 getNodeType();
+  Node                getParentNode();
+  NodeIterator        getChildNodes();
+  boolean             hasChildNodes();
+  Node                getFirstChild();
+  Node                getPreviousSibling();
+  Node                getNextSibling();
+  Node                insertBefore(in Node newChild, 
+                                   in Node refChild)  interface NotMyChildException {};
+;
+  Node                replaceChild(in Node newChild, 
+                                   in Node oldChild)  interface NotMyChildException {};
+;
+  Node                removeChild(in Node oldChild)  interface NotMyChildException {};
+;
+};
+
+interface NodeIterator {
+  unsigned long       getLength();
+  unsigned long       getCurrentPos();
+  boolean             atFirst();
+  boolean             atLast();
+  Node                toNextNode();
+  Node                toPrevNode();
+  Node                toFirstNode();
+  Node                toLastNode();
+  Node                moveTo(in int n);
+};
+
+interface TreeIterator : NodeIterator {
+  unsigned long       numChildren();
+  unsigned long       numPreviousSiblings();
+  unsigned long       numNextSiblings();
+  Node                toParent();
+  Node                toPreviousSibling();
+  Node                toNextSibling();
+  Node                toFirstChild();
+  Node                toLastChild();
+  Node                toNthChild(in int n)  interface NoSuchNodeException {};
+;
+};
+
+interface Attribute {
+  wstring             getName();
+  wstring             getValue();
+  attribute boolean        specified;
+  wstring             toString();
+};
+
+interface AttributeList {
+  Attribute           getAttribute(in wstring attrName);
+  Attribute           setAttribute(in Attribute attr);
+  Attribute           remove(in wstring attrName)  interface NoSuchAttributeException {};
+;
+  Attribute           item(in unsigned long index)  interface NoSuchAttributeException {};
+;
+  unsigned long       getLength();
+};
+
+interface Element : Node {
+  wstring             getTagName();
+  NodeIterator        getAttributes();
+  wstring             getAttribute(in name name);
+  void                setAttribute(in string name, 
+                                   in string value);
+  void                removeAttribute(in wstring name);
+  Attribute           getAttributeNode(in name name);
+  void                setAttributeNode(in Attribute newAttr);
+  void                removeAttributeNode(in Attribute oldAttr);
+  void                getElementsByTagName(in wstring tagname);
+  void                normalize();
+};
+
+interface Text : Node {
+  attribute wstring        data;
+  void                append(in wstring data);
+  void                insert(in int offset, 
+                             in wstring data);
+  void                delete(in int offset, 
+                             in int count);
+  void                replace(in int offset, 
+                              in int count, 
+                              in wstring data);
+  void                splice(in Element element, 
+                             in int offset, 
+                             in int count);
+};
+
+interface Comment : Node {
+  attribute wstring        data;
+};
+
+interface PI : Node {
+  attribute wstring        name;
+  attribute wstring        data;
+};
+
+</pre></td></tr>
+</table>
+</blockquote>
+<br>
+<a name='ID-1453982312'></a>
+<h1 class='div1'>2.10. Java Core API definitions</h1><blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9' width='80%'><pre>
+public interface DOM {
+   public Document          createDocument(String type);
+   public boolean           hasFeature(String feature);
+}
+
+public interface DocumentContext {
+   public Document          getDocument();
+   public void              setDocument(Document arg);
+
+}
+
+public interface DocumentFragment extends Node {
+   public Document          getMasterDoc();
+   public void              setMasterDoc(Document arg);
+
+}
+
+public interface Document extends DocumentFragment {
+   public Node              getDocumentType();
+   public void              setDocumentType(Node arg);
+
+   public Element           getDocumentElement();
+   public void              setDocumentElement(Element arg);
+
+   public DocumentContext   getContextInfo();
+   public void              setContextInfo(DocumentContext arg);
+
+   public DocumentContext   createDocumentContext();
+   public Element           createElement(String tagName, 
+                                          AttributeList attributes);
+   public Text              createTextNode(String data);
+   public Comment           createComment(String data);
+   public PI                createPI(String name, 
+                                     String data);
+   public Attribute         createAttribute(String name, 
+                                            Node value);
+   public AttributeList     createAttributeList();
+   public TreeIterator      createTreeIterator(Node node);
+   public NodeIterator      getElementsByTagName(String tagname);
+}
+
+public interface Node {
+   // NodeType
+   public static final int            DOCUMENT             = 1;
+   public static final int            ELEMENT              = 2;
+   public static final int            ATTRIBUTE            = 3;
+   public static final int            PI                   = 4;
+   public static final int            COMMENT              = 5;
+   public static final int            TEXT                 = 6;
+
+   public int               getNodeType();
+   public Node              getParentNode();
+   public NodeIterator      getChildNodes();
+   public boolean           hasChildNodes();
+   public Node              getFirstChild();
+   public Node              getPreviousSibling();
+   public Node              getNextSibling();
+   public Node              insertBefore(Node newChild, 
+                                         Node refChild)  public class NotMyChildException extends Exception {};
+;
+   public Node              replaceChild(Node newChild, 
+                                         Node oldChild)  public class NotMyChildException extends Exception {};
+;
+   public Node              removeChild(Node oldChild)  public class NotMyChildException extends Exception {};
+;
+}
+
+public interface NodeIterator {
+   public int               getLength();
+   public int               getCurrentPos();
+   public boolean           atFirst();
+   public boolean           atLast();
+   public Node              toNextNode();
+   public Node              toPrevNode();
+   public Node              toFirstNode();
+   public Node              toLastNode();
+   public Node              moveTo(int n);
+}
+
+public interface TreeIterator extends NodeIterator {
+   public int               numChildren();
+   public int               numPreviousSiblings();
+   public int               numNextSiblings();
+   public Node              toParent();
+   public Node              toPreviousSibling();
+   public Node              toNextSibling();
+   public Node              toFirstChild();
+   public Node              toLastChild();
+   public Node              toNthChild(int n)  public class NoSuchNodeException extends Exception {};
+;
+}
+
+public interface Attribute {
+   public String            getName();
+   public String            getValue();
+   public boolean           getSpecified();
+   public void              setSpecified(boolean arg);
+
+   public String            toString();
+}
+
+public interface AttributeList {
+   public Attribute         getAttribute(String attrName);
+   public Attribute         setAttribute(Attribute attr);
+   public Attribute         remove(String attrName)  public class NoSuchAttributeException extends Exception {};
+;
+   public Attribute         item(int index)  public class NoSuchAttributeException extends Exception {};
+;
+   public int               getLength();
+}
+
+public interface Element extends Node {
+   public String            getTagName();
+   public NodeIterator      getAttributes();
+   public String            getAttribute(name name);
+   public void              setAttribute(String name, 
+                                         String value);
+   public void              removeAttribute(String name);
+   public Attribute         getAttributeNode(name name);
+   public void              setAttributeNode(Attribute newAttr);
+   public void              removeAttributeNode(Attribute oldAttr);
+   public void              getElementsByTagName(String tagname);
+   public void              normalize();
+}
+
+public interface Text extends Node {
+   public String            getData();
+   public void              setData(String arg);
+
+   public void              append(String data);
+   public void              insert(int offset, 
+                                   String data);
+   public void              delete(int offset, 
+                                   int count);
+   public void              replace(int offset, 
+                                    int count, 
+                                    String data);
+   public void              splice(Element element, 
+                                   int offset, 
+                                   int count);
+}
+
+public interface Comment extends Node {
+   public String            getData();
+   public void              setData(String arg);
+
+}
+
+public interface PI extends Node {
+   public String            getName();
+   public void              setName(String arg);
+
+   public String            getData();
+   public void              setData(String arg);
+
+}
+
+</pre></td></tr>
+</table>
+</blockquote>
+<br>
+<a name='ID-1370785602'></a>
+<h1 class='div1'>2.11. ECMAScript Core API definitions</h1><h2>Object DOM</h2>
+<blockquote>
+<p>The <b>DOM</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>createDocument(type)</b></dt>
+<dd>This method returns a <b>Document</b>.
+ The <b>type</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>hasFeature(feature)</b></dt>
+<dd>This method returns a <b>boolean</b>.
+ The <b>feature</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object DocumentContext</h2>
+<blockquote>
+<p>The <b>DocumentContext</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>document</b></dt>
+<dd>This property is expected to be a <b>Document</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object DocumentFragment</h2>
+<blockquote>
+<p><b>DocumentFragment</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>DocumentFragment</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>masterDoc</b></dt>
+<dd>This property is expected to be a <b>Document</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Document</h2>
+<blockquote>
+<p><b>Document</b> has the all the properties and methods of <b>DocumentFragment</b> as well as the properties and methods defined below.</p>
+<p>The <b>Document</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>documentType</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>documentElement</b></dt>
+<dd>This property is expected to be a <b>Element</b></dd>
+<dt><b>contextInfo</b></dt>
+<dd>This property is expected to be a <b>DocumentContext</b></dd>
+<dt><b>createDocumentContext</b></dt>
+<dd>This property is expected to be a <b>DocumentContext</b></dd>
+<dt><b>createAttributeList</b></dt>
+<dd>This property is expected to be a <b>AttributeList</b></dd>
+</dl></blockquote>
+<p>The <b>Document</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>createElement(tagName,&nbsp;attributes)</b></dt>
+<dd>This method returns a <b>Element</b>.
+ The <b>tagName</b> parameter is expected to be of type <b>wstring.</b>.
+ The <b>attributes</b> parameter is expected to be of type <b>AttributeList.</b>.
+</dd>
+<dt><b>createTextNode(data)</b></dt>
+<dd>This method returns a <b>Text</b>.
+ The <b>data</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>createComment(data)</b></dt>
+<dd>This method returns a <b>Comment</b>.
+ The <b>data</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>createPI(name,&nbsp;data)</b></dt>
+<dd>This method returns a <b>PI</b>.
+ The <b>name</b> parameter is expected to be of type <b>wstring.</b>.
+ The <b>data</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>createAttribute(name,&nbsp;value)</b></dt>
+<dd>This method returns a <b>Attribute</b>.
+ The <b>name</b> parameter is expected to be of type <b>wstring.</b>.
+ The <b>value</b> parameter is expected to be of type <b>Node.</b>.
+</dd>
+<dt><b>createTreeIterator(node)</b></dt>
+<dd>This method returns a <b>TreeIterator</b>.
+ The <b>node</b> parameter is expected to be of type <b>Node.</b>.
+</dd>
+<dt><b>getElementsByTagName(tagname)</b></dt>
+<dd>This method returns a <b>NodeIterator</b>.
+ The <b>tagname</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Node</h2>
+<blockquote>
+<p>The <b>Node</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>nodeType</b></dt>
+<dd>This property is expected to be a <b>int</b></dd>
+<dt><b>parentNode</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>childNodes</b></dt>
+<dd>This property is expected to be a <b>NodeIterator</b></dd>
+<dt><b>hasChildNodes</b></dt>
+<dd>This property is expected to be a <b>boolean</b></dd>
+<dt><b>firstChild</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>previousSibling</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>nextSibling</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+</dl></blockquote>
+<p>The <b>Node</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>insertBefore(newChild,&nbsp;refChild)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>newChild</b> parameter is expected to be of type <b>Node.</b>.
+ The <b>refChild</b> parameter is expected to be of type <b>Node.</b>.
+</dd>
+<dt><b>replaceChild(newChild,&nbsp;oldChild)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>newChild</b> parameter is expected to be of type <b>Node.</b>.
+ The <b>oldChild</b> parameter is expected to be of type <b>Node.</b>.
+</dd>
+<dt><b>removeChild(oldChild)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>oldChild</b> parameter is expected to be of type <b>Node.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object NodeIterator</h2>
+<blockquote>
+<p>The <b>NodeIterator</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>length</b></dt>
+<dd>This property is expected to be a <b>unsigned long</b></dd>
+<dt><b>currentPos</b></dt>
+<dd>This property is expected to be a <b>unsigned long</b></dd>
+<dt><b>atFirst</b></dt>
+<dd>This property is expected to be a <b>boolean</b></dd>
+<dt><b>atLast</b></dt>
+<dd>This property is expected to be a <b>boolean</b></dd>
+<dt><b>toNextNode</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>toPrevNode</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>toFirstNode</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>toLastNode</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+</dl></blockquote>
+<p>The <b>NodeIterator</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>moveTo(n)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>n</b> parameter is expected to be of type <b>int.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object TreeIterator</h2>
+<blockquote>
+<p><b>TreeIterator</b> has the all the properties and methods of <b>NodeIterator</b> as well as the properties and methods defined below.</p>
+<p>The <b>TreeIterator</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>numChildren</b></dt>
+<dd>This property is expected to be a <b>unsigned long</b></dd>
+<dt><b>numPreviousSiblings</b></dt>
+<dd>This property is expected to be a <b>unsigned long</b></dd>
+<dt><b>numNextSiblings</b></dt>
+<dd>This property is expected to be a <b>unsigned long</b></dd>
+<dt><b>toParent</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>toPreviousSibling</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>toNextSibling</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>toFirstChild</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+<dt><b>toLastChild</b></dt>
+<dd>This property is expected to be a <b>Node</b></dd>
+</dl></blockquote>
+<p>The <b>TreeIterator</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>toNthChild(n)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>n</b> parameter is expected to be of type <b>int.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Attribute</h2>
+<blockquote>
+<p>The <b>Attribute</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>specified</b></dt>
+<dd>This property is expected to be a <b>boolean</b></dd>
+<dt><b>name</b></dt>
+<dd>This property is expected to be a <b>wstring</b></dd>
+<dt><b>value</b></dt>
+<dd>This property is expected to be a <b>wstring</b></dd>
+<dt><b>toString</b></dt>
+<dd>This property is expected to be a <b>wstring</b></dd>
+</dl></blockquote>
+<p>The <b>Attribute</b> object has the following methods:</p>
+<blockquote><dl>
+</dl></blockquote>
+</blockquote>
+<h2>Object AttributeList</h2>
+<blockquote>
+<p>The <b>AttributeList</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>length</b></dt>
+<dd>This property is expected to be a <b>unsigned long</b></dd>
+</dl></blockquote>
+<p>The <b>AttributeList</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>getAttribute(attrName)</b></dt>
+<dd>This method returns a <b>Attribute</b>.
+ The <b>attrName</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>setAttribute(attr)</b></dt>
+<dd>This method returns a <b>Attribute</b>.
+ The <b>attr</b> parameter is expected to be of type <b>Attribute.</b>.
+</dd>
+<dt><b>remove(attrName)</b></dt>
+<dd>This method returns a <b>Attribute</b>.
+ The <b>attrName</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>item(index)</b></dt>
+<dd>This method returns a <b>Attribute</b>.
+ The <b>index</b> parameter is expected to be of type <b>unsigned long.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Element</h2>
+<blockquote>
+<p><b>Element</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>Element</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>tagName</b></dt>
+<dd>This property is expected to be a <b>wstring</b></dd>
+<dt><b>attributes</b></dt>
+<dd>This property is expected to be a <b>NodeIterator</b></dd>
+<dt><b>normalize</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+</dl></blockquote>
+<p>The <b>Element</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>getAttribute(name)</b></dt>
+<dd>This method returns a <b>wstring</b>.
+ The <b>name</b> parameter is expected to be of type <b>name.</b>.
+</dd>
+<dt><b>setAttribute(name,&nbsp;value)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>name</b> parameter is expected to be of type <b>string.</b>.
+ The <b>value</b> parameter is expected to be of type <b>string.</b>.
+</dd>
+<dt><b>removeAttribute(name)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>name</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>getAttributeNode(name)</b></dt>
+<dd>This method returns a <b>Attribute</b>.
+ The <b>name</b> parameter is expected to be of type <b>name.</b>.
+</dd>
+<dt><b>setAttributeNode(newAttr)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>newAttr</b> parameter is expected to be of type <b>Attribute.</b>.
+</dd>
+<dt><b>removeAttributeNode(oldAttr)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>oldAttr</b> parameter is expected to be of type <b>Attribute.</b>.
+</dd>
+<dt><b>getElementsByTagName(tagname)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>tagname</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Text</h2>
+<blockquote>
+<p><b>Text</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>Text</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>data</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+<p>The <b>Text</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>append(data)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>data</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>insert(offset,&nbsp;data)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>offset</b> parameter is expected to be of type <b>int.</b>.
+ The <b>data</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>delete(offset,&nbsp;count)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>offset</b> parameter is expected to be of type <b>int.</b>.
+ The <b>count</b> parameter is expected to be of type <b>int.</b>.
+</dd>
+<dt><b>replace(offset,&nbsp;count,&nbsp;data)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>offset</b> parameter is expected to be of type <b>int.</b>.
+ The <b>count</b> parameter is expected to be of type <b>int.</b>.
+ The <b>data</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>splice(element,&nbsp;offset,&nbsp;count)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>element</b> parameter is expected to be of type <b>Element.</b>.
+ The <b>offset</b> parameter is expected to be of type <b>int.</b>.
+ The <b>count</b> parameter is expected to be of type <b>int.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Comment</h2>
+<blockquote>
+<p><b>Comment</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>Comment</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>data</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object PI</h2>
+<blockquote>
+<p><b>PI</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>PI</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>name</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+<dt><b>data</b></dt>
+<dd>This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<br></body>
+</html>
