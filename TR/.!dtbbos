@@ -1,0 +1,751 @@
+375
+.
+5 5 1
+..
+5 35 3
+1997
+5 65 250
+CVS
+5 95 20
+fontpics
+5 125 312
+images
+5 155 86
+newbg
+5 185 150
+NOTE-MCF-XML
+5 215 335
+NOTE-MCF-XML-970624
+5 245 338
+old
+5 275 25
+WD-html-lex
+5 305 177
+WD-html2
+5 335 18
+WD-html2-950922
+5 365 7
+WD-html40
+5 395 339
+WD-html40-970708
+5 425 351
+WD-math
+5 455 240
+WD-math-970515
+5 485 311
+WD-math-970710
+5 515 239
+WD-sgml-lex
+5 545 29
+WD-sgml-lex-960615
+5 575 119
+WWWicn
+5 605 39
+.#Overview.html.1.42
+5 635 143
+.#Overview.html.1.68
+5 665 265
+.#Overview.html.1.8
+5 695 57
+.#REC-CSS1-961217.html.1.1
+5 725 245
+.#REC-CSS1-961217.html.1.2
+5 755 246
+.#REC-CSS1-961217.html.1.3
+5 785 268
+.#REC-CSS1.html.1.1
+5 815 213
+3_2a.gif
+5 845 126
+3_2b.gif
+5 875 209
+4_2.gif
+5 905 220
+5_2.gif
+5 935 230
+8859-1-fill-b.gif
+5 965 292
+arch.gif
+5 995 317
+assertion.gif
+5 1025 232
+ciphomatic.gif
+5 1055 233
+d_sig.gif
+5 1085 234
+draft-ietf-http-pep-00.html
+5 1115 165
+draft-ietf-http-pep-00.txt
+5 1145 153
+draft-ietf-http-pep-01.html
+5 1175 172
+draft-ietf-http-pep-01.txt
+5 1205 170
+draft-ietf-http-pep-03.txt
+5 1235 300
+draft-ietf-jepi-uppflow-00.html
+5 1265 254
+draft-khare-http-pep-01.ps
+5 1295 96
+draft-khare-http-pep-01.txt
+5 1325 94
+entitytest-8859.html
+5 1355 291
+fred.tar
+5 1385 102
+hdml20-3.html
+5 1415 287
+hdml20-4.html
+5 1445 307
+hdml20-5.html
+5 1475 308
+hdml20-6.html
+5 1505 306
+hdml20-7.html
+5 1535 309
+hdml20-8.html
+5 1565 305
+hdml20-9.html
+5 1595 304
+html.dtd
+5 1625 104
+HTML32.cat
+5 1655 255
+HTML32.dtd
+5 1685 256
+html40.pdf
+5 1715 344
+HTMLlat1.ent
+5 1745 296
+HTMLmisc.ent
+5 1775 266
+HTMLsym.ent
+5 1805 288
+id_cert.gif
+5 1835 235
+Image1.gif
+5 1865 328
+Image2.gif
+5 1895 329
+info_resource.gif
+5 1925 236
+ISOlat1.ent
+5 1955 257
+key_info.gif
+5 1985 237
+manifest.gif
+5 2015 238
+math.tgz
+5 2045 207
+navyl.gif
+5 2075 208
+NOTE-ACSS-970124.html
+5 2105 264
+NOTE-ACSS.html
+5 2135 263
+NOTE-amaya-970220.html
+5 2165 183
+NOTE-amaya-970220.html~
+5 2195 214
+NOTE-amaya.html
+5 2225 342
+NOTE-CDFsubmit.html
+5 2255 294
+NOTE-cgm-970618.html
+5 2285 336
+NOTE-cgm.html
+5 2315 313
+NOTE-frosting-19970724.css
+5 2345 374
+NOTE-frosting-19970724.html
+5 2375 375
+NOTE-html-970421.html
+5 2405 295
+NOTE-html-970531.html
+5 2435 322
+NOTE-html.html
+5 2465 337
+NOTE-http-edit-dist-scenarios-961213.html
+5 2495 168
+NOTE-http-edit-dist-scenarios.html
+5 2525 343
+NOTE-imagemap.html
+5 2555 180
+NOTE-jepi-970519.html
+5 2585 315
+NOTE-jepi.html
+5 2615 316
+NOTE-layout.html
+5 2645 159
+NOTE-MCF-XML-970606.html
+5 2675 333
+NOTE-MCF-XML.html
+5 2705 354
+NOTE-MCF-XML.html~
+5 2735 334
+NOTE-OPS-FrameWork.html
+5 2765 325
+NOTE-OPS-OverHTTP.html
+5 2795 326
+NOTE-OPS-StandardPractices.html
+5 2825 327
+NOTE-rdm.html
+5 2855 241
+NOTE-Submission-HDML-FAQ.html
+5 2885 310
+NOTE-Submission-HDML-hdml20-3.html
+5 2915 303
+NOTE-Submission-HDML-spec.html
+5 2945 302
+NOTE-Submission-HDML.html
+5 2975 301
+NOTE-Web-privacy.html
+5 3005 330
+NOTE-XMLsubmit.html
+5 3035 293
+Order.html
+5 3065 16
+Overview.html
+5 3095 353
+Overview.html~
+5 3125 166
+pep-01.ps
+5 3155 58
+pep-chart.eps
+5 3185 32
+pep-chart.gif
+5 3215 226
+PNG-Chunks.html
+5 3245 182
+PNG-ColorAppendix.html
+5 3275 189
+PNG-Compression.html
+5 3305 192
+PNG-CRCAppendix.html
+5 3335 203
+PNG-Credits.html
+5 3365 195
+PNG-DataRep.html
+5 3395 197
+PNG-Decoders.html
+5 3425 199
+PNG-Encoders.html
+5 3455 184
+PNG-Filters.html
+5 3485 186
+PNG-GammaAppendix.html
+5 3515 190
+PNG-Glossary.html
+5 3545 193
+PNG-History.html
+5 3575 196
+PNG-Introduction.html
+5 3605 198
+PNG-Misc.html
+5 3635 187
+PNG-Ordering.html
+5 3665 185
+PNG-Rationale.html
+5 3695 188
+PNG-References.html
+5 3725 191
+PNG-Resources.html
+5 3755 194
+PNG-Structure.html
+5 3785 200
+png.html
+5 3815 22
+PR-CSS1-961112.html
+5 3845 225
+PR-CSS1-961113.html
+5 3875 224
+PR-CSS1.html
+5 3905 160
+PR-html32-961105.html
+5 3935 221
+PR-PICS-labels-960808.html
+5 3965 140
+PR-PICS-labels-960808.html.old
+5 3995 227
+PR-PICS-services-960808.html
+5 4025 243
+PR-PICS-services-960808.html.old
+5 4055 137
+PR-png-960701.final.html
+5 4085 249
+PR-png-960701.html
+5 4115 135
+PR-png-960701.HTML2.html
+5 4145 248
+PR-png-960701.sk.html
+5 4175 251
+profile.gif
+5 4205 297
+REC-CSS1.html
+5 4265 181
+REC-html32-970113.html
+5 4295 229
+REC-html32-970113.html~
+5 4325 228
+REC-html32.html
+5 4355 125
+REC-PICS-labels-961031.html
+5 4385 219
+REC-PICS-labels.html
+5 4415 223
+REC-PICS-services-961031.html
+5 4445 218
+REC-PICS-services.html
+5 4475 222
+REC-png-961001.html
+5 4505 321
+REC-png-multi.html
+5 4535 201
+REC-png.html
+5 4565 247
+REC-png.html.gz
+5 4595 202
+REC-png.pdf
+5 4625 205
+REC-png.ps
+5 4655 204
+REC-png.ps.gz
+5 4685 206
+REC-png.txt
+5 4715 178
+REC-png.txt.gz
+5 4745 161
+REC.CSS1.orig
+5 4775 244
+recbg.jpg
+5 4805 154
+relations.html
+5 4835 179
+Release.html
+5 4865 5
+Release.only.html
+5 4895 23
+res_info.gif
+5 4925 258
+session_id.html
+5 4955 56
+sgml.l
+5 4985 15
+sig_block.gif
+5 5015 259
+sig_lab.gif
+5 5045 260
+simple.gif
+5 5075 332
+testing-rk.html
+5 5105 262
+tmp.html
+5 5135 46
+W3C-TR-HowTo.html
+5 5165 49
+W3C-TR-Template.html
+5 5195 37
+WD-acss-970328.html
+5 5225 270
+WD-acss-970630.html
+5 5255 349
+WD-acss-970630.html~
+5 5285 350
+WD-acss.html
+5 5315 151
+WD-css1-951117.html
+5 5345 27
+WD-css1-951123.html
+5 5375 47
+WD-css1-951209.html
+5 5405 45
+WD-css1-951222.html
+5 5435 54
+WD-css1-960220.html
+5 5465 24
+WD-css1-960418.html
+5 5495 41
+WD-css1-960505.html
+5 5525 62
+WD-css1-960717.html
+5 5555 141
+WD-css1-960726.html
+5 5585 146
+WD-css1-960911.html
+5 5615 176
+WD-css1.html
+5 5645 33
+WD-csslayout-951220.html
+5 5675 48
+WD-csslayout-960116.html
+5 5705 66
+WD-csslayout-960327.html
+5 5735 72
+WD-csslayout2-960325.html
+5 5765 73
+WD-csslayout2-960327.html
+5 5795 74
+WD-DISG-label.html
+5 5825 320
+WD-doctypes-960302.html
+5 5855 78
+WD-doctypes.html
+5 5885 103
+WD-DSIG-arch-961017.html
+5 5915 210
+WD-DSIG-arch-961024-a.html
+5 5945 215
+WD-DSIG-arch-961024.html
+5 5975 211
+WD-DSIG-arch-961025.html
+5 6005 216
+WD-DSIG-arch-961026.html
+5 6035 217
+WD-DSIG-arch.html
+5 6065 212
+WD-DSIG-label-970516.html
+5 6095 314
+WD-DSIG-label-970523.html
+5 6125 318
+WD-DSIG-label-970601.html
+5 6155 323
+WD-DSIG-label-970605.html
+5 6185 324
+WD-DSIG-label-arch-970110.html
+5 6215 231
+WD-DSIG-label-arch-970610.html
+5 6245 331
+WD-DSIG-label-arch.html
+5 6275 261
+WD-DSIG-label-pics.gif
+5 6305 319
+WD-DSIG-label.html
+5 6335 345
+WD-entities-961125.html
+5 6365 271
+WD-entities.html
+5 6395 278
+WD-font-970721.html
+5 6425 362
+WD-font.html
+5 6455 352
+WD-form-filling-960416.html
+5 6485 82
+WD-form-filling.html
+5 6515 145
+WD-forms-960308.html
+5 6545 83
+WD-forms-960410.html
+5 6575 84
+WD-forms-970203.html
+5 6605 171
+WD-forms-970402.html
+5 6635 272
+WD-forms.html
+5 6665 110
+WD-frames-970331.html
+5 6695 273
+WD-frames.html
+5 6725 164
+WD-html2-950922.ps
+5 6755 8
+WD-html2-950922.txt
+5 6785 9
+WD-html32-960909.html
+5 6815 173
+WD-html32.html
+5 6845 138
+WD-htmllink-970328.html
+5 6875 274
+WD-htmllink.html
+5 6905 279
+WD-http-pep-951122.html
+5 6935 42
+WD-http-pep-960220.html
+5 6965 79
+WD-http-pep-960222.html
+5 6995 87
+WD-http-pep-960819.html
+5 7025 50
+WD-http-pep-960820.html
+5 7055 169
+WD-http-pep-970131.html
+5 7085 163
+WD-http-pep-970321.html
+5 7115 269
+WD-http-pep-970428.html
+5 7145 298
+WD-http-pep-970428.html~
+5 7175 299
+WD-http-pep-970714.doc
+5 7205 361
+WD-http-pep-970714.html
+5 7235 357
+WD-http-pep-970714.ps
+5 7265 359
+WD-http-pep-970714.txt
+5 7295 360
+WD-http-pep-970714.var
+5 7325 366
+WD-http-pep.html
+5 7355 40
+WD-http-sea-960108.html
+5 7385 59
+WD-http-sea.html
+5 7415 61
+WD-ilu-requestor-960307.html
+5 7445 242
+WD-ilu-requestor.html
+5 7475 107
+WD-insert-951220.html
+5 7505 51
+WD-insert-951221.html
+5 7535 52
+WD-insert.html
+5 7565 36
+WD-jepi-uppflow-970106.html
+5 7595 252
+WD-jepi-uppflow.html
+5 7625 253
+WD-layout-960329.html
+5 7655 91
+WD-layout-960401.html
+5 7685 97
+WD-layout-960404.html
+5 7715 98
+WD-layout-960405.html
+5 7745 101
+WD-layout-960408.html
+5 7775 105
+WD-layout-960606.html
+5 7805 106
+WD-layout-960608.html
+5 7835 108
+WD-layout.html
+5 7865 113
+WD-logfile-960221.html
+5 7895 92
+WD-logfile-960323.html
+5 7925 114
+WD-logfile.html
+5 7955 60
+WD-mptp-951122.html
+5 7985 38
+WD-mptp-951122.txt
+5 8015 34
+WD-mptp.html
+5 8045 21
+WD-mptp951122.html
+5 8075 35
+WD-object-960226.html
+5 8105 100
+WD-object-960308.html
+5 8135 109
+WD-object-960311.html
+5 8165 115
+WD-object-960312.html
+5 8195 117
+WD-object-960325.html
+5 8225 118
+WD-object-960326.html
+5 8255 121
+WD-object-960328.html
+5 8285 122
+WD-object-960409.html
+5 8315 123
+WD-object-960410.html
+5 8345 124
+WD-object-960411.html
+5 8375 127
+WD-object-960412.html
+5 8405 128
+WD-object-960422.html
+5 8435 129
+WD-object-970218.html
+5 8465 275
+WD-object.html
+5 8495 99
+WD-PICS-labels-960505.html
+5 8525 158
+WD-PICS-services-960505.html
+5 8555 157
+WD-PICS-services.html
+5 8585 156
+WD-png-0528.html
+5 8615 144
+WD-png-951126.html
+5 8645 43
+WD-png-960128.html
+5 8675 71
+WD-png-960221.html
+5 8705 95
+WD-png-960311.html
+5 8735 116
+WD-png-960528.html
+5 8765 147
+WD-png-status.txt
+5 8795 44
+WD-positioning-970130.html
+5 8825 267
+WD-positioning-970131.html
+5 8855 174
+WD-positioning.html
+5 8885 175
+WD-print-970331-fig1.gif
+5 8915 284
+WD-print-970331.html
+5 8945 283
+WD-print-970626.html
+5 8975 341
+WD-print-fig1.gif
+5 9005 340
+WD-print.html
+5 9035 162
+WD-proxy-960221.html
+5 9065 93
+WD-proxy.html
+5 9095 85
+WD-script-960124.html
+5 9125 69
+WD-script-960131.html
+5 9155 26
+WD-script-960208.html
+5 9185 76
+WD-script-960418.html
+5 9215 130
+WD-script-960612.html
+5 9245 131
+WD-script-960614.html
+5 9275 132
+WD-script-960627.html
+5 9305 133
+WD-script-960709.html
+5 9335 136
+WD-script-960808.html
+5 9365 142
+WD-script-970314.html
+5 9395 276
+WD-script.html
+5 9425 19
+WD-sec-960313.html
+5 9455 120
+WD-session-id-960220.html
+5 9485 81
+WD-session-id-960221.html
+5 9515 90
+WD-session-id.html
+5 9545 80
+WD-session_id.html
+5 9575 88
+WD-sgml-lex-951115.html
+5 9605 28
+WD-sgml-lex-960208.html
+5 9635 75
+WD-sigs-960311.html
+5 9665 111
+WD-sigs.html
+5 9695 112
+WD-style-951122.html
+5 9725 31
+WD-style-960115.html
+5 9755 63
+WD-style-960118.html
+5 9785 65
+WD-style-960119.html
+5 9815 67
+WD-style-960605.html
+5 9845 134
+WD-style-960710.html
+5 9875 139
+WD-style-970324.html
+5 9905 277
+WD-style.html
+5 9935 4
+WD-tables-950925.html
+5 9965 6
+WD-tables-951003.html
+5 9995 12
+WD-tables-951010.html
+5 10025 11
+WD-tables-951023.html
+5 10055 10
+WD-tables-951025.html
+5 10085 13
+WD-tables-951027.html
+5 10115 14
+WD-tables-951222.html
+5 10145 53
+WD-tables-960123.html
+5 10175 68
+WD-tables.html
+5 10205 17
+WD-wwwicn-960108.html
+5 10235 55
+WD-wwwicn-960126.html
+5 10265 167
+WD-wwwicn-960129.html
+5 10295 64
+WD-wwwicn-960131.html
+5 10325 70
+WD-wwwicn-960215.html
+5 10355 77
+WD-wwwicn-960604.html
+5 10385 149
+WD-wwwicn-960729.html
+5 10415 155
+WD-wwwicn.html
+5 10445 30
+WD-xml-961101.html
+5 10475 148
+WD-xml-961114.html
+5 10505 89
+WD-xml-970807.html
+5 10535 372
+WD-xml-970807.html~
+5 10565 373
+WD-xml-970807.ps
+5 10595 368
+WD-xml-970807.ps.zip
+5 10625 369
+WD-xml-970807.var
+5 10655 371
+WD-xml-970807.xml
+5 10685 370
+WD-xml-lang-970331.html
+5 10715 281
+WD-xml-lang-970331.html~
+5 10745 282
+WD-xml-lang-970630.html
+5 10775 346
+WD-xml-lang-970630.ps
+5 10805 347
+WD-xml-lang-970630.var
+5 10835 365
+WD-xml-lang-970630.var~
+5 10865 367
+WD-xml-lang-970630.xml
+5 10895 355
+WD-xml-lang.html
+5 10925 280
+WD-xml-lang.html.old
+5 10955 348
+WD-xml-link-970331.html
+5 10985 286
+WD-xml-link-970331.html~
+5 11015 289
+WD-xml-link-970406.html
+5 11045 290
+WD-xml-link-970630.html
+5 11075 364
+WD-xml-link-970630a.html
+5 11105 356
+WD-xml-link-970630a.html~
+5 11135 358
+WD-xml-link-970731.html
+5 11165 363
+WD-xml-link.html
+5 11195 285
+WD-xml.html
+5 11225 152
+REC-CSS1-961217.html
+5 11285 2
