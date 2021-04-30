@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
+<head>
+  <title>Data Catalog Vocabulary (DCAT)</title>
+  <meta name="description" content="A vocabulary for describing the contents of a data catalog" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+<!--[if lt IE 9]>
+  <script src="http://www.w3.org/2008/site/js/html5shiv.js"></script>  <![endif]-->
+	
+  <style type="text/css">
+  table {
+    border-collapse:collapse;
+  }
+  td, th {
+    border:1px solid black;
+    padding:1em;
+  }  
+  table#namespaces td {
+    font-family: monospace;
+  }
+  table.definition {
+    width:100%;
+  }
+  table.definition td.prop {
+    width:10em;
+  }
+pre {
+	padding: 1em;
+	border: 1px dashed #2f6fab;
+	color: black;
+	background-color: #f9f9f9;
+	line-height: 1.1em;
+}
+
+/*****************************************************************
+ * ReSpec 3 CSS
+ * Robin Berjon - http://berjon.com/
+ *****************************************************************/
+
+/* --- INLINES --- */
+em.rfc2119 { 
+    text-transform:     lowercase;
+    font-variant:       small-caps;
+    font-style:         normal;
+    color:              #900;
+}
+
+h1 abbr, h2 abbr, h3 abbr, h4 abbr, h5 abbr, h6 abbr, a abbr,
+h1 abbr, h2 abbr, h3 abbr, h4 abbr, h5 abbr, h6 abbr, a abbr {
+    border: none;
+}
+
+dfn {
+    font-weight:    bold;
+}
+
+a.internalDFN {
+    color:  inherit;
+    border-bottom:  1px solid #99c;
+    text-decoration:    none;
+}
+
+a.externalDFN {
+    color:  inherit;
+    border-bottom:  1px dotted #ccc;
+    text-decoration:    none;
+}
+
+a.bibref {
+    text-decoration:    none;
+}
+
+cite .bibref {
+    font-style: normal;
+}
+
+code {
+    color:  #ff4500;
+}
+
+
+/* --- --- */
+ol.algorithm { counter-reset:numsection; list-style-type: none; }
+ol.algorithm li { margin: 0.5em 0; }
+ol.algorithm li:before { font-weight: bold; counter-increment: numsection; content: counters(numsection, ".") ") "; }
+
+/* --- TOC --- */
+.toc a, .tof a {
+    text-decoration:    none;
+}
+
+a .secno, a .figno {
+    color:  #000;
+}
+
+ul.tof, ol.tof {
+    list-style: none outside none;
+}
+
+.caption {
+    margin-top: 0.5em;
+    font-style:   italic;
+}
+
+/* --- TABLE --- */
+table.simple {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    border-bottom:  3px solid #005a9c;
+}
+
+.simple th {
+    background: #005a9c;
+    color:  #fff;
+    padding:    3px 5px;
+    text-align: left;
+}
+
+.simple th[scope="row"] {
+    background: inherit;
+    color:  inherit;
+    border-top: 1px solid #ddd;
+}
+
+.simple td {
+    padding:    3px 10px;
+    border-top: 1px solid #ddd;
+}
+
+.simple tr:nth-child(even) {
+    background: #f0f6ff;
+}
+
+/* --- DL --- */
+.section dd > p:first-child {
+    margin-top: 0;
+}
+
+.section dd > p:last-child {
+    margin-bottom: 0;
+}
+
+.section dd {
+    margin-bottom:  1em;
+}
+
+.section dl.attrs dd, .section dl.eldef dd {
+    margin-bottom:  0;
+}
+</style>
+<link rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/W3C-WD" />
+
+</head>
+<body>
+  <div class="head">
+  <p><a href="http://www.w3.org/"><img width="72" height="48" src="http://www.w3.org/Icons/w3c_home" alt="W3C" /></a></p>
+  <h1 class="title" id="title">Data Catalog Vocabulary (DCAT)</h1>
+  
+  <h2 id="w3c-working-draft-01-august-2013"><abbr title="World Wide Web Consortium">W3C</abbr> Last Call Working Draft 01 August 2013</h2>
+  <dl>
+    
+      <dt>This version:</dt>
+      <dd><a href="http://www.w3.org/TR/2013/WD-vocab-dcat-20130801/">http://www.w3.org/TR/2013/WD-vocab-dcat-20130801/</a></dd>
+      <dt>Latest published version:</dt>
+      <dd><a href="http://www.w3.org/TR/vocab-dcat/">http://www.w3.org/TR/vocab-dcat/</a></dd>
+      <dt>Latest editor's draft:</dt>
+      <dd><a href="http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html">http://dvcs.w3.org/hg/gld/raw-file/default/dcat/index.html</a></dd>
+      <dt>Previous version:</dt>
+      <dd><a href="http://www.w3.org/TR/2013/WD-vocab-dcat-20130312/">http://www.w3.org/TR/2013/WD-vocab-dcat-20130312/</a></dd>
+    
+    <dt>Editors:</dt>
+    <dd><a href="mailto:fadi.maali@deri.org">Fadi Maali</a>, <a href="http://www.deri.ie">DERI, NUI Galway</a></dd>
+    <dd><a href="mailto:olyerickson@gmail.com">John Erickson</a>, <a href="http://tw.rpi.edu/">Tetherless World Constellation (RPI)</a></dd>
+    <dt>Contributor:</dt> <dd><a href="mailto:phila@w3.org">Phil Archer</a>, <a href="http://www.w3.org/">W3C/ERCIM</a></dd>
+ </dl>
+ <p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2013 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p>    
+<hr /></div>
+
+<section id="abstract" class="introductory">
+<h2>Abstract</h2>
+  <p>DCAT is an RDF vocabulary designed to facilitate interoperability between data catalogs published on the Web. This document defines the schema and provides examples for its use.</p>
+  <p>By using DCAT to describe datasets in data catalogs, publishers increase discoverability and enable applications easily to consume metadata from multiple catalogs. It further enables decentralized publishing of catalogs and facilitates federated dataset search across sites. Aggregated DCAT metadata can serve as a manifest file to facilitate digital preservation.</p>
+</section>
+<section id="sotd" class="introductory"><h2>Status of This Document</h2>
+  
+    
+      
+        <p>
+          <em>This section describes the status of this document at the time of its publication. Other
+          documents may supersede this document. A list of current <abbr title="World Wide Web Consortium">W3C</abbr> publications and the latest revision
+          of this technical report can be found in the <a href="http://www.w3.org/TR/"><abbr title="World Wide Web Consortium">W3C</abbr> technical reports
+          index</a> at http://www.w3.org/TR/.</em>
+        </p>
+        
+        <p>
+          This document was published by the <a href="http://www.w3.org/2011/gld/">Government Linked Data Working Group</a> as a Last Call Working Draft.   It is the second Last Call and addresses the <a href="http://www.w3.org/Search/Mail/Public/search?type-index=public-gld-comments&amp;index-type=t&amp;keywords=dcat&amp;search=Search">comments and feedback</a> received during the first Last Call period.   See <a href="#change-history"><b>change history</b></a> for more details.
+	</p>
+          
+	    <p>The Working Group is very interested in hearing comments about this work.   <b>Please send comments by 30 August 2013</b> to 
+          <a href="mailto:public-gld-comments@w3.org">public-gld-comments@w3.org</a> 
+          (<a href="mailto:public-gld-comments-request@w3.org?subject=subscribe">subscribe</a>,
+          <a href="http://lists.w3.org/Archives/Public/public-gld-comments/">archives</a>).              This document is intended to become a <abbr title="World Wide Web Consortium">W3C</abbr> Recommendation.</p>
+          
+        <p>Publication as a Last Call Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.</p>
+        
+        
+          <p>
+            This is a Last Call Working Draft and thus the Working Group has determined that this document has satisfied the
+            relevant technical requirements and is sufficiently stable to advance through the Technical Recommendation process.
+          </p>
+        
+        <p>
+          
+            This document was produced by a group operating under the 
+            <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+          
+          
+          
+            
+              <abbr title="World Wide Web Consortium">W3C</abbr> maintains a <a href="http://www.w3.org/2004/01/pp-impl/47663/status" rel="disclosure">public list of any patent disclosures</a> 
+            
+            made in connection with the deliverables of the group; that page also includes instructions for 
+            disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains
+            <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the
+            information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
+            6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.</p>
+        
+      
+    
+  
+</section><section id="toc"><h2 class="introductory">Table of Contents</h2><ul class="toc"><li class="tocline"><a href="#introduction" class="tocxref"><span class="secno">1. </span>Introduction</a></li><li class="tocline"><a href="#namespaces-1" class="tocxref"><span class="secno">2. </span>Namespaces</a></li><li class="tocline"><a href="#conformance" class="tocxref"><span class="secno">3. </span>Conformance</a></li><li class="tocline"><a href="#vocabulary-overview" class="tocxref"><span class="secno">4. </span>Vocabulary Overview</a><ul class="toc"><li class="tocline"><a href="#basic-example" class="tocxref"><span class="secno">4.1 </span>Basic Example</a></li><li class="tocline"><a href="#classifying-datasets" class="tocxref"><span class="secno">4.2 </span>Classifying datasets</a></li><li class="tocline"><a href="#describing-catalog-records-metadata" class="tocxref"><span class="secno">4.3 </span>Describing catalog records metadata</a></li><li class="tocline"><a href="#a-dataset-available-only-behind-some-web-page" class="tocxref"><span class="secno">4.4 </span>A dataset available only behind some Web page</a></li><li class="tocline"><a href="#a-dataset-available-as-download-and-behind-some-web-page" class="tocxref"><span class="secno">4.5 </span>A dataset available as download and behind some Web page</a></li></ul></li><li class="tocline"><a href="#vocabulary-specification" class="tocxref"><span class="secno">5. </span>Vocabulary specification</a><ul class="toc"><li class="tocline"><a href="#class-catalog" class="tocxref"><span class="secno">5.1 </span>Class: Catalog</a></li><li class="tocline"><a href="#class-catalog-record" class="tocxref"><span class="secno">5.2 </span>Class: Catalog record</a></li><li class="tocline"><a href="#class-dataset" class="tocxref"><span class="secno">5.3 </span>Class: Dataset</a></li><li class="tocline"><a href="#class-distribution" class="tocxref"><span class="secno">5.4 </span>Class: Distribution</a></li><li class="tocline"><a href="#class-concept-scheme" class="tocxref"><span class="secno">5.5 </span>Class: Concept scheme</a></li><li class="tocline"><a href="#class-concept" class="tocxref"><span class="secno">5.6 </span>Class: Concept</a></li><li class="tocline"><a href="#class-organization-person" class="tocxref"><span class="secno">5.7 </span>Class: Organization/Person</a></li></ul></li><li class="tocline"><a href="#acknowledgements" class="tocxref"><span class="secno">A. </span>Acknowledgements</a></li><li class="tocline"><a href="#change-history" class="tocxref"><span class="secno">B. </span>Change history</a></li><li class="tocline"><a href="#references" class="tocxref"><span class="secno">C. </span>References</a><ul class="toc"><li class="tocline"><a href="#normative-references" class="tocxref"><span class="secno">C.1 </span>Normative references</a></li><li class="tocline"><a href="#informative-references" class="tocxref"><span class="secno">C.2 </span>Informative references</a></li></ul></li></ul></section>
+
+
+
+<section class="informative" id="introduction">
+
+<!--OddPage-->
+<h2 id="intro"><span class="secno">1. </span>Introduction</h2><p><em>This section is non-normative.</em></p>
+<p>Data can come in many formats, ranging from spreadsheets over XML and RDF to various specialist formats. DCAT does not make any assumptions about the format of the datasets described in a catalog. Other, complementary vocabularies may be used together with DCAT to provide more detailed format-specific information. For example, properties from the VoID vocabulary [<cite><a class="bibref" href="#bib-VOID">VOID</a></cite>] can be used to express various statistics about a DCAT-described dataset if that dataset is in RDF format.</p>
+<p>This document does not prescribe any particular method of deploying data expressed in DCAT. DCAT is applicable in many contexts including RDF accessible via SPARQL endpoints, embedded in HTML pages as RDFa, or serialized as e.g. RDF/XML or Turtle. The examples in this document use Turtle simply because of Turtle's readability.</p>
+</section>
+
+<section id="namespaces-1">
+
+<!--OddPage-->
+<h2 id="ns"><span class="secno">2. </span>Namespaces</h2>
+<p>The namespace for DCAT is <code>http://www.w3.org/ns/dcat#</code>. However,
+it should be noted that DCAT makes extensive use of terms from other vocabularies,
+in particular <a href="http://dublincore.org/documents/dcmi-terms/">Dublin Core</a>. DCAT itself defines a minimal set of classes and
+properties of its own. A full set of namespaces and prefixes used in this
+document is shown in the table below.</p>
+
+<table id="namespaces">
+  <thead><tr><th>Prefix</th><th>Namespace</th></tr></thead>
+  <tbody>
+    <tr><td>dcat</td><td>http://www.w3.org/ns/dcat#</td></tr>
+    <tr><td>dct</td><td>http://purl.org/dc/terms/</td></tr>
+    <tr><td>dctype</td><td>http://purl.org/dc/dcmitype/</td></tr>
+    <tr><td>foaf</td><td>http://xmlns.com/foaf/0.1/</td></tr>
+    <tr><td>rdf</td><td>http://www.w3.org/1999/02/22-rdf-syntax-ns#</td></tr>
+    <tr><td>rdfs</td><td>http://www.w3.org/2000/01/rdf-schema#</td></tr>
+    <tr><td>skos</td><td>http://www.w3.org/2004/02/skos/core#</td></tr>
+    <tr><td>vcard</td><td>http://www.w3.org/2006/vcard/ns#</td></tr>
+    <tr><td>xsd</td><td>http://www.w3.org/2001/XMLSchema#</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section id="conformance">
+<!--OddPage-->
+<h2><span class="secno">3. </span>Conformance</h2>
+<p>
+  As well as sections marked as non-normative, all authoring guidelines, diagrams, examples,
+  and notes in this specification are non-normative. Everything else in this specification is
+  normative.
+</p>
+<p>
+  The key words <em class="rfc2119" title="must">must</em>, <em class="rfc2119" title="must not">must not</em>, <em class="rfc2119" title="required">required</em>, <em class="rfc2119" title="should">should</em>, <em class="rfc2119" title="should not">should not</em>, <em class="rfc2119" title="recommended">recommended</em>, <em class="rfc2119" title="may">may</em>,
+  and <em class="rfc2119" title="optional">optional</em> in this specification are to be interpreted as described in [<cite><a class="bibref" href="#bib-RFC2119">RFC2119</a></cite>].
+</p>
+
+A data catalog conforms to DCAT if:
+<ul>
+<li> It is organized into datasets and distributions.</li>
+
+<li> An RDF description of the catalog itself and its datasets and distributions is available (but the choice of 
+RDF syntaxes, access protocols, and access policies is not mandated by this specification).</li>
+
+<li> The contents of all metadata fields that are held in the catalog, and that contain data about the catalog itself and its dataset and distributions, are included in this RDF description, expressed using the appropriate classes and properties from DCAT, except where no such class or property exists.</li>
+
+<li> All classes and properties defined in DCAT are used in a way consistent with the semantics declared in this specification.</li>
+
+<li>DCAT-compliant catalogs <em class="rfc2119" title="may">may</em> include additional non-DCAT metadata fields and additional RDF data in the catalog's RDF description.</li>
+</ul>
+
+A <strong>DCAT profile</strong> is a specification for data catalogs that adds additional constraints to DCAT. A data catalog that conforms to the profile also conforms to DCAT. Additional constraints in a profile <em class="rfc2119" title="may">may</em> include:
+<ul>
+<li> A minimum set of required metadata fields </li>
+<li> Classes and properties for additional metadata fields not covered in DCAT</li>
+<li> Controlled vocabularies or URI sets as acceptable values for properties</li>
+<li> Requirements for specific access mechanisms (RDF syntaxes, protocols) to the catalog's RDF description</li>
+</ul>
+
+</section>
+
+<section class="informative" id="vocabulary-overview">
+
+<!--OddPage-->
+<h2 id="overview"><span class="secno">4. </span>Vocabulary Overview</h2><p><em>This section is non-normative.</em></p>
+<p>DCAT is an RDF vocabulary well-suited to representing government data catalogs such as <a href="http://data.gov">data.gov</a> and <a href="http://data.gov.uk">data.gov.uk</a>. DCAT defines three main classes:</p>
+<ul><li> <code><a href="#Class:_Catalog">dcat:Catalog</a></code> represents the catalog
+</li><li> <code><a href="#Class:_Dataset">dcat:Dataset</a></code> represents a dataset in a catalog. 
+</li><li> <code><a href="#Class:_Distribution">dcat:Distribution</a></code> represents an accessible form of a dataset as for example a downloadable file, an RSS feed or a web service that provides the data.
+</li></ul>
+<p>
+Notice that a dataset in DCAT 
+is defined as a "collection of data, published or curated by a single agent, and available for access or 
+download in one or more formats". A dataset does not have to be available as a downloadable file.
+For example, a dataset that is available via an API can be defined as an instance of dcat:Dataset and the  
+API can be defined as an instance of dcat:Distribution. DCAT itself does not define properties specific to APIs description. 
+These are considered out of the scope of this version of the vocabulary. Nevertheless, this can be defined as a profile of the DCAT vocabulary.
+</p>
+<p>Another important class in DCAT is <code><a href="#Class:_Catalog_record">dcat:CatalogRecord</a></code> which describes a dataset entry in the catalog. Notice that while dcat:Dataset represents the dataset itself, dcat:CatalogRecord represents the record that describes a dataset in the catalog. The use of the CatalogRecord is considered optional. It is used to capture provenance information about dataset entries in a catalog. If this distinction is not necessary then CatalogRecord can be safely ignored.</p>
+
+<p><img alt="UML model of DCAT classes and properties" src="dcat-model.jpg" /></p>
+<p>All RDF examples in this document are written in Turtle syntax [<cite><a class="bibref" href="#bib-TURTLE-TR">TURTLE-TR</a></cite>].</p>
+<section id="basic-example">
+<h3 id="example"><span class="secno">4.1 </span>Basic Example</h3><p><em>This section is non-normative.</em></p>
+<p>This example provides a quick overview of how DCAT might be used to represent a government catalog and its datasets. </p>
+
+<p>First, the catalog description:
+</p>
+<pre>   :catalog
+       a dcat:Catalog ;
+       dct:title "Imaginary Catalog" ;
+       rdfs:label "Imaginary Catalog" ;
+       foaf:homepage &lt;http://example.org/catalog&gt; ;
+       dct:publisher :transparency-office ;
+       dct:language &lt;http://id.loc.gov/vocabulary/iso639-1/en&gt;  ;
+       dcat:dataset :dataset-001  , :dataset-002 , :dataset-003 ; 
+       .
+</pre>
+<p>The publisher of the catalog has the relative URI :transparency-office. Further description of the publisher can be provided as in the following example:
+</p>
+<pre>   :transparency-office
+       a foaf:Organization ;
+       rdfs:label "Transparency Office" ;
+       .
+</pre>
+<p>The catalog lists each of its datasets via dcat:dataset property. In the example above, an example dataset was mentioned with the relative URI :dataset-001. A possible description of it using DCAT is shown below:
+</p>
+<pre>   :dataset-001
+       a dcat:Dataset ;
+       dct:title "Imaginary dataset" ;
+       dcat:keyword "accountability","transparency" ,"payments" ;
+       dct:issued "2011-12-05"^^xsd:date ;
+       dct:modified "2011-12-05"^^xsd:date ;
+       dct:publisher :finance-ministry ;
+       dct:language &lt;http://id.loc.gov/vocabulary/iso639-1/en&gt;  ;
+       dct:accrualPeriodicity &lt;http://purl.org/linked-data/sdmx/2009/code#freq-W&gt;  ;
+       dcat:distribution :dataset-001-csv ;
+       .
+</pre>
+
+<p>In order to express frequency of update in the example above, we chose to use an instance from the <a href="http://www.w3.org/TR/vocab-data-cube/#dsd-cog">Content-Oriented Guidelines</a> developed as part 
+of the <abbr title="World Wide Web Consortium">W3C</abbr> Data Cube Vocabulary efforts.</p>
+<p>The dataset distribution :dataset-001-csv can be downloaded as a 5Kb CSV file. This information is 
+represented via an RDF resource of type dcat:Distribution.
+</p>
+<pre>   :dataset-001-csv
+       a dcat:Distribution ;
+       dcat:downloadURL &lt;http://www.example.org/files/001.csv&gt; ;
+       dct:title "CSV distribution of imaginary dataset 001" ;
+       dcat:mediaType "text/csv" ;
+       dcat:byteSize "5120"^^xsd:decimal ;
+       .
+</pre>
+</section>
+
+<section id="classifying-datasets">
+<h3 id="example-classification"><span class="secno">4.2 </span>Classifying datasets</h3>
+<p>The catalog classifies its datasets according to a set of domains represented by the relative URI :themes. SKOS can be used to describe the domains used:
+</p>
+<pre>   :catalog dcat:themeTaxonomy :themes .
+</pre>
+
+<pre>   :themes
+       a skos:ConceptScheme ;
+       skos:prefLabel "A set of domains to classify documents" ;
+       .
+</pre>
+
+<pre>   :dataset-001 dcat:theme :accountability  .
+</pre>
+<p>Notice that this dataset is classified under the domain represented by the relative URI :accountability. 
+It is recommended to define the concept as part of the concepts scheme identified by the URI :themes that was used to describe the catalog domains. An example SKOS description:
+</p>
+<pre>   :accountability 
+       a skos:Concept ;
+       skos:inScheme :themes ;
+       skos:prefLabel "Accountability" ;
+       .
+</pre>
+</section>
+
+<section id="describing-catalog-records-metadata">
+<h3 id="example-catalog-record"><span class="secno">4.3 </span>Describing catalog records metadata</h3>
+<p>If the catalog publisher decides to keep metadata
+describing its records (i.e. the records containing metadata
+describing the datasets), dcat:CatalogRecord can be used. For example,
+while  :dataset-001 was issued on 2011-12-05, its description on Imaginary Catalog was added on 2011-12-11. This can be represented by DCAT as in the following:
+</p>
+<pre>   :catalog  dcat:record :record-001  .
+</pre>
+
+<pre>   :record-001
+       a dcat:CatalogRecord ;
+       foaf:primaryTopic :dataset-001 ;
+       dct:issued "2011-12-11"^^xsd:date ;
+       .  
+</pre>
+</section>
+
+<section id="a-dataset-available-only-behind-some-web-page">
+<h3 id="example-landing-page"><span class="secno">4.4 </span>A dataset available only behind some Web page</h3>
+<p>:dataset-002 is available as a CSV file. However :dataset-002 can only be obtained through some Web page 
+where the user needs to click some links, provide some information and check some boxes 
+before accessing the data</p>
+
+<pre>   :dataset-002 
+       a dcat:Dataset ;
+       dcat:landingPage &lt;http://example.org/dataset-002.html&gt; ;
+       dcat:distribution :dataset-002-csv ;
+       .
+   :dataset-002-csv 
+       a dcat:Distribution ;
+       dcat:accessURL &lt;http://example.org/dataset-002.html&gt; ;
+       dcat:mediaType "text/csv" ;
+       .
+</pre>
+
+Notice the use of dcat:landingPage and the definition of the dcat:Distribution instance.
+</section>
+
+<section id="a-dataset-available-as-download-and-behind-some-web-page">
+<h3 id="example-landing-page-download"><span class="secno">4.5 </span>A dataset available as download and behind some Web page</h3>
+<p>On the other hand, :dataset-003 can be obtained through some landing page but also can be downloaded from a known URL.
+</p>
+<pre>   :dataset-003 
+       a dcat:Dataset ;
+       dcat:landingPage &lt;http://example.org/dataset-003.html&gt; ;
+       dcat:distribution :dataset-003-csv ;
+       .
+   :dataset-003-csv 
+       a dcat:Distribution ;
+       dcat:downloadURL &lt;http://example.org/dataset-003.csv&gt; .
+       dcat:mediaType "text/csv" ;
+       .
+</pre>
+Notice that we used dcat:downloadURL with the downloadable distribution and that the other distribution through the landing page
+does not have to be defined as a separate dcat:Distribution instance.
+</section>
+
+</section>
+
+<section id="vocabulary-specification">
+
+<!--OddPage-->
+<h2 id="vocab-spec"><span class="secno">5. </span>Vocabulary specification</h2>
+
+<section id="class-catalog">
+<h3 id="Class:_Catalog"><span class="secno">5.1 </span>Class: Catalog</h3>
+<p>The following properties are recommended for use on this class:
+<a href="#Property:catalog_catalog_record">catalog record</a>,
+<a href="#Property:catalog_dataset">dataset</a>,
+<a href="#Property:catalog_description">description</a>,
+<a href="#Property:catalog_homepage">homepage</a>,
+<a href="#Property:catalog_language">language</a>,
+<a href="#Property:catalog_license">license</a>,
+<a href="#Property:catalog_publisher">publisher</a>,
+<a href="#Property:catalog_release_date">release date</a>,
+<a href="#Property:catalog_rights">rights</a>,
+<a href="#Property:catalog_spatial">spatial</a>,
+<a href="#Property:catalog_themes">themes</a>,
+<a href="#Property:catalog_title">title</a>,
+<a href="#Property:catalog_update_date">update date</a>
+</p>
+<table class="definition">
+  <thead><tr><th>RDF Class:</th><th><a href="http://www.w3.org/ns/dcat#Catalog">dcat:Catalog</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A data catalog is a curated collection of metadata about datasets.</td></tr>
+    <tr><td class="prop">Usage note:</td><td>Typically, a web-based data catalog is represented as a single instance of this class.</td></tr>
+    <tr><td class="prop">See also:</td><td> <a href="#Class:_Catalog_record">Catalog record</a>, <a href="#Class:_Dataset">Dataset</a></td></tr>
+  </tbody>
+</table>
+
+<section>
+<h4 id="Property:catalog_title">Property: title</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/title">dct:title</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A name given to the catalog.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:catalog_description">Property: description</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/description">dct:description</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A free-text account of the catalog.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:catalog_release_date">Property: release date</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/issued">dct:issued</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Date of formal issuance (e.g., publication) of the catalog.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a> 
+    encoded using the relevant <a href="http://www.w3.org/TR/NOTE-datetime">ISO 8601 Date and Time compliant string</a> and typed using the appropriate XML Schema datatype [<cite><a class="bibref" href="#bib-XMLSCHEMA-2">XMLSCHEMA-2</a></cite>]
+    </td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:dataset_release_date" title=""> dataset release date</a>, <a href="#Property:record_release_date" title=""> catalog record listing date</a> and <a href="#Property:distribution_release_date" title=""> distribution release date</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:catalog_update_date">Property: update/modification date</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/modified">dct:modified</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Most recent date on which the catalog was changed, updated or modified.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a> 
+    encoded using the relevant <a href="http://www.w3.org/TR/NOTE-datetime">ISO 8601 Date and Time compliant string</a> and typed using the appropriate XML Schema datatype [<cite><a class="bibref" href="#bib-XMLSCHEMA-2">XMLSCHEMA-2</a></cite>]
+    </td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:dataset_update_date" title=""> dataset modification date</a>, <a href="#Property:record_update_date" title=""> catalog record modification date</a> and <a href="#Property:distribution_update_date" title=""> distribution modification date</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:catalog_language">Property: language</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/language">dct:language</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The language of the catalog. This refers to the language used in the textual metadata describing titles, descriptions, etc. of the datasets in the catalog.</td></tr>
+    <tr><td class="prop">Range:</td><td>
+    <a href="http://purl.org/dc/terms/LinguisticSystem">dct:LinguisticSystem</a>
+    <br />
+    Resources defined by the Library of Congress (<a href="http://id.loc.gov/vocabulary/iso639-1.html">1</a>,
+     <a href="http://id.loc.gov/vocabulary/iso639-2.html">2</a>) <em class="rfc2119" title="should">should</em> be used.
+  <br />
+If a ISO 639-1 (two-letter) code is defined for language, then its corresponding IRI <em class="rfc2119" title="should">should</em> be used; if no ISO 639-1 code is defined, then IRI corresponding to the ISO 639-2 (three-letter) code <em class="rfc2119" title="should">should</em> be used.</td></tr>
+    <tr><td class="prop">Usage note:</td><td>Multiple values can be used. The publisher might also choose to describe the language on the dataset level (see <a href="#Property:dataset_language">dataset language</a>).</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:catalog_homepage">Property: homepage</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://xmlns.com/foaf/0.1/homepage">foaf:homepage</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The homepage of the catalog.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://xmlns.com/foaf/0.1/Document">foaf:Document</a></td></tr>
+    <tr><td class="prop">Usage note:</td><td><a href="http://xmlns.com/foaf/0.1/homepage">foaf:homepage</a> is an inverse functional property (IFP) which means that it should be unique and precisely identify the catalog. This allows smushing various descriptions of the catalog when different URIs are used.</td></tr>
+  </tbody>
+</table>
+</section>
+
+
+<section>
+<h4 id="Property:catalog_publisher">Property: publisher</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/publisher">dct:publisher</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The entity responsible for making the catalog online.</td></tr>
+    <tr><td class="prop">Usage note:</td><td>Resources of type <a href="http://xmlns.com/foaf/0.1/Agent">foaf:Agent</a> 
+    are recommended as values for this property.</td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Class:_Organization.2FPerson">Class: Organization/Person</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:catalog_spatial">Property: spatial/geographic </h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/spatial">dct:spatial</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The geographical area covered by the catalog.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://purl.org/dc/terms/Location">dct:Location</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:catalog_themes">Property: themes</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://www.w3.org/ns/dcat#themeTaxonomy">dcat:themeTaxonomy</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The knowledge organization system (KOS) used to classify catalog's datasets.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2004/02/skos/core#ConceptScheme">skos:ConceptScheme</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:catalog_license">Property: license</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/license">dct:license</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>This links to the license document under which the <strong>catalog</strong>
+     is made available and <strong>not the datasets</strong>. Even if the license of the catalog applies to all of its 
+     datasets and distributions, it should be replicated on each distribution.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://purl.org/dc/terms/LicenseDocument">dct:LicenseDocument</a></td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:catalog_rights">catalog rights</a>, 
+    <a href="#Property:distribution_license">distribution license</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:catalog_rights">Property: rights</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/rights">dct:rights</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>This describes the rights under which the <strong>catalog</strong>
+     can be used/reused and <strong>not the datasets</strong>. Even if theses rights apply to all the catalog   
+     datasets and distributions, it should be replicated on each distribution.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://purl.org/dc/terms/RightsStatement">dct:RightsStatement</a></td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:catalog_license">catalog license</a>, 
+    <a href="#Property:distribution_rights">distribution rights</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:catalog_dataset">Property: dataset</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://www.w3.org/ns/dcat#dataset">dcat:dataset</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A dataset that is part of the catalog.</td></tr>
+    <tr><td class="prop">Sub property of:</td><td><a href="http://purl.org/dc/terms/hasPart">dct:hasPart</a></td></tr>
+    <tr><td class="prop">Domain:</td><td><a href="http://www.w3.org/ns/dcat#Catalog">dcat:Catalog</a></td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/ns/dcat#Dataset">dcat:Dataset</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:catalog_catalog_record">Property: catalog record</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://www.w3.org/ns/dcat#record">dcat:record</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A catalog record that is part of the catalog.</td></tr>
+    <tr><td class="prop">Domain:</td><td><a href="http://www.w3.org/ns/dcat#Catalog">dcat:Catalog</a></td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/ns/dcat#CatalogRecord">dcat:CatalogRecord</a></td></tr>
+  </tbody>
+</table>
+</section>
+</section> 
+<!-- end Class:Catalog -->
+
+
+<section id="class-catalog-record">
+<h3 id="Class:_Catalog_record"><span class="secno">5.2 </span>Class: Catalog record</h3>
+<p>The following properties are recommended for use on this class:
+<a href="#Property:record_description">description</a>,
+<a href="#Property:record_release_date">listing date</a>,
+<a href="#Property:record_primary_topic">primary topic</a>,
+<a href="#Property:record_title">title</a>,
+<a href="#Property:record_update_date">update date</a>
+</p>
+
+<table class="definition">
+  <thead><tr><th>RDF Class:</th><th><a href="http://www.w3.org/ns/dcat#CatalogRecord">dcat:CatalogRecord</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A record in a data catalog, describing a single dataset.</td></tr>
+    <tr><td class="prop">Usage note</td><td>This class is optional and not all catalogs will use it. It exists for catalogs where a distinction is made between metadata about 
+    a <em>dataset</em> and metadata about the <em>dataset's entry in the catalog</em>. For example, the <i>publication date</i> property of the <i>dataset</i> reflects 
+    the date when the information was originally made available by the publishing agency, while the publication date of the <i>catalog record</i> is the date when the dataset was added to the catalog. 
+    In cases where both dates differ, or where only the latter is known, the <em>publication date</em> should only be specified for the catalog record.
+    Notice that the <abbr title="World Wide Web Consortium">W3C</abbr> PROV Ontology [<cite><a class="bibref" href="#bib-PROV-O">PROV-O</a></cite>] allows describing further provenance information such as the details of the process and the agent involved in a particular change to a dataset.
+    </td></tr>
+    <tr><td class="prop">See also</td><td><a href="#Class:_Dataset">Dataset</a></td></tr>
+  </tbody>
+</table>
+
+
+<p>If a catalog is represented as an RDF Dataset with named graphs (as defined in [<cite><a class="bibref" href="#bib-SPARQL-QUERY-11">SPARQL-QUERY-11</a></cite>]), 
+then it is appropriate to place the description of each dataset 
+(consisting of all RDF triples that mention the dcat:Dataset, dcat:CatalogRecord, and any of its dcat:Distributions) 
+into a separate named graph. The name of that graph should be the IRI of the catalog record.
+</p>
+
+<section>
+<h4 id="Property:record_title">Property: title</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/title">dct:title</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A name given to the record.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:record_description">Property: description</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/description">dct:description</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>free-text account of the record.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:record_release_date">Property: listing date</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/issued">dct:issued</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The date of listing the corresponding dataset in the catalog.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a> 
+    encoded using the relevant <a href="http://www.w3.org/TR/NOTE-datetime">ISO 8601 Date and Time compliant string</a> and typed using the appropriate XML Schema datatype [<cite><a class="bibref" href="#bib-XMLSCHEMA-2">XMLSCHEMA-2</a></cite>]
+     </td></tr>
+    <tr><td class="prop">Usage note:</td><td>This indicates the date of listing the dataset in the catalog and not the publication date of the dataset itself.</td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:dataset_release_date" title=""> dataset release date</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+
+<section>
+<h4 id="Property:record_update_date">Property: update/modification date</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/modified">dct:modified</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Most recent date on which the catalog entry was changed, updated or modified.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a> 
+    encoded using the relevant <a href="http://www.w3.org/TR/NOTE-datetime">ISO 8601 Date and Time compliant string</a> and typed using the appropriate XML Schema datatype [<cite><a class="bibref" href="#bib-XMLSCHEMA-2">XMLSCHEMA-2</a></cite>] 
+     </td></tr>
+    <tr><td class="prop">Usage note:</td><td>This indicates the date of last change of a catalog entry, i.e. the catalog metadata description of the dataset, and not the date of the dataset itself.</td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:dataset_update_date" title=""> dataset modification date</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:record_primary_topic">Property: primary topic</h4>
+
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://xmlns.com/foaf/0.1/primaryTopic">foaf:primaryTopic</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Links the catalog record to the dcat:Dataset resource described in the record.</td></tr>
+    <tr><td class="prop">Usage note:</td><td><a href="http://xmlns.com/foaf/0.1/primaryTopic">foaf:primaryTopic</a> property is functional: 
+    each catalog record can have at most one primary topic i.e. describes one dataset.</td></tr>
+  </tbody>
+</table>
+</section>
+</section> 
+<!-- end Class catalog record -->
+
+
+<section id="class-dataset">
+<h3 id="Class:_Dataset"><span class="secno">5.3 </span>Class: Dataset</h3>
+<p>The following properties are recommended for use on this class:
+<a href="#Property:dataset_contactPoint">contact point</a>,
+<a href="#Property:dataset_description">description</a>,
+<a href="#Property:dataset_distribution">distribution</a>,
+<a href="#Property:dataset_frequency">frequency</a>,
+<a href="#Property:dataset_identifier">identifier</a>,
+<a href="#Property:dataset_keyword">keyword</a>,
+<a href="#Property:dataset_landingpage">landing page</a>,
+<a href="#Property:dataset_language">language</a>,
+<a href="#Property:dataset_publisher">publisher</a>,
+<a href="#Property:dataset_release_date">release date</a>,
+<a href="#Property:dataset_spatial">spatial coverage</a>,
+<a href="#Property:dataset_temporal">temporal coverage</a>,
+<a href="#Property:dataset_theme">theme</a>,
+<a href="#Property:dataset_title">title</a>,
+<a href="#Property:dataset_update_date">update date</a>,
+</p>
+
+
+<table class="definition">
+  <thead><tr><th>RDF Class:</th><th><a href="http://www.w3.org/ns/dcat#Dataset">dcat:Dataset</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A collection of data, published or curated by a single agent, and available for access or download in one or more formats.</td></tr>
+    <tr><td class="prop">Sub class of:</td><td><a href="http://purl.org/dc/dcmitype/Dataset">dctype:Dataset</a></td></tr>    
+    <tr><td class="prop">Usage note:</td><td>This class represents the actual dataset as published by the dataset publisher. In cases where a distinction between the actual dataset and its entry in the catalog is necessary (because metadata such as modification date and maintainer might differ), the <i><a href="#Class:_Catalog_record">catalog record</a></i> class can be used for the latter.</td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Class:_Catalog_record" title="">Catalog record</a></td></tr>
+  </tbody>
+</table>
+
+<section>
+<h4 id="Property:dataset_title">Property: title</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/title">dct:title</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A name given to the dataset.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_description">Property: description</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/description">dct:description</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>free-text account of the dataset.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_release_date">Property: release date</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/issued">dct:issued</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Date of formal issuance (e.g., publication) of the dataset.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a> 
+    encoded using the relevant <a href="http://www.w3.org/TR/NOTE-datetime">ISO 8601 Date and Time compliant string</a> and typed using the appropriate XML Schema datatype [<cite><a class="bibref" href="#bib-XMLSCHEMA-2">XMLSCHEMA-2</a></cite>]
+    </td></tr>
+    <tr><td class="prop">Usage note:</td><td>This property should be set using the first known date of issuance.</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_update_date">Property: update/modification date</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/modified">dct:modified</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Most recent date on which the dataset was changed, updated or modified.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a> 
+    encoded using the relevant <a href="http://www.w3.org/TR/NOTE-datetime">ISO 8601 Date and Time compliant string</a> and typed using the appropriate XML Schema datatype [<cite><a class="bibref" href="#bib-XMLSCHEMA-2">XMLSCHEMA-2</a></cite>]
+    </td></tr>
+    <tr><td class="prop">Usage note:</td><td>The value of this property indicates a change to the actual dataset, not a change to the catalog record. An absent value may indicate that the dataset has never changed after its initial publication, or that the date of last modification is not known, or that the dataset is continuously updated.</td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:dataset_frequency">frequency</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_language">Property: language</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/language">dct:language</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The language of the dataset.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://purl.org/dc/terms/LinguisticSystem">dct:LinguisticSystem</a>
+    <br />
+    Resources defined by the Library of Congress (<a href="http://id.loc.gov/vocabulary/iso639-1.html">1</a>,
+     <a href="http://id.loc.gov/vocabulary/iso639-2.html">2</a>) <em class="rfc2119" title="should">should</em> be used.
+  <br />
+If a ISO 639-1 (two-letter) code is defined for language, then its corresponding IRI <em class="rfc2119" title="should">should</em> be used; if no ISO 639-1 code is defined, then IRI corresponding to the ISO 639-2 (three-letter) code <em class="rfc2119" title="should">should</em> be used.</td></tr>
+    <tr><td class="prop">Usage note:</td><td>This overrides the value of the <a href="#Property:catalog_language">catalog language</a> in case of conflict.</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_publisher">Property: publisher</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/publisher">dct:publisher</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>An entity responsible for making the dataset available.</td></tr>
+    <tr><td class="prop">Usage note:</td><td>Resources of type <a href="http://xmlns.com/foaf/0.1/Agent">foaf:Agent</a> 
+    are recommended as values for this property.</td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Class:_Organization.2FPerson">Class: Organization/Person</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_frequency">Property: frequency</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/accrualPeriodicity">dct:accrualPeriodicity</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The frequency at which dataset is published.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://purl.org/dc/terms/Frequency">dct:Frequency</a> (A rate at which something recurs)</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_identifier">Property: identifier</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/identifier">dct:identifier</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A unique identifier of the dataset.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a></td></tr>
+    <tr><td class="prop">Usage note:</td><td>The identifier might be used as part of the URI of the dataset, but still having it represented explicitly is useful.</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_spatial">Property: spatial/geographical coverage</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/spatial">dct:spatial</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Spatial coverage of the dataset.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://purl.org/dc/terms/Location">dct:Location</a> (A spatial region or named place)</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_temporal">Property: temporal coverage</h4>
+
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/temporal">dct:temporal</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The temporal period that the dataset covers.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://purl.org/dc/terms/PeriodOfTime">dct:PeriodOfTime</a> (An interval of time that is named or defined by its start and end dates)</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_theme">Property: theme/category</h4>
+
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://www.w3.org/ns/dcat#theme">dcat:theme</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The main category of the dataset. A dataset can have multiple themes.</td></tr>
+    <tr><td class="prop">Sub property of:</td><td><a href="http://purl.org/dc/terms/subject">dct:subject</a></td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2004/02/skos/core#Concept">skos:Concept</a></td></tr>
+    <tr><td class="prop">Usage note:</td><td>The set of <a href="http://www.w3.org/2004/02/skos/core#Concept">skos:Concept</a>s used to categorize the datasets are organized in a <a href="http://www.w3.org/2004/02/skos/core#ConceptScheme">skos:ConceptScheme</a> describing all the categories and their relations in the catalog.</td></tr>
+    <tr><td>See also:</td><td><a href="#Property:catalog_themes">catalog themes taxonomy</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_keyword">Property: keyword/tag</h4>
+
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://www.w3.org/ns/dcat#keyword">dcat:keyword</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A keyword or tag describing the dataset.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_contactPoint">Property: contact point</h4>
+
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://www.w3.org/ns/dcat#contactPoint">dcat:contactPoint</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Link a dataset to relevant contact information which is provided using VCard [<cite><a class="bibref" href="#bib-VCARD">VCARD</a></cite>].</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2006/vcard/ns#VCard">vcard:VCard</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_distribution">Property: dataset distribution</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://www.w3.org/ns/dcat#distribution">dcat:distribution</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Connects a dataset to its available distributions.</td></tr>
+    <tr><td class="prop">Domain:</td><td><a href="http://www.w3.org/ns/dcat#Dataset">dcat:Dataset</a></td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/ns/dcat#Distribution">dcat:Distribution</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:dataset_landingpage">Property: landing page</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://www.w3.org/ns/dcat#landingPage">dcat:landingPage</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A Web page that can be navigated to in a Web browser to gain access to the dataset, its distributions and/or additional information.</td></tr>
+    <tr><td class="prop">Sub property of:</td><td><a href="http://xmlns.com/foaf/0.1/page">foaf:page</a></td></tr>
+    <tr><td class="prop">Domain:</td><td><a href="http://www.w3.org/ns/dcat#Dataset">dcat:Dataset</a></td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://xmlns.com/foaf/0.1/Document">foaf:Document</a></td></tr>
+    <tr><td class="prop">Usage note:</td><td>
+        If the distribution(s) are accessible only through a landing page 
+    (i.e. direct download URLs are not known), then the landing page link <em class="rfc2119" title="should">should</em> be duplicated as accessURL on a distribution. (see <a href="#example-landing-page">example 4.4</a>)
+    </td></tr>
+  </tbody>
+</table>
+</section>
+</section> 
+<!-- end class Dataset -->
+
+
+<section id="class-distribution">
+<h3 id="Class:_Distribution"><span class="secno">5.4 </span>Class: Distribution</h3>
+<p>The following properties are recommended for use on this class:
+<a href="#Property:distribution_accessurl">access URL</a>,
+<a href="#Property:distribution_size">byte size</a>,
+<a href="#Property:distribution_description">description</a>,
+<a href="#Property:distribution_downloadurl">download URL</a>,
+<a href="#Property:distribution_format">format</a>,
+<a href="#Property:distribution_license">license</a>,
+<a href="#Property:distribution_media_type">media type</a>,
+<a href="#Property:distribution_release_date">release date</a>,
+<a href="#Property:distribution_rights">rights</a>,
+<a href="#Property:distribution_title">title</a>,
+<a href="#Property:distribution_update_date">update date</a>
+</p>
+
+<table class="definition">
+  <thead><tr><th>RDF class:</th><th><a href="http://www.w3.org/ns/dcat#Distribution">dcat:Distribution</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Represents a specific available form of a dataset. Each dataset might be available in different forms, 
+these forms might represent different formats of the dataset or different endpoints. 
+Examples of distributions include a downloadable CSV file, an API or an RSS feed</td></tr>
+    <tr><td class="prop">Usage note:</td><td>This represents a general availability of a dataset it implies no information 
+    about the actual access method of the data, i.e. whether it is a direct download, API, or some through Web page. 
+    The use of <a href="#Property:distribution_downloadurl">dcat:downloadURL</a> property indicates directly downloadable distributions.</td></tr>
+  </tbody>
+</table>
+
+<section>
+<h4 id="Property:distribution_title">Property: title</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/title">dct:title</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A name given to the distribution.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:distribution_description">Property: description</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/description">dct:description</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>free-text account of the distribution.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:distribution_release_date">Property: release date</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/issued">dct:issued</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Date of formal issuance (e.g., publication) of the distribution.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a> 
+    encoded using the relevant <a href="http://www.w3.org/TR/NOTE-datetime">ISO 8601 Date and Time compliant string</a> and typed using the appropriate XML Schema datatype [<cite><a class="bibref" href="#bib-XMLSCHEMA-2">XMLSCHEMA-2</a></cite>]
+    </td></tr>
+    <tr><td class="prop">Usage note:</td><td>This property should be set using the first known date of issuance.</td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:dataset_release_date" title=""> dataset release date</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:distribution_update_date">Property: update/modification date</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/modified">dct:modified</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Most recent date on which the distribution was changed, updated or modified.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a> 
+    encoded using the relevant <a href="http://www.w3.org/TR/NOTE-datetime">ISO 8601 Date and Time compliant string</a> and typed using the appropriate XML Schema datatype [<cite><a class="bibref" href="#bib-XMLSCHEMA-2">XMLSCHEMA-2</a></cite>]</td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:dataset_update_date" title=""> dataset modification date</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:distribution_license">Property: license</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/license">dct:license</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>This links to the license document under which the distribution is made available.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://purl.org/dc/terms/LicenseDocument">dct:LicenseDocument</a></td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:distribution_rights" title=""> distribution rights</a>, 
+    <a href="#Property:catalog_license" title="">catalog license</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:distribution_rights">Property: rights</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/rights">dct:rights</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Information about rights held in and over the distribution.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://purl.org/dc/terms/RightsStatement">dct:RightsStatement</a></td></tr>
+    <tr><td class="prop">Usage note:</td><td>dct:license, which is a sub-property of dct:rights, can be used to link 
+    a distribution to a license document. However, dct:rights allows linking to a rights statement that 
+    can include licensing information as well as other information that supplements the licence such as attribution.</td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:distribution_license" title=""> distribution license</a>, 
+    <a href="#Property:catalog_rights" title="">catalog rights</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+
+<section>
+<h4 id="Property:distribution_accessurl">Property: access URL</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://www.w3.org/ns/dcat#accessURL">dcat:accessURL</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>Could be any kind of URL that gives access to a distribution of the dataset. E.g. landing page, download, feed URL, 
+SPARQL endpoint. Use when your catalog does not have information on which it is or when it is definitely not a download.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Resource">rdfs:Resource</a></td></tr>
+    <tr><td class="prop">Usage note:</td><td><ul> <li>the value is a URL.</li>
+    <li>
+    If the distribution(s) are accessible only through a landing page 
+    (i.e. direct download URLs are not known), then the landing page link <em class="rfc2119" title="should">should</em> be duplicated as accessURL on a distribution. (see <a href="#example-landing-page">example 4.4</a>)
+    </li></ul>
+    </td></tr>
+    <tr><td class="prop">See also</td><td><a href="#Property:distribution_downloadurl">distribution download URL</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:distribution_downloadurl">Property: download URL</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://www.w3.org/ns/dcat#downloadURL">dcat:downloadURL</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>This is a direct link to a downloadable file in a given format. E.g. CSV file or RDF file. 
+The format is described by the distribution's dc:format and/or dcat:mediaType</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Resource">rdfs:Resource</a></td></tr>
+    <tr><td class="prop">Usage note:</td><td>the value is a URL.</td></tr>
+    <tr><td class="prop">See also</td><td><a href="#Property:distribution_accessurl">distribution access URL</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:distribution_size">Property: byteSize</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://www.w3.org/ns/dcat#size">dcat:byteSize</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The size of a distribution in bytes.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://www.w3.org/2000/01/rdf-schema#Literal">rdfs:Literal</a> typed as <a href="http://www.w3.org/TR/xmlschema-2/#decimal">xsd:decimal</a>.</td></tr>
+    <tr><td class="prop">Usage note:</td><td>The size in bytes can be approximated when the precise size is not known.</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:distribution_media_type">Property: media type</h4>
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://www.w3.org/ns/dcat#mediaType">dcat:mediaType</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The media type of the distribution as defined by <a href="http://www.iana.org/assignments/media-types/">IANA</a>.</td></tr>
+    <tr><td class="prop">Sub property of:</td><td><a href="http://purl.org/dc/terms/format">dct:format</a></td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://purl.org/dc/terms/MediaTypeOrExtent">dct:MediaTypeOrExtent</a></td></tr>
+    <tr><td class="prop">Usage note:</td><td>This property <em class="rfc2119" title="should">should</em> be used when the media type of the distribution is defined in <a href="http://www.iana.org/assignments/media-types/">IANA</a>, otherwise dct:format <em class="rfc2119" title="may">may</em> be used with different values.</td></tr>
+        <tr><td class="prop">See also:</td><td><a href="#Property:distribution_format"> format</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h4 id="Property:distribution_format">Property: format</h4>
+
+<table class="definition">
+  <thead><tr><th>RDF Property:</th><th><a href="http://purl.org/dc/terms/format">dct:format</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The file format of the distribution.</td></tr>
+    <tr><td class="prop">Range:</td><td><a href="http://purl.org/dc/terms/MediaTypeOrExtent">dct:MediaTypeOrExtent</a></td></tr>
+    <tr><td class="prop">Usage note:</td><td> <a href="#Property:distribution_media_type">dcat:mediaType</a> <em class="rfc2119" title="should">should</em> be used if the type of the distribution is defined by <a href="http://www.iana.org/assignments/media-types/">IANA</a>.</td></tr>
+  </tbody>
+</table>
+</section>
+</section> 
+<!-- end class Distribution -->
+
+
+<section id="class-concept-scheme">
+<h3 id="Class:_Concept_Scheme"><span class="secno">5.5 </span>Class: Concept scheme</h3>
+<table class="definition">
+  <thead><tr><th>RDF Class:</th><th><a href="http://www.w3.org/2004/02/skos/core#ConceptScheme">skos:ConceptScheme</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>The knowledge organization system (KOS) used to represent themes/categories of datasets in the catalog.</td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:catalog_themes">catalog themes</a>, <a href="#Property:dataset_theme">dataset theme</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section id="class-concept">
+<h3 id="Class:_Concept"><span class="secno">5.6 </span>Class: Concept</h3>
+<table class="definition">
+  <thead><tr><th>RDF Class:</th><th><a href="http://www.w3.org/2004/02/skos/core#Concept">skos:Concept</a></th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Definition:</td><td>A category or a theme used to describe datasets in the catalog.</td></tr>
+    <tr><td class="prop">Usage note:</td><td>It is recommended to use either skos:inScheme or skos:topConceptOf on every skos:Concept 
+    used to classify datasets to link it to the concept scheme it belongs to. This concept scheme is typically associated with the catalog using dcat:themeTaxonomy</td></tr>
+    <tr><td class="prop">See also:</td><td><a href="#Property:catalog_themes">catalog themes</a>, <a href="#Property:dataset_theme">dataset theme</a></td></tr>
+  </tbody>
+</table>
+</section>
+
+<section id="class-organization-person">
+<h3 id="Class:_Organization.2FPerson"><span class="secno">5.7 </span>Class: Organization/Person</h3>
+
+<table class="definition">
+  <thead><tr><th>RDF Classes:</th><th><a href="http://xmlns.com/foaf/0.1/Person">foaf:Person</a> for people and <a href="http://xmlns.com/foaf/0.1/Organization">foaf:Organization</a> for government agencies or other entities.</th></tr></thead>
+  <tbody>
+    <tr><td class="prop">Usage note:</td><td><a href="http://xmlns.com/foaf/spec/">FOAF</a> provides sufficient properties to describe these entities.</td></tr>
+  </tbody>
+</table>
+</section>
+
+
+</section>
+
+<section id="acknowledgements" class="appendix">
+
+<!--OddPage-->
+<h2><span class="secno">A. </span>Acknowledgements</h2>
+<p>This document contains a significant contribution from Richard Cyganiak. Richard Cyganiak 
+is one of the initiators of the DCAT work and 
+significantly contributed to the work on this specification as it made its way through the <abbr title="World Wide Web Consortium">W3C</abbr> process.</p>
+<p>The editors would like to thank Vassilios Peristeras for his comments and support for the original DCAT work. Vassilios Peristeras is also one of the initiators of the DCAT work. We would also like to thank Rufus Pollock for his significant input and comments.</p>
+<p>This document has benefited from inputs from many members of the Government Linked Data Working Group. 
+Specific thanks are due to Ghislain Atemezing, Martin Alvarez and Makx Dekkers.</p>
+</section>
+<section id="change-history" class="appendix">
+
+<!--OddPage-->
+<h2><span class="secno">B. </span>Change history</h2>
+<p> Changes since <a href="http://www.w3.org/TR/2013/WD-vocab-dcat-20130312/"><abbr title="World Wide Web Consortium">W3C</abbr> Last Call working Draft 12 March 2013</a>: </p>
+<ul>
+<li> Section 4: diagram updated with new properties</li>
+<li> Section 4: add text to clarify describing datasets available via API</li>
+<li> Section 5.1: description of properties <code>dct:issued</code> and <code>dct:modified</code> updated</li>
+<li> Section 5.1: <code>dct:rights</code> added</li>
+<li> Section 5.2: description of properties <code>dct:issued</code> and <code>dct:modified</code> updated</li>
+<li> Section 5.3: description of properties <code>dct:issued</code> and <code>dct:modified</code> updated</li>
+<li> Section 5.3: <code>dcat:contactPoint</code> added</li>
+<li> Section 5.4: description of properties <code>dct:issued</code> and <code>dct:modified</code> updated</li>
+<li> Section 5.4: <code>dct:rights</code> added</li>
+<li> Section 5.5: split into two sections 5.5 and 5.6</li>
+</ul>
+</section>
+
+<section id="references" class="appendix">
+<!--OddPage-->
+<h2><span class="secno">C. </span>References</h2><section id="normative-references"><h3><span class="secno">C.1 </span>Normative references</h3><dl class="bibliography"><dt id="bib-RFC2119">[RFC2119]</dt><dd>S. Bradner. <a href="http://www.ietf.org/rfc/rfc2119.txt"><cite>Key words for use in RFCs to Indicate Requirement Levels.</cite></a> March 1997. Internet RFC 2119.  URL: <a href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a> 
+</dd></dl></section><section id="informative-references"><h3><span class="secno">C.2 </span>Informative references</h3><dl class="bibliography"><dt id="bib-PROV-O">[PROV-O]</dt><dd>T. Lebo; S. Sahoo; D. McGuinness. <a href="http://www.w3.org/TR/2013/REC-prov-o-20130430/"><cite>PROV-O: The PROV Ontology</cite></a> April 2013. W3C Recommendation. URL: <a href="http://www.w3.org/TR/2013/REC-prov-o-20130430/">http://www.w3.org/TR/2013/REC-prov-o-20130430/</a>
+</dd><dt id="bib-SPARQL-QUERY-11">[SPARQL-QUERY-11]</dt><dd>Steve Harris; Andy Seaborne. <a href="http://www.w3.org/TR/2012/PR-sparql11-query-20121108/"><cite>SPARQL 1.1 Query Language</cite></a> 8 November 2012. W3C Proposed Recommendation. URL: <a href="http://www.w3.org/TR/2012/PR-sparql11-query-20121108/">http://www.w3.org/TR/2012/PR-sparql11-query-20121108/</a>
+</dd><dt id="bib-TURTLE-TR">[TURTLE-TR]</dt><dd>Eric Prud'hommeaux, Gavin Carothers. <a href="http://www.w3.org/TR/2013/CR-turtle-20130219/"><cite>Turtle: Terse RDF Triple Language.</cite></a> 19 February 2013. W3C Candidate Recommendation. URL: <a href="http://www.w3.org/TR/2013/CR-turtle-20130219/">http://www.w3.org/TR/2013/CR-turtle-20130219/</a>
+</dd><dt id="bib-VCARD">[VCARD]</dt><dd>R. Iannella; et al. <a href="http://www.w3.org/Submission/2010/SUBM-vcard-rdf-20100120"><cite>Representing vCard Objects in RDF</cite></a> January 2010. W3C Member Sumission 20 January 2010. URL: <a href="http://www.w3.org/Submission/2010/SUBM-vcard-rdf-20100120">http://www.w3.org/Submission/2010/SUBM-vcard-rdf-20100120</a>
+</dd><dt id="bib-VOID">[VOID]</dt><dd>Keith Alexander; Richard Cyganiak; Michael Hausenblas; Jun Zhao. <a href="http://www.w3.org/TR/void/"><cite>Describing Linked Datasets with the VoID Vocabulary</cite></a> 03 March 2011. Interest Group Note. URL: <a href="http://www.w3.org/TR/void/">http://www.w3.org/TR/void/</a>
+</dd><dt id="bib-XMLSCHEMA-2">[XMLSCHEMA-2]</dt><dd>David Peterson; Shudi (Sandy) Gao; Ashok Malhotra; C. M. Sperberg-McQueen; Henry S. Thompson. <a href="http://www.w3.org/TR/xmlschema11-2/"><cite>W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes</cite></a> April 2012. W3C Recommendation. URL: <a href="http://www.w3.org/TR/xmlschema11-2/">http://www.w3.org/TR/xmlschema11-2/</a>
+</dd></dl></section></section><script src="https://www.w3.org/scripts/TR/fixup.js"></script></body></html>
