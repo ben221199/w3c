@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Sun Jul 19 19:49:44 PDT 1998 -->
+<html lang='en'>
+<head>
+  <title> Document Object Model Glossary</title>
+  <link rel='stylesheet' type='text/css' href='./dom.css'>
+</head>
+<body>
+<div class='noprint'>
+<hr>
+<table width='100%' cellpadding='0' class='navigation-bar'>
+<tr>
+<td width='30%' align='left'><a href='contributors.html'><img border='0' src='./back.jpg' alt=' Document Object Model Contributors'></a></td>
+<td width='30%' align='center'><a href='cover.html'><img border='0' src='./up.jpg' alt='Cover'></a></td>
+<td width='30%' align='right'><a href='level-1-bindings.html'><img border='0' src='./forward.jpg' alt=' Document Object Model Level 1 Bindings'></a></td>
+</tr>
+</table>
+<hr>
+</div>
+
+<a name='glossary'></a>
+<h1 class='adiv1'>Appendix C: Document Object Model Glossary</h1>
+<dl>
+<dt><i>Editors</i></dt>
+<dd>Robert S. Sutor, IBM</dd></dl>
+
+<!--NewPage--><!-- this is for html2ps -->
+<p>Several of the following term definitions have been borrowed or
+    modified from similar definitions in other W3C documents. Links to
+    these documents follow the definitions. <dl>
+<dt><b><a name='g-ancestor'>ancestor</a></b></dt>
+<dd>An <i>ancestor</i> node of any node A is any node
+	  above A in a tree model of a document, where "above" means
+	  "toward the root."
+	</dd><dt><b><a name='g-API'>API</a></b></dt>
+<dd>An <i>API</i> is an application programming
+	  interface, a set of functions or methods used to access some
+	  functionality.</dd><dt><b><a name='g-child'>child</a></b></dt>
+<dd>A <i>child</i> is an immediate descendant node of
+	  a node.</dd><dt><b><a name='g-client'>client application</a></b></dt>
+<dd>A [client] application is any software that uses the
+	  Document Object Model programming interfaces provided by the
+	  hosting implementation to accomplish useful work. Some
+	  examples of client applications are scripts within an HTML
+	  or XML document.</dd><dt><b><a name='g-COM'>COM</a></b></dt>
+<dd><i>COM</i> is Microsoft's 
+       <a href='http://www.microsoft.com/com'>Component Object Model,</a>
+
+	  a technology for building applications from binary software components.
+	</dd><dt><b><a name='g-content'>content model</a></b></dt>
+<dd>The <i>content model</i> is a simple grammar
+	  governing the allowed types of the child elements and the
+	  order in which they appear. See [<a href='http://www.w3.org/TR/REC-xml#sec3.2'>XML</a>
+]
+	</dd><dt><b><a name='g-context'>context</a></b></dt>
+<dd>A <i>context </i>specifies an access pattern (or
+	  path): a set of interfaces which give you a way to interact
+	  with a model. For example, imagine a model with different
+	  colored arcs connecting data nodes. A context might be a
+	  sheet of colored acetate that is placed over the model
+	  allowing you a partial view of the total information in the
+	  model.</dd><dt><b><a name='g-convenience'>convenience</a></b></dt>
+<dd>A <i>convenience method</i> is an operation on an
+      object that could be accomplished by a program consisting of
+      more basic operations on the object. Convenience methods are
+      usually provided to make the API easier and simpler to use or to
+	  allow specific programs to create more optimized implementations
+	  for common operations. A similar definition holds for a
+	  <i>convenience property</i>.
+      </dd><dt><b><a name='g-cooked'>cooked model</a></b></dt>
+<dd>A model for a document that represents the document
+	  after it has been manipulated in some way. For example, any
+	  combination of any of the following transformations would
+	  create a cooked model:
+	  <ol>
+<li>Expansion of internal text entities.</li>
+<li>Expansion of external entities.</li>
+<li>Model augmentation with style-specified generated
+		text.</li>
+<li>Execution of style-specified
+		reordering.</li>
+<li>Execution of scripts.</li>
+</ol>
+ A browser might only be able to provide access to a
+	  cooked model, while an editor might provide access to a
+	  cooked or the initial structure model (also known as the
+	  <i>uncooked model</i>) for a document. </dd><dt><b><a name='g-CORBA'>CORBA</a></b></dt>
+<dd><i>CORBA</i> is the <i>Common Object Request Broker
+	  Architecture</i> from the <a href='http://www.omg.org'>OMG.</a>
+
+	  This architecture is a collection of objects and libraries that allow
+	  the creation of applications containing objects that make and receive
+	  requests and responses in a distributed environment.
+	</dd><dt><b><a name='g-cursor'>cursor</a></b></dt>
+<dd>A <i>cursor </i>is an object representation of a
+	  node. It may possess information about context and the path
+	  traversed to reach the node.</dd><dt><b><a name='g-datamodel'>data model</a></b></dt>
+<dd>A <i>data model</i>
+      is a collection of descriptions of data structures and their contained
+	  fields, together with the operations or functions that manipulate them.
+	</dd><dt><b><a name='g-deprecation'>deprecation</a></b></dt>
+<dd>When new releases of specifications are released, some older
+	  features may be marked as being <i>deprecated</i>. This
+	  means that new work should not use the features and that
+	  although they are supported in the current release, they may
+	  not be supported or available in future releases.</dd><dt><b><a name='g-descendant'>descendant</a></b></dt>
+<dd>A <i>descendant</i> node of any node A is any node
+	  below A in a tree model of a document, where "above" means
+	  "toward the root."</dd><dt><b><a name='g-ECMAScript'>ECMAScript</a></b></dt>
+<dd>The programming language defined by the <a href='http://www.ecma.ch/stand/ecma-262.htm'>ECMA-262</a>
+ standard.  As stated in
+	  the standard, the originating technology for ECMAScript was
+	  <a href='http://developer.netscape.com/one/javascript/resources.html'>JavaScript.</a>
+ Note that in the
+	  ECMAScript binding, the word "property" is used in
+	  the same sense as the IDL term
+	  "attribute."</dd><dt><b><a name='g-element'>element</a></b></dt>
+<dd>Each document contains one or more elements, the
+	  boundaries of which are either delimited by start-tags and
+	  end-tags, or, for empty elements by an empty-element tag.
+	  Each element has a type, identified by name, and may have a
+	  set of attributes. Each attribute has a name and a value.
+	  [<a href='http://www.w3.org/TR/REC-xml#sec-logical-struct'>XML</a>
+]
+	</dd><dt><b><a name='g-eventp'>event propagation, also
+        known as event bubbling</a></b></dt>
+<dd>This is the idea that an event can affect one object and
+	  a set of related objects. Any of the potentially affected
+	  objects can block the event or substitute a different one
+	  (upward event propagation). The event is broadcast from the
+	  node at which it originates to every parent node.</dd><dt><b><a name='g-host'>hosting implementation</a></b></dt>
+<dd>A [hosting] implementation is a software module that
+	  provides an implementation of the DOM interfaces so that a
+	  client application can use them. Some examples of hosting
+	  implementations are browsers, editors and document
+	  repositories.</dd><dt><b><a name='g-html'>HTML</a></b></dt>
+<dd>The HyperText Markup Language (<i>HTML</i>) is a
+	  simple markup language used to create hypertext documents
+	  that are portable from one platform to another. HTML
+	  documents are SGML documents with generic semantics that are
+	  appropriate for representing information from a wide range
+	  of applications. [<a href='http://www.w3.org/TR/REC-html32'>HTML 3.2</a>
+]
+	  [<a href='http://www.w3.org/TR/REC-html40'>HTML4.0</a>
+]</dd><dt><b><a name='g-IDL'>IDL</a></b></dt>
+<dd>An Interface Definition Language (<i>IDL</i>) is
+	  used to define the interfaces for accessing and operating
+	  upon objects. Examples of IDLs are the <a href='http://www.omg.org/'>Object Management Group's IDL</a>
+, <a href='http://premium.microsoft.com/msdn/library/sdkdoc/mi-laref_49v0.htm'>Microsoft's IDL</a>
+, and Sun's <a href='http://java.sun.com/products/jdk/preview/docs/ext/idl/'>Java IDL</a>
+.</dd><dt><b><a name='g-implementor'>implementor</a></b></dt>
+<dd>Companies, organizations, and individuals that claim to
+	  support the Document Object Model as an API for their
+	  products.</dd><dt><b><a name='g-inheritance'>inheritance</a></b></dt>
+<dd>In object-oriented programming, the ability to create new
+	  classes (or interfaces) that contain all the methods and properties
+	  of another class (or interface), plus additional methods and properties.
+	  If class (or interface) D inherits from class (or interface) B, then
+	  D is said to be <i>derived</i> from B. B is said to be a <i>base</i>
+	  class (or interface) for D.
+	  Some programming languages allow for multiple inheritance, that is, inheritance
+	  from more than one class or interface.
+      </dd><dt><b><a name='g-raw'>initial structure model</a></b></dt>
+<dd>Also known as the <i>raw structure model</i> or
+	  the <i>uncooked model</i>, this represents the
+	  document before it has been modified by entity expansions,
+	  generated text, style-specified reordering, or the execution
+	  of scripts. In some implementations, this might correspond
+	  to the "initial parse tree" for the document, if
+	  it ever exists. Note that a given implementation might not
+	  be able to provide access to the initial structure model for
+	  a document, though an editor probably would.</dd><dt><b><a name='g-interface'>interface</a></b></dt>
+<dd>An <i>interface</i> is a declaration of a set of
+      methods with no information given about their implementation.
+	  In object systems that support interfaces and inheritance,
+	  interfaces can usually inherit from one another.
+      </dd><dt><b><a name='g-binding'>language binding</a></b></dt>
+<dd>A programming <i>language binding</i> for an IDL
+	  specification is an implementation of the interfaces in the
+	  specification for the given language. For example, a Java
+	  language binding for the Document Object Model IDL
+	  specification would implement the concrete Java classes that
+	  provide the functionality exposed by the
+	  interfaces.</dd><dt><b><a name='g-method'>method</a></b></dt>
+<dd>A <i>method</i> is an operation or function that is
+	  associated with an object and is allowed to manipulate the
+	  object's data.
+      </dd><dt><b><a name='g-model'>model</a></b></dt>
+<dd>A <i>model</i> is the actual data representation
+	  for the information at hand. Examples are the structural
+	  model and the style model representing the parse structure
+	  and the style information associated with a document. The
+	  model might be a tree, or a directed graph, or something
+	  else.</dd><dt><b><a name='g-objectmodel'>object model</a></b></dt>
+<dd>An <i>object model</i>
+	  is a collection of
+	  descriptions of classes or interfaces,
+	  together with their member data, member functions,
+	  and class-static operations.
+	</dd><dt><b><a name='g-parent'>parent</a></b></dt>
+<dd>A <i>parent</i> is an immediate ancestor node of a
+	  node.</dd><dt><b><a name='g-root'>root node</a></b></dt>
+<dd>The <i>root node</i> is the unique node that is
+	  not a child of any other node. All other nodes are children
+	  or other descendents of the root node. [<a href='http://www.w3.org/TR/REC-xml#sec2.1'>XML</a>
+]</dd><dt><b><a name='g-sibling'>sibling</a></b></dt>
+<dd>Two nodes are <i>siblings</i> if they have the
+	  same parent node.</dd><dt><b><a name='g-stringcompare'>string comparison</a></b></dt>
+<dd>When string matching is required, it is to occur as
+	  though the comparison was between 2 sequences of code points
+	  from the Unicode 2.0 standard.</dd><dt><b><a name='g-tagvalid'>tag valid document</a></b></dt>
+<dd>A document is <i>tag valid</i> if all begin and
+	  end tags are properly balanced and nested.</dd><dt><b><a name='g-typevalid'>type valid document</a></b></dt>
+<dd>A document is <i>type valid</i> if it conforms to
+	  an explicit DTD.</dd><dt><b><a name='g-uncooked'>uncooked model</a></b></dt>
+<dd>See initial structure model.</dd><dt><b><a name='g-WF'>well-formed document</a></b></dt>
+<dd>A document is <i>well-formed</i> if it is tag
+	  valid and entities are limited to single elements (i.e.,
+	  single sub-trees).</dd><dt><b><a name='g-XML'>XML</a></b></dt>
+<dd>Extensible Markup Language (<i>XML</i>) is an
+	  extremely simple dialect of SGML which is completely
+	  described in this document. The goal is to enable generic
+	  SGML to be served, received, and processed on the Web in the
+	  way that is now possible with HTML. XML has been designed
+	  for ease of implementation and for interoperability with
+	  both SGML and HTML. [<a href='http://www.w3.org/TR/REC-xml'>XML</a>
+]</dd></dl>
+<div class='noprint'>
+<hr>
+<table width='100%' cellpadding='0' class='navigation-bar'>
+<tr>
+<td width='30%' align='left'><a href='contributors.html'><img border='0' src='./back.jpg' alt=' Document Object Model Contributors'></a></td>
+<td width='30%' align='center'><a href='cover.html'><img border='0' src='./up.jpg' alt='Cover'></a></td>
+<td width='30%' align='right'><a href='level-1-bindings.html'><img border='0' src='./forward.jpg' alt=' Document Object Model Level 1 Bindings'></a></td>
+</tr>
+</table>
+<hr>
+</div>
+</body>
+</html>

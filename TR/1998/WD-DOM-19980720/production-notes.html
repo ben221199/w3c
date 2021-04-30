@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Sun Jul 19 19:49:41 PDT 1998 -->
+<html lang='en'>
+<head>
+  <title> Production Notes</title>
+  <link rel='stylesheet' type='text/css' href='./dom.css'>
+</head>
+<body>
+<div class='noprint'>
+<hr>
+<table width='100%' cellpadding='0' class='navigation-bar'>
+<tr>
+<td width='30%' align='left'><a href='level-one-html.html'><img border='0' src='./back.jpg' alt=' Document Object Model (HTML) Level 1'></a></td>
+<td width='30%' align='center'><a href='cover.html'><img border='0' src='./up.jpg' alt='Cover'></a></td>
+<td width='30%' align='right'><a href='contributors.html'><img border='0' src='./forward.jpg' alt=' Document Object Model Contributors'></a></td>
+</tr>
+</table>
+<hr>
+</div>
+
+<a name='ID-2010795334'></a>
+<h1 class='adiv1'>Appendix A: Production Notes</h1>
+<dl>
+<dt><i>Editors</i></dt>
+<dd>Gavin Nicol, Inso EPS</dd></dl>
+
+<!--NewPage--><!-- this is for html2ps -->
+<p>The DOM specification serves as a good example of the power of
+    using XML: all of the HTML documents, Java bindings, OMG IDL bindings, and
+    ECMA Script bindings are generated froma single set of XML source
+    files. This section outlines how this specification is written in
+    XML, and how the various derived works are created. 
+<a name='ID-1181349559'></a>
+<h2 class='adiv2'>A.1: The Document Type Definition</h2>
+<p>This specification was written entirely in XML, using a DTD based
+      heavily on the DTD used by the XML Working Group for the XML
+      specification. The major difference between the DTD used by the XML
+      Working Group, and the DTD used for this specification is in the
+      addition of a DTD module for interface specifications.<p>The DTD module for interfaces specifications is a very loose
+      translation of the Extended Backus-Naur Form (EBNF)
+      specification of the OMG IDL syntax into XML DTD syntax. In
+      addition to the translation, the ability to
+      <em>describe</em> the interfaces was added, thereby creating
+      a limited form of <em>literate programming</em> for
+      interface definitions.<p>While the DTD module is sufficient for the purposes of the DOM
+      WG, it is very loosely typed, meaning that there are very few
+      constraints placed on the type specifications (the type
+      information is effectively treated as an opaque string). In a DTD 
+      for object
+      to object communication, some stricter enforcement of data types
+      would probably be beneficial.<br>
+<a name='ID-934280754'></a>
+<h2 class='adiv2'>A.2: The production process</h2>
+<p>The DOM specification is written using XML. All documents are valid
+      XML. In order to produce
+      the HTML versions of the specification, the object indexes, the Java
+      source code, and the OMG IDL and ECMA Script
+      definitions, the XML specification is <em>converted</em>.<p>The tool currently used for conversion is <em>COST</em> by
+      Joe English. <code>COST</code> takes the ESIS output of
+      <code>nsgmls</code>, creates an internal representation, and
+      then allows <em>scripts</em>, and <em>event
+	handlers</em> to be run over the internal data structure.
+      Event handlers allow document <em>patterns</em> and
+      associated processing to be specified: when the pattern is
+      matched during a preorder traversal of a document subtree, the
+      associated action is executed. This is the heart of the
+      conversion process. Scripts are used to tie the various
+      components together. For example, each of the major derived data
+      sources (Java code etc.) is created by the execution of a
+      script, which in turn executes one or more event handlers. The
+      scripts and event handlers are specified using TCL.<p>The current version of <code>COST</code> has been somewhat
+      modified from the publically available version. In particular,
+      it now runs correctly under 32-bit Windows, uses TCL 8.0, and 
+      correctly handles the case sensitivity of
+      XML (though it probably could not correctly handle native language
+      markup).<p>We could also have used <code>Jade</code>, by James Clark. Like
+      <code>COST</code>, <code>Jade</code> allows patterns and actions
+      to be specified, but <code>Jade</code> is based on DSSSL, an
+      international standard, whereas <code>COST</code> is
+      not. <code>Jade</code> is more powerful than <code>COST</code>
+      in many ways, but prior experience of the editor with Cost made it 
+      easier to use this rather than <code>Jade</code>. A future version 
+      or Level of
+      the DOM specification may be produced using <code>Jade</code> or
+      an <code>XSL</code> processor.<br>
+<a name='ID-235933356'></a>
+<h2 class='adiv2'>A.3: Object Definitions</h2>
+<p>As stated earlier, all object definitions are specified in XML.
+      The Java bindings, OMG IDL bindings, and ECMA Script bindings are all
+      generated automatically from the XML source code.<p>This is possible because the information specified in XML is a
+      <em>superset</em> of what these other syntax need. This is a
+      general observation, and the same kind of technique can be
+      applied to many other areas: given rich structure, rich
+      processing and conversion are possible. For Java and OMG IDL, it
+      is basically just a matter of renaming syntactic keywords, for
+      ECMA Script, the process is somewhat more involved.<p>A typical object definition in XML looks something like this:
+<blockquote>
+<pre class='code-block'>&lt;interface name="foo"&gt;
+  &lt;descr&gt;&lt;p&gt;Description goes here...&lt;/p&gt;&lt;/descr&gt;
+  &lt;method name="bar"&gt;
+    &lt;descr&gt;&lt;p&gt;Description goes here...&lt;/p&gt;&lt;/descr&gt;
+    &lt;parameters&gt;
+      &lt;param name="baz" type="wstring" attr="in"&gt;
+        &lt;descr&gt;&lt;p&gt;Description goes here...&lt;/p&gt;&lt;/descr&gt;
+      &lt;/param&gt;
+    &lt;/parameters&gt;
+    &lt;returns type="void"&gt;
+       &lt;descr&gt;&lt;p&gt;Description goes here...&lt;/p&gt;&lt;/descr&gt;
+    &lt;/returns&gt;
+    &lt;raises&gt;
+       &lt;!-- Throws no exceptions --&gt;  
+    &lt;/raises&gt;
+  &lt;/method&gt;
+&lt;/interface&gt;</pre>
+</blockquote>
+<p>As can easily be seen, this is quite verbose, but not unlike
+      OMG IDL. In fact, when the specification was originally
+      converted to use XML, the OMG IDL definitions were automatically
+      converted into the corresponding XML source using common Unix text
+      manipulation tools.
+<div class='noprint'>
+<br><hr>
+<table width='100%' cellpadding='0' class='navigation-bar'>
+<tr>
+<td width='30%' align='left'><a href='level-one-html.html'><img border='0' src='./back.jpg' alt=' Document Object Model (HTML) Level 1'></a></td>
+<td width='30%' align='center'><a href='cover.html'><img border='0' src='./up.jpg' alt='Cover'></a></td>
+<td width='30%' align='right'><a href='contributors.html'><img border='0' src='./forward.jpg' alt=' Document Object Model Contributors'></a></td>
+</tr>
+</table>
+<hr>
+</div>
+</body>
+</html>

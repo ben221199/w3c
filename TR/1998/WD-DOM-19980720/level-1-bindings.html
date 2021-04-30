@@ -1,0 +1,3934 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Sun Jul 19 19:49:47 PDT 1998 -->
+<html lang='en'>
+<head>
+  <title> Document Object Model Level 1 Bindings</title>
+  <link rel='stylesheet' type='text/css' href='./dom.css'>
+</head>
+<body>
+<div class='noprint'>
+<hr>
+<table width='100%' cellpadding='0' class='navigation-bar'>
+<tr>
+<td width='30%' align='left'><a href='glossary.html'><img border='0' src='./back.jpg' alt=' Document Object Model Glossary'></a></td>
+<td width='30%' align='center'><a href='cover.html'><img border='0' src='./up.jpg' alt='Cover'></a></td>
+<td width='30%' align='right'><a href='object-index.html'><img border='0' src='./forward.jpg' alt=' Index of Objects Defined by the DOM'></a></td>
+</tr>
+</table>
+<hr>
+</div>
+
+<a name='bindings'></a>
+<h1 class='adiv1'>Appendix D: Document Object Model Level 1 Bindings</h1>
+<p>This appendix contains the complete OMG IDL, Java, and ECMA Script
+    bindings for the Level 1 Document Object Model definitions. The 
+    definitions are divided into Core and HTML.
+<p>The IDL and Java bindings are also available as <a href='idlbindings.zip'>idlbindings.zip</a> and <a href='javabindings.zip'>javabindings.zip</a>.
+
+<a name='ID-934117397'></a>
+<h2 class='adiv2'>D.1: Document Object Model Level 1 Core Bindings</h2>
+
+<a name='ID-2094849111'></a>
+<h3 class='adiv3'>D.1.1: OMG IDL Definitions for Level 1 Core</h3>
+<p>This section contains the OMG IDL definitions for the interfaces
+	in the Core Document Object Model specification, including the 
+        extended (XML)
+	interfaces.  The HTML OMG IDL definition is in the  <a href='level-one-html.html'>Level 1 HTML DOM
+	  specification</a>
+.
+
+      <pre class='idl-code'>
+enum ExceptionCode {
+  UNSUPPORTED_DOCUMENT_ERR,
+  NOT_CHILD_ERR,
+  NO_CHILDREN_ALLOWED_ERR,
+  INDEX_SIZE_ERR,
+  WSTRING_SIZE_ERR,
+  DATA_SIZE_ERR
+};
+
+exception DOMException {
+   ExceptionCode   code;
+};
+
+interface DOMImplementation {
+  boolean                   hasFeature(in wstring feature, 
+                                       in wstring version);
+};
+
+interface DocumentFragment : Node {
+  readonly attribute  Document             masterDoc;
+};
+
+interface Document : DocumentFragment {
+  readonly attribute  DocumentType         doctype;
+  readonly attribute  DOMImplementation    implementation;
+  readonly attribute  Element              documentElement;
+  Element                   createElement(in wstring tagName);
+  DocumentFragment          createDocumentFragment();
+  Text                      createTextNode(in wstring data);
+  Comment                   createComment(in wstring data);
+  CDATASection              createCDATASection(in wstring data);
+  ProcessingInstruction     createProcessingInstruction(in wstring target, 
+                                                        in wstring data);
+  Attribute                 createAttribute(in wstring name);
+  Entity                    createEntity();
+  EntityReference           createEntityReference();
+  NodeList                  getElementsByTagName(in wstring tagname);
+};
+
+interface Node {
+  // NodeType
+  const unsigned short      DOCUMENT           = 1;
+  const unsigned short      ELEMENT            = 2;
+  const unsigned short      ATTRIBUTE          = 3;
+  const unsigned short      PROCESSING_INSTRUCTION = 4;
+  const unsigned short      COMMENT            = 5;
+  const unsigned short      TEXT               = 6;
+  const unsigned short      CDATA_SECTION      = 7;
+  const unsigned short      DOCUMENT_FRAGMENT  = 8;
+  const unsigned short      ENTITY             = 9;
+  const unsigned short      ENTITY_REFERENCE   = 10;
+  const unsigned short      DOCUMENT_TYPE      = 11;
+
+  readonly attribute  wstring              nodeName;
+           attribute  wstring              nodeValue;
+  readonly attribute  unsigned short       nodeType;
+  readonly attribute  Node                 parentNode;
+  readonly attribute  NodeList             childNodes;
+  readonly attribute  Node                 firstChild;
+  readonly attribute  Node                 lastChild;
+  readonly attribute  Node                 previousSibling;
+  readonly attribute  Node                 nextSibling;
+  readonly attribute  NamedNodeMap         attributes;
+  Node                      insertBefore(in Node newChild, 
+                                         in Node refChild)
+                                         raises(DOMException);
+  Node                      replaceChild(in Node newChild, 
+                                         in Node oldChild)
+                                         raises(DOMException);
+  Node                      removeChild(in Node oldChild)
+                                        raises(DOMException);
+  Node                      appendChild(in Node newChild);
+  boolean                   hasChildNodes();
+  Node                      cloneNode(in boolean deep);
+  boolean                   equals(in Node arg, 
+                                   in boolean deep);
+};
+
+interface NodeList {
+  Node                      item(in unsigned long index);
+  readonly attribute  unsigned long        size;
+};
+
+interface NamedNodeMap {
+  Node                      getNamedItem(in wstring name);
+  void                      setNamedItem(in Node arg);
+  Node                      removeNamedItem(in wstring name);
+  Node                      item(in unsigned long index);
+  readonly attribute  unsigned long        size;
+};
+
+interface Data : Node {
+           attribute  wstring              data;
+  readonly attribute  unsigned long        size;
+  wstring                   substring(in unsigned long start, 
+                                      in unsigned long count)
+                                      raises(DOMException);
+  void                      append(in wstring arg);
+  void                      insert(in unsigned long offset, 
+                                   in wstring arg)
+                                   raises(DOMException);
+  void                      delete(in unsigned long offset, 
+                                   in unsigned long count)
+                                   raises(DOMException);
+  void                      replace(in unsigned long offset, 
+                                    in unsigned long count, 
+                                    in wstring arg)
+                                    raises(DOMException);
+};
+
+interface Attribute : Node {
+  wstring                   getName();
+           attribute  boolean              specified;
+  wstring                   getValue();
+};
+
+interface Element : Node {
+  wstring                   getTagName();
+  NamedNodeMap              getAttributes();
+  wstring                   getAttribute(in wstring name);
+  void                      setAttribute(in string name, 
+                                         in string value);
+  void                      removeAttribute(in wstring name);
+  Attribute                 getAttributeNode(in wstring name);
+  void                      setAttributeNode(in Attribute newAttr);
+  void                      removeAttributeNode(in Attribute oldAttr);
+  NodeList                  getElementsByTagName(in wstring tagname);
+  void                      normalize();
+};
+
+interface Text : Data {
+  Text                      splitText(in unsigned long offset);
+  Text                      joinText(in Text node1, 
+                                     in Text node2);
+};
+
+interface Comment : Data {
+};
+
+interface ProcessingInstruction : Node {
+           attribute  wstring              target;
+           attribute  wstring              data;
+};
+
+interface CDATASection : Text {
+};
+
+interface DocumentType : Node {
+           attribute  wstring              name;
+  readonly attribute  NamedNodeMap         entities;
+  readonly attribute  NamedNodeMap         notations;
+};
+
+interface Notation : Node {
+           attribute  wstring              publicId;
+           attribute  wstring              systemId;
+};
+
+interface Entity : Node {
+           attribute  wstring              publicId;
+           attribute  wstring              systemId;
+           attribute  wstring              notationName;
+};
+
+interface EntityReference : Node {
+};
+
+</pre>
+<br>
+<a name='ID-1453982312'></a>
+<h3 class='adiv3'>D.1.2: Java Definitions for Level 1 Core</h3>
+<pre class='idl-code'>
+ public static final int UNSUPPORTED_DOCUMENT_ERR= 1;
+ public static final int NOT_CHILD_ERR= 2;
+ public static final int NO_CHILDREN_ALLOWED_ERR= 3;
+ public static final int INDEX_SIZE_ERR= 4;
+ public static final int WSTRING_SIZE_ERR= 5;
+ public static final int DATA_SIZE_ERR= 6;
+
+
+public class DOMException extends RuntimeException {
+ public static final int UNSUPPORTED_DOCUMENT_ERR= 1;
+ public static final int NOT_CHILD_ERR= 2;
+ public static final int NO_CHILDREN_ALLOWED_ERR= 3;
+ public static final int INDEX_SIZE_ERR= 4;
+ public static final int WSTRING_SIZE_ERR= 5;
+ public static final int DATA_SIZE_ERR= 6;
+
+
+   public int   code;
+}
+
+public interface DOMImplementation {
+   public boolean            hasFeature(String feature, 
+                                        String version);
+}
+
+public interface DocumentFragment extends Node {
+   public Document           getMasterDoc();
+
+}
+
+public interface Document extends DocumentFragment {
+   public DocumentType       getDoctype();
+
+   public DOMImplementation  getImplementation();
+
+   public Element            getDocumentElement();
+
+   public Element            createElement(String tagName);
+   public DocumentFragment   createDocumentFragment();
+   public Text               createTextNode(String data);
+   public Comment            createComment(String data);
+   public CDATASection       createCDATASection(String data);
+   public ProcessingInstruction createProcessingInstruction(String target, 
+                                                            String data);
+   public Attribute          createAttribute(String name);
+   public Entity             createEntity();
+   public EntityReference    createEntityReference();
+   public NodeList           getElementsByTagName(String tagname);
+}
+
+public interface Node {
+   // NodeType
+   public static final short           DOCUMENT             = 1;
+   public static final short           ELEMENT              = 2;
+   public static final short           ATTRIBUTE            = 3;
+   public static final short           PROCESSING_INSTRUCTION = 4;
+   public static final short           COMMENT              = 5;
+   public static final short           TEXT                 = 6;
+   public static final short           CDATA_SECTION        = 7;
+   public static final short           DOCUMENT_FRAGMENT    = 8;
+   public static final short           ENTITY               = 9;
+   public static final short           ENTITY_REFERENCE     = 10;
+   public static final short           DOCUMENT_TYPE        = 11;
+
+   public String             getNodeName();
+
+   public String             getNodeValue();
+   public void               setNodeValue(String arg);
+
+   public short              getNodeType();
+
+   public Node               getParentNode();
+
+   public NodeList           getChildNodes();
+
+   public Node               getFirstChild();
+
+   public Node               getLastChild();
+
+   public Node               getPreviousSibling();
+
+   public Node               getNextSibling();
+
+   public NamedNodeMap       getAttributes();
+
+   public Node               insertBefore(Node newChild, 
+                                          Node refChild)
+                                          throws DOMException;
+   public Node               replaceChild(Node newChild, 
+                                          Node oldChild)
+                                          throws DOMException;
+   public Node               removeChild(Node oldChild)
+                                         throws DOMException;
+   public Node               appendChild(Node newChild);
+   public boolean            hasChildNodes();
+   public Node               cloneNode(boolean deep);
+   public boolean            equals(Node arg, 
+                                    boolean deep);
+}
+
+public interface NodeList {
+   public Node               item(int index);
+   public int                getSize();
+
+}
+
+public interface NamedNodeMap {
+   public Node               getNamedItem(String name);
+   public void               setNamedItem(Node arg);
+   public Node               removeNamedItem(String name);
+   public Node               item(int index);
+   public int                getSize();
+
+}
+
+public interface Data extends Node {
+   public String             getData();
+   public void               setData(String arg);
+
+   public int                getSize();
+
+   public String             substring(int start, 
+                                       int count)
+                                       throws DOMException;
+   public void               append(String arg);
+   public void               insert(int offset, 
+                                    String arg)
+                                    throws DOMException;
+   public void               delete(int offset, 
+                                    int count)
+                                    throws DOMException;
+   public void               replace(int offset, 
+                                     int count, 
+                                     String arg)
+                                     throws DOMException;
+}
+
+public interface Attribute extends Node {
+   public String             getName();
+   public boolean            getSpecified();
+   public void               setSpecified(boolean arg);
+
+   public String             getValue();
+}
+
+public interface Element extends Node {
+   public String             getTagName();
+   public NamedNodeMap       getAttributes();
+   public String             getAttribute(String name);
+   public void               setAttribute(String name, 
+                                          String value);
+   public void               removeAttribute(String name);
+   public Attribute          getAttributeNode(String name);
+   public void               setAttributeNode(Attribute newAttr);
+   public void               removeAttributeNode(Attribute oldAttr);
+   public NodeList           getElementsByTagName(String tagname);
+   public void               normalize();
+}
+
+public interface Text extends Data {
+   public Text               splitText(int offset);
+   public Text               joinText(Text node1, 
+                                      Text node2);
+}
+
+public interface Comment extends Data {
+}
+
+public interface ProcessingInstruction extends Node {
+   public String             getTarget();
+   public void               setTarget(String arg);
+
+   public String             getData();
+   public void               setData(String arg);
+
+}
+
+public interface CDATASection extends Text {
+}
+
+public interface DocumentType extends Node {
+   public String             getName();
+   public void               setName(String arg);
+
+   public NamedNodeMap       getEntities();
+
+   public NamedNodeMap       getNotations();
+
+}
+
+public interface Notation extends Node {
+   public String             getPublicId();
+   public void               setPublicId(String arg);
+
+   public String             getSystemId();
+   public void               setSystemId(String arg);
+
+}
+
+public interface Entity extends Node {
+   public String             getPublicId();
+   public void               setPublicId(String arg);
+
+   public String             getSystemId();
+   public void               setSystemId(String arg);
+
+   public String             getNotationName();
+   public void               setNotationName(String arg);
+
+}
+
+public interface EntityReference extends Node {
+}
+
+</pre>
+<br>
+<a name='ID-1370785602'></a>
+<h3 class='adiv3'>D.1.3: ECMA Script Definitions for Level 1 Core</h3>
+<h2>Object ExceptionCode</h2>
+<blockquote>
+</blockquote>
+<h2>Object DOMException</h2>
+<blockquote>
+</blockquote>
+<h2>Object DOMImplementation</h2>
+<blockquote>
+<p>The <b>DOMImplementation</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>hasFeature(feature,&nbsp;version)</b></dt>
+<dd>This method returns a <b>boolean</b>.
+ The <b>feature</b> parameter is expected to be of type <b>wstring.</b>.
+ The <b>version</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object DocumentFragment</h2>
+<blockquote>
+<p><b>DocumentFragment</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>DocumentFragment</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>masterDoc</b></dt>
+<dd>
+ This property is expected to be a <b>Document</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Document</h2>
+<blockquote>
+<p><b>Document</b> has the all the properties and methods of <b>DocumentFragment</b> as well as the properties and methods defined below.</p>
+<p>The <b>Document</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>doctype</b></dt>
+<dd>
+ This property is expected to be a <b>DocumentType</b></dd>
+<dt><b>implementation</b></dt>
+<dd>
+ This property is expected to be a <b>DOMImplementation</b></dd>
+<dt><b>documentElement</b></dt>
+<dd>
+ This property is expected to be a <b>Element</b></dd>
+<dt><b>createDocumentFragment</b></dt>
+<dd>This property is expected to be a <b>DocumentFragment</b></dd>
+<dt><b>createEntity</b></dt>
+<dd>This property is expected to be a <b>Entity</b></dd>
+<dt><b>createEntityReference</b></dt>
+<dd>This property is expected to be a <b>EntityReference</b></dd>
+</dl></blockquote>
+<p>The <b>Document</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>createElement(tagName)</b></dt>
+<dd>This method returns a <b>Element</b>.
+ The <b>tagName</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>createTextNode(data)</b></dt>
+<dd>This method returns a <b>Text</b>.
+ The <b>data</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>createComment(data)</b></dt>
+<dd>This method returns a <b>Comment</b>.
+ The <b>data</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>createCDATASection(data)</b></dt>
+<dd>This method returns a <b>CDATASection</b>.
+ The <b>data</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>createProcessingInstruction(target,&nbsp;data)</b></dt>
+<dd>This method returns a <b>ProcessingInstruction</b>.
+ The <b>target</b> parameter is expected to be of type <b>wstring.</b>.
+ The <b>data</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>createAttribute(name)</b></dt>
+<dd>This method returns a <b>Attribute</b>.
+ The <b>name</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>getElementsByTagName(tagname)</b></dt>
+<dd>This method returns a <b>NodeList</b>.
+ The <b>tagname</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Node</h2>
+<blockquote>
+<p>The <b>Node</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>nodeName</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>nodeValue</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>nodeType</b></dt>
+<dd>
+ This property is expected to be a <b>short</b></dd>
+<dt><b>parentNode</b></dt>
+<dd>
+ This property is expected to be a <b>Node</b></dd>
+<dt><b>childNodes</b></dt>
+<dd>
+ This property is expected to be a <b>NodeList</b></dd>
+<dt><b>firstChild</b></dt>
+<dd>
+ This property is expected to be a <b>Node</b></dd>
+<dt><b>lastChild</b></dt>
+<dd>
+ This property is expected to be a <b>Node</b></dd>
+<dt><b>previousSibling</b></dt>
+<dd>
+ This property is expected to be a <b>Node</b></dd>
+<dt><b>nextSibling</b></dt>
+<dd>
+ This property is expected to be a <b>Node</b></dd>
+<dt><b>attributes</b></dt>
+<dd>
+ This property is expected to be a <b>NamedNodeMap</b></dd>
+<dt><b>hasChildNodes</b></dt>
+<dd>This property is expected to be a <b>boolean</b></dd>
+</dl></blockquote>
+<p>The <b>Node</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>insertBefore(newChild,&nbsp;refChild)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>newChild</b> parameter is expected to be of type <b>Node.</b>.
+ The <b>refChild</b> parameter is expected to be of type <b>Node.</b>.
+</dd>
+<dt><b>replaceChild(newChild,&nbsp;oldChild)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>newChild</b> parameter is expected to be of type <b>Node.</b>.
+ The <b>oldChild</b> parameter is expected to be of type <b>Node.</b>.
+</dd>
+<dt><b>removeChild(oldChild)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>oldChild</b> parameter is expected to be of type <b>Node.</b>.
+</dd>
+<dt><b>appendChild(newChild)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>newChild</b> parameter is expected to be of type <b>Node.</b>.
+</dd>
+<dt><b>cloneNode(deep)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>deep</b> parameter is expected to be of type <b>boolean.</b>.
+</dd>
+<dt><b>equals(arg,&nbsp;deep)</b></dt>
+<dd>This method returns a <b>boolean</b>.
+ The <b>arg</b> parameter is expected to be of type <b>Node.</b>.
+ The <b>deep</b> parameter is expected to be of type <b>boolean.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object NodeList</h2>
+<blockquote>
+<p>The <b>NodeList</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>size</b></dt>
+<dd>
+ This property is expected to be a <b>int</b></dd>
+</dl></blockquote>
+<p>The <b>NodeList</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>item(index)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>index</b> parameter is expected to be of type <b>unsigned long.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object NamedNodeMap</h2>
+<blockquote>
+<p>The <b>NamedNodeMap</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>size</b></dt>
+<dd>
+ This property is expected to be a <b>int</b></dd>
+</dl></blockquote>
+<p>The <b>NamedNodeMap</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>getNamedItem(name)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>name</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>setNamedItem(arg)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>arg</b> parameter is expected to be of type <b>Node.</b>.
+</dd>
+<dt><b>removeNamedItem(name)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>name</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>item(index)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>index</b> parameter is expected to be of type <b>unsigned long.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Data</h2>
+<blockquote>
+<p><b>Data</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>Data</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>data</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>size</b></dt>
+<dd>
+ This property is expected to be a <b>int</b></dd>
+</dl></blockquote>
+<p>The <b>Data</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>substring(start,&nbsp;count)</b></dt>
+<dd>This method returns a <b>wstring</b>.
+ The <b>start</b> parameter is expected to be of type <b>unsigned long.</b>.
+ The <b>count</b> parameter is expected to be of type <b>unsigned long.</b>.
+</dd>
+<dt><b>append(arg)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>arg</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>insert(offset,&nbsp;arg)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>offset</b> parameter is expected to be of type <b>unsigned long.</b>.
+ The <b>arg</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>delete(offset,&nbsp;count)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>offset</b> parameter is expected to be of type <b>unsigned long.</b>.
+ The <b>count</b> parameter is expected to be of type <b>unsigned long.</b>.
+</dd>
+<dt><b>replace(offset,&nbsp;count,&nbsp;arg)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>offset</b> parameter is expected to be of type <b>unsigned long.</b>.
+ The <b>count</b> parameter is expected to be of type <b>unsigned long.</b>.
+ The <b>arg</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Attribute</h2>
+<blockquote>
+<p><b>Attribute</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>Attribute</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>specified</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>name</b></dt>
+<dd>This property is expected to be a <b>wstring</b></dd>
+<dt><b>value</b></dt>
+<dd>This property is expected to be a <b>wstring</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Element</h2>
+<blockquote>
+<p><b>Element</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>Element</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>tagName</b></dt>
+<dd>This property is expected to be a <b>wstring</b></dd>
+<dt><b>attributes</b></dt>
+<dd>This property is expected to be a <b>NamedNodeMap</b></dd>
+<dt><b>normalize</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+</dl></blockquote>
+<p>The <b>Element</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>getAttribute(name)</b></dt>
+<dd>This method returns a <b>wstring</b>.
+ The <b>name</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>setAttribute(name,&nbsp;value)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>name</b> parameter is expected to be of type <b>string.</b>.
+ The <b>value</b> parameter is expected to be of type <b>string.</b>.
+</dd>
+<dt><b>removeAttribute(name)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>name</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>getAttributeNode(name)</b></dt>
+<dd>This method returns a <b>Attribute</b>.
+ The <b>name</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>setAttributeNode(newAttr)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>newAttr</b> parameter is expected to be of type <b>Attribute.</b>.
+</dd>
+<dt><b>removeAttributeNode(oldAttr)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>oldAttr</b> parameter is expected to be of type <b>Attribute.</b>.
+</dd>
+<dt><b>getElementsByTagName(tagname)</b></dt>
+<dd>This method returns a <b>NodeList</b>.
+ The <b>tagname</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Text</h2>
+<blockquote>
+<p><b>Text</b> has the all the properties and methods of <b>Data</b> as well as the properties and methods defined below.</p>
+<p>The <b>Text</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>splitText(offset)</b></dt>
+<dd>This method returns a <b>Text</b>.
+ The <b>offset</b> parameter is expected to be of type <b>unsigned long.</b>.
+</dd>
+<dt><b>joinText(node1,&nbsp;node2)</b></dt>
+<dd>This method returns a <b>Text</b>.
+ The <b>node1</b> parameter is expected to be of type <b>Text.</b>.
+ The <b>node2</b> parameter is expected to be of type <b>Text.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Comment</h2>
+<blockquote>
+<p><b>Comment</b> has the all the properties and methods of <b>Data</b> as well as the properties and methods defined below.</p>
+</blockquote>
+<h2>Object ProcessingInstruction</h2>
+<blockquote>
+<p><b>ProcessingInstruction</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>ProcessingInstruction</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>target</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>data</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object CDATASection</h2>
+<blockquote>
+<p><b>CDATASection</b> has the all the properties and methods of <b>Text</b> as well as the properties and methods defined below.</p>
+</blockquote>
+<h2>Object DocumentType</h2>
+<blockquote>
+<p><b>DocumentType</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>DocumentType</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>entities</b></dt>
+<dd>
+ This property is expected to be a <b>NamedNodeMap</b></dd>
+<dt><b>notations</b></dt>
+<dd>
+ This property is expected to be a <b>NamedNodeMap</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Notation</h2>
+<blockquote>
+<p><b>Notation</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>Notation</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>publicId</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>systemId</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object Entity</h2>
+<blockquote>
+<p><b>Entity</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+<p>The <b>Entity</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>publicId</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>systemId</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>notationName</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object EntityReference</h2>
+<blockquote>
+<p><b>EntityReference</b> has the all the properties and methods of <b>Node</b> as well as the properties and methods defined below.</p>
+</blockquote>
+<br><br>
+<a name='ID-1192783596'></a>
+<h2 class='adiv2'>D.2: Document Object Model Level 1 HTML Bindings</h2>
+
+<a name='ID-119394714'></a>
+<h3 class='adiv3'>D.2.1: OMG IDL Definitions for the Level 1 HTML DOM</h3>
+<pre class='idl-code'>
+interface HTMLCollection {
+  readonly attribute  long                 length;
+  Node                      item(in long index);
+  Node                      namedItem(in wstring name);
+};
+
+interface HTMLDocument : Document {
+           attribute  wstring              title;
+  readonly attribute  wstring              referrer;
+  readonly attribute  wstring              fileSize;
+  readonly attribute  wstring              fileCreatedDate;
+  readonly attribute  wstring              fileModifiedDate;
+  readonly attribute  wstring              fileUpdatedDate;
+  readonly attribute  wstring              domain;
+  readonly attribute  wstring              URL;
+           attribute  HTMLElement          body;
+  readonly attribute  HTMLCollection       images;
+  readonly attribute  HTMLCollection       applets;
+  readonly attribute  HTMLCollection       links;
+  readonly attribute  HTMLCollection       forms;
+  readonly attribute  HTMLCollection       anchors;
+           attribute  wstring              cookie;
+  void                      open();
+  void                      close();
+  void                      write(in wstring text);
+  void                      writeln(in wstring text);
+  Element                   getElementById(in wstring elementId);
+  NodeList                  getElementsByName(in wstring elementName);
+};
+
+interface HTMLElement : Element {
+           attribute  wstring              id;
+           attribute  wstring              title;
+           attribute  wstring              lang;
+           attribute  wstring              dir;
+           attribute  wstring              className;
+};
+
+interface HTMLHtmlElement : HTMLElement {
+           attribute  wstring              version;
+};
+
+interface HTMLHeadElement : HTMLElement {
+           attribute  wstring              profile;
+};
+
+interface HTMLLinkElement : HTMLElement {
+           attribute  boolean              disabled;
+           attribute  wstring              charset;
+           attribute  wstring              href;
+           attribute  wstring              hreflang;
+           attribute  wstring              media;
+           attribute  wstring              rel;
+           attribute  wstring              rev;
+           attribute  wstring              target;
+           attribute  wstring              type;
+};
+
+interface HTMLTitleElement : HTMLElement {
+           attribute  wstring              text;
+};
+
+interface HTMLMetaElement : HTMLElement {
+           attribute  wstring              content;
+           attribute  wstring              httpEquiv;
+           attribute  wstring              name;
+           attribute  wstring              scheme;
+};
+
+interface HTMLBaseElement : HTMLElement {
+           attribute  wstring              href;
+           attribute  wstring              target;
+};
+
+interface HTMLIsIndexElement : HTMLElement {
+  readonly attribute  HTMLFormElement      form;
+           attribute  wstring              prompt;
+};
+
+interface HTMLStyleElement : HTMLElement {
+           attribute  boolean              disabled;
+           attribute  wstring              media;
+           attribute  wstring              type;
+};
+
+interface HTMLBodyElement : HTMLElement {
+           attribute  wstring              aLink;
+           attribute  wstring              background;
+           attribute  wstring              bgColor;
+           attribute  wstring              link;
+           attribute  wstring              text;
+           attribute  wstring              vLink;
+};
+
+interface HTMLFormElement : HTMLElement {
+  readonly attribute  HTMLCollection       elements;
+  readonly attribute  long                 length;
+           attribute  wstring              name;
+           attribute  wstring              acceptCharset;
+           attribute  wstring              action;
+           attribute  wstring              enctype;
+           attribute  wstring              method;
+           attribute  wstring              target;
+};
+
+interface HTMLSelectElement : HTMLElement {
+  readonly attribute  wstring              type;
+           attribute  long                 selectedIndex;
+           attribute  wstring              value;
+           attribute  long                 length;
+  readonly attribute  HTMLFormElement      form;
+           attribute  HTMLCollection       options;
+           attribute  boolean              disabled;
+           attribute  boolean              multiple;
+           attribute  wstring              name;
+           attribute  long                 size;
+           attribute  long                 tabIndex;
+  void                      add(in HTMLElement element, 
+                                in HTMLElement before);
+  void                      remove(in long index);
+  void                      blur();
+  void                      focus();
+};
+
+interface HTMLOptGroupElement : HTMLElement {
+           attribute  boolean              disabled;
+           attribute  wstring              label;
+};
+
+interface HTMLOptionElement : HTMLElement {
+  readonly attribute  HTMLFormElement      form;
+           attribute  boolean              defaultSelected;
+  readonly attribute  wstring              text;
+           attribute  long                 index;
+           attribute  boolean              disabled;
+           attribute  wstring              label;
+  readonly attribute  boolean              selected;
+           attribute  wstring              value;
+};
+
+interface HTMLInputElement : HTMLElement {
+           attribute  wstring              defaultValue;
+           attribute  boolean              defaultChecked;
+  readonly attribute  HTMLFormElement      form;
+           attribute  wstring              accept;
+           attribute  wstring              accessKey;
+           attribute  wstring              align;
+           attribute  wstring              alt;
+           attribute  boolean              checked;
+           attribute  boolean              disabled;
+           attribute  long                 maxLength;
+           attribute  wstring              name;
+           attribute  boolean              readOnly;
+           attribute  wstring              size;
+           attribute  wstring              src;
+           attribute  long                 tabIndex;
+  readonly attribute  wstring              type;
+           attribute  wstring              useMap;
+           attribute  wstring              value;
+  void                      blur();
+  void                      focus();
+  void                      select();
+  void                      click();
+};
+
+interface HTMLTextAreaElement : HTMLElement {
+           attribute  wstring              defaultValue;
+  readonly attribute  HTMLFormElement      form;
+           attribute  wstring              accessKey;
+           attribute  long                 cols;
+           attribute  boolean              disabled;
+           attribute  wstring              name;
+           attribute  boolean              readOnly;
+           attribute  long                 rows;
+           attribute  long                 tabIndex;
+  readonly attribute  wstring              type;
+  void                      blur();
+  void                      focus();
+  void                      select();
+};
+
+interface HTMLButtonElement : HTMLElement {
+  readonly attribute  HTMLFormElement      form;
+           attribute  wstring              accessKey;
+           attribute  boolean              disabled;
+           attribute  wstring              name;
+           attribute  long                 tabIndex;
+  readonly attribute  wstring              type;
+           attribute  wstring              value;
+};
+
+interface HTMLLabelElement : HTMLElement {
+  readonly attribute  HTMLFormElement      form;
+           attribute  wstring              accessKey;
+           attribute  wstring              htmlFor;
+};
+
+interface HTMLFieldSetElement : HTMLElement {
+  readonly attribute  HTMLFormElement      form;
+};
+
+interface HTMLLegendElement : HTMLElement {
+  readonly attribute  HTMLFormElement      form;
+           attribute  wstring              accessKey;
+           attribute  wstring              align;
+};
+
+interface HTMLUListElement : HTMLElement {
+           attribute  boolean              compact;
+           attribute  wstring              type;
+};
+
+interface HTMLOListElement : HTMLElement {
+           attribute  boolean              compact;
+           attribute  long                 start;
+           attribute  wstring              type;
+};
+
+interface HTMLDListElement : HTMLElement {
+           attribute  boolean              compact;
+};
+
+interface HTMLDirectoryElement : HTMLElement {
+           attribute  boolean              compact;
+};
+
+interface HTMLMenuElement : HTMLElement {
+           attribute  boolean              compact;
+};
+
+interface HTMLLIElement : HTMLElement {
+           attribute  wstring              type;
+           attribute  long                 value;
+};
+
+interface HTMLBlockquoteElement : HTMLElement {
+           attribute  wstring              cite;
+};
+
+interface HTMLDivElement : HTMLElement {
+           attribute  wstring              align;
+};
+
+interface HTMLParagraphElement : HTMLElement {
+           attribute  wstring              align;
+};
+
+interface HTMLHeadingElement : HTMLElement {
+           attribute  wstring              align;
+};
+
+interface HTMLQuoteElement : HTMLElement {
+           attribute  wstring              cite;
+};
+
+interface HTMLPreElement : HTMLElement {
+           attribute  long                 width;
+};
+
+interface HTMLBRElement : HTMLElement {
+           attribute  wstring              clear;
+};
+
+interface HTMLBaseFontElement : HTMLElement {
+           attribute  wstring              color;
+           attribute  wstring              face;
+           attribute  wstring              size;
+};
+
+interface HTMLFontElement : HTMLElement {
+           attribute  wstring              color;
+           attribute  wstring              face;
+           attribute  wstring              size;
+};
+
+interface HTMLHRElement : HTMLElement {
+           attribute  wstring              align;
+           attribute  boolean              noShade;
+           attribute  wstring              size;
+           attribute  wstring              width;
+};
+
+interface HTMLInsElement : HTMLElement {
+           attribute  wstring              cite;
+           attribute  wstring              dateTime;
+};
+
+interface HTMLDelElement : HTMLElement {
+           attribute  wstring              cite;
+           attribute  wstring              dateTime;
+};
+
+interface HTMLModElement : HTMLElement {
+           attribute  wstring              cite;
+           attribute  wstring              dateTime;
+};
+
+interface HTMLAnchorElement : HTMLElement {
+           attribute  wstring              accessKey;
+           attribute  wstring              charset;
+           attribute  wstring              coords;
+           attribute  wstring              href;
+           attribute  wstring              hreflang;
+           attribute  wstring              name;
+           attribute  wstring              rel;
+           attribute  wstring              rev;
+           attribute  wstring              shape;
+           attribute  long                 tabIndex;
+           attribute  wstring              target;
+           attribute  wstring              type;
+  void                      blur();
+  void                      focus();
+};
+
+interface HTMLImageElement : HTMLElement {
+           attribute  wstring              lowSrc;
+           attribute  wstring              name;
+           attribute  wstring              align;
+           attribute  wstring              alt;
+           attribute  wstring              border;
+           attribute  wstring              height;
+           attribute  wstring              hspace;
+           attribute  boolean              isMap;
+           attribute  wstring              longDesc;
+           attribute  wstring              src;
+           attribute  wstring              useMap;
+           attribute  wstring              vspace;
+           attribute  wstring              width;
+};
+
+interface HTMLObjectElement : HTMLElement {
+  readonly attribute  HTMLFormElement      form;
+           attribute  wstring              code;
+           attribute  wstring              align;
+           attribute  wstring              archive;
+           attribute  wstring              border;
+           attribute  wstring              codeBase;
+           attribute  wstring              codeType;
+           attribute  wstring              data;
+           attribute  boolean              declare;
+           attribute  wstring              height;
+           attribute  wstring              hspace;
+           attribute  wstring              name;
+           attribute  wstring              standby;
+           attribute  long                 tabIndex;
+           attribute  wstring              type;
+           attribute  wstring              useMap;
+           attribute  wstring              vspace;
+           attribute  wstring              width;
+};
+
+interface HTMLParamElement : HTMLElement {
+           attribute  wstring              name;
+           attribute  wstring              type;
+           attribute  wstring              value;
+           attribute  wstring              valueType;
+};
+
+interface HTMLAppletElement : HTMLElement {
+           attribute  wstring              align;
+           attribute  wstring              alt;
+           attribute  wstring              archive;
+           attribute  wstring              code;
+           attribute  wstring              codeBase;
+           attribute  wstring              height;
+           attribute  wstring              hspace;
+           attribute  wstring              name;
+           attribute  wstring              object;
+           attribute  wstring              vspace;
+           attribute  wstring              width;
+};
+
+interface HTMLMapElement : HTMLElement {
+  readonly attribute  HTMLCollection       areas;
+           attribute  wstring              name;
+};
+
+interface HTMLAreaElement : HTMLElement {
+           attribute  wstring              accessKey;
+           attribute  wstring              alt;
+           attribute  wstring              coords;
+           attribute  wstring              href;
+           attribute  boolean              noHref;
+           attribute  wstring              shape;
+           attribute  long                 tabIndex;
+           attribute  wstring              target;
+};
+
+interface HTMLScriptElement : HTMLElement {
+           attribute  wstring              text;
+           attribute  wstring              htmlFor;
+           attribute  wstring              event;
+           attribute  wstring              charset;
+           attribute  boolean              defer;
+           attribute  wstring              src;
+           attribute  wstring              type;
+};
+
+interface HTMLTableElement : HTMLElement {
+           attribute  HTMLTableCaptionElement caption;
+           attribute  HTMLTableSectionElement tHead;
+           attribute  HTMLTableSectionElement tFoot;
+  readonly attribute  HTMLCollection       rows;
+           attribute  HTMLCollection       tBodies;
+           attribute  wstring              align;
+           attribute  wstring              bgColor;
+           attribute  wstring              border;
+           attribute  wstring              cellPadding;
+           attribute  wstring              cellSpacing;
+           attribute  wstring              frame;
+           attribute  wstring              rules;
+           attribute  wstring              summary;
+           attribute  wstring              width;
+  HTMLElement               createTHead();
+  void                      deleteTHead();
+  HTMLElement               createTFoot();
+  void                      deleteTFoot();
+  HTMLElement               createCaption();
+  void                      deleteCaption();
+  HTMLElement               insertRow(in long index);
+  void                      deleteRow(in long index);
+};
+
+interface HTMLTableCaptionElement : HTMLElement {
+           attribute  wstring              align;
+};
+
+interface HTMLTableColElement : HTMLElement {
+           attribute  wstring              align;
+           attribute  wstring              ch;
+           attribute  wstring              chOff;
+           attribute  long                 span;
+           attribute  wstring              vAlign;
+           attribute  wstring              width;
+};
+
+interface HTMLTheadElement : HTMLElement {
+           attribute  wstring              align;
+           attribute  wstring              ch;
+           attribute  wstring              chOff;
+           attribute  wstring              vAlign;
+};
+
+interface HTMLTbodyElement : HTMLElement {
+           attribute  wstring              align;
+           attribute  wstring              ch;
+           attribute  wstring              chOff;
+           attribute  wstring              vAlign;
+};
+
+interface HTMLTfootElement : HTMLElement {
+           attribute  wstring              align;
+           attribute  wstring              ch;
+           attribute  wstring              chOff;
+           attribute  wstring              vAlign;
+};
+
+interface HTMLTableSectionElement : HTMLElement {
+           attribute  wstring              align;
+           attribute  wstring              vAlign;
+           attribute  HTMLCollection       rows;
+  HTMLElement               insertRow(in long index);
+  void                      deleteRow(in long index);
+};
+
+interface HTMLTableRowElement : HTMLElement {
+           attribute  long                 rowIndex;
+           attribute  long                 sectionRowIndex;
+           attribute  HTMLCollection       cells;
+           attribute  wstring              align;
+           attribute  wstring              bgColor;
+           attribute  wstring              ch;
+           attribute  wstring              chOff;
+           attribute  wstring              vAlign;
+  HTMLElement               insertCell(in long index);
+  void                      deleteCell(in long index);
+};
+
+interface HTMLTableCellElement : HTMLElement {
+           attribute  long                 cellIndex;
+           attribute  wstring              abbr;
+           attribute  wstring              align;
+           attribute  wstring              axis;
+           attribute  wstring              bgColor;
+           attribute  wstring              ch;
+           attribute  wstring              chOff;
+           attribute  long                 colSpan;
+           attribute  wstring              headers;
+           attribute  wstring              height;
+           attribute  boolean              noWrap;
+           attribute  long                 rowSpan;
+           attribute  wstring              scope;
+           attribute  wstring              vAlign;
+           attribute  wstring              width;
+};
+
+interface HTMLFrameSetElement : HTMLElement {
+           attribute  wstring              cols;
+           attribute  wstring              rows;
+};
+
+interface HTMLFrameElement : HTMLElement {
+           attribute  wstring              frameBorder;
+           attribute  wstring              longDesc;
+           attribute  wstring              marginHeight;
+           attribute  wstring              marginWidth;
+           attribute  wstring              name;
+           attribute  boolean              noResize;
+           attribute  wstring              scrolling;
+           attribute  wstring              src;
+};
+
+interface HTMLIFrameElement : HTMLElement {
+           attribute  wstring              align;
+           attribute  wstring              frameBorder;
+           attribute  wstring              height;
+           attribute  wstring              longDesc;
+           attribute  wstring              marginHeight;
+           attribute  wstring              marginWidth;
+           attribute  wstring              name;
+           attribute  wstring              scrolling;
+           attribute  wstring              src;
+           attribute  wstring              width;
+};
+
+</pre>
+<br>
+<a name='ID-1068341473'></a>
+<h3 class='adiv3'>D.2.2: Java Definitions for the Level 1 HTML DOM</h3>
+<pre class='idl-code'>
+public interface HTMLCollection {
+   public long               getLength();
+
+   public Node               item(long index);
+   public Node               namedItem(String name);
+}
+
+public interface HTMLDocument extends Document {
+   public String             getTitle();
+   public void               setTitle(String arg);
+
+   public String             getReferrer();
+
+   public String             getFileSize();
+
+   public String             getFileCreatedDate();
+
+   public String             getFileModifiedDate();
+
+   public String             getFileUpdatedDate();
+
+   public String             getDomain();
+
+   public String             getURL();
+
+   public HTMLElement        getBody();
+   public void               setBody(HTMLElement arg);
+
+   public HTMLCollection     getImages();
+
+   public HTMLCollection     getApplets();
+
+   public HTMLCollection     getLinks();
+
+   public HTMLCollection     getForms();
+
+   public HTMLCollection     getAnchors();
+
+   public String             getCookie();
+   public void               setCookie(String arg);
+
+   public void               open();
+   public void               close();
+   public void               write(String text);
+   public void               writeln(String text);
+   public Element            getElementById(String elementId);
+   public NodeList           getElementsByName(String elementName);
+}
+
+public interface HTMLElement extends Element {
+   public String             getId();
+   public void               setId(String arg);
+
+   public String             getTitle();
+   public void               setTitle(String arg);
+
+   public String             getLang();
+   public void               setLang(String arg);
+
+   public String             getDir();
+   public void               setDir(String arg);
+
+   public String             getClassName();
+   public void               setClassName(String arg);
+
+}
+
+public interface HTMLHtmlElement extends HTMLElement {
+   public String             getVersion();
+   public void               setVersion(String arg);
+
+}
+
+public interface HTMLHeadElement extends HTMLElement {
+   public String             getProfile();
+   public void               setProfile(String arg);
+
+}
+
+public interface HTMLLinkElement extends HTMLElement {
+   public boolean            getDisabled();
+   public void               setDisabled(boolean arg);
+
+   public String             getCharset();
+   public void               setCharset(String arg);
+
+   public String             getHref();
+   public void               setHref(String arg);
+
+   public String             getHreflang();
+   public void               setHreflang(String arg);
+
+   public String             getMedia();
+   public void               setMedia(String arg);
+
+   public String             getRel();
+   public void               setRel(String arg);
+
+   public String             getRev();
+   public void               setRev(String arg);
+
+   public String             getTarget();
+   public void               setTarget(String arg);
+
+   public String             getType();
+   public void               setType(String arg);
+
+}
+
+public interface HTMLTitleElement extends HTMLElement {
+   public String             getText();
+   public void               setText(String arg);
+
+}
+
+public interface HTMLMetaElement extends HTMLElement {
+   public String             getContent();
+   public void               setContent(String arg);
+
+   public String             getHttpEquiv();
+   public void               setHttpEquiv(String arg);
+
+   public String             getName();
+   public void               setName(String arg);
+
+   public String             getScheme();
+   public void               setScheme(String arg);
+
+}
+
+public interface HTMLBaseElement extends HTMLElement {
+   public String             getHref();
+   public void               setHref(String arg);
+
+   public String             getTarget();
+   public void               setTarget(String arg);
+
+}
+
+public interface HTMLIsIndexElement extends HTMLElement {
+   public HTMLFormElement    getForm();
+
+   public String             getPrompt();
+   public void               setPrompt(String arg);
+
+}
+
+public interface HTMLStyleElement extends HTMLElement {
+   public boolean            getDisabled();
+   public void               setDisabled(boolean arg);
+
+   public String             getMedia();
+   public void               setMedia(String arg);
+
+   public String             getType();
+   public void               setType(String arg);
+
+}
+
+public interface HTMLBodyElement extends HTMLElement {
+   public String             getALink();
+   public void               setALink(String arg);
+
+   public String             getBackground();
+   public void               setBackground(String arg);
+
+   public String             getBgColor();
+   public void               setBgColor(String arg);
+
+   public String             getLink();
+   public void               setLink(String arg);
+
+   public String             getText();
+   public void               setText(String arg);
+
+   public String             getVLink();
+   public void               setVLink(String arg);
+
+}
+
+public interface HTMLFormElement extends HTMLElement {
+   public HTMLCollection     getElements();
+
+   public long               getLength();
+
+   public String             getName();
+   public void               setName(String arg);
+
+   public String             getAcceptCharset();
+   public void               setAcceptCharset(String arg);
+
+   public String             getAction();
+   public void               setAction(String arg);
+
+   public String             getEnctype();
+   public void               setEnctype(String arg);
+
+   public String             getMethod();
+   public void               setMethod(String arg);
+
+   public String             getTarget();
+   public void               setTarget(String arg);
+
+}
+
+public interface HTMLSelectElement extends HTMLElement {
+   public String             getType();
+
+   public long               getSelectedIndex();
+   public void               setSelectedIndex(long arg);
+
+   public String             getValue();
+   public void               setValue(String arg);
+
+   public long               getLength();
+   public void               setLength(long arg);
+
+   public HTMLFormElement    getForm();
+
+   public HTMLCollection     getOptions();
+   public void               setOptions(HTMLCollection arg);
+
+   public boolean            getDisabled();
+   public void               setDisabled(boolean arg);
+
+   public boolean            getMultiple();
+   public void               setMultiple(boolean arg);
+
+   public String             getName();
+   public void               setName(String arg);
+
+   public long               getSize();
+   public void               setSize(long arg);
+
+   public long               getTabIndex();
+   public void               setTabIndex(long arg);
+
+   public void               add(HTMLElement element, 
+                                 HTMLElement before);
+   public void               remove(long index);
+   public void               blur();
+   public void               focus();
+}
+
+public interface HTMLOptGroupElement extends HTMLElement {
+   public boolean            getDisabled();
+   public void               setDisabled(boolean arg);
+
+   public String             getLabel();
+   public void               setLabel(String arg);
+
+}
+
+public interface HTMLOptionElement extends HTMLElement {
+   public HTMLFormElement    getForm();
+
+   public boolean            getDefaultSelected();
+   public void               setDefaultSelected(boolean arg);
+
+   public String             getText();
+
+   public long               getIndex();
+   public void               setIndex(long arg);
+
+   public boolean            getDisabled();
+   public void               setDisabled(boolean arg);
+
+   public String             getLabel();
+   public void               setLabel(String arg);
+
+   public boolean            getSelected();
+
+   public String             getValue();
+   public void               setValue(String arg);
+
+}
+
+public interface HTMLInputElement extends HTMLElement {
+   public String             getDefaultValue();
+   public void               setDefaultValue(String arg);
+
+   public boolean            getDefaultChecked();
+   public void               setDefaultChecked(boolean arg);
+
+   public HTMLFormElement    getForm();
+
+   public String             getAccept();
+   public void               setAccept(String arg);
+
+   public String             getAccessKey();
+   public void               setAccessKey(String arg);
+
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getAlt();
+   public void               setAlt(String arg);
+
+   public boolean            getChecked();
+   public void               setChecked(boolean arg);
+
+   public boolean            getDisabled();
+   public void               setDisabled(boolean arg);
+
+   public long               getMaxLength();
+   public void               setMaxLength(long arg);
+
+   public String             getName();
+   public void               setName(String arg);
+
+   public boolean            getReadOnly();
+   public void               setReadOnly(boolean arg);
+
+   public String             getSize();
+   public void               setSize(String arg);
+
+   public String             getSrc();
+   public void               setSrc(String arg);
+
+   public long               getTabIndex();
+   public void               setTabIndex(long arg);
+
+   public String             getType();
+
+   public String             getUseMap();
+   public void               setUseMap(String arg);
+
+   public String             getValue();
+   public void               setValue(String arg);
+
+   public void               blur();
+   public void               focus();
+   public void               select();
+   public void               click();
+}
+
+public interface HTMLTextAreaElement extends HTMLElement {
+   public String             getDefaultValue();
+   public void               setDefaultValue(String arg);
+
+   public HTMLFormElement    getForm();
+
+   public String             getAccessKey();
+   public void               setAccessKey(String arg);
+
+   public long               getCols();
+   public void               setCols(long arg);
+
+   public boolean            getDisabled();
+   public void               setDisabled(boolean arg);
+
+   public String             getName();
+   public void               setName(String arg);
+
+   public boolean            getReadOnly();
+   public void               setReadOnly(boolean arg);
+
+   public long               getRows();
+   public void               setRows(long arg);
+
+   public long               getTabIndex();
+   public void               setTabIndex(long arg);
+
+   public String             getType();
+
+   public void               blur();
+   public void               focus();
+   public void               select();
+}
+
+public interface HTMLButtonElement extends HTMLElement {
+   public HTMLFormElement    getForm();
+
+   public String             getAccessKey();
+   public void               setAccessKey(String arg);
+
+   public boolean            getDisabled();
+   public void               setDisabled(boolean arg);
+
+   public String             getName();
+   public void               setName(String arg);
+
+   public long               getTabIndex();
+   public void               setTabIndex(long arg);
+
+   public String             getType();
+
+   public String             getValue();
+   public void               setValue(String arg);
+
+}
+
+public interface HTMLLabelElement extends HTMLElement {
+   public HTMLFormElement    getForm();
+
+   public String             getAccessKey();
+   public void               setAccessKey(String arg);
+
+   public String             getHtmlFor();
+   public void               setHtmlFor(String arg);
+
+}
+
+public interface HTMLFieldSetElement extends HTMLElement {
+   public HTMLFormElement    getForm();
+
+}
+
+public interface HTMLLegendElement extends HTMLElement {
+   public HTMLFormElement    getForm();
+
+   public String             getAccessKey();
+   public void               setAccessKey(String arg);
+
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+}
+
+public interface HTMLUListElement extends HTMLElement {
+   public boolean            getCompact();
+   public void               setCompact(boolean arg);
+
+   public String             getType();
+   public void               setType(String arg);
+
+}
+
+public interface HTMLOListElement extends HTMLElement {
+   public boolean            getCompact();
+   public void               setCompact(boolean arg);
+
+   public long               getStart();
+   public void               setStart(long arg);
+
+   public String             getType();
+   public void               setType(String arg);
+
+}
+
+public interface HTMLDListElement extends HTMLElement {
+   public boolean            getCompact();
+   public void               setCompact(boolean arg);
+
+}
+
+public interface HTMLDirectoryElement extends HTMLElement {
+   public boolean            getCompact();
+   public void               setCompact(boolean arg);
+
+}
+
+public interface HTMLMenuElement extends HTMLElement {
+   public boolean            getCompact();
+   public void               setCompact(boolean arg);
+
+}
+
+public interface HTMLLIElement extends HTMLElement {
+   public String             getType();
+   public void               setType(String arg);
+
+   public long               getValue();
+   public void               setValue(long arg);
+
+}
+
+public interface HTMLBlockquoteElement extends HTMLElement {
+   public String             getCite();
+   public void               setCite(String arg);
+
+}
+
+public interface HTMLDivElement extends HTMLElement {
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+}
+
+public interface HTMLParagraphElement extends HTMLElement {
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+}
+
+public interface HTMLHeadingElement extends HTMLElement {
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+}
+
+public interface HTMLQuoteElement extends HTMLElement {
+   public String             getCite();
+   public void               setCite(String arg);
+
+}
+
+public interface HTMLPreElement extends HTMLElement {
+   public long               getWidth();
+   public void               setWidth(long arg);
+
+}
+
+public interface HTMLBRElement extends HTMLElement {
+   public String             getClear();
+   public void               setClear(String arg);
+
+}
+
+public interface HTMLBaseFontElement extends HTMLElement {
+   public String             getColor();
+   public void               setColor(String arg);
+
+   public String             getFace();
+   public void               setFace(String arg);
+
+   public String             getSize();
+   public void               setSize(String arg);
+
+}
+
+public interface HTMLFontElement extends HTMLElement {
+   public String             getColor();
+   public void               setColor(String arg);
+
+   public String             getFace();
+   public void               setFace(String arg);
+
+   public String             getSize();
+   public void               setSize(String arg);
+
+}
+
+public interface HTMLHRElement extends HTMLElement {
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public boolean            getNoShade();
+   public void               setNoShade(boolean arg);
+
+   public String             getSize();
+   public void               setSize(String arg);
+
+   public String             getWidth();
+   public void               setWidth(String arg);
+
+}
+
+public interface HTMLInsElement extends HTMLElement {
+   public String             getCite();
+   public void               setCite(String arg);
+
+   public String             getDateTime();
+   public void               setDateTime(String arg);
+
+}
+
+public interface HTMLDelElement extends HTMLElement {
+   public String             getCite();
+   public void               setCite(String arg);
+
+   public String             getDateTime();
+   public void               setDateTime(String arg);
+
+}
+
+public interface HTMLModElement extends HTMLElement {
+   public String             getCite();
+   public void               setCite(String arg);
+
+   public String             getDateTime();
+   public void               setDateTime(String arg);
+
+}
+
+public interface HTMLAnchorElement extends HTMLElement {
+   public String             getAccessKey();
+   public void               setAccessKey(String arg);
+
+   public String             getCharset();
+   public void               setCharset(String arg);
+
+   public String             getCoords();
+   public void               setCoords(String arg);
+
+   public String             getHref();
+   public void               setHref(String arg);
+
+   public String             getHreflang();
+   public void               setHreflang(String arg);
+
+   public String             getName();
+   public void               setName(String arg);
+
+   public String             getRel();
+   public void               setRel(String arg);
+
+   public String             getRev();
+   public void               setRev(String arg);
+
+   public String             getShape();
+   public void               setShape(String arg);
+
+   public long               getTabIndex();
+   public void               setTabIndex(long arg);
+
+   public String             getTarget();
+   public void               setTarget(String arg);
+
+   public String             getType();
+   public void               setType(String arg);
+
+   public void               blur();
+   public void               focus();
+}
+
+public interface HTMLImageElement extends HTMLElement {
+   public String             getLowSrc();
+   public void               setLowSrc(String arg);
+
+   public String             getName();
+   public void               setName(String arg);
+
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getAlt();
+   public void               setAlt(String arg);
+
+   public String             getBorder();
+   public void               setBorder(String arg);
+
+   public String             getHeight();
+   public void               setHeight(String arg);
+
+   public String             getHspace();
+   public void               setHspace(String arg);
+
+   public boolean            getIsMap();
+   public void               setIsMap(boolean arg);
+
+   public String             getLongDesc();
+   public void               setLongDesc(String arg);
+
+   public String             getSrc();
+   public void               setSrc(String arg);
+
+   public String             getUseMap();
+   public void               setUseMap(String arg);
+
+   public String             getVspace();
+   public void               setVspace(String arg);
+
+   public String             getWidth();
+   public void               setWidth(String arg);
+
+}
+
+public interface HTMLObjectElement extends HTMLElement {
+   public HTMLFormElement    getForm();
+
+   public String             getCode();
+   public void               setCode(String arg);
+
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getArchive();
+   public void               setArchive(String arg);
+
+   public String             getBorder();
+   public void               setBorder(String arg);
+
+   public String             getCodeBase();
+   public void               setCodeBase(String arg);
+
+   public String             getCodeType();
+   public void               setCodeType(String arg);
+
+   public String             getData();
+   public void               setData(String arg);
+
+   public boolean            getDeclare();
+   public void               setDeclare(boolean arg);
+
+   public String             getHeight();
+   public void               setHeight(String arg);
+
+   public String             getHspace();
+   public void               setHspace(String arg);
+
+   public String             getName();
+   public void               setName(String arg);
+
+   public String             getStandby();
+   public void               setStandby(String arg);
+
+   public long               getTabIndex();
+   public void               setTabIndex(long arg);
+
+   public String             getType();
+   public void               setType(String arg);
+
+   public String             getUseMap();
+   public void               setUseMap(String arg);
+
+   public String             getVspace();
+   public void               setVspace(String arg);
+
+   public String             getWidth();
+   public void               setWidth(String arg);
+
+}
+
+public interface HTMLParamElement extends HTMLElement {
+   public String             getName();
+   public void               setName(String arg);
+
+   public String             getType();
+   public void               setType(String arg);
+
+   public String             getValue();
+   public void               setValue(String arg);
+
+   public String             getValueType();
+   public void               setValueType(String arg);
+
+}
+
+public interface HTMLAppletElement extends HTMLElement {
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getAlt();
+   public void               setAlt(String arg);
+
+   public String             getArchive();
+   public void               setArchive(String arg);
+
+   public String             getCode();
+   public void               setCode(String arg);
+
+   public String             getCodeBase();
+   public void               setCodeBase(String arg);
+
+   public String             getHeight();
+   public void               setHeight(String arg);
+
+   public String             getHspace();
+   public void               setHspace(String arg);
+
+   public String             getName();
+   public void               setName(String arg);
+
+   public String             getObject();
+   public void               setObject(String arg);
+
+   public String             getVspace();
+   public void               setVspace(String arg);
+
+   public String             getWidth();
+   public void               setWidth(String arg);
+
+}
+
+public interface HTMLMapElement extends HTMLElement {
+   public HTMLCollection     getAreas();
+
+   public String             getName();
+   public void               setName(String arg);
+
+}
+
+public interface HTMLAreaElement extends HTMLElement {
+   public String             getAccessKey();
+   public void               setAccessKey(String arg);
+
+   public String             getAlt();
+   public void               setAlt(String arg);
+
+   public String             getCoords();
+   public void               setCoords(String arg);
+
+   public String             getHref();
+   public void               setHref(String arg);
+
+   public boolean            getNoHref();
+   public void               setNoHref(boolean arg);
+
+   public String             getShape();
+   public void               setShape(String arg);
+
+   public long               getTabIndex();
+   public void               setTabIndex(long arg);
+
+   public String             getTarget();
+   public void               setTarget(String arg);
+
+}
+
+public interface HTMLScriptElement extends HTMLElement {
+   public String             getText();
+   public void               setText(String arg);
+
+   public String             getHtmlFor();
+   public void               setHtmlFor(String arg);
+
+   public String             getEvent();
+   public void               setEvent(String arg);
+
+   public String             getCharset();
+   public void               setCharset(String arg);
+
+   public boolean            getDefer();
+   public void               setDefer(boolean arg);
+
+   public String             getSrc();
+   public void               setSrc(String arg);
+
+   public String             getType();
+   public void               setType(String arg);
+
+}
+
+public interface HTMLTableElement extends HTMLElement {
+   public HTMLTableCaptionElement getCaption();
+   public void               setCaption(HTMLTableCaptionElement arg);
+
+   public HTMLTableSectionElement getTHead();
+   public void               setTHead(HTMLTableSectionElement arg);
+
+   public HTMLTableSectionElement getTFoot();
+   public void               setTFoot(HTMLTableSectionElement arg);
+
+   public HTMLCollection     getRows();
+
+   public HTMLCollection     getTBodies();
+   public void               setTBodies(HTMLCollection arg);
+
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getBgColor();
+   public void               setBgColor(String arg);
+
+   public String             getBorder();
+   public void               setBorder(String arg);
+
+   public String             getCellPadding();
+   public void               setCellPadding(String arg);
+
+   public String             getCellSpacing();
+   public void               setCellSpacing(String arg);
+
+   public String             getFrame();
+   public void               setFrame(String arg);
+
+   public String             getRules();
+   public void               setRules(String arg);
+
+   public String             getSummary();
+   public void               setSummary(String arg);
+
+   public String             getWidth();
+   public void               setWidth(String arg);
+
+   public HTMLElement        createTHead();
+   public void               deleteTHead();
+   public HTMLElement        createTFoot();
+   public void               deleteTFoot();
+   public HTMLElement        createCaption();
+   public void               deleteCaption();
+   public HTMLElement        insertRow(long index);
+   public void               deleteRow(long index);
+}
+
+public interface HTMLTableCaptionElement extends HTMLElement {
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+}
+
+public interface HTMLTableColElement extends HTMLElement {
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getCh();
+   public void               setCh(String arg);
+
+   public String             getChOff();
+   public void               setChOff(String arg);
+
+   public long               getSpan();
+   public void               setSpan(long arg);
+
+   public String             getVAlign();
+   public void               setVAlign(String arg);
+
+   public String             getWidth();
+   public void               setWidth(String arg);
+
+}
+
+public interface HTMLTheadElement extends HTMLElement {
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getCh();
+   public void               setCh(String arg);
+
+   public String             getChOff();
+   public void               setChOff(String arg);
+
+   public String             getVAlign();
+   public void               setVAlign(String arg);
+
+}
+
+public interface HTMLTbodyElement extends HTMLElement {
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getCh();
+   public void               setCh(String arg);
+
+   public String             getChOff();
+   public void               setChOff(String arg);
+
+   public String             getVAlign();
+   public void               setVAlign(String arg);
+
+}
+
+public interface HTMLTfootElement extends HTMLElement {
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getCh();
+   public void               setCh(String arg);
+
+   public String             getChOff();
+   public void               setChOff(String arg);
+
+   public String             getVAlign();
+   public void               setVAlign(String arg);
+
+}
+
+public interface HTMLTableSectionElement extends HTMLElement {
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getVAlign();
+   public void               setVAlign(String arg);
+
+   public HTMLCollection     getRows();
+   public void               setRows(HTMLCollection arg);
+
+   public HTMLElement        insertRow(long index);
+   public void               deleteRow(long index);
+}
+
+public interface HTMLTableRowElement extends HTMLElement {
+   public long               getRowIndex();
+   public void               setRowIndex(long arg);
+
+   public long               getSectionRowIndex();
+   public void               setSectionRowIndex(long arg);
+
+   public HTMLCollection     getCells();
+   public void               setCells(HTMLCollection arg);
+
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getBgColor();
+   public void               setBgColor(String arg);
+
+   public String             getCh();
+   public void               setCh(String arg);
+
+   public String             getChOff();
+   public void               setChOff(String arg);
+
+   public String             getVAlign();
+   public void               setVAlign(String arg);
+
+   public HTMLElement        insertCell(long index);
+   public void               deleteCell(long index);
+}
+
+public interface HTMLTableCellElement extends HTMLElement {
+   public long               getCellIndex();
+   public void               setCellIndex(long arg);
+
+   public String             getAbbr();
+   public void               setAbbr(String arg);
+
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getAxis();
+   public void               setAxis(String arg);
+
+   public String             getBgColor();
+   public void               setBgColor(String arg);
+
+   public String             getCh();
+   public void               setCh(String arg);
+
+   public String             getChOff();
+   public void               setChOff(String arg);
+
+   public long               getColSpan();
+   public void               setColSpan(long arg);
+
+   public String             getHeaders();
+   public void               setHeaders(String arg);
+
+   public String             getHeight();
+   public void               setHeight(String arg);
+
+   public boolean            getNoWrap();
+   public void               setNoWrap(boolean arg);
+
+   public long               getRowSpan();
+   public void               setRowSpan(long arg);
+
+   public String             getScope();
+   public void               setScope(String arg);
+
+   public String             getVAlign();
+   public void               setVAlign(String arg);
+
+   public String             getWidth();
+   public void               setWidth(String arg);
+
+}
+
+public interface HTMLFrameSetElement extends HTMLElement {
+   public String             getCols();
+   public void               setCols(String arg);
+
+   public String             getRows();
+   public void               setRows(String arg);
+
+}
+
+public interface HTMLFrameElement extends HTMLElement {
+   public String             getFrameBorder();
+   public void               setFrameBorder(String arg);
+
+   public String             getLongDesc();
+   public void               setLongDesc(String arg);
+
+   public String             getMarginHeight();
+   public void               setMarginHeight(String arg);
+
+   public String             getMarginWidth();
+   public void               setMarginWidth(String arg);
+
+   public String             getName();
+   public void               setName(String arg);
+
+   public boolean            getNoResize();
+   public void               setNoResize(boolean arg);
+
+   public String             getScrolling();
+   public void               setScrolling(String arg);
+
+   public String             getSrc();
+   public void               setSrc(String arg);
+
+}
+
+public interface HTMLIFrameElement extends HTMLElement {
+   public String             getAlign();
+   public void               setAlign(String arg);
+
+   public String             getFrameBorder();
+   public void               setFrameBorder(String arg);
+
+   public String             getHeight();
+   public void               setHeight(String arg);
+
+   public String             getLongDesc();
+   public void               setLongDesc(String arg);
+
+   public String             getMarginHeight();
+   public void               setMarginHeight(String arg);
+
+   public String             getMarginWidth();
+   public void               setMarginWidth(String arg);
+
+   public String             getName();
+   public void               setName(String arg);
+
+   public String             getScrolling();
+   public void               setScrolling(String arg);
+
+   public String             getSrc();
+   public void               setSrc(String arg);
+
+   public String             getWidth();
+   public void               setWidth(String arg);
+
+}
+
+</pre>
+<br>
+<a name='ID-2017288232'></a>
+<h3 class='adiv3'>D.2.3: ECMA Script Definitions for the Level 1 HTML DOM</h3>
+<h2>Object HTMLCollection</h2>
+<blockquote>
+<p>The <b>HTMLCollection</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>length</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+</dl></blockquote>
+<p>The <b>HTMLCollection</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>item(index)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>index</b> parameter is expected to be of type <b>long.</b>.
+</dd>
+<dt><b>namedItem(name)</b></dt>
+<dd>This method returns a <b>Node</b>.
+ The <b>name</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLDocument</h2>
+<blockquote>
+<p><b>HTMLDocument</b> has the all the properties and methods of <b>Document</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLDocument</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>title</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>referrer</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>fileSize</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>fileCreatedDate</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>fileModifiedDate</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>fileUpdatedDate</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>domain</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>URL</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>body</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLElement</b></dd>
+<dt><b>images</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLCollection</b></dd>
+<dt><b>applets</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLCollection</b></dd>
+<dt><b>links</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLCollection</b></dd>
+<dt><b>forms</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLCollection</b></dd>
+<dt><b>anchors</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLCollection</b></dd>
+<dt><b>cookie</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>open</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+<dt><b>close</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+</dl></blockquote>
+<p>The <b>HTMLDocument</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>write(text)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>text</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>writeln(text)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>text</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>getElementById(elementId)</b></dt>
+<dd>This method returns a <b>Element</b>.
+ The <b>elementId</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+<dt><b>getElementsByName(elementName)</b></dt>
+<dd>This method returns a <b>NodeList</b>.
+ The <b>elementName</b> parameter is expected to be of type <b>wstring.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLElement</h2>
+<blockquote>
+<p><b>HTMLElement</b> has the all the properties and methods of <b>Element</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>id</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>title</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>lang</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>dir</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>className</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLHtmlElement</h2>
+<blockquote>
+<p><b>HTMLHtmlElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLHtmlElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>version</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLHeadElement</h2>
+<blockquote>
+<p><b>HTMLHeadElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLHeadElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>profile</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLLinkElement</h2>
+<blockquote>
+<p><b>HTMLLinkElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLLinkElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>disabled</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>charset</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>href</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>hreflang</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>media</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>rel</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>rev</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>target</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLTitleElement</h2>
+<blockquote>
+<p><b>HTMLTitleElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLTitleElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>text</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLMetaElement</h2>
+<blockquote>
+<p><b>HTMLMetaElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLMetaElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>content</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>httpEquiv</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>scheme</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLBaseElement</h2>
+<blockquote>
+<p><b>HTMLBaseElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLBaseElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>href</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>target</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLIsIndexElement</h2>
+<blockquote>
+<p><b>HTMLIsIndexElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLIsIndexElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>form</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLFormElement</b></dd>
+<dt><b>prompt</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLStyleElement</h2>
+<blockquote>
+<p><b>HTMLStyleElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLStyleElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>disabled</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>media</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLBodyElement</h2>
+<blockquote>
+<p><b>HTMLBodyElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLBodyElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>aLink</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>background</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>bgColor</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>link</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>text</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>vLink</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLFormElement</h2>
+<blockquote>
+<p><b>HTMLFormElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLFormElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>elements</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLCollection</b></dd>
+<dt><b>length</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>acceptCharset</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>action</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>enctype</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>method</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>target</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLSelectElement</h2>
+<blockquote>
+<p><b>HTMLSelectElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLSelectElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>selectedIndex</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>value</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>length</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>form</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLFormElement</b></dd>
+<dt><b>options</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLCollection</b></dd>
+<dt><b>disabled</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>multiple</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>size</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>tabIndex</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>blur</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+<dt><b>focus</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+</dl></blockquote>
+<p>The <b>HTMLSelectElement</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>add(element,&nbsp;before)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>element</b> parameter is expected to be of type <b>HTMLElement.</b>.
+ The <b>before</b> parameter is expected to be of type <b>HTMLElement.</b>.
+</dd>
+<dt><b>remove(index)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>index</b> parameter is expected to be of type <b>long.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLOptGroupElement</h2>
+<blockquote>
+<p><b>HTMLOptGroupElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLOptGroupElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>disabled</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>label</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLOptionElement</h2>
+<blockquote>
+<p><b>HTMLOptionElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLOptionElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>form</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLFormElement</b></dd>
+<dt><b>defaultSelected</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>text</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>index</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>disabled</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>label</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>selected</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>value</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLInputElement</h2>
+<blockquote>
+<p><b>HTMLInputElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLInputElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>defaultValue</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>defaultChecked</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>form</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLFormElement</b></dd>
+<dt><b>accept</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>accessKey</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>alt</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>checked</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>disabled</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>maxLength</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>readOnly</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>size</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>src</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>tabIndex</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>useMap</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>value</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>blur</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+<dt><b>focus</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+<dt><b>select</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+<dt><b>click</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLTextAreaElement</h2>
+<blockquote>
+<p><b>HTMLTextAreaElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLTextAreaElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>defaultValue</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>form</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLFormElement</b></dd>
+<dt><b>accessKey</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>cols</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>disabled</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>readOnly</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>rows</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>tabIndex</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>blur</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+<dt><b>focus</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+<dt><b>select</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLButtonElement</h2>
+<blockquote>
+<p><b>HTMLButtonElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLButtonElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>form</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLFormElement</b></dd>
+<dt><b>accessKey</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>disabled</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>tabIndex</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>value</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLLabelElement</h2>
+<blockquote>
+<p><b>HTMLLabelElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLLabelElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>form</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLFormElement</b></dd>
+<dt><b>accessKey</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>htmlFor</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLFieldSetElement</h2>
+<blockquote>
+<p><b>HTMLFieldSetElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLFieldSetElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>form</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLFormElement</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLLegendElement</h2>
+<blockquote>
+<p><b>HTMLLegendElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLLegendElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>form</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLFormElement</b></dd>
+<dt><b>accessKey</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLUListElement</h2>
+<blockquote>
+<p><b>HTMLUListElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLUListElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>compact</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLOListElement</h2>
+<blockquote>
+<p><b>HTMLOListElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLOListElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>compact</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>start</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLDListElement</h2>
+<blockquote>
+<p><b>HTMLDListElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLDListElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>compact</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLDirectoryElement</h2>
+<blockquote>
+<p><b>HTMLDirectoryElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLDirectoryElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>compact</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLMenuElement</h2>
+<blockquote>
+<p><b>HTMLMenuElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLMenuElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>compact</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLLIElement</h2>
+<blockquote>
+<p><b>HTMLLIElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLLIElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>value</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLBlockquoteElement</h2>
+<blockquote>
+<p><b>HTMLBlockquoteElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLBlockquoteElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>cite</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLDivElement</h2>
+<blockquote>
+<p><b>HTMLDivElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLDivElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLParagraphElement</h2>
+<blockquote>
+<p><b>HTMLParagraphElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLParagraphElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLHeadingElement</h2>
+<blockquote>
+<p><b>HTMLHeadingElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLHeadingElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLQuoteElement</h2>
+<blockquote>
+<p><b>HTMLQuoteElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLQuoteElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>cite</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLPreElement</h2>
+<blockquote>
+<p><b>HTMLPreElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLPreElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>width</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLBRElement</h2>
+<blockquote>
+<p><b>HTMLBRElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLBRElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>clear</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLBaseFontElement</h2>
+<blockquote>
+<p><b>HTMLBaseFontElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLBaseFontElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>color</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>face</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>size</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLFontElement</h2>
+<blockquote>
+<p><b>HTMLFontElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLFontElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>color</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>face</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>size</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLHRElement</h2>
+<blockquote>
+<p><b>HTMLHRElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLHRElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>noShade</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>size</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>width</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLInsElement</h2>
+<blockquote>
+<p><b>HTMLInsElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLInsElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>cite</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>dateTime</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLDelElement</h2>
+<blockquote>
+<p><b>HTMLDelElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLDelElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>cite</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>dateTime</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLModElement</h2>
+<blockquote>
+<p><b>HTMLModElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLModElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>cite</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>dateTime</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLAnchorElement</h2>
+<blockquote>
+<p><b>HTMLAnchorElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLAnchorElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>accessKey</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>charset</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>coords</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>href</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>hreflang</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>rel</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>rev</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>shape</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>tabIndex</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>target</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>blur</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+<dt><b>focus</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLImageElement</h2>
+<blockquote>
+<p><b>HTMLImageElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLImageElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>lowSrc</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>alt</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>border</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>height</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>hspace</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>isMap</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>longDesc</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>src</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>useMap</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>vspace</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>width</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLObjectElement</h2>
+<blockquote>
+<p><b>HTMLObjectElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLObjectElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>form</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLFormElement</b></dd>
+<dt><b>code</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>archive</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>border</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>codeBase</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>codeType</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>data</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>declare</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>height</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>hspace</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>standby</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>tabIndex</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>useMap</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>vspace</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>width</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLParamElement</h2>
+<blockquote>
+<p><b>HTMLParamElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLParamElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>value</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>valueType</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLAppletElement</h2>
+<blockquote>
+<p><b>HTMLAppletElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLAppletElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>alt</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>archive</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>code</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>codeBase</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>height</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>hspace</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>object</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>vspace</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>width</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLMapElement</h2>
+<blockquote>
+<p><b>HTMLMapElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLMapElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>areas</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLCollection</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLAreaElement</h2>
+<blockquote>
+<p><b>HTMLAreaElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLAreaElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>accessKey</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>alt</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>coords</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>href</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>noHref</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>shape</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>tabIndex</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>target</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLScriptElement</h2>
+<blockquote>
+<p><b>HTMLScriptElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLScriptElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>text</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>htmlFor</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>event</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>charset</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>defer</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>src</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>type</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLTableElement</h2>
+<blockquote>
+<p><b>HTMLTableElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLTableElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>caption</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLTableCaptionElement</b></dd>
+<dt><b>tHead</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLTableSectionElement</b></dd>
+<dt><b>tFoot</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLTableSectionElement</b></dd>
+<dt><b>rows</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLCollection</b></dd>
+<dt><b>tBodies</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLCollection</b></dd>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>bgColor</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>border</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>cellPadding</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>cellSpacing</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>frame</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>rules</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>summary</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>width</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>createTHead</b></dt>
+<dd>This property is expected to be a <b>HTMLElement</b></dd>
+<dt><b>deleteTHead</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+<dt><b>createTFoot</b></dt>
+<dd>This property is expected to be a <b>HTMLElement</b></dd>
+<dt><b>deleteTFoot</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+<dt><b>createCaption</b></dt>
+<dd>This property is expected to be a <b>HTMLElement</b></dd>
+<dt><b>deleteCaption</b></dt>
+<dd>This property is expected to be a <b>void</b></dd>
+</dl></blockquote>
+<p>The <b>HTMLTableElement</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>insertRow(index)</b></dt>
+<dd>This method returns a <b>HTMLElement</b>.
+ The <b>index</b> parameter is expected to be of type <b>long.</b>.
+</dd>
+<dt><b>deleteRow(index)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>index</b> parameter is expected to be of type <b>long.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLTableCaptionElement</h2>
+<blockquote>
+<p><b>HTMLTableCaptionElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLTableCaptionElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLTableColElement</h2>
+<blockquote>
+<p><b>HTMLTableColElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLTableColElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>ch</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>chOff</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>span</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>vAlign</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>width</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLTheadElement</h2>
+<blockquote>
+<p><b>HTMLTheadElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLTheadElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>ch</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>chOff</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>vAlign</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLTbodyElement</h2>
+<blockquote>
+<p><b>HTMLTbodyElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLTbodyElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>ch</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>chOff</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>vAlign</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLTfootElement</h2>
+<blockquote>
+<p><b>HTMLTfootElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLTfootElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>ch</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>chOff</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>vAlign</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLTableSectionElement</h2>
+<blockquote>
+<p><b>HTMLTableSectionElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLTableSectionElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>vAlign</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>rows</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLCollection</b></dd>
+</dl></blockquote>
+<p>The <b>HTMLTableSectionElement</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>insertRow(index)</b></dt>
+<dd>This method returns a <b>HTMLElement</b>.
+ The <b>index</b> parameter is expected to be of type <b>long.</b>.
+</dd>
+<dt><b>deleteRow(index)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>index</b> parameter is expected to be of type <b>long.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLTableRowElement</h2>
+<blockquote>
+<p><b>HTMLTableRowElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLTableRowElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>rowIndex</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>sectionRowIndex</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>cells</b></dt>
+<dd>
+ This property is expected to be a <b>HTMLCollection</b></dd>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>bgColor</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>ch</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>chOff</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>vAlign</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+<p>The <b>HTMLTableRowElement</b> object has the following methods:</p>
+<blockquote><dl>
+<dt><b>insertCell(index)</b></dt>
+<dd>This method returns a <b>HTMLElement</b>.
+ The <b>index</b> parameter is expected to be of type <b>long.</b>.
+</dd>
+<dt><b>deleteCell(index)</b></dt>
+<dd>This method returns a <b>void</b>.
+ The <b>index</b> parameter is expected to be of type <b>long.</b>.
+</dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLTableCellElement</h2>
+<blockquote>
+<p><b>HTMLTableCellElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLTableCellElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>cellIndex</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>abbr</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>axis</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>bgColor</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>ch</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>chOff</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>colSpan</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>headers</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>height</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>noWrap</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>rowSpan</b></dt>
+<dd>
+ This property is expected to be a <b>long</b></dd>
+<dt><b>scope</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>vAlign</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>width</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLFrameSetElement</h2>
+<blockquote>
+<p><b>HTMLFrameSetElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLFrameSetElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>cols</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>rows</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLFrameElement</h2>
+<blockquote>
+<p><b>HTMLFrameElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLFrameElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>frameBorder</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>longDesc</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>marginHeight</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>marginWidth</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>noResize</b></dt>
+<dd>
+ This property is expected to be a <b>boolean</b></dd>
+<dt><b>scrolling</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>src</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<h2>Object HTMLIFrameElement</h2>
+<blockquote>
+<p><b>HTMLIFrameElement</b> has the all the properties and methods of <b>HTMLElement</b> as well as the properties and methods defined below.</p>
+<p>The <b>HTMLIFrameElement</b> object has the following properties:</p>
+<blockquote><dl>
+<dt><b>align</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>frameBorder</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>height</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>longDesc</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>marginHeight</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>marginWidth</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>name</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>scrolling</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>src</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+<dt><b>width</b></dt>
+<dd>
+ This property is expected to be a <b>String</b></dd>
+</dl></blockquote>
+</blockquote>
+<div class='noprint'>
+<br><br><hr>
+<table width='100%' cellpadding='0' class='navigation-bar'>
+<tr>
+<td width='30%' align='left'><a href='glossary.html'><img border='0' src='./back.jpg' alt=' Document Object Model Glossary'></a></td>
+<td width='30%' align='center'><a href='cover.html'><img border='0' src='./up.jpg' alt='Cover'></a></td>
+<td width='30%' align='right'><a href='object-index.html'><img border='0' src='./forward.jpg' alt=' Index of Objects Defined by the DOM'></a></td>
+</tr>
+</table>
+<hr>
+</div>
+</body>
+</html>
