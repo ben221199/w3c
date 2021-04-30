@@ -1,0 +1,2356 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>
+<html lang="en" dir="ltr">
+<head>
+
+  
+    <title>Contacts API</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+
+
+
+  <style type="text/css">
+/*****************************************************************
+ * ReSpec CSS
+ * Robin Berjon <robin at berjon dot com>
+ * v0.05 - 2009-07-31
+ *****************************************************************/
+
+
+/* --- INLINES --- */
+em.rfc2119 { 
+    text-transform:     lowercase;
+    font-variant:       small-caps;
+    font-style:         normal;
+    color:              #900;
+}
+
+h1 acronym, h2 acronym, h3 acronym, h4 acronym, h5 acronym, h6 acronym, a acronym,
+h1 abbr, h2 abbr, h3 abbr, h4 abbr, h5 abbr, h6 abbr, a abbr {
+    border: none;
+}
+
+dfn {
+    font-weight:    bold;
+}
+
+a.internalDFN {
+    color:  inherit;
+    border-bottom:  medium solid #99c;
+    text-decoration:    none;
+}
+
+a.externalDFN {
+    color:  inherit;
+    border-bottom:  medium dotted #ccc;
+    text-decoration:    none;
+}
+
+a.bibref {
+    text-decoration:    none;
+}
+
+code {
+    color:  #ff4500;
+}
+
+
+/* --- WEB IDL --- */
+pre.idl {
+    border-top: 1px solid #90b8de;
+    border-bottom: 1px solid #90b8de;
+    padding:    1em;
+    line-height:    120%;
+}
+
+pre.idl::before {
+    content:    "WebIDL";
+    display:    block;
+    width:      150px;
+    background: #90b8de;
+    color:  #fff;
+    font-family:    initial;
+    padding:    3px;
+    font-weight:    bold;
+    margin: -1em 0 1em -1em;
+}
+
+.idlType {
+    color:  #ff4500;
+    font-weight:    bold;
+    text-decoration:    none;
+}
+
+/*.idlModule*/
+/*.idlModuleID*/
+/*.idlInterface*/
+.idlInterfaceID {
+    font-weight:    bold;
+    color:  #005a9c;
+}
+
+.idlSuperclass {
+    font-style: italic;
+    color:  #005a9c;
+}
+
+/*.idlAttribute*/
+.idlAttrType, .idlFieldType {
+    color:  #005a9c;
+}
+.idlAttrName, .idlFieldName {
+    color:  #ff4500;
+}
+.idlAttrName a, .idlFieldName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlMethod*/
+.idlMethType {
+    color:  #005a9c;
+}
+.idlMethName {
+    color:  #ff4500;
+}
+.idlMethName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlParam*/
+.idlParamType {
+    color:  #005a9c;
+}
+.idlParamName {
+    font-style: italic;
+}
+
+.extAttr {
+    color:  #666;
+}
+
+/*.idlConst*/
+.idlConstType {
+    color:  #005a9c;
+}
+.idlConstName {
+    color:  #ff4500;
+}
+.idlConstName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlException*/
+.idlExceptionID {
+    font-weight:    bold;
+    color:  #c00;
+}
+
+.idlTypedefID, .idlTypedefType {
+    color:  #005a9c;
+}
+
+.idlRaises, .idlRaises a.idlType, .idlRaises a.idlType code, .excName a, .excName a code {
+    color:  #c00;
+    font-weight:    normal;
+}
+
+.excName a {
+    font-family:    monospace;
+}
+
+.idlRaises a.idlType, .excName a.idlType {
+    border-bottom:  1px dotted #c00;
+}
+
+.excGetSetTrue, .excGetSetFalse, .prmNullTrue, .prmNullFalse, .prmOptTrue, .prmOptFalse {
+    width:  45px;
+    text-align: center;
+}
+.excGetSetTrue, .prmNullTrue, .prmOptTrue { color:  #0c0; }
+.excGetSetFalse, .prmNullFalse, .prmOptFalse { color:  #c00; }
+
+.idlImplements a {
+    font-weight:    bold;
+}
+
+dl.attributes, dl.methods, dl.constants, dl.fields {
+    margin-left:    2em;
+}
+
+.attributes dt, .methods dt, .constants dt, .fields dt {
+    font-weight:    normal;
+}
+
+.attributes dt code, .methods dt code, .constants dt code, .fields dt code {
+    font-weight:    bold;
+    color:  #000;
+    font-family:    monospace;
+}
+
+.attributes dt code, .fields dt code {
+    background:  #ffffd2;
+}
+
+.attributes dt .idlAttrType code, .fields dt .idlFieldType code {
+    color:  #005a9c;
+    background:  transparent;
+    font-family:    inherit;
+    font-weight:    normal;
+    font-style: italic;
+}
+
+.methods dt code {
+    background:  #d9e6f8;
+}
+
+.constants dt code {
+    background:  #ddffd2;
+}
+
+.attributes dd, .methods dd, .constants dd, .fields dd {
+    margin-bottom:  1em;
+}
+
+table.parameters, table.exceptions {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    margin: 0.5em 0;
+    width:  100%;
+}
+table.parameters { border-bottom:  1px solid #90b8de; }
+table.exceptions { border-bottom:  1px solid #deb890; }
+
+.parameters th, .exceptions th {
+    color:  #fff;
+    padding:    3px 5px;
+    text-align: left;
+    font-family:    initial;
+    font-weight:    normal;
+    text-shadow:    #666 1px 1px 0;
+}
+.parameters th { background: #90b8de; }
+.exceptions th { background: #deb890; }
+
+.parameters td, .exceptions td {
+    padding:    3px 10px;
+    border-top: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.parameters tr:first-child td, .exceptions tr:first-child td {
+    border-top: none;
+}
+
+.parameters td.prmName, .exceptions td.excName, .exceptions td.excCodeName {
+    width:  100px;
+}
+
+.parameters td.prmType {
+    width:  120px;
+}
+
+table.exceptions table {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    width:  100%;
+}
+
+/* --- TOC --- */
+.toc a {
+    text-decoration:    none;
+}
+
+a .secno {
+    color:  #000;
+}
+
+/* --- TABLE --- */
+table.simple {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    border-bottom:  3px solid #005a9c;
+}
+
+.simple th {
+    background: #005a9c;
+    color:  #fff;
+    padding:    3px 5px;
+    text-align: left;
+}
+
+.simple th[scope="row"] {
+    background: inherit;
+    color:  inherit;
+    border-top: 1px solid #ddd;
+}
+
+.simple td {
+    padding:    3px 10px;
+    border-top: 1px solid #ddd;
+}
+
+.simple tr:nth-child(even) {
+    background: #f0f6ff;
+}
+
+/* --- DL --- */
+.section dd > p:first-child {
+    margin-top: 0;
+}
+
+.section dd > p:last-child {
+    margin-bottom: 0;
+}
+
+.section dd {
+    margin-bottom:  1em;
+}
+
+.section dl.attrs dd, .section dl.eldef dd {
+    margin-bottom:  0;
+}
+
+/* --- EXAMPLES --- */
+pre.example {
+    border-top: 1px solid #ff4500;
+    border-bottom: 1px solid #ff4500;
+    padding:    1em;
+    margin-top: 1em;
+}
+
+pre.example::before {
+    content:    "Example";
+    display:    block;
+    width:      150px;
+    background: #ff4500;
+    color:  #fff;
+    font-family:    initial;
+    padding:    3px;
+    font-weight:    bold;
+    margin: -1em 0 1em -1em;
+}
+
+/* --- EDITORIAL NOTES --- */
+.issue {
+    padding:    1em;
+    border: 1px solid #f00;
+    background: #ffc;
+}
+
+.issue::before {
+    content:    "Issue";
+    display:    block;
+    width:  150px;
+    margin: -1.5em 0 0.5em 0;
+    font-weight:    bold;
+    border: 1px solid #f00;
+    background: #fff;
+    padding:    3px 1em;
+}
+
+.note {
+    padding:    1em;
+    border: 2px solid #cff6d9;
+    background: #e2fff0;
+}
+
+.note::before {
+    content:    "Note";
+    display:    block;
+    width:  150px;
+    margin: -1.5em 0 0.5em 0;
+    font-weight:    bold;
+    border: 1px solid #cff6d9;
+    background: #fff;
+    padding:    3px 1em;
+}
+
+/* --- SYNTAX HIGHLIGHTING --- */
+pre.sh_sourceCode {
+  background-color: white;
+  color: black;
+  font-style: normal;
+  font-weight: normal;
+}
+
+pre.sh_sourceCode .sh_keyword { color: #005a9c; font-weight: bold; }           /* language keywords */
+pre.sh_sourceCode .sh_type { color: #666; }                            /* basic types */
+pre.sh_sourceCode .sh_usertype { color: teal; }                             /* user defined types */
+pre.sh_sourceCode .sh_string { color: red; font-family: monospace; }        /* strings and chars */
+pre.sh_sourceCode .sh_regexp { color: orange; font-family: monospace; }     /* regular expressions */
+pre.sh_sourceCode .sh_specialchar { color: 	#ffc0cb; font-family: monospace; }  /* e.g., \n, \t, \\ */
+pre.sh_sourceCode .sh_comment { color: #A52A2A; font-style: italic; }         /* comments */
+pre.sh_sourceCode .sh_number { color: purple; }                             /* literal numbers */
+pre.sh_sourceCode .sh_preproc { color: #00008B; font-weight: bold; }       /* e.g., #include, import */
+pre.sh_sourceCode .sh_symbol { color: blue; }                            /* e.g., <, >, + */
+pre.sh_sourceCode .sh_function { color: black; font-weight: bold; }         /* function calls and declarations */
+pre.sh_sourceCode .sh_cbracket { color: red; }                              /* block brackets (e.g., {, }) */
+pre.sh_sourceCode .sh_todo { font-weight: bold; background-color: #00FFFF; }   /* TODO and FIXME */
+
+/* Predefined variables and functions (for instance glsl) */
+pre.sh_sourceCode .sh_predef_var { color: #00008B; }
+pre.sh_sourceCode .sh_predef_func { color: #00008B; font-weight: bold; }
+
+/* for OOP */
+pre.sh_sourceCode .sh_classname { color: teal; }
+
+/* line numbers (not yet implemented) */
+pre.sh_sourceCode .sh_linenum { display: none; }
+
+/* Internet related */
+pre.sh_sourceCode .sh_url { color: blue; text-decoration: underline; font-family: monospace; }
+
+/* for ChangeLog and Log files */
+pre.sh_sourceCode .sh_date { color: blue; font-weight: bold; }
+pre.sh_sourceCode .sh_time, pre.sh_sourceCode .sh_file { color: #00008B; font-weight: bold; }
+pre.sh_sourceCode .sh_ip, pre.sh_sourceCode .sh_name { color: #006400; }
+
+/* for Prolog, Perl... */
+pre.sh_sourceCode .sh_variable { color: #006400; }
+
+/* for LaTeX */
+pre.sh_sourceCode .sh_italics { color: #006400; font-style: italic; }
+pre.sh_sourceCode .sh_bold { color: #006400; font-weight: bold; }
+pre.sh_sourceCode .sh_underline { color: #006400; text-decoration: underline; }
+pre.sh_sourceCode .sh_fixed { color: green; font-family: monospace; }
+pre.sh_sourceCode .sh_argument { color: #006400; }
+pre.sh_sourceCode .sh_optionalargument { color: purple; }
+pre.sh_sourceCode .sh_math { color: orange; }
+pre.sh_sourceCode .sh_bibtex { color: blue; }
+
+/* for diffs */
+pre.sh_sourceCode .sh_oldfile { color: orange; }
+pre.sh_sourceCode .sh_newfile { color: #006400; }
+pre.sh_sourceCode .sh_difflines { color: blue; }
+
+/* for css */
+pre.sh_sourceCode .sh_selector { color: purple; }
+pre.sh_sourceCode .sh_property { color: blue; }
+pre.sh_sourceCode .sh_value { color: #006400; font-style: italic; }
+
+/* other */
+pre.sh_sourceCode .sh_section { color: black; font-weight: bold; }
+pre.sh_sourceCode .sh_paren { color: red; }
+pre.sh_sourceCode .sh_attribute { color: #006400; }
+
+</style><link charset="utf-8" type="text/css" rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/W3C-WD"></head><body style="display: inherit;"><div class="head"><p><a href="http://www.w3.org/"><img src="http://www.w3.org/Icons/w3c_home" alt="W3C" height="48" width="72"></a></p><h1 class="title" id="title">Contacts API</h1><h2 id="w3c-working-draft-01-july-2010">W3C Working Draft 01 July 2010</h2><dl><dt>This version:</dt><dd><a href="http://www.w3.org/TR/2010/WD-contacts-api-20100701/">http://www.w3.org/TR/2010/WD-contacts-api-20100701/</a></dd><dt>Latest published version:</dt><dd><a href="http://www.w3.org/TR/contacts-api/">http://www.w3.org/TR/contacts-api/</a></dd><dt>Latest editor's draft:</dt><dd><a href="http://dev.w3.org/2009/dap/contacts/">http://dev.w3.org/2009/dap/contacts/</a></dd><dt>Previous version:</dt><dd><a href="http://www.w3.org/TR/2010/WD-contacts-api-20100121/">http://www.w3.org/TR/2010/WD-contacts-api-20100121/</a></dd><dt>Editor:</dt><dd>Richard Tibbett, Invited Expert</dd></dl><p class="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2010 <a href="http://www.w3.org/"><acronym title="World Wide Web Consortium">W3C</acronym></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><acronym title="Massachusetts Institute of Technology">MIT</acronym></a>, <a href="http://www.ercim.eu/"><acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym></a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply.</p><hr></div>
+    <div class="introductory section" id="abstract"><h2>Abstract</h2>
+      <p>
+        The Contacts API defines the high-level interfaces required to provide access to a user's unified address book.
+      </p>
+    </div><div id="sotd" class="introductory section"><h2>Status of This Document</h2><p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
+      <p>
+        This document represents the early consensus of the group on the scope and features of the proposed Contacts API. Issues and
+        editors note in the document highlight some of the points on which the group is still working and would particularly like to get
+        feedback.
+      </p>
+    <p>This document was published by the <a href="http://www.w3.org/2009/dap/">Device APIs and Policy Working Group</a> as a Working Draft. This document is intended to become a W3C Recommendation. If you wish to make comments regarding this document, please send them to <a href="mailto:public-device-apis@w3.org">public-device-apis@w3.org</a> (<a href="mailto:public-device-apis-request@w3.org?subject=subscribe">subscribe</a>, <a href="http://lists.w3.org/Archives/Public/public-device-apis/">archives</a>). All feedback is welcome.</p><p>Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.</p><p>This document was produced by a group operating under the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</a>. W3C maintains a <a href="http://www.w3.org/2004/01/pp-impl/43696/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>.</p></div><div class="section" id="toc"><h2 class="introductory">Table of Contents</h2><ul class="toc"><li class="tocline"><a class="tocxref" href="#conformance"><span class="secno">1. </span>Conformance</a></li><li class="tocline"><a class="tocxref" href="#introduction"><span class="secno">2. </span>
+        Introduction
+      </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#usage-examples"><span class="secno">2.1 </span>
+          Usage Examples
+        </a></li></ul></li><li class="tocline"><a class="tocxref" href="#security-and-privacy-considerations"><span class="secno">3. </span>
+        Security and Privacy Considerations
+      </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#privacy-considerations-for-implementors-of-the-contacts-api"><span class="secno">3.1 </span>
+          Privacy considerations for implementors of the Contacts API
+        </a></li><li class="tocline"><a class="tocxref" href="#privacy-considerations-for-recipients-of-contact-information"><span class="secno">3.2 </span>
+          Privacy considerations for recipients of contact information
+        </a></li><li class="tocline"><a class="tocxref" href="#additional-implementation-considerations"><span class="secno">3.3 </span>
+          Additional implementation considerations
+        </a></li></ul></li><li class="tocline"><a class="tocxref" href="#api-description"><span class="secno">4. </span>
+        API Description
+      </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#servicecontacts-interface"><span class="secno">4.1 </span>
+          <span class="idlType formerLink idlType"><code>ServiceContacts</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes"><span class="secno">4.1.1 </span>Attributes</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contacts-interface"><span class="secno">4.2 </span>
+          <span class="idlType formerLink idlType"><code>Contacts</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#methods"><span class="secno">4.2.1 </span>Methods</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contact-interface"><span class="secno">4.3 </span>
+          <span class="idlType formerLink idlType"><code>Contact</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes-1"><span class="secno">4.3.1 </span>Attributes</a></li><li class="tocline"><a class="tocxref" href="#methods-1"><span class="secno">4.3.2 </span>Methods</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contactproperties-interface"><span class="secno">4.4 </span>
+          <span class="idlType formerLink idlType"><code>ContactProperties</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes-2"><span class="secno">4.4.1 </span>Attributes</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contactname-interface"><span class="secno">4.5 </span>
+          <span class="idlType formerLink idlType"><code>ContactName</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes-3"><span class="secno">4.5.1 </span>Attributes</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contactfield-interface"><span class="secno">4.6 </span>
+          <span class="idlType formerLink idlType"><code>ContactField</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes-4"><span class="secno">4.6.1 </span>Attributes</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contactaddress-interface"><span class="secno">4.7 </span>
+          <span class="idlType formerLink idlType"><code>ContactAddress</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes-5"><span class="secno">4.7.1 </span>Attributes</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contactorganization-interface"><span class="secno">4.8 </span>
+          <span class="idlType formerLink idlType"><code>ContactOrganization</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes-6"><span class="secno">4.8.1 </span>Attributes</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contactaccount-interface"><span class="secno">4.9 </span>
+          <span class="idlType formerLink idlType"><code>ContactAccount</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes-7"><span class="secno">4.9.1 </span>Attributes</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contactfindoptions-interface"><span class="secno">4.10 </span>
+          <span class="idlType formerLink idlType"><code>ContactFindOptions</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes-8"><span class="secno">4.10.1 </span>Attributes</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contactfindsuccesscb-interface"><span class="secno">4.11 </span>
+          <span class="idlType formerLink idlType"><code>ContactFindSuccessCB</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#methods-2"><span class="secno">4.11.1 </span>Methods</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contactsuccesscb-interface"><span class="secno">4.12 </span>
+          <span class="idlType formerLink idlType"><code>ContactSuccessCB</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#methods-3"><span class="secno">4.12.1 </span>Methods</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contacterrorcb-interface"><span class="secno">4.13 </span>
+          <span class="idlType formerLink idlType"><code>ContactErrorCB</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#methods-4"><span class="secno">4.13.1 </span>Methods</a></li></ul></li><li class="tocline"><a class="tocxref" href="#contacterror-interface"><span class="secno">4.14 </span>
+          <span class="idlType formerLink idlType"><code>ContactError</code></span> interface
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#attributes-9"><span class="secno">4.14.1 </span>Attributes</a></li><li class="tocline"><a class="tocxref" href="#constants"><span class="secno">4.14.2 </span>Constants</a></li></ul></li></ul></li><li class="tocline"><a class="tocxref" href="#contact-search-processing"><span class="secno">5. </span>
+        <span class="formerLink">Contact Search Processing</span>
+      </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#search-qualifiers"><span class="secno">5.1 </span>
+          Search Qualifiers
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#complex-search-qualifiers"><span class="secno">5.1.1 </span>
+            Complex Search Qualifiers
+          </a></li><li class="tocline"><a class="tocxref" href="#search-qualifier-example"><span class="secno">5.1.2 </span>
+            Search Qualifier Example
+          </a></li></ul></li><li class="tocline"><a class="tocxref" href="#options-processing"><span class="secno">5.2 </span>
+          Options Processing
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#search-cardinality"><span class="secno">5.2.1 </span>
+            Search Cardinality
+          </a></li><li class="tocline"><a class="tocxref" href="#search-sorting"><span class="secno">5.2.2 </span>
+            Search Sorting
+          </a></li><li class="tocline"><a class="tocxref" href="#search-filters"><span class="secno">5.2.3 </span>
+            Search Filters
+          </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#search-filter-example"><span class="secno">5.2.3.1 </span>
+              Search Filter Example
+            </a></li></ul></li></ul></li></ul></li><li class="tocline"><a class="tocxref" href="#user-interaction-guidelines"><span class="secno">A. </span>
+        User Interaction Guidelines
+      </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#sharing-contact-information"><span class="secno">A.1 </span>
+          Sharing Contact Information
+        </a></li><li class="tocline"><a class="tocxref" href="#contact-writebacks"><span class="secno">A.2 </span>
+          Contact Writebacks
+        </a><ul class="toc"><li class="tocline"><a class="tocxref" href="#saving-a-contact-to-the-address-book"><span class="secno">A.2.1 </span>
+            Saving a Contact to the Address Book
+          </a></li><li class="tocline"><a class="tocxref" href="#removing-a-contact-from-the-address-book"><span class="secno">A.2.2 </span>
+            Removing a Contact from the Address Book
+          </a></li></ul></li></ul></li><li class="tocline"><a class="tocxref" href="#search-weights"><span class="secno">B. </span>
+        Search Weights
+      </a></li><li class="tocline"><a class="tocxref" href="#references"><span class="secno">C. </span>References</a><ul class="toc"><li class="tocline"><a class="tocxref" href="#normative-references"><span class="secno">C.1 </span>Normative references</a></li><li class="tocline"><a class="tocxref" href="#informative-references"><span class="secno">C.2 </span>Informative references</a></li></ul></li></ul></div>
+    
+    <div class="section" id="conformance"><!--OddPage--><h2><span class="secno">1. </span>Conformance</h2><p>As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.</p>
+<p>The key words <em title="must" class="rfc2119">must</em>, <em title="must not" class="rfc2119">must not</em>, <em title="required" class="rfc2119">required</em>, <em title="should" class="rfc2119">should</em>, <em title="should not" class="rfc2119">should not</em>, <em title="recommended" class="rfc2119">recommended</em>, <em title="may" class="rfc2119">may</em>, and <em title="optional" class="rfc2119">optional</em> in this specification are to be interpreted as described in [<a href="#bib-RFC2119" rel="biblioentry" class="bibref">RFC2119</a>].</p>
+
+      <p>
+        This specification defines conformance criteria that apply to a single product: the <dfn id="dfn-user-agent">user agent</dfn> that implements the
+        interfaces that it contains.
+      </p>
+      <p>
+        Implementations that use ECMAScript to implement the APIs defined in this specification must implement them in a manner consistent
+        with the ECMAScript Bindings defined in the Web IDL specification [<a href="#bib-WEBIDL" rel="biblioentry" class="bibref">WEBIDL</a>], as this specification uses that specification and
+        terminology.
+      </p>
+    </div>
+    <div id="introduction" class="informative section">
+      <!--OddPage--><h2><span class="secno">2. </span>
+        Introduction
+      </h2><p><em>This section is non-normative.</em></p>
+      <p>
+        Every operating system and a large number of web-based service providers have different ways of representing address book
+        information. Most users are required to maintain a plurality of contact lists which leads to multiple copies of address book data.
+        The multiplicity of address books that a user is required to maintain often leads to disjointed and inconsistent information being
+        stored across a user's address book providers.
+      </p>
+      <p>
+        Providing address book information to these service providers means handing over all of your data and trusting these providers with
+        the security and privacy of storing and sharing of your information. When sharing this data with 3rd parties users are, more often
+        than not, required to hand over access to their whole address book. Users are implicitly required to trust 3rd parties with all of
+        their data when, in reality, the user may only wish, or need, to share a subset of their address book information so that an
+        application can fulfill its purpose.
+      </p>
+      <p>
+        This specification defines the concept of a user's unified address book - where address book data may be sourced from a
+        plurality of sources - both online and locally. This specification then defines the interfaces on which 3rd party applications can
+        access a user's unified address book; with explicit user permission and filtering. The focus of this data sharing is on making
+        the user aware of the data that they will share and putting them at the centre of the data sharing process; free to select both the
+        extent to which they share their address book information and the ability to restrict which pieces of information related to which
+        contact gets shared.
+      </p>
+      <p>
+        The API itself is agnostic of any underlying address book sources and storage. A conforming implementation is required to implement
+        all fields defined in this specification.
+      </p>
+      <div class="section" id="usage-examples">
+        <h3><span class="secno">2.1 </span>
+          Usage Examples
+        </h3>
+        <p>
+          The following code extracts illustrate how to search, add, remove and update contact information in a given address book:
+        </p>
+        <div>
+          <p>
+            Searching for matching contacts.
+          </p>
+        </div>
+<pre class="example sh_javascript_dom sh_sourceCode"><span class="sh_keyword">function</span> <span class="sh_function">successContactFindCallback</span><span class="sh_symbol">(</span>contacts<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
+    <span class="sh_comment">// do something with resulting contact objects</span>
+    <span class="sh_keyword">for</span> <span class="sh_symbol">(</span><span class="sh_keyword">var</span> i <span class="sh_keyword">in</span> contacts<span class="sh_symbol">)</span> <span class="sh_predef_func">alert</span><span class="sh_symbol">(</span>contacts<span class="sh_symbol">[</span>i<span class="sh_symbol">].</span>displayName<span class="sh_symbol">);</span>
+    <span class="sh_comment">// ...</span>
+<span class="sh_cbracket">}</span>
+
+<span class="sh_keyword">function</span> <span class="sh_function">generalErrorCB</span><span class="sh_symbol">(</span>error<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
+    <span class="sh_comment">// do something with resulting errors</span>
+    <span class="sh_predef_func">alert</span><span class="sh_symbol">(</span>error<span class="sh_symbol">.</span>code<span class="sh_symbol">);</span>
+    <span class="sh_comment">// ...</span>
+<span class="sh_cbracket">}</span>
+
+<span class="sh_comment">// Perform an address book search. Obtain the 'name' and 'emails' properties </span>
+<span class="sh_comment">// and initially filter the list to Contact records containing 'Bob':</span>
+<span class="sh_predef_var">navigator</span><span class="sh_symbol">.</span>service<span class="sh_symbol">.</span>contacts<span class="sh_symbol">.</span><span class="sh_predef_func">find</span><span class="sh_symbol">([</span><span class="sh_string">'name'</span><span class="sh_symbol">,</span> <span class="sh_string">'emails'</span><span class="sh_symbol">],</span>
+                                successContactFindCallback<span class="sh_symbol">,</span> 
+                                generalErrorCB<span class="sh_symbol">,</span>
+                                <span class="sh_cbracket">{</span>filter<span class="sh_symbol">:</span> <span class="sh_string">'Bob'</span><span class="sh_cbracket">}</span>
+                               <span class="sh_symbol">);</span></pre>
+        <div>
+          <p>
+            Creating a new contact.
+          </p>
+        </div>
+<pre class="example sh_javascript_dom sh_sourceCode"><span class="sh_comment">// Create new contact  </span>
+<span class="sh_keyword">var</span> myContact <span class="sh_symbol">=</span> <span class="sh_predef_var">navigator</span><span class="sh_symbol">.</span>service<span class="sh_symbol">.</span>contacts<span class="sh_symbol">.</span><span class="sh_function">create</span><span class="sh_symbol">(</span><span class="sh_cbracket">{</span>displayName<span class="sh_symbol">:</span> <span class="sh_string">'Robert'</span><span class="sh_cbracket">}}</span><span class="sh_symbol">);</span>
+
+<span class="sh_comment">// Add additional contact attributes as required...</span>
+<span class="sh_comment">// myContact.nicknames.push('bobby');</span></pre>
+        <div>
+          <p>
+            Saving a new contact in the underlying addressbook.
+          </p>
+        </div>
+<pre class="example sh_javascript_dom sh_sourceCode"><span class="sh_comment">// previous example follow-on...</span>
+
+<span class="sh_keyword">function</span> <span class="sh_function">successContactCallback</span><span class="sh_symbol">(</span>contact<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
+    <span class="sh_comment">// do something with resulting contact object</span>
+    <span class="sh_predef_func">alert</span><span class="sh_symbol">(</span>contact<span class="sh_symbol">.</span>displayName<span class="sh_symbol">);</span>
+    <span class="sh_comment">// ...</span>
+<span class="sh_cbracket">}</span>
+
+<span class="sh_comment">// Save new contact</span>
+myContact<span class="sh_symbol">.</span><span class="sh_function">save</span><span class="sh_symbol">(</span>successContactCallback<span class="sh_symbol">,</span> generalErrorCB<span class="sh_symbol">);</span></pre>
+        <div>
+          <p>
+            Editing an existing contact.
+          </p>
+        </div>
+<pre class="example sh_javascript_dom sh_sourceCode"><span class="sh_comment">// previous example follow-on...</span>
+
+<span class="sh_comment">// e.g. add a new phone number</span>
+myContact<span class="sh_symbol">.</span>phoneNumbers<span class="sh_symbol">.</span><span class="sh_function">push</span><span class="sh_symbol">(</span><span class="sh_cbracket">{</span>type<span class="sh_symbol">:</span> <span class="sh_string">'home'</span><span class="sh_symbol">,</span> value<span class="sh_symbol">:</span> <span class="sh_string">'+440000000002'</span><span class="sh_cbracket">}</span><span class="sh_symbol">);</span>
+
+<span class="sh_comment">// Update existing contact</span>
+myContact<span class="sh_symbol">.</span><span class="sh_function">save</span><span class="sh_symbol">(</span>successContactCallback<span class="sh_symbol">,</span> generalErrorCB<span class="sh_symbol">);</span></pre>
+        <div>
+          <p>
+            Removing an existing contact.
+          </p>
+        </div>
+<pre class="example sh_javascript_dom sh_sourceCode"><span class="sh_comment">// previous example follow-on...</span>
+
+<span class="sh_comment">// Remove existing contact</span>
+myContact<span class="sh_symbol">.</span><span class="sh_function">remove</span><span class="sh_symbol">(</span>successContactCallback<span class="sh_symbol">,</span> generalErrorCB<span class="sh_symbol">);</span></pre>
+      </div>
+    </div>
+    <div class="section" id="security-and-privacy-considerations">
+      <!--OddPage--><h2><span class="secno">3. </span>
+        Security and Privacy Considerations
+      </h2>
+      <p class="note">
+        The overall architecture for addressing privacy in DAP is still under construction. As it is finalized, there may be changes made
+        to this API to reflect requirements or support for privacy-related functionality.
+      </p>
+      <p>
+        The API defined in this specification can be used to create, find, save and remove contact information from a user's address
+        book(s). All API methods disclose information related to a user's contacts such as their phone number(s), email address(es) and
+        other personally identifying information. The distribution of this information could potentially compromise the user's privacy.
+        A conforming implementation of this specification <em title="must" class="rfc2119">must</em> provide a mechanism that protects the user's privacy and this mechanism
+        should ensure that no contact information is creatable, retrivable, updateable or removable without the user's express
+        permission.
+      </p>
+      <div class="section" id="privacy-considerations-for-implementors-of-the-contacts-api">
+        <h3><span class="secno">3.1 </span>
+          Privacy considerations for implementors of the Contacts API
+        </h3>
+        <p>
+          A <a class="internalDFN" href="#dfn-user-agent">user agent</a> must not create, find, save or delete contact information to Web sites without the express permission of the
+          user. A <a class="internalDFN" href="#dfn-user-agent">user agent</a> must acquire permission through a user interface, unless they have prearranged trust relationships with
+          users, as described below. The user interface must include the URI of the document origin, as defined in [<a href="#bib-HTML5" rel="biblioentry" class="bibref">HTML5</a>]. Those
+          permissions that are acquired through the user interface and that are preserved beyond the current browsing session (i.e. beyond
+          the time when the browsing context, as defined in [<a href="#bib-HTML5" rel="biblioentry" class="bibref">HTML5</a>], is navigated to another URL) <em title="must" class="rfc2119">must</em> be revocable and a <a class="internalDFN" href="#dfn-user-agent">user
+          agent</a> must respect revoked permissions.
+        </p>
+        <p>
+          Obtaining the user's express permission to access one API method does not imply the user has granted permission for the same
+          Web site to access other methods provided by this API, or to access the same method with a different set of arguments, as part of
+          the same permission context. If a user has expressed permission for an implementation to, e.g. find a set of existing contacts,
+          the implementation must seek the user's express permission if and when any additional create, find, save or remove function
+          is called on this API.
+        </p>
+        <p>
+          A <a class="internalDFN" href="#dfn-user-agent">user agent</a> may have prearranged trust relationships that do not require such user interfaces. For example, while a Web
+          browser will present a user interface when a Web site performs an address book request, a Widget Runtime <em title="may" class="rfc2119">may</em> have a prearranged,
+          delegated security relationship with the user and, as such, a suitable alternative security and privacy mechanism with which to
+          authorize the creation, retrieval, update and/or removal of contact information.
+        </p>
+      </div>
+      <div class="section" id="privacy-considerations-for-recipients-of-contact-information">
+        <h3><span class="secno">3.2 </span>
+          Privacy considerations for recipients of contact information
+        </h3>
+        <p>
+          Recipients <em title="must" class="rfc2119">must</em> only request contact information when necessary. Recipients <em title="must" class="rfc2119">must</em> only use the contact information for the task
+          for which it was provided to them. Recipients <em title="must" class="rfc2119">must</em> dispose of contact information once that task is completed, unless expressly
+          permitted to retain it by the user. Recipients <em title="must" class="rfc2119">must</em> also take measures to protect this information against unauthorized access.
+          If contact information is stored, users should be allowed to update and delete this information.
+        </p>
+        <p>
+          The recipient of contact information <em title="must" class="rfc2119">must</em> not retransmit the contact information without the user's express permission. Care
+          should be taken when retransmitting and use of encryption is encouraged.
+        </p>
+        <p>
+          Recipients <em title="must" class="rfc2119">must</em> clearly and conspicuously disclose the fact that they are collecting contact data, the purpose for the
+          collection, how long the data is retained, how the data is secured, how the data is shared if it is shared, how users can access,
+          update and delete the data, and any other choices that users have with respect to the data. This disclosure <em title="must" class="rfc2119">must</em> include an
+          explanation of any exceptions to the guidelines listed above.
+        </p>
+      </div>
+      <div id="additional-implementation-considerations" class="informative section">
+        <h3><span class="secno">3.3 </span>
+          Additional implementation considerations
+        </h3><p><em>This section is non-normative.</em></p>
+        <p>
+          Further to the requirements listed in the previous section, implementors of the Contacts API are also advised to consider the
+          following aspects that can negatively affect the privacy of their users: in certain cases, users can inadvertently grant
+          permission to the User Agent to disclose their contacts to Web sites. In other cases, the content hosted at a certain URL changes
+          in such a way that the previously granted contact permissions no longer apply as far as the user is concerned. Or the users might
+          simply change their minds.
+        </p>
+        <p>
+          Predicting or preventing these situations is inherently difficult. Mitigation and in-depth defensive measures are an
+          implementation responsibility and not prescribed by this specification. However, in designing these measures, implementers are
+          advised to enable user awareness of contact sharing, and to provide easy access to interfaces that enable revocation of
+          permissions.
+        </p>
+      </div>
+    </div>
+    <div class="section" id="api-description">
+      <!--OddPage--><h2><span class="secno">4. </span>
+        API Description
+      </h2>
+      <div class="section" id="servicecontacts-interface">
+        <h3><span class="secno">4.1 </span>
+          <a class="idlType" href="#idl-def-ServiceContacts"><code>ServiceContacts</code></a> interface
+        </h3>
+        <p>
+          The <a href="#servicecontacts-interface"><code>ServiceContacts</code></a> interface is exposed on the <code>navigator.service</code>
+          object, as defined in [<a href="#bib-CORE-DEVICE" rel="biblioentry" class="bibref">CORE-DEVICE</a>].
+        </p>
+        <pre class="idl"><span class="idlImplements"><a>Service</a> implements <a class="idlType" href="#idl-def-ServiceContacts"><code>ServiceContacts</code></a>;</span></pre><div class="idlImplementsDesc">
+          &nbsp;
+        </div>
+        <pre class="idl"><span class="idlInterface" id="idl-def-ServiceContacts">[<span class="extAttr">NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">ServiceContacts</span> {
+<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-Contacts"><code>Contacts</code></a></span> <span class="idlAttrName"><a href="#widl-ServiceContacts-contacts">contacts</a></span>;</span>
+};</span>
+</pre><div class="section" id="attributes"><h4><span class="secno">4.1.1 </span>Attributes</h4><dl class="attributes"><dt id="widl-ServiceContacts-contacts"><code>contacts</code> of type <span class="idlAttrType"><a class="idlType" href="#idl-def-Contacts"><code>Contacts</code></a></span>, readonly</dt><dd>
+            The root node from which the contacts functionality can be accessed.
+          <div><em>No exceptions.</em></div></dd></dl></div>
+      </div>
+      <div class="section" id="contacts-interface">
+        <h3><span class="secno">4.2 </span>
+          <a class="idlType" href="#idl-def-Contacts"><code>Contacts</code></a> interface
+        </h3>
+        <p>
+          The <a class="idlType" href="#idl-def-Contacts"><code>Contacts</code></a> interface exposes a database collecting contacts information, such that they may be created, found, read,
+          updated, and deleted.
+        </p>
+        <p>
+          Multiple address books, taken from different sources, can be represented within this unified address book interface. Contacts
+          from different sources can be distinguished using the <a href="#widl-Contact-serviceId"><code>serviceId</code></a> field.. In addition, multiple address books can be displayed
+          by filtering on the required <a href="#widl-Contact-serviceId"><code>serviceId</code></a> value via the <code>Contacts</code> <a href="#widl-Contacts-find">find()</a> function.
+        </p>
+        <p>
+          Equally, multiple contact groups can be represented within this unified address book by specifying consistent <a href="#widl-ContactProperties-tags"><code>tags</code></a> value(s) as part of individual <a href="#contact-interface"><code>Contact</code></a> objects. Multiple contact groups can be displayed by filtering on the
+          required <a href="#widl-ContactProperties-tags"><code>tags</code></a> value(s) via the <code>Contacts</code> <a href="#widl-Contacts-find">find()</a> function.
+        </p>
+        <pre class="idl"><span class="idlInterface" id="idl-def-Contacts">[<span class="extAttr">NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">Contacts</span> {
+<span class="idlMethod">    <span class="idlMethType"><a class="idlType" href="#idl-def-Contact"><code>Contact</code></a></span>   <span class="idlMethName"><a href="#widl-Contacts-create">create</a></span> (<span class="idlParam">in <span class="idlParamType"><a class="idlType" href="#idl-def-ContactProperties"><code>ContactProperties</code></a></span> <span class="idlParamName">attributes</span></span>);</span>
+<span class="idlMethod">    <span class="idlMethType"><a>PendingOp</a></span> <span class="idlMethName"><a href="#widl-Contacts-find">find</a></span> (<span class="idlParam">in <span class="idlParamType"><a>DOMString</a>[]</span> <span class="idlParamName">fields</span></span>, <span class="idlParam">in <span class="idlParamType"><a class="idlType" href="#idl-def-ContactFindSuccessCB"><code>ContactFindSuccessCB</code></a></span> <span class="idlParamName">successCB</span></span>, <span class="idlParam">in optional <span class="idlParamType"><a class="idlType" href="#idl-def-ContactErrorCB"><code>ContactErrorCB</code></a>?</span> <span class="idlParamName">errorCB</span></span>, <span class="idlParam">in optional <span class="idlParamType"><a class="idlType" href="#idl-def-ContactFindOptions"><code>ContactFindOptions</code></a>?</span> <span class="idlParamName">options</span></span>);</span>
+};</span>
+</pre><div class="section" id="methods"><h4><span class="secno">4.2.1 </span>Methods</h4><dl class="methods"><dt id="widl-Contacts-create"><code>create</code></dt><dd>
+            Create a new <code>Contact</code> object. 
+            <p>
+              This method takes one argument. When called, it returns a <a href="#contact-interface"><code>Contact</code></a> object.
+            </p>
+            <p>
+              The newly created <a href="#contact-interface"><code>Contact</code></a> object <em title="must not" class="rfc2119">must not</em> be stored in the user's address book as a result of
+              calling this method. The <a href="#contact-interface"><code>Contact</code></a> <a href="#widl-Contact-save">save()</a> method <em title="must" class="rfc2119">must</em> be called on the response of this method to store the new <a href="#contact-interface"><code>Contact</code></a> object in the user's address book.
+            </p>
+            
+          <table class="parameters"><tr><th>Parameter</th><th>Type</th><th>Nullable</th><th>Optional</th><th>Description</th></tr><tr><td class="prmName">attributes</td><td class="prmType"><code><a class="idlType" href="#idl-def-ContactProperties"><code>ContactProperties</code></a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc">
+                The attributes to assign to the resulting object.
+              </td></tr></table><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a class="idlType" href="#idl-def-Contact"><code>Contact</code></a></code></div></dd><dt id="widl-Contacts-find"><code>find</code></dt><dd>
+            <p>
+              Find contacts in the address book according to the <a class="internalDFN" href="#dfn-find-contacts-process">find contacts process</a> detailed below.
+            </p>
+            <p>
+              This method takes two, three or four arguments. When called, it immediately returns a <code>PendingOp</code> object , as
+              defined in [<a href="#bib-CORE-DEVICE" rel="biblioentry" class="bibref">CORE-DEVICE</a>], and then asynchronously starts a <dfn id="dfn-find-contacts-process">find contacts process</dfn> defined as follows:
+            </p>
+            <ol>
+              <li>
+                If a current find(), save() or remove() operation is pending a response, invoke the <code>errorCB</code> with a <a href="#widl-ContactError-PENDING_OPERATION_ERROR"><code>PENDING_OPERATION_ERROR</code></a> code.
+              </li>
+              <li>
+                Search for contacts in the address book according to the rules defined in <a href="#contact-search-processing">Contact Search Processing</a>.
+              </li>
+              <li>
+                If successful, invoke the associated <code>successCB</code>. If the attempt fails, and the method was invoked with a
+                non-<code>null</code> <code>errorCB</code> argument, this method must invoke the <code>errorCB</code> with a <a href="#contacterror-interface"><code>ContactError</code></a> object as an argument.
+              </li>
+            </ol>
+            
+          <table class="parameters"><tr><th>Parameter</th><th>Type</th><th>Nullable</th><th>Optional</th><th>Description</th></tr><tr><td class="prmName">fields</td><td class="prmType"><code><a>DOMString</a>[]</code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc">
+                The <a class="internalDFN" href="#dfn-search-qualifier">search qualifier</a>.
+              </td></tr><tr><td class="prmName">successCB</td><td class="prmType"><code><a class="idlType" href="#idl-def-ContactFindSuccessCB"><code>ContactFindSuccessCB</code></a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc">
+                Function to call when the asynchronous operation completes
+              </td></tr><tr><td class="prmName">errorCB</td><td class="prmType"><code><a class="idlType" href="#idl-def-ContactErrorCB"><code>ContactErrorCB</code></a></code></td><td class="prmNullTrue">✔</td><td class="prmOptTrue">✔</td><td class="prmDesc">
+                Function to call when the asynchronous operation fails.
+              </td></tr><tr><td class="prmName">options</td><td class="prmType"><code><a class="idlType" href="#idl-def-ContactFindOptions"><code>ContactFindOptions</code></a></code></td><td class="prmNullTrue">✔</td><td class="prmOptTrue">✔</td><td class="prmDesc">
+                The options to apply to the output of this method.
+              </td></tr></table><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>PendingOp</a></code></div></dd></dl></div>
+      </div>
+      <div class="section" id="contact-interface">
+        <h3><span class="secno">4.3 </span>
+          <a class="idlType" href="#idl-def-Contact"><code>Contact</code></a> interface
+        </h3>
+        <p>
+          The <a href="#contact-interface"><code>Contact</code></a> interface captures a single contact item. This interface extends <a href="#contactproperties-interface"><code>ContactProperties</code></a> attributes.
+        </p>
+        <p>
+          All <a href="#contact-interface"><code>Contact</code></a> objects <em title="must" class="rfc2119">must</em> include all attributes supported by the implementation,
+          regardless of whether these attributes have been assigned a non-<code>null</code> value or a <code>null</code> value.
+        </p>
+        <p>
+          If a supported attribute has not been assigned a value by the user and/or implementation, then this attribute <em title="must" class="rfc2119">must</em> still be
+          present in the resulting <a href="#contact-interface"><code>Contact</code></a> object and <em title="must" class="rfc2119">must</em> have a value of <code>null</code>.
+        </p>
+        <pre class="idl"><span class="idlInterface" id="idl-def-Contact">[<span class="extAttr">NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">Contact</span> : <span class="idlSuperclass"><a class="idlType" href="#idl-def-ContactProperties"><code>ContactProperties</code></a></span> {
+<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>DOMString</a></span>  <span class="idlAttrName"><a href="#widl-Contact-id">id</a></span>;</span>
+<span class="idlAttribute">             attribute <span class="idlAttrType"><a>DOMString</a>?</span> <span class="idlAttrName"><a href="#widl-Contact-serviceId">serviceId</a></span>;</span>
+<span class="idlMethod">    <span class="idlMethType"><a class="idlType" href="#idl-def-Contact"><code>Contact</code></a></span>   <span class="idlMethName"><a href="#widl-Contact-clone">clone</a></span> ();</span>
+<span class="idlMethod">    <span class="idlMethType"><a>PendingOp</a></span> <span class="idlMethName"><a href="#widl-Contact-save">save</a></span> (<span class="idlParam">in <span class="idlParamType"><a class="idlType" href="#idl-def-ContactSuccessCB"><code>ContactSuccessCB</code></a></span> <span class="idlParamName">successCB</span></span>, <span class="idlParam">in optional <span class="idlParamType"><a class="idlType" href="#idl-def-ContactErrorCB"><code>ContactErrorCB</code></a>?</span> <span class="idlParamName">errorCB</span></span>);</span>
+<span class="idlMethod">    <span class="idlMethType"><a>PendingOp</a></span> <span class="idlMethName"><a href="#widl-Contact-remove">remove</a></span> (<span class="idlParam">in <span class="idlParamType"><a class="idlType" href="#idl-def-ContactSuccessCB"><code>ContactSuccessCB</code></a></span> <span class="idlParamName">successCB</span></span>, <span class="idlParam">in optional <span class="idlParamType"><a class="idlType" href="#idl-def-ContactErrorCB"><code>ContactErrorCB</code></a>?</span> <span class="idlParamName">errorCB</span></span>);</span>
+};</span>
+</pre><div class="section" id="attributes-1"><h4><span class="secno">4.3.1 </span>Attributes</h4><dl class="attributes"><dt id="widl-Contact-id"><code>id</code> of type <span class="idlAttrType"><a>DOMString</a></span>, readonly</dt><dd>
+            <p>
+              A globally unique identifier for the given <code>Contact</code> object. Each <code>Contact</code> referenced from
+              <code>Contacts</code> <em title="must" class="rfc2119">must</em> include a non-empty <code>id</code> value.
+            </p>
+            <p>
+              An implementation <em title="must" class="rfc2119">must</em> maintain this globally unique resource identifier when a Contact is added to, or present within, an
+              Address Book.
+            </p>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>id</code>] for additional definition of this attribute.
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-Contact-serviceId"><code>serviceId</code> of type <span class="idlAttrType"><a>DOMString</a></span>, nullable</dt><dd>
+            <p class="note">
+              Can we remove this attribute? Does a web application need to know the storage location of a Contact record?<br>
+              <br>
+               This directly relates to <a href="http://www.w3.org/2009/dap/track/issues/43">ISSUE-43</a> and discussion thread <a href="http://lists.w3.org/Archives/Public/public-device-apis/2010Jun/0248.html">http://lists.w3.org/Archives/Public/public-device-apis/2010Jun/0248.html</a>.
+            </p>
+            <p>
+              An identifier that <em title="may" class="rfc2119">may</em> be provided that represents the address book owner of the current contact object.
+            </p>
+            <p>
+              This attribute enables multiple address book sources to be tagged and filtered on Contact objects.
+            </p>
+            <p>
+              The following constants are defined for use in the <code>serviceId</code> attribute for addressing non-networked storage
+              databases:
+            </p>
+<pre> 
+'uicc', 'device'.
+</pre>
+            <p>
+              A conforming implementation <em title="must" class="rfc2119">must</em> define a <dfn id="dfn-default-service-identifier">default service identifier</dfn> on which to store <a href="#contact-interface"><code>Contact</code></a> objects that have not yet been assigned to any storage database. The
+              <a class="internalDFN" href="#dfn-default-service-identifier">default service identifier</a> will then be used in the <a href="#contact-interface"><code>Contact</code></a> <a href="#widl-Contact-save">save()</a> operation when a serviceId is not recognized or when the serviceId attribute is
+              <code>null</code>.
+            </p>
+            <p>
+              For all other Contacts sources, it is recommended that the serviceId attribute is assigned as a URI.
+            </p>
+          <div><em>No exceptions.</em></div></dd></dl></div><div class="section" id="methods-1"><h4><span class="secno">4.3.2 </span>Methods</h4><dl class="methods"><dt id="widl-Contact-clone"><code>clone</code></dt><dd>
+            <p>
+              Create a deep clone copy of the current object minus the current object's <a href="#widl-Contact-id"><code>id</code></a> attribute.
+            </p>
+            <p>
+              The resulting object <em title="must" class="rfc2119">must</em> be provided with a newly generated <a href="#widl-Contact-id"><code>id</code></a> attribute to distiguish the cloned object from the original object.
+            </p>
+          <div><em>No parameters.</em></div><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a class="idlType" href="#idl-def-Contact"><code>Contact</code></a></code></div></dd><dt id="widl-Contact-remove"><code>remove</code></dt><dd>
+            <p>
+              Remove the current contact from the address book.
+            </p>
+            <p>
+              In the case that the current <a href="#widl-Contact-id"><code>id</code></a> attribute is <code>null</code> and this method is invoked, a <a href="#contacterrorcb-interface"><code>ContactErrorCB</code></a> <em title="must" class="rfc2119">must</em> be triggered as part of the <a class="internalDFN" href="#dfn-remove-contact-process">remove contact
+              process</a>. This error <em title="must" class="rfc2119">must</em> consist of a <a href="#contacterror-interface"><code>ContactError</code></a> object with a <code>code</code> of <a href="#widl-ContactError-NOT_FOUND_ERROR"><code>NOT_FOUND_ERROR</code></a>.
+            </p>
+            <p>
+              This method takes one or two arguments. When called, it immediately returns a <code>PendingOp</code> object, as defined in
+              [<a href="#bib-CORE-DEVICE" rel="biblioentry" class="bibref">CORE-DEVICE</a>], and then asynchronously starts a <dfn id="dfn-remove-contact-process">remove contact process</dfn> defined as follows:
+            </p>
+            <ol>
+              <li>
+                If a current find(), save() or remove() operation is pending a response, invoke the <code>errorCB</code> with a <a href="#widl-ContactError-PENDING_OPERATION_ERROR"><code>PENDING_OPERATION_ERROR</code></a> code.
+              </li>
+              <li>
+                Remove the current object from <a href="#contacts-interface"><code>Contacts</code></a>.
+              </li>
+              <li>
+                If the removal of the current object from <a href="#contacts-interface"><code>Contacts</code></a> was successful, set the current object's <a href="#widl-Contact-id"><code>Contact.id</code></a> value to <code>null</code> and the current object's <a href="#widl-Contact-serviceId"><code>Contact.serviceId</code></a> value to <code>null</code>.
+              </li>
+              <li>
+                If successful, invoke the associated <code>successCB</code>. If the attempt fails, and the method was invoked with a
+                non-<code>null</code> <code>errorCB</code> argument, this method must invoke the <code>errorCB</code> with a <a href="#contacterror-interface"><code>ContactError</code></a> object as an argument.
+              </li>
+            </ol>
+            
+          <table class="parameters"><tr><th>Parameter</th><th>Type</th><th>Nullable</th><th>Optional</th><th>Description</th></tr><tr><td class="prmName">successCB</td><td class="prmType"><code><a class="idlType" href="#idl-def-ContactSuccessCB"><code>ContactSuccessCB</code></a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc">
+                Function to call when the asynchronous operation completes
+              </td></tr><tr><td class="prmName">errorCB</td><td class="prmType"><code><a class="idlType" href="#idl-def-ContactErrorCB"><code>ContactErrorCB</code></a></code></td><td class="prmNullTrue">✔</td><td class="prmOptTrue">✔</td><td class="prmDesc">
+                Function to call when the asynchronous operation fails.
+              </td></tr></table><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>PendingOp</a></code></div></dd><dt id="widl-Contact-save"><code>save</code></dt><dd>
+            <p>
+              Add or update (as appropriate) the current <a href="#contact-interface"><code>Contact</code></a> object to the <a href="#contacts-interface"><code>Contacts</code></a>.
+            </p>
+            <p>
+              This method takes one or two arguments. When called, it immediately returns a <code>PendingOp</code> object , as defined in
+              [<a href="#bib-CORE-DEVICE" rel="biblioentry" class="bibref">CORE-DEVICE</a>], and then asynchronously starts a <dfn id="dfn-save-contact-process">save contact process</dfn> defined as follows:
+            </p>
+            <ol>
+              <li>
+                If a current find(), save() or remove() operation is pending a response, invoke the <code>errorCB</code> with a <a href="#widl-ContactError-PENDING_OPERATION_ERROR"><code>PENDING_OPERATION_ERROR</code></a> code.
+              </li>
+              <li>
+                If the current <a href="#widl-Contact-serviceId"><code>Contact.serviceId</code></a> value is not recognized in <a href="#contacts-interface"><code>Contacts</code></a> or a <a href="#widl-Contact-serviceId"><code>Contact.serviceId</code></a> value has not been set, create and set a new <a href="#widl-Contact-serviceId"><code>Contact.serviceId</code></a> value to the <a class="internalDFN" href="#dfn-default-service-identifier">default service identifier</a>.
+              </li>
+              <li>
+                If the current <a href="#widl-Contact-id"><code>Contact.id</code></a> value is not recognized in <a href="#contacts-interface"><code>Contacts</code></a> or a <a href="#widl-Contact-id"><code>Contact.id</code></a> value has not been set, create and set a new <a href="#widl-Contact-id"><code>Contact.id</code></a> value and add the current object as a new object to <a href="#contacts-interface"><code>Contacts</code></a>.
+              </li>
+              <li>
+                If the <a href="#widl-Contact-id"><code>Contact.id</code></a> already exists in <a href="#contacts-interface"><code>Contacts</code></a> then update the existing object in <a href="#contacts-interface"><code>Contacts</code></a>.
+              </li>
+              <li>
+                If successful, invoke the associated <code>successCB</code>. If the attempt fails, and the method was invoked with a
+                non-<code>null</code> <code>errorCB</code> argument, this method must invoke the <code>errorCB</code> with a <a href="#contacterror-interface"><code>ContactError</code></a> object as an argument.
+              </li>
+            </ol>
+            
+          <table class="parameters"><tr><th>Parameter</th><th>Type</th><th>Nullable</th><th>Optional</th><th>Description</th></tr><tr><td class="prmName">successCB</td><td class="prmType"><code><a class="idlType" href="#idl-def-ContactSuccessCB"><code>ContactSuccessCB</code></a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc">
+                Function to call when the asynchronous operation completes
+              </td></tr><tr><td class="prmName">errorCB</td><td class="prmType"><code><a class="idlType" href="#idl-def-ContactErrorCB"><code>ContactErrorCB</code></a></code></td><td class="prmNullTrue">✔</td><td class="prmOptTrue">✔</td><td class="prmDesc">
+                Function to call when the asynchronous operation fails.
+              </td></tr></table><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>PendingOp</a></code></div></dd></dl></div>
+      </div>
+      <div class="section" id="contactproperties-interface">
+        <h3><span class="secno">4.4 </span>
+          <a class="idlType" href="#idl-def-ContactProperties"><code>ContactProperties</code></a> interface
+        </h3>
+        <p class="note">
+          The use of Portable Contacts schema as the format for contacts is subject to further discussions in the group.
+        </p>
+        <p>
+          The <a href="#contactproperties-interface"><code>ContactProperties</code></a> interface captures the settable properties of a contact.
+          All properties included in this interface have a corresponding definition in [<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>].
+        </p>
+        <p>
+          In addition to the properties defined in this interface, a conforming implementation <em title="must" class="rfc2119">must</em> support both the Singular and Plural
+          OpenSocial fields defined in [<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>].
+        </p>
+        <p class="note">
+          The inclusion of OpenSocial fields in the paragraph above needs further explanation, particularly in relation to contact database
+          searching and sorting.
+        </p>
+        <pre class="idl"><span class="idlInterface" id="idl-def-ContactProperties">[<span class="extAttr">NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">ContactProperties</span> {
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span>             <span class="idlAttrName"><a href="#widl-ContactProperties-displayName">displayName</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactName"><code>ContactName</code></a></span>           <span class="idlAttrName"><a href="#widl-ContactProperties-name">name</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span>             <span class="idlAttrName"><a href="#widl-ContactProperties-nickname">nickname</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a>[]</span>        <span class="idlAttrName"><a href="#widl-ContactProperties-phoneNumbers">phoneNumbers</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a>[]</span>        <span class="idlAttrName"><a href="#widl-ContactProperties-emails">emails</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactAddress"><code>ContactAddress</code></a>[]</span>      <span class="idlAttrName"><a href="#widl-ContactProperties-addresses">addresses</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a>[]</span>        <span class="idlAttrName"><a href="#widl-ContactProperties-ims">ims</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactOrganization"><code>ContactOrganization</code></a>[]</span> <span class="idlAttrName"><a href="#widl-ContactProperties-organizations">organizations</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span>             <span class="idlAttrName"><a href="#widl-ContactProperties-published">published</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span>             <span class="idlAttrName"><a href="#widl-ContactProperties-updated">updated</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span>             <span class="idlAttrName"><a href="#widl-ContactProperties-birthday">birthday</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span>             <span class="idlAttrName"><a href="#widl-ContactProperties-anniversary">anniversary</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span>             <span class="idlAttrName"><a href="#widl-ContactProperties-gender">gender</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span>             <span class="idlAttrName"><a href="#widl-ContactProperties-note">note</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span>             <span class="idlAttrName"><a href="#widl-ContactProperties-preferredUsername">preferredUsername</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a>[]</span>        <span class="idlAttrName"><a href="#widl-ContactProperties-photos">photos</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a>[]</span>        <span class="idlAttrName"><a href="#widl-ContactProperties-tags">tags</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a>[]</span>        <span class="idlAttrName"><a href="#widl-ContactProperties-relationships">relationships</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a>[]</span>        <span class="idlAttrName"><a href="#widl-ContactProperties-urls">urls</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactAccount"><code>ContactAccount</code></a>[]</span>      <span class="idlAttrName"><a href="#widl-ContactProperties-accounts">accounts</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span>             <span class="idlAttrName"><a href="#widl-ContactProperties-utcOffset">utcOffset</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span>             <span class="idlAttrName"><a href="#widl-ContactProperties-connected">connected</a></span>;</span>
+};</span>
+</pre><div class="section" id="attributes-2"><h4><span class="secno">4.4.1 </span>Attributes</h4><dl class="attributes"><dt id="widl-ContactProperties-accounts"><code>accounts</code> of type array of <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactAccount"><code>ContactAccount</code></a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.2. <code>accounts</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-addresses"><code>addresses</code> of type array of <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactAddress"><code>ContactAddress</code></a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.2. <code>addresses</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-anniversary"><code>anniversary</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>anniversary</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-birthday"><code>birthday</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>birthday</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-connected"><code>connected</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p class="note">
+              Ignore this [<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] attribute?
+            </p>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>connected</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-displayName"><code>displayName</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>displayName</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-emails"><code>emails</code> of type array of <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.2. <code>emails</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-gender"><code>gender</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>gender</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-ims"><code>ims</code> of type array of <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.2. <code>ims</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-name"><code>name</code> of type <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactName"><code>ContactName</code></a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>name</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-nickname"><code>nickname</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>nickname</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-note"><code>note</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>note</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-organizations"><code>organizations</code> of type array of <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactOrganization"><code>ContactOrganization</code></a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.2. <code>organizations</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-phoneNumbers"><code>phoneNumbers</code> of type array of <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.2. <code>phoneNumbers</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-photos"><code>photos</code> of type array of <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.2. <code>photos</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-preferredUsername"><code>preferredUsername</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>preferredUsername</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-published"><code>published</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>published</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-relationships"><code>relationships</code> of type array of <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.2. <code>relationships</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-tags"><code>tags</code> of type array of <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.2. <code>tags</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-updated"><code>updated</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>updated</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-urls"><code>urls</code> of type array of <span class="idlAttrType"><a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.2. <code>urls</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactProperties-utcOffset"><code>utcOffset</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>] Section 7.2.1. <code>utcOffset</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd></dl></div>
+      </div>
+      <div class="section" id="contactname-interface">
+        <h3><span class="secno">4.5 </span>
+          <a class="idlType" href="#idl-def-ContactName"><code>ContactName</code></a> interface
+        </h3>
+        <p>
+          The <a href="#contactname-interface"><code>ContactName</code></a> interface describes a contact's name.
+        </p>
+        <pre class="idl"><span class="idlInterface" id="idl-def-ContactName">[<span class="extAttr">NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">ContactName</span> {
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactName-formatted">formatted</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactName-familyName">familyName</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactName-givenName">givenName</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactName-middleName">middleName</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactName-honorificPrefix">honorificPrefix</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactName-honorificSuffix">honorificSuffix</a></span>;</span>
+};</span>
+</pre><div class="section" id="attributes-3"><h4><span class="secno">4.5.1 </span>Attributes</h4><dl class="attributes"><dt id="widl-ContactName-familyName"><code>familyName</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.3. <code>familyName</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactName-formatted"><code>formatted</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.3. <code>formatted</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactName-givenName"><code>givenName</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.3. <code>givenName</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactName-honorificPrefix"><code>honorificPrefix</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.3. <code>honorificPrefix</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactName-honorificSuffix"><code>honorificSuffix</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.3. <code>honorificSuffix</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactName-middleName"><code>middleName</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.3. <code>middleName</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd></dl></div>
+      </div>
+      <div class="section" id="contactfield-interface">
+        <h3><span class="secno">4.6 </span>
+          <a class="idlType" href="#idl-def-ContactField"><code>ContactField</code></a> interface
+        </h3>
+        <p>
+          The ContactField interface is a reusable component that is used to support contact fields within the <a href="#contactproperties-interface"><code>ContactProperties</code></a> interface.
+        </p>
+        <pre class="idl"><span class="idlInterface" id="idl-def-ContactField">[<span class="extAttr">NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">ContactField</span> {
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactField-type">type</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactField-value">value</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>boolean</a></span>   <span class="idlAttrName"><a href="#widl-ContactField-primary">primary</a></span>;</span>
+};</span>
+</pre><div class="section" id="attributes-4"><h4><span class="secno">4.6.1 </span>Attributes</h4><dl class="attributes"><dt id="widl-ContactField-primary"><code>primary</code> of type <span class="idlAttrType"><a>boolean</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.2.2. <code>primary</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactField-type"><code>type</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.2.2. <code>type</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactField-value"><code>value</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.2.2. <code>value</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd></dl></div>
+      </div>
+      <div class="section" id="contactaddress-interface">
+        <h3><span class="secno">4.7 </span>
+          <a class="idlType" href="#idl-def-ContactAddress"><code>ContactAddress</code></a> interface
+        </h3>
+        <p>
+          The ContactAddress interface is a reusable component that is used to support contact addresses within the <a href="#contactproperties-interface"><code>ContactProperties</code></a> interface.
+        </p>
+        <pre class="idl"><span class="idlInterface" id="idl-def-ContactAddress">[<span class="extAttr">NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">ContactAddress</span> {
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactAddress-formatted">formatted</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactAddress-streetAddress">streetAddress</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactAddress-locality">locality</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactAddress-region">region</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactAddress-postalCode">postalCode</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactAddress-country">country</a></span>;</span>
+};</span>
+</pre><div class="section" id="attributes-5"><h4><span class="secno">4.7.1 </span>Attributes</h4><dl class="attributes"><dt id="widl-ContactAddress-country"><code>country</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.4. <code>country</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactAddress-formatted"><code>formatted</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.4. <code>formatted</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactAddress-locality"><code>locality</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.4. <code>locality</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactAddress-postalCode"><code>postalCode</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.4. <code>postalCode</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactAddress-region"><code>region</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.4. <code>region</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactAddress-streetAddress"><code>streetAddress</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.4. <code>streetAddress</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd></dl></div>
+      </div>
+      <div class="section" id="contactorganization-interface">
+        <h3><span class="secno">4.8 </span>
+          <a class="idlType" href="#idl-def-ContactOrganization"><code>ContactOrganization</code></a> interface
+        </h3>
+        <p>
+          The ContactOrganization interface is a reusable component that is used to support contact organizations within the <a href="#contactproperties-interface"><code>ContactProperties</code></a> interface.
+        </p>
+        <pre class="idl"><span class="idlInterface" id="idl-def-ContactOrganization">[<span class="extAttr">NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">ContactOrganization</span> {
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactOrganization-name">name</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactOrganization-department">department</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactOrganization-title">title</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactOrganization-startDate">startDate</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactOrganization-endDate">endDate</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactOrganization-location">location</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactOrganization-description">description</a></span>;</span>
+};</span>
+</pre><div class="section" id="attributes-6"><h4><span class="secno">4.8.1 </span>Attributes</h4><dl class="attributes"><dt id="widl-ContactOrganization-department"><code>department</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.5. <code>department</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactOrganization-description"><code>description</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.5. <code>description</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactOrganization-endDate"><code>endDate</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.5. <code>endDate</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactOrganization-location"><code>location</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.5. <code>location</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactOrganization-name"><code>name</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.5. <code>name</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactOrganization-startDate"><code>startDate</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.5. <code>startDate</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactOrganization-title"><code>title</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.5. <code>title</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd></dl></div>
+      </div>
+      <div class="section" id="contactaccount-interface">
+        <h3><span class="secno">4.9 </span>
+          <a class="idlType" href="#idl-def-ContactAccount"><code>ContactAccount</code></a> interface
+        </h3>
+        <p>
+          The ContactAccount interface is a reusable component that is used to support contact accounts within the <a href="#contactproperties-interface"><code>ContactProperties</code></a> interface.
+        </p>
+        <pre class="idl"><span class="idlInterface" id="idl-def-ContactAccount">[<span class="extAttr">NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">ContactAccount</span> {
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactAccount-domain">domain</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactAccount-username">username</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span> <span class="idlAttrName"><a href="#widl-ContactAccount-userid">userid</a></span>;</span>
+};</span>
+</pre><div class="section" id="attributes-7"><h4><span class="secno">4.9.1 </span>Attributes</h4><dl class="attributes"><dt id="widl-ContactAccount-domain"><code>domain</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.6. <code>domain</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactAccount-userid"><code>userid</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.6. <code>userid</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactAccount-username"><code>username</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              See [[<a href="#bib-POCO-SCHEMA" rel="biblioentry" class="bibref">POCO-SCHEMA</a>]] Section 7.6. <code>username</code>].
+            </p>
+          <div><em>No exceptions.</em></div></dd></dl></div>
+      </div>
+      <div class="section" id="contactfindoptions-interface">
+        <h3><span class="secno">4.10 </span>
+          <a class="idlType" href="#idl-def-ContactFindOptions"><code>ContactFindOptions</code></a> interface
+        </h3>
+        <p>
+          The <a href="#contactfindoptions-interface"><code>ContactFindOptions</code></a> interface describes the options that can be applied to
+          contact searching. When a <a href="#contactfindoptions-interface"><code>ContactFindOptions</code></a> parameter is provided to the <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation, it should be processed according to the provisions detailed in <a href="#options-processing">Options Processing</a>.
+        </p>
+        <pre class="idl"><span class="idlInterface" id="idl-def-ContactFindOptions">[<span class="extAttr">NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">ContactFindOptions</span> {
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>String</a>?</span>         <span class="idlAttrName"><a href="#widl-ContactFindOptions-filter">filter</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>boolean</a>?</span>        <span class="idlAttrName"><a href="#widl-ContactFindOptions-multiple">multiple</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>unsigned short</a>?</span> <span class="idlAttrName"><a href="#widl-ContactFindOptions-limit">limit</a></span>;</span>
+<span class="idlAttribute">    attribute <span class="idlAttrType"><a>DOMString</a></span>       <span class="idlAttrName"><a href="#widl-ContactFindOptions-updatedSince">updatedSince</a></span>;</span>
+};</span>
+</pre><div class="section" id="attributes-8"><h4><span class="secno">4.10.1 </span>Attributes</h4><dl class="attributes"><dt id="widl-ContactFindOptions-filter"><code>filter</code> of type <span class="idlAttrType"><a>String</a></span>, nullable</dt><dd>
+            A DOMString-based <a class="internalDFN" href="#dfn-search-filter">search filter</a> with which to search and intially filter the <a href="#contacts-interface"><code>Contacts</code></a> database.
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactFindOptions-limit"><code>limit</code> of type <span class="idlAttrType"><a>unsigned short</a></span>, nullable</dt><dd>
+            <p>
+              The maximum number of results to return from the contacts search.
+            </p>
+            <p>
+              This parameter only applies in the case that the associated <code>multiple</code> attribute is equal to <code>true</code>.
+            </p>
+            <p>
+              If no value is provided, the search will return all <a href="#contact-interface"><code>Contact</code></a> object results.
+            </p>
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactFindOptions-multiple"><code>multiple</code> of type <span class="idlAttrType"><a>boolean</a></span>, nullable</dt><dd>
+            A boolean value to indicate whether multiple Contact objects are returnable as part of the associated <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation.
+          <div><em>No exceptions.</em></div></dd><dt id="widl-ContactFindOptions-updatedSince"><code>updatedSince</code> of type <span class="idlAttrType"><a>DOMString</a></span></dt><dd>
+            <p>
+              Return only contact records that have been updated on or after the given time, specified as an xs:dateTime.
+            </p>
+            <p>
+              This filter is based on the <a href="#widl-ContactProperties-updated"><code>updated</code></a> field as defined in <a href="#contactproperties-interface"><code>ContactProperties</code></a>.
+            </p>
+          <div><em>No exceptions.</em></div></dd></dl></div>
+      </div>
+      <div class="section" id="contactfindsuccesscb-interface">
+        <h3><span class="secno">4.11 </span>
+          <a class="idlType" href="#idl-def-ContactFindSuccessCB"><code>ContactFindSuccessCB</code></a> interface
+        </h3>
+        <!-- interface intro here -->
+        <pre class="idl"><span class="idlInterface" id="idl-def-ContactFindSuccessCB">[<span class="extAttr">Callback=FunctionOnly, NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">ContactFindSuccessCB</span> {
+<span class="idlMethod">    <span class="idlMethType"><a>void</a></span> <span class="idlMethName"><a href="#widl-ContactFindSuccessCB-onSuccess">onSuccess</a></span> (<span class="idlParam">in <span class="idlParamType"><a class="idlType" href="#idl-def-Contact"><code>Contact</code></a>[]</span> <span class="idlParamName">contactObjs</span></span>);</span>
+};</span>
+</pre><div class="section" id="methods-2"><h4><span class="secno">4.11.1 </span>Methods</h4><dl class="methods"><dt id="widl-ContactFindSuccessCB-onSuccess"><code>onSuccess</code></dt><dd>
+            <!-- interface description here -->
+            
+          <table class="parameters"><tr><th>Parameter</th><th>Type</th><th>Nullable</th><th>Optional</th><th>Description</th></tr><tr><td class="prmName">contactObjs</td><td class="prmType"><code><a class="idlType" href="#idl-def-Contact"><code>Contact</code></a>[]</code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc">
+                The Contact objects resulting from the given <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> method. <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a>
+              </td></tr></table><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>void</a></code></div></dd></dl></div>
+      </div>
+      <div class="section" id="contactsuccesscb-interface">
+        <h3><span class="secno">4.12 </span>
+          <a class="idlType" href="#idl-def-ContactSuccessCB"><code>ContactSuccessCB</code></a> interface
+        </h3>
+        <!-- interface intro here -->
+        <pre class="idl"><span class="idlInterface" id="idl-def-ContactSuccessCB">[<span class="extAttr">Callback=FunctionOnly, NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">ContactSuccessCB</span> {
+<span class="idlMethod">    <span class="idlMethType"><a>void</a></span> <span class="idlMethName"><a href="#widl-ContactSuccessCB-onSuccess">onSuccess</a></span> (<span class="idlParam">in <span class="idlParamType"><a class="idlType" href="#idl-def-Contact"><code>Contact</code></a></span> <span class="idlParamName">contactObj</span></span>);</span>
+};</span>
+</pre><div class="section" id="methods-3"><h4><span class="secno">4.12.1 </span>Methods</h4><dl class="methods"><dt id="widl-ContactSuccessCB-onSuccess"><code>onSuccess</code></dt><dd>
+            <!-- interface description here -->
+            
+          <table class="parameters"><tr><th>Parameter</th><th>Type</th><th>Nullable</th><th>Optional</th><th>Description</th></tr><tr><td class="prmName">contactObj</td><td class="prmType"><code><a class="idlType" href="#idl-def-Contact"><code>Contact</code></a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc">
+                The Contact object resulting from the given <a href="#contact-interface"><code>Contact</code></a> <a href="#widl-Contact-save">save()</a> or <a href="#contact-interface"><code>Contact</code></a> <a href="#widl-Contact-remove">remove()</a> method.
+              </td></tr></table><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>void</a></code></div></dd></dl></div>
+      </div>
+      <div class="section" id="contacterrorcb-interface">
+        <h3><span class="secno">4.13 </span>
+          <a class="idlType" href="#idl-def-ContactErrorCB"><code>ContactErrorCB</code></a> interface
+        </h3>
+        <!-- interface intro here -->
+        <pre class="idl"><span class="idlInterface" id="idl-def-ContactErrorCB">[<span class="extAttr">Callback=FunctionOnly, NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">ContactErrorCB</span> {
+<span class="idlMethod">    <span class="idlMethType"><a>void</a></span> <span class="idlMethName"><a href="#widl-ContactErrorCB-onError">onError</a></span> (<span class="idlParam">in <span class="idlParamType"><a class="idlType" href="#idl-def-ContactError"><code>ContactError</code></a></span> <span class="idlParamName">error</span></span>);</span>
+};</span>
+</pre><div class="section" id="methods-4"><h4><span class="secno">4.13.1 </span>Methods</h4><dl class="methods"><dt id="widl-ContactErrorCB-onError"><code>onError</code></dt><dd>
+            <!-- interface description here -->
+            
+          <table class="parameters"><tr><th>Parameter</th><th>Type</th><th>Nullable</th><th>Optional</th><th>Description</th></tr><tr><td class="prmName">error</td><td class="prmType"><code><a class="idlType" href="#idl-def-ContactError"><code>ContactError</code></a></code></td><td class="prmNullFalse">✘</td><td class="prmOptFalse">✘</td><td class="prmDesc">
+                The Contact API related error object.
+              </td></tr></table><div><em>No exceptions.</em></div><div><em>Return type: </em><code><a>void</a></code></div></dd></dl></div>
+      </div>
+      <div class="section" id="contacterror-interface">
+        <h3><span class="secno">4.14 </span>
+          <a class="idlType" href="#idl-def-ContactError"><code>ContactError</code></a> interface
+        </h3>
+        <p>
+          The <a href="#contacterror-interface"><code>ContactError</code></a> interface encapsulates all errors in the manipulation of <a href="#contact-interface"><code>Contact</code></a> objects in the Contacts API.
+        </p>
+        <pre class="idl"><span class="idlInterface" id="idl-def-ContactError">[<span class="extAttr">NoInterfaceObject</span>]
+interface <span class="idlInterfaceID">ContactError</span> {
+<span class="idlConst">    const <span class="idlConstType"><a>unsigned short</a></span> <span class="idlConstName"><a href="#widl-ContactError-UNKNOWN_ERROR">UNKNOWN_ERROR</a></span> = <span class="idlConstValue">0</span>;</span>
+<span class="idlConst">    const <span class="idlConstType"><a>unsigned short</a></span> <span class="idlConstName"><a href="#widl-ContactError-INVALID_ARGUMENT_ERROR">INVALID_ARGUMENT_ERROR</a></span> = <span class="idlConstValue">1</span>;</span>
+<span class="idlConst">    const <span class="idlConstType"><a>unsigned short</a></span> <span class="idlConstName"><a href="#widl-ContactError-NOT_FOUND_ERROR">NOT_FOUND_ERROR</a></span> = <span class="idlConstValue">2</span>;</span>
+<span class="idlConst">    const <span class="idlConstType"><a>unsigned short</a></span> <span class="idlConstName"><a href="#widl-ContactError-TIMEOUT_ERROR">TIMEOUT_ERROR</a></span> = <span class="idlConstValue">3</span>;</span>
+<span class="idlConst">    const <span class="idlConstType"><a>unsigned short</a></span> <span class="idlConstName"><a href="#widl-ContactError-PENDING_OPERATION_ERROR">PENDING_OPERATION_ERROR</a></span> = <span class="idlConstValue">4</span>;</span>
+<span class="idlConst">    const <span class="idlConstType"><a>unsigned short</a></span> <span class="idlConstName"><a href="#widl-ContactError-IO_ERROR">IO_ERROR</a></span> = <span class="idlConstValue">5</span>;</span>
+<span class="idlConst">    const <span class="idlConstType"><a>unsigned short</a></span> <span class="idlConstName"><a href="#widl-ContactError-NOT_SUPPORTED_ERROR">NOT_SUPPORTED_ERROR</a></span> = <span class="idlConstValue">6</span>;</span>
+<span class="idlConst">    const <span class="idlConstType"><a>unsigned short</a></span> <span class="idlConstName"><a href="#widl-ContactError-PERMISSION_DENIED_ERROR">PERMISSION_DENIED_ERROR</a></span> = <span class="idlConstValue">20</span>;</span>
+<span class="idlAttribute">    readonly attribute <span class="idlAttrType"><a>unsigned short</a></span> <span class="idlAttrName"><a href="#widl-ContactError-code">code</a></span>;</span>
+};</span>
+</pre><div class="section" id="attributes-9"><h4><span class="secno">4.14.1 </span>Attributes</h4><dl class="attributes"><dt id="widl-ContactError-code"><code>code</code> of type <span class="idlAttrType"><a>unsigned short</a></span>, readonly</dt><dd>
+            An error code assigned by an implementation when an error has occurred in Contacts API processing.
+          <div><em>No exceptions.</em></div></dd></dl></div><div class="section" id="constants"><h4><span class="secno">4.14.2 </span>Constants</h4><dl class="constants"><dt id="widl-ContactError-INVALID_ARGUMENT_ERROR"><code>INVALID_ARGUMENT_ERROR</code> of type <span class="idlConstType"><a>unsigned short</a></span></dt><dd>
+            An invalid parameter was provided when the requested method was invoked.
+          </dd><dt id="widl-ContactError-IO_ERROR"><code>IO_ERROR</code> of type <span class="idlConstType"><a>unsigned short</a></span></dt><dd>
+            An error occurred in communication with the underlying implementation that meant the requested method could not complete.
+          </dd><dt id="widl-ContactError-NOT_FOUND_ERROR"><code>NOT_FOUND_ERROR</code> of type <span class="idlConstType"><a>unsigned short</a></span></dt><dd>
+            If no response information can be provided from the requested method.
+          </dd><dt id="widl-ContactError-NOT_SUPPORTED_ERROR"><code>NOT_SUPPORTED_ERROR</code> of type <span class="idlConstType"><a>unsigned short</a></span></dt><dd>
+            The requested method is not supported by the current implementation.
+          </dd><dt id="widl-ContactError-PENDING_OPERATION_ERROR"><code>PENDING_OPERATION_ERROR</code> of type <span class="idlConstType"><a>unsigned short</a></span></dt><dd>
+            If the <a class="internalDFN" href="#dfn-user-agent">user agent</a> is currently waiting for a callback on a current find(), save() or remove() operation, as defined in
+            this specification.
+          </dd><dt id="widl-ContactError-PERMISSION_DENIED_ERROR"><code>PERMISSION_DENIED_ERROR</code> of type <span class="idlConstType"><a>unsigned short</a></span></dt><dd>
+            Access to the requested method was denied at the implementation or by the user.
+          </dd><dt id="widl-ContactError-TIMEOUT_ERROR"><code>TIMEOUT_ERROR</code> of type <span class="idlConstType"><a>unsigned short</a></span></dt><dd>
+            The requested method timed out before it could be completed.
+          </dd><dt id="widl-ContactError-UNKNOWN_ERROR"><code>UNKNOWN_ERROR</code> of type <span class="idlConstType"><a>unsigned short</a></span></dt><dd>
+            An unknown error occurred.
+          </dd></dl></div>
+      </div>
+    </div>
+    <!-- end api description section -->
+    <div class="section" id="contact-search-processing">
+      <!--OddPage--><h2><span class="secno">5. </span>
+        <a>Contact Search Processing</a>
+      </h2>
+      <p>
+        The <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> method provides an operation to search for one of more <a href="#contact-interface"><code>Contact</code></a> objects within the <a href="#contacts-interface"><code>Contacts</code></a> database.
+      </p>
+      <div class="section" id="search-qualifiers">
+        <h3><span class="secno">5.1 </span>
+          Search Qualifiers
+        </h3>
+        <p>
+          The <dfn id="dfn-search-qualifier">search qualifier</dfn> provides an application with a way to request the specific subset of <a href="#contactproperties-interface"><code>ContactProperties</code></a> it wishes to obtain in any resulting successful callback.
+          The <a class="internalDFN" href="#dfn-search-qualifier">search qualifier</a> is deployed to minimize the data that needs to be shared with an application in order to let that
+          application fulfill its function on behalf of the user. The <a class="internalDFN" href="#dfn-search-qualifier">search qualifier</a> is included within a <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation as the <code>filter</code> parameter.
+        </p>
+        <p>
+          A <a class="internalDFN" href="#dfn-search-qualifier">search qualifier</a> <em title="must" class="rfc2119">must</em> be specified from a requesting application as a part of any <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation.
+        </p>
+        <p>
+          If the <a class="internalDFN" href="#dfn-search-qualifier">search qualifier</a> provided is of <em>zero-length</em> then the current <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation <em title="must not" class="rfc2119">must not</em> return any <a href="#contactproperties-interface"><code>ContactProperties</code></a> within any resulting <a href="#contact-interface"><code>Contact</code></a> object(s).
+        </p>
+        <p>
+          In the case that the <a class="internalDFN" href="#dfn-search-qualifier">search qualifier</a> provided is of <em>non-zero-length</em> then the current <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation <em title="must" class="rfc2119">must</em> return only the matching <a href="#contactproperties-interface"><code>ContactProperties</code></a> within any resulting <a href="#contact-interface"><code>Contact</code></a> object(s).
+        </p>
+        <p>
+          If a specific <a class="internalDFN" href="#dfn-search-qualifier">search qualifier</a> element provided, or <code>filter[x]</code>, does not match any well-known <a href="#contactproperties-interface"><code>ContactProperties</code></a> attribute, <code>filter[x]</code> <em title="should" class="rfc2119">should</em> be ignored when
+          executing the current <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation.
+        </p>
+        <div class="section" id="complex-search-qualifiers">
+          <h4><span class="secno">5.1.1 </span>
+            Complex Search Qualifiers
+          </h4>
+          <p>
+            Certain <a href="#contactproperties-interface"><code>ContactProperties</code></a> attributes can be considered complex by the fact that
+            the information they contain is available only through child DOMString-based attributes of a complex Object object.
+          </p>
+          <p>
+            In such cases, a requesting application <em title="must" class="rfc2119">must</em> be able to request both the full complex <a href="#contactproperties-interface"><code>ContactProperties</code></a> attribute and also be able to request individual parts
+            of a complex <a href="#contactproperties-interface"><code>ContactProperties</code></a> attribute in the <a class="internalDFN" href="#dfn-search-qualifier">search qualifier</a> provided to a
+            <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation.
+          </p>
+          <p>
+            For example, the <code>name</code> attribute of <a href="#contactproperties-interface"><code>ContactProperties</code></a> is defined to be of complex type <a href="#contactname-interface"><code>ContactName</code></a>. Therefore, a requesting application may request either the full
+            complex attribute (i.e. <code>name</code>) or specific individual attributes of this complex attribute (i.e.
+            <code>name.formatted</code>, <code>name.familyName</code>, <code>name.givenName</code>, <code>name.middleName</code>,
+            <code>name.honorificPrefix</code>, <code>name.honorificSuffix</code>) as part of a <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation's <a class="internalDFN" href="#dfn-search-qualifier">search qualifier</a>.
+          </p>
+          <p>
+            In the case that a complex <a href="#contactproperties-interface"><code>ContactProperties</code></a> attribute is defined as a sequence or array of complex
+            objects, specific individual attributes can be referenced by using the complex attribute name, a dot (<code>.</code>) character
+            and the individual attribute to be retrieved.
+          </p>
+          <p>
+            For example, the <code>addresses</code> attribute of <a href="#contactproperties-interface"><code>ContactProperties</code></a> allows multiple <a href="#contactaddress-interface"><code>ContactAddress</code></a> objects to be defined. To request individual attributes of
+            this complex attribute an application would request e.g. <code>addresses.locality</code>, <code>addresses.region</code>, etc.
+          </p>
+        </div>
+        <div class="section" id="search-qualifier-example">
+          <h4><span class="secno">5.1.2 </span>
+            Search Qualifier Example
+          </h4>
+          <p>
+            The following Contact search is initiated:
+          </p>
+<pre class="example sh_javascript sh_sourceCode">navigator<span class="sh_symbol">.</span>service<span class="sh_symbol">.</span>contacts<span class="sh_symbol">.</span><span class="sh_function">find</span><span class="sh_symbol">([</span><span class="sh_string">'emails.value'</span><span class="sh_symbol">,</span> <span class="sh_string">'name'</span><span class="sh_symbol">,</span> <span class="sh_string">'friends'</span><span class="sh_symbol">],</span>
+                                <span class="sh_keyword">function</span><span class="sh_symbol">(</span>contacts<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span> 
+                                   <span class="sh_keyword">for</span><span class="sh_symbol">(</span>i <span class="sh_keyword">in</span> contacts<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
+                                      <span class="sh_keyword">for</span><span class="sh_symbol">(</span>j <span class="sh_keyword">in</span> contacts<span class="sh_symbol">[</span>i<span class="sh_symbol">].</span>emails<span class="sh_symbol">)</span>
+                                         <span class="sh_function">alert</span><span class="sh_symbol">(</span>contacts<span class="sh_symbol">[</span>i<span class="sh_symbol">].</span>emails<span class="sh_symbol">[</span>j<span class="sh_symbol">]);</span>
+                                   <span class="sh_cbracket">}</span>
+                                <span class="sh_cbracket">}</span><span class="sh_symbol">);</span></pre>
+          <p>
+            The above example logically implies:
+          </p>
+          <ol>
+            <li>
+              Return only the valid <a href="#contactproperties-interface"><code>ContactProperties</code></a> requested in the provided <a class="internalDFN" href="#dfn-search-qualifier">search qualifier</a>
+              (<code>name</code>, <code>emails.value</code> - <code>friends</code> is not a valid <a href="#contactproperties-interface"><code>ContactProperties</code></a> attribute so ignore this element).
+            </li>
+          </ol>
+        </div>
+      </div>
+      <div class="section" id="options-processing">
+        <h3><span class="secno">5.2 </span>
+          Options Processing
+        </h3>
+        <div class="section" id="search-cardinality">
+          <h4><span class="secno">5.2.1 </span>
+            Search Cardinality
+          </h4>
+          <p>
+            By default, the <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation <em title="must" class="rfc2119">must</em> return either an empty sequence or a single <a href="#contact-interface"><code>Contact</code></a> object, accessible as part of the sequence returned in the <a href="#contactfindsuccesscb-interface"><code>ContactFindSuccessCB</code></a> callback function.
+          </p>
+          <p>
+            If a <a href="#contactfindoptions-interface"><code>ContactFindOptions</code></a> object is provided to the <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation and its <code>multiple</code> attribute is set to <code>true</code>, the <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation <em title="must" class="rfc2119">must</em> return either an empty sequence, a single <a href="#contact-interface"><code>Contact</code></a> object or <var>[X]</var> number of <a href="#contact-interface"><code>Contact</code></a> objects, accessible as part of the sequence returned in the <a href="#contactfindsuccesscb-interface"><code>ContactFindSuccessCB</code></a> callback function.
+          </p>
+          <p>
+            An implementation <em title="must" class="rfc2119">must</em> specify a suitable integer-based <dfn id="dfn-upper-cardinality-limit">upper cardinality limit</dfn> to limit the maximum number of
+            Contact objects that may be returned in the case that the <code>multiple</code> flag is <code>true</code> and the
+            <code>limit</code> flag is <a class="internalDFN" href="#dfn-out-of-bounds">out of bounds</a>.
+          </p>
+          <p>
+            If a <a href="#contactfindoptions-interface"><code>ContactFindOptions</code></a> object is provided to the <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation and its <code>limit</code> attribute is greater than zero and less than or
+            equal to the implementation's <a class="internalDFN" href="#dfn-upper-cardinality-limit">upper cardinality limit</a>, then <var>[X]</var> <em title="must" class="rfc2119">must</em> be set to the provided
+            <code>limit</code> value.
+          </p>
+          <p>
+            The <code>limit</code> attribute is <dfn id="dfn-out-of-bounds">out of bounds</dfn> if a <a href="#contactfindoptions-interface"><code>ContactFindOptions</code></a> object is provided to the <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation and its <code>limit</code> attribute is less than or equal to zero or greater
+            than the implementation's <a class="internalDFN" href="#dfn-upper-cardinality-limit">upper cardinality limit</a>. In this case <var>[X]</var> <em title="must" class="rfc2119">must</em> be set to the
+            implementation's <a class="internalDFN" href="#dfn-upper-cardinality-limit">upper cardinality limit</a>.
+          </p>
+        </div>
+        <div class="section" id="search-sorting">
+          <h4><span class="secno">5.2.2 </span>
+            Search Sorting
+          </h4>
+          <p>
+            The <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation must return successful callback results according to the sorting guidelines
+            defined in this section.
+          </p>
+          <p>
+            A <dfn id="dfn-search-weight">search weight</dfn> is a numeric value defined for each attribute in a <a href="#contact-interface"><code>Contact</code></a> object. A lower value denotes a higher placing in the ultimate sorting of
+            <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> results. Search weights for each <a href="#contactproperties-interface"><code>ContactProperties</code></a> field are defined in <a href="#search-weights">Appendix B</a>.
+          </p>
+          <p>
+            For example, if a <a class="internalDFN" href="#dfn-search-filter">search filter</a> of 'Bob' matches to <code>name.givenName</code> in Object A and to
+            <code>displayName</code> in Object B, Object B will be the first result object returned from the successCB of the given <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation, followed by Object A.
+          </p>
+          <p class="note">
+            Include UNICODE guidelines for intra-attribute sorting of results (where multiple Contact objects match on the same
+            attribute)... [<a href="#bib-UNICODE" rel="biblioentry" class="bibref">UNICODE</a>] DUCET
+          </p>
+        </div>
+        <div class="section" id="search-filters">
+          <h4><span class="secno">5.2.3 </span>
+            Search Filters
+          </h4>
+          <p>
+            A <dfn id="dfn-search-filter">search filter</dfn> <em title="may" class="rfc2119">may</em> be specified from a requesting web application to initially filter the Contacts database to a
+            more specific set of <a href="#contact-interface"><code>Contact</code></a> objects in which it is interested. The <a class="internalDFN" href="#dfn-search-filter">search filter</a> is included as
+            the <code>filter</code> attribute of the <a href="#contactfindoptions-interface"><code>ContactFindOptions</code></a> object provided to a <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation.
+          </p>
+          <p>
+            A <a class="internalDFN" href="#dfn-search-filter">search filter</a> is used to search all the fields of a <a href="#contacts-interface"><code>Contacts</code></a> database and represents the logical union, or <code>∪</code>, of
+            provided values that are matched therein.
+          </p>
+          <p>
+            All contact searching <em title="must" class="rfc2119">must</em> apply a loose-matching policy to the <a class="internalDFN" href="#dfn-search-filter">search filter</a> provided. If a <a href="#contactproperties-interface"><code>ContactProperties</code></a> attribute being searched in a <a href="#contact-interface"><code>Contact</code></a> object, stored within the <a href="#contacts-interface"><code>Contacts</code></a> database, is a <a class="internalDFN" href="#dfn-partial-value-match">partial value match</a> of the input filter value, that
+            <a href="#contact-interface"><code>Contact</code></a> object <em title="must" class="rfc2119">must</em> be returned as part of the resulting <a href="#contactfindsuccesscb-interface"><code>ContactFindSuccessCB</code></a>.
+          </p>
+          <p>
+            A <dfn id="dfn-partial-value-match">partial value match</dfn> refers to both syntactic and semantic partial matching of an input filter value with a
+            corresponding value in the address book and denotes that a corresponding match was found in the address book that begins with,
+            contains or ends with the value of the input filter value, or any variation thereof.
+          </p>
+          <p>
+            Comparing two strings in a <dfn id="dfn-compatibility-caseless">compatibility caseless</dfn> manner means using the Unicode <em>compatibility caseless
+            match</em> operation to compare the two strings. [<a href="#bib-UNICODE" rel="biblioentry" class="bibref">UNICODE</a>]
+          </p>
+          <p>
+            A <a class="internalDFN" href="#dfn-partial-value-match">partial value match</a> <em title="must" class="rfc2119">must</em> use the <a class="internalDFN" href="#dfn-compatibility-caseless">compatibility caseless</a> manner in which to match against corresponding values
+            in the <a href="#contacts-interface"><code>Contacts</code></a> database.
+          </p>
+          <p>
+            &nbsp;
+          </p>
+          <p>
+            The <dfn id="dfn-rules-for-processing-search-filters">rules for processing search filters</dfn> is defined below and is always provided with a <var title="filter">filter</var> parameter, representing the <code>filter</code> attribute of the <a href="#contactfindoptions-interface"><code>ContactFindOptions</code></a> parameter provided within the current <a href="#contacts-interface"><code>Contacts</code></a> <a href="#widl-Contacts-find">find()</a> operation.
+          </p>
+          <dl class="switch">
+            <dt>
+              &nbsp;
+            </dt>
+            <dd>
+              Let <var title="contactsets">contactsets</var> be initially the set of all known contacts in the <a href="#contacts-interface"><code>Contacts</code></a> database. 
+              <p>
+                Let <var title="contactsresult">contactsresult</var> be initially an empty Object object.
+              </p>
+            </dd>
+            <dt>
+              If <var title="filter">filter</var> is a DOMString object
+            </dt>
+            <dd>
+              <ol>
+                <li>
+                  Let <var title="contactset">contactset</var> be the next enumerable Object in <var title="contactsets">contactsets</var>. If there is no next enumerable Object, go to step 5.
+                </li>
+                <li>
+                  Let <var title="partialMatchFound">partialMatchFound</var> be the result of applying the <a class="internalDFN" href="#dfn-partial-matching-algorithm">partial matching algorithm</a>,
+                  providing <var title="filter">filter</var> and <var title="contactset">contactset</var> as inputs.
+                </li>
+                <li>
+                  If <var title="partialMatchFound">partialMatchFound</var> is <code>true</code>, add <var title="contactset">contactset</var> to <var title="contactsresult">contactsresult</var>.
+                </li>
+                <li>
+                  Go to step 1.
+                </li>
+                <li>
+                  Sort <var title="contactsresult">contactsresult</var> according to the guidelines in <a href="#search-sorting">Search Sorting</a>.
+                </li>
+                <li>
+                  Return <var title="contactsresult">contactsresult</var>.
+                </li>
+              </ol>
+            </dd>
+            <dt>
+              If <var title="filter">filter</var> is another native object type
+            </dt>
+            <dd>
+              <p>
+                Return <var title="contactsets">contactsets</var>.
+              </p>
+            </dd>
+          </dl>
+          <p>
+            &nbsp;
+          </p>
+          <p>
+            The <dfn id="dfn-partial-matching-algorithm">partial matching algorithm</dfn> is defined below and is always provided with a <var title="filter">filter</var> parameter, representing the input string to compare; and a <var title="contactset">contactset</var> parameter, representing an individual <a href="#contact-interface"><code>Contact</code></a> object:
+          </p>
+          <dl class="switch">
+            <dt>
+              &nbsp;
+            </dt>
+            <dd>
+              Let <var title="hasPartialMatch">hasPartialMatch</var> be initially set to <code>false</code>.
+            </dd>
+            <dt>
+              If <var title="contactset">contactset</var> is an Object object
+            </dt>
+            <dd>
+              <ol>
+                <li>
+                  Let <var title="elementvalue">elementvalue</var> be the String value of the next enumerable property in <var title="contactset">contactset</var>. If there are no more enumerable properties, go to step 5.
+                </li>
+                <li>
+                  Let <var title="hasPartialMatch">hasPartialMatch</var> be the boolean result for the comparison of <var title="filter">filter</var> with <var title="elementvalue">elementvalue</var> in a <a class="internalDFN" href="#dfn-compatibility-caseless">compatibility caseless</a> manner and with a <a class="internalDFN" href="#dfn-partial-value-match">partial value match</a>
+                  policy applied to both sides of the comparison operation.
+                </li>
+                <li>
+                  If <var title="hasPartialMatch">hasPartialMatch</var> is <code>true</code>, go to step 5.
+                </li>
+                <li>
+                  Go to step 1.
+                </li>
+                <li>
+                  Return <var title="hasPartialMatch">hasPartialMatch</var>.
+                </li>
+              </ol>
+            </dd>
+            <dt>
+              If <var title="contactset">contactset</var> is another native object type
+            </dt>
+            <dd>
+              <p>
+                Return <code>false</code>.
+              </p>
+            </dd>
+          </dl>
+          <p>
+            &nbsp;
+          </p>
+          <div class="section" id="search-filter-example">
+            <h5><span class="secno">5.2.3.1 </span>
+              Search Filter Example
+            </h5>
+            <p>
+              The following Contact search is initiated:
+            </p>
+<pre class="example sh_javascript sh_sourceCode">navigator<span class="sh_symbol">.</span>service<span class="sh_symbol">.</span>contacts<span class="sh_symbol">.</span><span class="sh_function">find</span><span class="sh_symbol">([</span><span class="sh_string">'name'</span><span class="sh_symbol">,</span> <span class="sh_string">'addresses.locality'</span><span class="sh_symbol">,</span> <span class="sh_string">'addresses.country'</span><span class="sh_symbol">,</span> <span class="sh_string">'phoneNumbers'</span><span class="sh_symbol">,</span> <span class="sh_string">'emails'</span><span class="sh_symbol">],</span>
+                                <span class="sh_keyword">function</span><span class="sh_symbol">(</span>contacts<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span> 
+                                   <span class="sh_keyword">for</span><span class="sh_symbol">(</span>x <span class="sh_keyword">in</span> contacts<span class="sh_symbol">)</span> <span class="sh_function">alert</span><span class="sh_symbol">(</span>contacts<span class="sh_symbol">[</span>x<span class="sh_symbol">].</span>name<span class="sh_symbol">);</span> 
+                                <span class="sh_cbracket">}</span><span class="sh_symbol">,</span>
+                                <span class="sh_cbracket">{</span>
+                                  filter<span class="sh_symbol">:</span> <span class="sh_string">'Robert'</span>
+                                <span class="sh_cbracket">}</span><span class="sh_symbol">);</span></pre>
+            <p>
+              The above example logically implies:
+            </p>
+            <ol>
+              <li>
+                Using ECMA-262 3rd Edition regular expression syntax and psuedo-code, the <a class="internalDFN" href="#dfn-search-filter">search filter</a> provided can be represented
+                as: 
+<pre>      ( displayName = /∧.*Robert.*$/i ) ∪ ( name.formatted = /∧.*Robert.*$/i ) ∪ ( nickname = /∧.*Robert.*$/i ) 
+        ∪ ( tags.value = /∧.*Robert.*$/i ) ∪ ( phoneNumbers.value = /∧.*Robert.*$/i )  ∪ ( addresses.formatted = /∧.*Robert.*$/i ) 
+          ∪ ... etc for all contact attributes and properties ...
+</pre>
+              </li>
+              <li>
+                Return only the valid <a href="#contactproperties-interface"><code>ContactProperties</code></a> requested in the provided <a class="internalDFN" href="#dfn-search-qualifier">search qualifier</a>
+                (<code>name</code>, <code>addresses.locality</code>, <code>addresses.country</code>, <code>phoneNumbers</code>,
+                <code>emails</code>) and only for the <a href="#contact-interface"><code>Contact</code></a> objects returned from the <a class="internalDFN" href="#dfn-rules-for-processing-search-filters">rules for processing search filters</a>
+                with the <a class="internalDFN" href="#dfn-search-filter">search filter</a> derived in step 1 provided as the <var>filter</var> input parameter.
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="user-interaction-guidelines" class="informative appendix section">
+      <!--OddPage--><h2><span class="secno">A. </span>
+        User Interaction Guidelines
+      </h2><p><em>This section is non-normative.</em></p>
+      <p>
+        This specification is primarily intended to provide the user with the ability to view and control the contact information that may
+        be shared, saved or removed from their unified address book. This annex provides some examples of a conformant user experience that
+        this specification enables.
+      </p>
+      <div class="section" id="sharing-contact-information">
+        <h3><span class="secno">A.1 </span>
+          Sharing Contact Information
+        </h3>
+        <p>
+          A website requests access to a user's address book with the following code:
+        </p>
+<pre class="example sh_javascript_dom sh_sourceCode"><span class="sh_keyword">function</span> <span class="sh_function">successContactFindCallback</span><span class="sh_symbol">(</span>contacts<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
+    <span class="sh_comment">// do something with resulting contact objects</span>
+    <span class="sh_keyword">for</span> <span class="sh_symbol">(</span><span class="sh_keyword">var</span> i <span class="sh_keyword">in</span> contacts<span class="sh_symbol">)</span> <span class="sh_predef_func">alert</span><span class="sh_symbol">(</span>contacts<span class="sh_symbol">[</span>i<span class="sh_symbol">].</span><span class="sh_predef_var">name</span><span class="sh_symbol">);</span>
+    <span class="sh_comment">// ...</span>
+<span class="sh_cbracket">}</span>
+
+<span class="sh_keyword">function</span> <span class="sh_function">generalErrorCB</span><span class="sh_symbol">(</span>error<span class="sh_symbol">)</span> <span class="sh_cbracket">{</span>
+    <span class="sh_comment">// do something with resulting errors</span>
+    <span class="sh_predef_func">alert</span><span class="sh_symbol">(</span>error<span class="sh_symbol">.</span>code<span class="sh_symbol">);</span>
+    <span class="sh_comment">// ...</span>
+<span class="sh_cbracket">}</span>
+
+<span class="sh_comment">// Perform an address book search. Obtain the 'name' and 'emails' properties </span>
+<span class="sh_comment">// and initially filter the list to Contact records containing 'Bob':</span>
+<span class="sh_predef_var">navigator</span><span class="sh_symbol">.</span>service<span class="sh_symbol">.</span>contacts<span class="sh_symbol">.</span><span class="sh_predef_func">find</span><span class="sh_symbol">([</span><span class="sh_string">'name'</span><span class="sh_symbol">,</span> <span class="sh_string">'emails'</span><span class="sh_symbol">],</span>
+                                successContactFindCallback<span class="sh_symbol">,</span> 
+                                generalErrorCB<span class="sh_symbol">,</span>
+                                <span class="sh_cbracket">{</span>filter<span class="sh_symbol">:</span> <span class="sh_string">'Bob'</span><span class="sh_cbracket">}</span>
+                               <span class="sh_symbol">);</span></pre>
+        <p>
+          As a result of executing this code, the <a class="internalDFN" href="#dfn-user-agent">user agent</a> may provide a non-blocking <dfn id="dfn-contact-search-notification">contact search notification</dfn> as
+          follows:
+        </p>
+        <p align="center">
+          <img src="contacts_notification.png" alt="Contact Search Notification"><br>
+           (<a href="contacts_notification.png">View as PNG</a>)
+        </p>
+        <p>
+          If an additional find(), save() or remove() operation is called by the current web application before the user has clicked
+          'Select' or 'Cancel' on the current notification, an error will be invoked with a code of <a href="#widl-ContactError-PERMISSION_DENIED_ERROR"><code>PENDING_OPERATION_ERROR</code></a>.
+        </p>
+        <p>
+          If the user clicks 'Cancel', the <a href="#contacterrorcb-interface"><code>ContactErrorCB</code></a> defined for the find() operation will be invoked with an error
+          code of <a href="#widl-ContactError-PERMISSION_DENIED_ERROR"><code>PERMISSION_DENIED_ERROR</code></a>.
+        </p>
+        <p>
+          If the user clicks 'Select', the <a class="internalDFN" href="#dfn-user-agent">user agent</a> may provide a <dfn id="dfn-contact-picker">contact picker</dfn>, utilising all of the
+          parameters provided in the find() operation as follows:
+        </p>
+        <p align="center">
+          <img src="contacts_picker.png" alt="Contact Picker"><br>
+           (<a href="contacts_picker.png">View as PNG</a>)
+        </p>
+        <p>
+          In this dialog, the user is provided with a summary of the sharing that the application is requesting and the option to select
+          one or more contacts (as appropriate) from the user interface.
+        </p>
+        <p>
+          If an additional find(), save() or remove() operation is called by the current web application before the user has clicked
+          'Select' or 'Cancel' on the current notification, an error will be invoked with a code of <a href="#widl-ContactError-PERMISSION_DENIED_ERROR"><code>PENDING_OPERATION_ERROR</code></a>.
+        </p>
+        <p>
+          If the user clicks 'Cancel', the <a href="#contacterrorcb-interface"><code>ContactErrorCB</code></a> associated to the current find() operation will be invoked with
+          an error code of <a href="#widl-ContactError-PERMISSION_DENIED_ERROR"><code>PERMISSION_DENIED_ERROR</code></a>.
+        </p>
+        <p>
+          If the user clicks 'Select', the <a href="#contactfindsuccesscb-interface"><code>ContactFindSuccessCB</code></a> associated to the current find() operation will be
+          invoked with the contact information selected by the user provided as the only parameter.
+        </p>
+        <p>
+          Further to this initial sharing of Contact information, the <a href="#security-and-privacy-considerations">Security and Privacy Considerations</a> section expects that the user should easily
+          be able to review and revoke permissions to web applications at a later date.
+        </p>
+        <p class="note">
+          Include permission review/revocation mockup?
+        </p>
+      </div>
+      <div class="section" id="contact-writebacks">
+        <h3><span class="secno">A.2 </span>
+          Contact Writebacks
+        </h3>
+        <div class="section" id="saving-a-contact-to-the-address-book">
+          <h4><span class="secno">A.2.1 </span>
+            Saving a Contact to the Address Book
+          </h4>
+          <p class="note">
+            Include Contact creation/modification writeback mockup.
+          </p>
+        </div>
+        <div class="section" id="removing-a-contact-from-the-address-book">
+          <h4><span class="secno">A.2.2 </span>
+            Removing a Contact from the Address Book
+          </h4>
+          <p class="note">
+            Include Contact deletion writeback mockup.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div id="search-weights" class="appendix section">
+      <!--OddPage--><h2><span class="secno">B. </span>
+        Search Weights
+      </h2>
+      <p>
+        The following table defines the <a class="internalDFN" href="#dfn-search-weight">search weight</a> values for each <a class="internalDFN" href="#dfn-search-qualifier">search qualifier</a> provided in this specification.
+      </p>
+      <table class="simple" summary="Search Weights by Search Qualifier">
+        <thead>
+          <tr>
+            <th>
+              <a class="internalDFN" href="#dfn-search-qualifier">Search Qualifier</a> 
+            </th>
+            <th>
+              <a class="internalDFN" href="#dfn-search-weight">Search Weight</a> 
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <code>displayName</code> 
+            </td>
+            <td>
+              1
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>name.formatted</code> 
+            </td>
+            <td>
+              2
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>nickname</code> 
+            </td>
+            <td>
+              3
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>tags.value</code> 
+            </td>
+            <td>
+              4
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>phoneNumbers.value</code> 
+            </td>
+            <td>
+              5
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>addresses.formatted</code> 
+            </td>
+            <td>
+              6
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>organizations.name</code> 
+            </td>
+            <td>
+              7
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>emails.value</code> 
+            </td>
+            <td>
+              8
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>ims.value</code> 
+            </td>
+            <td>
+              9
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>preferredUsername</code> 
+            </td>
+            <td>
+              10
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>name.familyName</code> 
+            </td>
+            <td>
+              11
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>name.givenName</code> 
+            </td>
+            <td>
+              12
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>name.middleName</code> 
+            </td>
+            <td>
+              13
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>addresses.country</code> 
+            </td>
+            <td>
+              14
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>addresses.region</code> 
+            </td>
+            <td>
+              15
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>addresses.streetAddress</code> 
+            </td>
+            <td>
+              16
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>addresses.locality</code> 
+            </td>
+            <td>
+              17
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>addresses.postalCode</code> 
+            </td>
+            <td>
+              18
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>organizations.department</code> 
+            </td>
+            <td>
+              19
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>organizations.title</code> 
+            </td>
+            <td>
+              20
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>organizations.startDate</code> 
+            </td>
+            <td>
+              21
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>organizations.endDate</code> 
+            </td>
+            <td>
+              22
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>organizations.location</code> 
+            </td>
+            <td>
+              23
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>organizations.description</code> 
+            </td>
+            <td>
+              24
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>accounts.domain</code> 
+            </td>
+            <td>
+              25
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>accounts.userid</code> 
+            </td>
+            <td>
+              26
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>accounts.username</code> 
+            </td>
+            <td>
+              27
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>photos.value</code> 
+            </td>
+            <td>
+              28
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>relationships.value</code> 
+            </td>
+            <td>
+              29
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>urls.value</code> 
+            </td>
+            <td>
+              30
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>gender</code> 
+            </td>
+            <td>
+              31
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>birthday</code> 
+            </td>
+            <td>
+              32
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>anniversary</code> 
+            </td>
+            <td>
+              33
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>published</code> 
+            </td>
+            <td>
+              34
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>updated</code> 
+            </td>
+            <td>
+              35
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>utcOffset</code> 
+            </td>
+            <td>
+              36
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>notes</code> 
+            </td>
+            <td>
+              37
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>name.honorificPrefix</code> 
+            </td>
+            <td>
+              38
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>name.honorificSuffix</code> 
+            </td>
+            <td>
+              39
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>phoneNumbers.type</code> 
+            </td>
+            <td>
+              40
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>addresses.type</code> 
+            </td>
+            <td>
+              41
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>emails.type</code> 
+            </td>
+            <td>
+              42
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>ims.type</code> 
+            </td>
+            <td>
+              43
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>tags.type</code> 
+            </td>
+            <td>
+              44
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>photos.type</code> 
+            </td>
+            <td>
+              45
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>relationships.type</code> 
+            </td>
+            <td>
+              46
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>urls.type</code> 
+            </td>
+            <td>
+              47
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>connected</code> 
+            </td>
+            <td>
+              48
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>id</code> 
+            </td>
+            <td>
+              49
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>phoneNumbers.primary</code> 
+            </td>
+            <td>
+              n/a (boolean attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>addresses.primary</code> 
+            </td>
+            <td>
+              n/a (boolean attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>emails.primary</code> 
+            </td>
+            <td>
+              n/a (boolean attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>ims.primary</code> 
+            </td>
+            <td>
+              n/a (boolean attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>tags.primary</code> 
+            </td>
+            <td>
+              n/a (boolean attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>photos.primary</code> 
+            </td>
+            <td>
+              n/a (boolean attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>relationships.primary</code> 
+            </td>
+            <td>
+              n/a (boolean attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>urls.primary</code> 
+            </td>
+            <td>
+              n/a (boolean attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>phoneNumbers</code> 
+            </td>
+            <td>
+              n/a (complex attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>addresses</code> 
+            </td>
+            <td>
+              n/a (complex attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>emails</code> 
+            </td>
+            <td>
+              n/a (complex attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>ims</code> 
+            </td>
+            <td>
+              n/a (complex attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>photos</code> 
+            </td>
+            <td>
+              n/a (complex attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>tags</code> 
+            </td>
+            <td>
+              n/a (complex attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>relationships</code> 
+            </td>
+            <td>
+              n/a (complex attribute)
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>urls</code> 
+            </td>
+            <td>
+              n/a (complex attribute)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+    </div>
+  <div class="appendix section" id="references"><!--OddPage--><h2><span class="secno">C. </span>References</h2><div class="section" id="normative-references"><h3><span class="secno">C.1 </span>Normative references</h3><dl class="bibliography"><dt id="bib-CORE-DEVICE">[CORE-DEVICE]</dt><dd>Robin Berjon. <a href="http://dev.w3.org/2009/dap/device/"><cite>Core Device Interfaces.</cite></a> 02 December 2009. W3C Editor's Draft. (Work in progress.) URL: <a href="http://dev.w3.org/2009/dap/device/">http://dev.w3.org/2009/dap/device/</a> 
+</dd><dt id="bib-POCO-SCHEMA">[POCO-SCHEMA]</dt><dd>Joseph Smarr. <a href="http://portablecontacts.net/draft-spec.html#schema"><cite>Portable Contacts 1.0 Draft C: Contact Schema</cite></a> 5 August 2008. URL: <a href="http://portablecontacts.net/draft-spec.html#schema">http://portablecontacts.net/draft-spec.html#schema</a> 
+</dd><dt id="bib-RFC2119">[RFC2119]</dt><dd>S. Bradner. <a href="http://www.ietf.org/rfc/rfc2119.txt"><cite>Key words for use in RFCs to Indicate Requirement Levels.</cite></a> Internet RFC 2119. URL: <a href="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</a> 
+</dd><dt id="bib-UNICODE">[UNICODE]</dt><dd>The Unicode Consortium. <a href="http://www.unicode.org/unicode/standard/versions/enumeratedversions.html"><cite>The Unicode Standard.</cite></a> 2003. Defined by: The Unicode Standard, Version 4.0 (Boston, MA, Addison-Wesley, ISBN 0-321-18578-1), as updated from time to time by the publication of new versions URL: <a href="http://www.unicode.org/unicode/standard/versions/enumeratedversions.html">http://www.unicode.org/unicode/standard/versions/enumeratedversions.html</a> 
+</dd><dt id="bib-WEBIDL">[WEBIDL]</dt><dd>Cameron McCormack. <a href="http://www.w3.org/TR/2008/WD-WebIDL-20081219"><cite>Web IDL.</cite></a> 19 December 2008. W3C Working Draft. (Work in progress.) URL: <a href="http://www.w3.org/TR/2008/WD-WebIDL-20081219">http://www.w3.org/TR/2008/WD-WebIDL-20081219</a> 
+</dd></dl></div><div class="section" id="informative-references"><h3><span class="secno">C.2 </span>Informative references</h3><dl class="bibliography"><dt id="bib-HTML5">[HTML5]</dt><dd>Ian Hickson; David Hyatt. <a href="http://www.w3.org/TR/2010/WD-html5-20100304/"><cite>HTML 5.</cite></a> 4 March 2010. W3C Working Draft. (Work in progress.) URL: <a href="http://www.w3.org/TR/2010/WD-html5-20100304/">http://www.w3.org/TR/2010/WD-html5-20100304/</a> 
+</dd></dl></div></div><script src="https://www.w3.org/scripts/TR/fixup.js"></script></body></html>

@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <title>Guidelines for Web Content Transformation Proxies 1.0 - Implementation Conformance Statement</title>
+      <style type="text/css" media="screen" xml:space="preserve">
+table {
+	border-collapse: collapse;
+	margin: 1em auto;}
+
+table, tr, th, td {
+	border: 1px solid black;
+	}
+
+th, td {
+	text-align: left;
+	padding: 5px 1em;	}
+
+
+tr.legend th {
+	text-align: center;
+	background: #005a9c;
+	color: #fff;
+}
+
+th {
+	background: #dadada;
+}
+th a {
+	text-decoration: none;
+	color: black;}
+
+td {
+	font-weight: normal;
+}
+
+td.yes, td.no {
+	text-align: center;
+}
+
+tr.must td.no {
+	background: #999999;
+}
+
+
+</style>
+      <link rel="stylesheet" type="text/css"
+            href="http://www.w3.org/StyleSheets/TR/W3C-ED.css"/>
+   </head>
+   <body>
+      <div class="head">
+         <a href="http://www.w3.org/">
+            <img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home"/>
+         </a>
+         <h1>Guidelines for Web Content Transformation Proxies 1.0 - Implementation Conformance Statement</h1>
+         <dl>
+            <dt>This version:</dt>
+            <dd>
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/ics.html">http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/ics.html</a>
+            </dd>
+            <dt>This document is an appendix to:</dt>
+            <dd>
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/">http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/</a>
+            </dd>
+            <dt>Latest version of "Guidelines for Web Content Transformation Proxies 1.0":</dt>
+            <dd>
+               <a href="http://www.w3.org/TR/ct-guidelines/">http://www.w3.org/TR/ct-guidelines/</a>
+            </dd>
+            <dt>Editor:</dt>
+            <dd>François Daoust, W3C</dd>
+            <dt>Contributors:</dt>
+            <dd>
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-acknowledgements">See Acknowledgments in Guidelines for Web Content Transformation Proxies 1.0</a>.
+            </dd>
+         </dl>
+
+         <p class="copyright">
+            <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">  Copyright</a> ©2009 <a href="http://www.w3.org/">
+               <acronym title="World Wide Web Consortium">W3C</acronym>
+            </a>
+            <sup>®</sup>  (<a href="http://www.csail.mit.edu/">
+               <acronym title="Massachusetts Institute of  Technology">MIT</acronym>
+            </a>, <a href="http://www.ercim.org/">
+               <acronym title="European Research Consortium for Informatics and Mathematics">ERCIM</acronym>
+            </a>, <a href="http://www.keio.ac.jp/">Keio</a>), All Rights  Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer"
+              >liability</a>,  <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks"
+              >trademark</a>  and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document  use</a> rules apply.</p>
+
+         <hr class="rule"/>
+      </div>
+      <h2>
+         <a id="abstract" name="abstract">Abstract</a>
+      </h2>
+      <p>This document is an appendix to <cite>
+            <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/">Guidelines for Web Content Transformation Proxies1.0</a>
+         </cite> [<a href="#CT-SPEC">CT-SPEC</a>]. It provides a tabular checklist of all the normative clauses in the guidelines, sorted by topic. Please refer to <cite>
+            <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/">Guidelines for Web Content Transformation Proxies 1.0</a>
+         </cite> [<a href="#CT-SPEC">CT-SPEC</a>]  for the full statements and context description of the excerpts listed below.</p>
+      <h2 id="status">Status of This Document</h2>
+      <p>
+         <em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em>
+      </p>
+      <p>This document is derived from and is an appendix to <cite>
+            <a href="http://www.w3.org/2005/MWI/BPWG/Group/TaskForces/CT/editors-drafts/Guidelines/081107"
+              >Guidelines for Web Content Transformation Proxies</a>
+         </cite> [<a href="#CT-SPEC">CT-SPEC</a>], which is a draft document, produced by the <a href="http://www.w3.org/2005/MWI/BPWG/Group/TaskForces/CT/">Content Transformation Task Force</a> of the <a href="http://www.w3.org/2005/MWI/BPWG/">Mobile Web Best Practices Working Group</a> as part of the <a href="http://www.w3.org/2005/MWI/Activity">Mobile Web Initiative</a>. Please see the "<a href="http://www.w3.org/2005/MWI/BPWG/Group/TaskForces/CT/editors-drafts/Guidelines/081107#status"
+           >Status of this document</a>" section of the corresponding guidelines specification  [<a href="#CT-SPEC">CT-SPEC</a>] for complete details about the status of the guidelines version from which this is extracted and which it accompanies.</p>
+      <p>Please send comments on this document to the Working Group's public email list <a href="mailto:public-bpwg-ct@w3.org">public-bpwg-ct@w3.org</a>, a <a href="http://lists.w3.org/Archives/Public/public-bpwg-ct/">publicly archived mailing list</a>.</p>
+      <hr class="rule"/>
+      <h2>
+         <a id="sec-introduction">Introduction</a>
+      </h2>
+      <p>This checklist includes excerpts of all the normative clauses of the <cite>
+            <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/">Guidelines for Web Content Transformation Proxies</a>
+         </cite> [<a href="#CT-SPEC">CT-SPEC</a>] presented in a tabular format. The statements are presented by order of their topic.</p>
+      <p>The <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-conformance"
+           >Conformance</a> section of the Guidelines for Web Content Transformation Proxies specification requires Transformation Deployments that wish to claim conformance to the specification to make available a conformance statement that specifies the reasons for non-compliance with any clauses containing the key words "<strong>should</strong>", "<strong>should not</strong>", "<strong>recommended</strong>" or "<strong>not recommended</strong>". This presentation is intended to provide a base template for such a conformance statement.</p>
+      <p>The table includes spaces for scoring each statement: "Compliance" to assert compliance and "Reason for non-compliance" to specify the reasons for non-compliance with a given clause. Non-compliance to absolute requirements of the specification, i.e. normative statements that use the terms <strong>must</strong>, <strong>must not</strong>, <strong>shall</strong> or <strong>shall not</strong>, is forbidden. The "Reason for non-compliance" column of absolute requirements is marked as "N/A" (Not Applicable).</p>
+      <h2 id="sec-checklist-table">Clauses table</h2>
+      <table id="checklist-table" border="1">
+         <tr class="legend">
+            <th rowspan="1" colspan="1">Guideline</th>
+            <th class="yes" rowspan="1" colspan="1">Compliance</th>
+            <th class="no" rowspan="1" colspan="1">Reason for non-compliance</th>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-transformation-deployment-conformance">3.4 Transformation Deployment Conformance</a>
+            </th>
+         </tr>
+	 <tr class="must">
+	   <td>A Transformation Deployment that wishes to claim conformance <strong>must</strong> make available a conformance statement <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-ConformanceStatement">
+	   <span class="specref">B Conformance Statement</span>
+	   </a> that specifies the reasons for non-compliance with any clauses containing the key words [...]</td>
+	   <td class="yes">
+	     <input type="checkbox"/>
+	   </td>
+	   <td class="no">
+	     N/A
+	   </td>
+         </tr>
+	 <tr class="must">
+	   <td>Conformance statements <strong>must</strong> be sent to <a href="mailto:public-content-transformation-conformance@w3.org">public-content-transformation-conformance@w3.org</a>.</td>
+	   <td class="yes">
+	     <input type="checkbox"/>
+	   </td>
+	   <td class="no">
+	     N/A
+	   </td>
+	 </tr>
+
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-applicable-HTTP-methods">4.1.1 Applicable HTTP Methods</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>Proxies <strong>should not</strong>  intervene in methods other than GET, POST, HEAD.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="should">
+            <td>If the HTTP method is altered from HEAD to GET, proxies
+                        <strong>should</strong> (providing such action is in accordance with
+                        normal HTTP caching rules) cache the response so that a second GET request
+                        for the same content is not required (see also <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-serving-cached-responses">
+                  <span class="specref">4.1.4 Serving Cached Responses</span>
+               </a>  ).</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="must">
+            <td>Other than to convert between HEAD and GET proxies <strong>must not</strong>  alter request methods.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-request-no-transform">4.1.2 no-transform directive in Request</a>
+            </th>
+         </tr>
+         <tr class="must">
+            <td>If the request
+    contains a <code>Cache-Control: no-transform</code> directive, proxies <strong>must not</strong>
+    alter the request other than to comply with <a title="transparent proxy" href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#term-transparent">transparent</a> HTTP
+    behavior defined in <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#ref-HTTP">[RFC 2616 HTTP]</a> sections <a href="http://tools.ietf.org/html/rfc3986.html#section-14.9.5">section 14.9.5</a> and <a href="http://tools.ietf.org/html/rfc3986.html#section-13.5.2">section 13.5.2</a> and to
+    add header fields as described in <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-additional-headers">
+                  <span class="specref">4.1.6 Additional HTTP Header Fields</span>
+               </a>  below.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-serving-cached-responses">4.1.4 Serving Cached Responses</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>[...]  In this case proxies    may  
+                        for the sake of consistency of representation serve stale data but when
+                        doing so <strong>should</strong>  notify the user that this is the case [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="must">
+            <td>[...] and  <strong>must</strong>  provide a simple means of retrieving a fresh copy.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-altering-header-values">4.1.5 Alteration of HTTP Header Field Values</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>Aside from the usual procedures defined in <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#ref-HTTP">[RFC 2616 HTTP]</a> proxies <strong>should not</strong> modify the values of header fields other than 
+                        the <code>User-Agent</code>, <code>Accept</code>, <code>Accept-Charset</code>, <code>Accept-Encoding</code>, and <code>Accept-Language</code>  header fields [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="must">
+            <td>[...] and  <strong>must not</strong>  delete header fields.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>[...]  It  <strong>must</strong> be possible for the server 
+                        to reconstruct the original User Agent originated header 
+                        fields by copying directly from the corresponding
+                        X-Device header field values (see <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-original-headers">
+                  <span class="specref">4.1.5.5 Original Header Fields</span>
+               </a>  ).</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="should">
+            <td>Other than to comply with <a title="transparent proxy" href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#term-transparent">transparent</a> HTTP operation, proxies <strong>should not</strong> modify <em>any</em>  request header fields unless one of the following applies:  [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="should">
+            <td>[...]  Since the concept of "Web site" is not strictly defined, proxies  <strong>should</strong>  use heuristics including comparisons of domain name to assess whether resources form part of the same "Web site".</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-content-tasting">4.1.5.1 Content Tasting</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>[...]  In order, as far as possible, to avoid misoperation of such content, proxies  <strong>should</strong>  avoid issuing duplicate requests [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="should">
+            <td>[...] and specifically  <strong>should not</strong>  issue duplicate requests for comparison purposes.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-avoiding-request-unacceptable">4.1.5.2 Avoiding "Request Unacceptable" Responses</a>
+            </th>
+         </tr>
+         <tr class="must">
+            <td>A proxy <strong>must not</strong>  reissue a POST request with altered header fields when the response to the unaltered POST request has HTTP status code 200 (in other words, it may only send the altered request for a POST request when the unaltered one resulted in an HTTP 406 response, and not a "request unacceptable" response).</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-user-selection">4.1.5.3 User Selection of Restructured Experience</a>
+            </th>
+         </tr>
+         <tr class="must">
+            <td>Proxies <strong>must</strong>  assume that by default users will wish to receive a representation prepared by the Web site.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>[...]  If a user has made such a choice then proxies    may   alter header field values when requesting resources in
+                            order to reflect that choice, but <strong>must</strong>, on receipt of
+                            an indication from a Web site that it offers alternative representations
+                            (see <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-use-of-link-element">
+                  <span class="specref">H.1.4.2 Indication of Intended Presentation Media Type of Representation</span>
+               </a>  ), inform the user of that and allow them to select an alternative representation.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>Proxies
+                                <strong>must</strong> assess whether a user's expressed preference
+                            for a restructured representation is still valid if a Web site changes
+                            its choice of representations (see <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-receipt-of-vary-header">
+                  <span class="specref">4.2.6 Receipt of Vary HTTP Header Field</span>
+               </a>  ).</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-sequence-of-requests">4.1.5.4 Sequence of Requests</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>[...] g. style sheets, images), proxies  <strong>should</strong>
+                            make the request for such resources with the same <code>User-Agent</code>  header field as the request for the resource from which they are referenced.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="should">
+            <td>When requesting linked resources that do not form part of the same Web
+                            site as the resource from which they are linked, proxies <strong>should
+                                not</strong>  base their choice of header fields on a consistency of presentation premise.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-original-headers">4.1.5.5 Original Header Fields</a>
+            </th>
+         </tr>
+         <tr class="must">
+            <td>When forwarding an HTTP request with altered HTTP header fields, in addition to complying with the rules of normal HTTP operation, proxies
+                                <strong>must</strong> include in the request copies of the
+                            unaltered header field values in the form <code>"X-Device-"&lt;original
+                                header name&gt;</code>  .</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>[...]  For example, if the  <code>User-Agent</code>
+                            header field has been altered, an <code>X-Device-User-Agent</code> header field
+                                <strong>must</strong> be added with the value of the received
+                                <code>User-Agent</code>  header field.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>Specifically the following mapping <strong>must</strong>  be used:  [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-additional-headers">4.1.6 Additional HTTP Header Fields</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>proxies <strong>should</strong> add the IP address of the initiator
+                                of the request to the end of a comma separated list in an
+                                    <code>X-Forwarded-For</code>  HTTP header field;  [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="must">
+            <td>proxies <strong>must</strong> include a <code>Via</code> HTTP
+                                header field (see <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-via-headers">
+                  <span class="specref">4.1.6.1 Proxy Treatment of Via Header Field</span>
+               </a>  ).</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-via-headers">4.1.6.1 Proxy Treatment of Via Header Field</a>
+            </th>
+         </tr>
+         <tr class="must">
+            <td>Proxies <strong>must</strong> (in accordance with RFC
+                            2616) include a <code>Via</code>  HTTP header field indicating their presence [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="should">
+            <td>[...] and  <strong>should</strong> indicate their ability to transform content by including a comment in the <code>Via</code>  HTTP header field consisting of the URI "http://www.w3.org/ns/ct".</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="should">
+            <td>When forwarding <code>Via</code> header fields, proxies <strong>should
+                            not</strong>  alter them by removing comments from them.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-Proxy-Response">4.2 Proxy Forwarding of Response to User Agent</a>
+            </th>
+         </tr>
+         <tr class="must">
+            <td>In the following, proxies <strong>must</strong> check for the presence of equivalent <code>&lt;meta http-equiv&gt;</code>  elements in HTML content, if the relevant HTTP header field is not present.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-ApplicableResponses">4.2.1 Applicable Responses</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>Proxies <strong>should not</strong>  intervene in the response if the request method was not HEAD, GET or POST.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-administrative-arrangements">4.2.2 User Preferences</a>
+            </th>
+         </tr>
+         <tr class="must">
+            <td>Proxies <strong>must</strong>  provide a means for users to express preferences for inhibiting content transformation even when this has been chosen by the user as the default behavior.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>[...]  Those preferences  <strong>must</strong>  be maintained on a user by user and Web site by Web site basis.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>Proxies <strong>must</strong> solicit re-expression of preferences in respect of a server if the server starts to indicate that it offers varying responses as discussed under <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-receipt-of-vary-header">
+                  <span class="specref">4.2.6 Receipt of Vary HTTP Header Field</span>
+               </a>  .</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-receipt-of-cache-control-no-transform">4.2.3 Receipt of Cache-Control: no-transform</a>
+            </th>
+         </tr>
+         <tr class="must">
+            <td>If the response includes a <code>Cache-Control: no-transform</code> directive
+                        then proxies <strong>must not</strong> alter it other than to comply with
+                            <a title="transparent proxy" href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#term-transparent">transparent</a> HTTP behavior as described in <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#ref-HTTP">[RFC 2616 HTTP]</a> 
+               <a href="http://tools.ietf.org/html/rfc3986.html#section-13.5.2">Section 13.5.2</a> and <a href="http://tools.ietf.org/html/rfc3986.html#section-14.9.5">Section 14.9.5</a>  and other than as follows.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>[...] and <strong>must</strong> provide the option for the user to continue with unaltered content [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-receipt-of-vary-header">4.2.6 Receipt of Vary HTTP Header Field</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>[...]  However, if it makes a request with altered header fields in these circumstances, and receives a response containing a  <code>Vary</code> header field referring to one of the altered
+                        header fields then it <strong>should</strong>  request the resource again with unaltered header fields.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="should">
+            <td>[...]  It  <strong>should</strong>  also update whatever heuristics it uses so that unaltered header fields are presented first in subsequent requests for this resource.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-receipt-of-link-to-handheld">4.2.7 Link to "handheld" Representation</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>If the response is an HTML response and it contains a <code>&lt;link
+                            rel="alternate" media="handheld" /&gt;</code> element, a proxy
+                            <strong>should</strong> request and process the referenced resource,
+                        unless the resource referenced is the <a title="current representation" href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#term-current-representation"
+                 >current representation</a>  .</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-WML-content">4.2.8 WML Content</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>If the content is WML proxies <strong>should</strong> act in a <a title="transparent proxy" href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#term-transparent">transparent</a>  manner.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-proxy-decision-to-transform">4.2.9 Proxy Decision to Transform</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>In the absence of a <code>Vary</code> or <code>no-transform</code> directive
+                        (or a <code>meta HTTP-Equiv</code> element containing <code>Cache-Control:
+                        no-transform</code>) proxies <strong>should not</strong>  transform content matching any of the following rules unless the user has specifically requested transformation:  [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-alteration-of-response">4.2.9.1 Alteration of Response</a>
+            </th>
+         </tr>
+         <tr class="must">
+            <td>It <strong>must</strong> add a <code>Warning 214 Transformation
+                                        Applied</code>  HTTP header field;  [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="should">
+            <td>The altered content <strong>should</strong>  validate according to an appropriate published formal grammar [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="must">
+            <td>[...] and if XML  <strong>must</strong> be <a href="http://www.w3.org/TR/xml/#dt-wellformed">well-formed</a>  ;  [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="should">
+            <td>It <strong>should</strong>  indicate to the user that the content has been transformed for mobile presentation and provide an option to view the original, unmodified content.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-link-rewriting">4.2.9.2 Link Rewriting</a>
+            </th>
+         </tr>
+         <tr class="must">
+            <td>Proxies <strong>must not</strong>  rewrite links when content transformation is prohibited.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>Proxies <strong>must</strong> preserve security between requests for domains that are not <a title="Same-Origin" href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#term-same-origin">same-origin</a>  in respect of cookies and scripts.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-https-link-rewriting">4.2.9.3 HTTPS Link Rewriting</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>The practice of intercepting HTTPS links is strongly <strong>NOT RECOMMENDED</strong>  .</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="must">
+            <td>If a proxy rewrites HTTPS links, it
+                                <strong>must</strong>  advise the user of the security implications of doing so [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>[...] and  <strong>must</strong>  provide the option to bypass it and to communicate with the server directly.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>Notwithstanding anything else in this document, proxies <strong>must not</strong> rewrite HTTPS links in the presence of a <code>Cache-Control: no-transform</code>  directive.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>If a proxy rewrites HTTPS links, replacement links
+                            <strong>must</strong> have the scheme <code>https</code>  .</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>When forwarding requests originating from HTTPS links proxies <strong>must</strong> include a <code>Via</code> header field as discussed under <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-via-headers">
+                  <span class="specref">4.1.6.1 Proxy Treatment of Via Header Field</span>
+               </a>  .</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>When forwarding responses from servers proxies <strong>must</strong>  notify the user of invalid server certificates.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr>
+            <th colspan="3">
+               <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/#sec-testing">5 Testing (Normative)</a>
+            </th>
+         </tr>
+         <tr class="should">
+            <td>Operators of content transformation proxies <strong>should</strong>  make available an interface through which the functions of the proxy can be exercised.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no"/>
+         </tr>
+         <tr class="must">
+            <td>[...]  The operations possible through this interface  <strong>must</strong>  cover those necessary to settle the outcome of all conformance statements listed in section B.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>The interface <strong>must</strong>  be reachable from terminals with browsing capabilities connected to the Web via a conventional Internet access environment at the tester's premises;  [...]</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+         <tr class="must">
+            <td>Such access <strong>must</strong>  be granted under fair, reasonable and non-discriminatory conditions.</td>
+            <td class="yes">
+               <input type="checkbox"/>
+            </td>
+            <td class="no">
+	  N/A
+	</td>
+         </tr>
+      </table>
+      <hr class="rule"/>
+      <h2 id="sec-references">References</h2>
+      <dl>
+         <dt id="CT-SPEC">CT-SPEC</dt>
+         <dd>
+            <cite>Guidelines for Web Content Transformation Proxies 1.0</cite>, Jo Rabin, mTLD Top Level Domain (dotMobi), W3C Working Draft 6 October 2009 (See <a href="http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/">http://www.w3.org/TR/2009/WD-ct-guidelines-20091006/</a>)</dd>
+      </dl>
+   </body>
+</html>
