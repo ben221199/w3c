@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Mon Mar 16 22:11:18 PST 1998 -->
+<html>
+<head>
+  <title> Document Object Model (Core) Level 1: Section 2.9</title>
+</head>
+<body bgcolor='#FFFFFF'>
+<h1><font size='6'>2.  Document Object Model (Core) Level 1</font></h1>
+<hr>
+<h1>2.9 IDL Interface definitions</h1><p>This section contains the IDL definitions for the objects in
+	the core Document Object Model. The HTML IDL definition is
+	<a href='level-one-html.html'>here</a>
+, and the XML IDL
+	definition, including the types to represent the document type
+	definition is <a href='level-one-xml.html'>here</a>
+. 
+      <blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface DOM {
+  Document            createDocument(in wstring type);
+  boolean             hasFeature(in wstring feature);
+};
+
+interface DocumentContext {
+  attribute Document       document;
+};
+
+interface DocumentFragment : Node {
+  attribute Document       masterDoc;
+};
+
+interface Document : DocumentFragment {
+  attribute Node           documentType;
+  attribute Element        documentElement;
+  attribute DocumentContext contextInfo;
+  DocumentContext     createDocumentContext();
+  Element             createElement(in wstring tagName, 
+                                    in AttributeList attributes);
+  Text                createTextNode(in wstring data);
+  Comment             createComment(in wstring data);
+  PI                  createPI(in wstring name, 
+                               in wstring data);
+  Attribute           createAttribute(in wstring name, 
+                                      in Node value);
+  AttributeList       createAttributeList();
+  NodeIterator        getElementsByTagName();
+};
+
+interface Node {
+  // NodeType
+  const int            DOCUMENT             = 1;
+  const int            ELEMENT              = 2;
+  const int            ATTRIBUTE            = 3;
+  const int            PI                   = 4;
+  const int            COMMENT              = 5;
+  const int            TEXT                 = 6;
+
+  int                 getNodeType();
+  Node                getParentNode();
+  NodeIterator        getChildNodes();
+  boolean             hasChildNodes();
+  Node                getFirstChild();
+  Node                getPreviousSibling();
+  Node                getNextSibling();
+  Node                insertBefore(in Node newChild, 
+                                   in Node refChild);
+  Node                replaceChild(in Node newChild, 
+                                   in Node oldChild);
+  Node                removeChild(in Node oldChild);
+};
+
+interface NodeIterator {
+  unsigned long       getLength();
+  Node                getCurrent();
+  Node                toNext();
+  Node                toPrevious();
+  Node                toFirst();
+  Node                toLast();
+  Node                toNth(in int Nth);
+  Node                toNode(in Node destNode);
+};
+
+interface TreeIterator : NodeIterator {
+  unsigned long       numChildren();
+  unsigned long       numPreviousSiblings();
+  unsigned long       numNextSiblings();
+  Node                toParent();
+  Node                toPreviousSibling();
+  Node                toNextSibling();
+  Node                toFirstChild();
+  Node                toLastChild();
+  Node                toNthChild();
+};
+
+interface Attribute {
+  wstring             getName();
+  attribute Node           value;
+  attribute boolean        specified;
+  wstring             toString();
+};
+
+interface AttributeList {
+  Attribute           getAttribute(in wstring attrName);
+  Attribute           setAttribute(in Attribute attr);
+  Attribute           remove(in wstring attrName);
+  Attribute           item(in unsigned long index);
+  unsigned long       getLength();
+};
+
+interface Element : Node {
+  wstring             getTagName();
+  AttributeList       attributes();
+  void                setAttribute(in Attribute newAttr);
+  void                normalize();
+  NodeIterator        getElementsByTagName();
+};
+
+interface Text : Node {
+  attribute wstring        data;
+  void                append(in wstring data);
+  void                insert(in int offset, 
+                             in wstring data);
+  void                delete(in int offset, 
+                             in int count);
+  void                replace(in int offset, 
+                              in int count, 
+                              in wstring data);
+  void                splice(in Element element, 
+                             in int offset, 
+                             in int count);
+};
+
+interface Comment : Node {
+  attribute wstring        data;
+};
+
+interface PI : Node {
+  attribute wstring        name;
+  attribute wstring        data;
+};
+
+</pre></td></tr>
+</table>
+</blockquote>
+<hr>
+</body>
+</html>

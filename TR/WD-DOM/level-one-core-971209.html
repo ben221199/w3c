@@ -1,0 +1,1309 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<HTML>
+  
+  <HEAD>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=iso-8859-1">
+    <TITLE>Document Object Model (Core) Level 1</TITLE>
+  </HEAD>
+  
+  <BODY BGCOLOR="#FFFFFF">
+    
+    <H3 ALIGN="RIGHT"><A HREF="http://www.w3.org"><IMG SRC="http://www.w3.org/Icons/w3c_home.gif" ALIGN="LEFT" ALT="W3C" BORDER="0" HSPACE="0"></A>WD-DOM/level-one-core-971209</H3>
+    
+    <H1 ALIGN="CENTER">Document Object Model (Core)
+    <BR> Level 1</H1>
+    
+    <H3 ALIGN="CENTER">W3C Working Draft 9-December-1997</H3>
+    
+    <DL>
+      <DT>This version:</DT>
+      <DD><A HREF="http://www.w3.org/TR/WD-DOM/level-one-core-971209">http://www.w3.org/TR/WD-DOM/level-one-core-971209</A>
+      </DD>
+      <DT>Latest version:</DT>
+      <DD><A HREF="http://www.w3.org/TR/WD-DOM/level-one-core">http://www.w3.org/TR/WD-DOM/level-one-core</A>
+      </DD>
+      <DT>Previous version:</DT>
+      <DD><A HREF="http://www.w3.org/TR/WD-DOM/level-one-core-971009">http://www.w3.org/TR/WD-DOM/level-one-core-971009</A>
+      </DD>
+      <DT>WG Chair:</DT>
+      <DD>Lauren Wood, SoftQuad, Inc. </DD>
+      <DT>Editor:</DT>
+      <DD>Steve Byrne, JavaSoft (until November 19, 1997)
+        <BR> Mike Champion, ArborText (from November 20, 1997)
+        <BR> </DD>
+      <DT>Principal contributors:</DT>
+      <DD>Vidur Apparao, Netscape; Steve Byrne, JavaSoft (until November 19,
+        1997); Bill Smith, Sun (after November 20, 1997); Mike Champion,
+        ArborText, Inc.; Scott Isaacs, Microsoft; Arnaud Le Hors, W3C; Gavin
+        Nicol, INSO; Peter Sharpe, SoftQuad, Inc.; Jared Sorensen, Novell; Bob
+        Sutor, IBM </DD>
+    </DL>
+    <CENTER>
+    <TABLE BORDER="3" CELLPADDING="3">
+      <TR>
+        <TD ALIGN="CENTER">
+        
+        <H2 ALIGN="CENTER">Abstract</H2>
+        
+        <P ALIGN="CENTER">The Document Object Model (DOM) level one provides a
+          mechanism for software developers and web script authors to access and
+          manipulate parsed HTML and XML content. All markup as well as any
+          document type declarations are made available. Level one also allows
+          creation &quot;from scratch&quot; of entire web documents in memory;
+          saving those documents persistently is left to the programmer. DOM
+          Level one is intentionally limited in scope to content representation
+          and manipulation; rendering, validation, externalization etc. are
+          deferred to higher levels of the DOM. </P></TD>
+      </TR>
+    </TABLE> </CENTER>
+    <HR ALIGN="CENTER">
+    
+    <H2>Status of this document</H2>
+    
+    <P>This document is part of the <A HREF="cover.html">Document Object Model
+        Specification</A></P>
+    <HR ALIGN="CENTER">
+    
+    <H2>Introduction</H2>
+    
+    <P>This specification defines a minimal set of objects and interfaces for
+      accessing and manipulating document objects. The functionality specified
+      in this draft (the &quot;<B>core</B>&quot; functionality) should be
+      sufficient to implement higher level operations, such as querying, and
+      filtering of a document; future drafts will add &quot;utility&quot;
+      operations which can be implemented in terms of the <B>core</B>
+      operations, but which may be implemented more efficiently using
+      implementation-specific mechanisms that fall outside of the scope of this
+      specification. </P>
+    
+    <H2>Intended Audience</H2>
+    
+    <P>The audience for this document is intended to be web script authors,
+      software developers, and DOM implementation providers. This document
+      presumes familiarity with concepts and terminology from HTML and XML, as
+      well as object oriented programming. The actual DOM specification is
+      provided in the Object Management Group's Interface Definition Language
+      (IDL); experience with Java or C++ syntax should be sufficient to allow
+      comprehension. </P>
+    
+    <H3>Design goals for the DOM Level One specification</H3>
+    
+    <P>The DOM objects and interfaces are designed to be: </P>
+    <UL>
+      <LI>sufficient for representing the content of parsed HTML and XML
+        documents without loss of [significant] information. The supported HTML
+        version is 4.0; the supported XML version is 1.0. </LI>
+      <LI>sufficient to construct an entirely new document instance
+        programmatically that is identical to the parsed form of a given HTML or
+        XML document. This means that it has sufficient constructive power to
+        build any useful document object hierarchy, and that an implementation
+        could be written such that the external document parser merely calls the
+        methods specified in the level one specification to build the object
+        hierarchy. </LI>
+      <LI>the foundation for the rest of the document object model levels,
+        which means it must be simple, flexible, and extensible. </LI>
+      <LI>thread-safe: The operations supported by the DOM will not corrupt the
+        document object or return corrupted state (as far as this API is
+        concerned). Higher level consistency support mechanisms such as explicit
+        locks or transactions are outside of the scope of the level one
+        specification. For level one of the DOM, the assumption is that only one
+        thread operates on the document at a time. </LI>
+    </UL>
+    
+    <P>Note: In the current specification, some operations can modify the
+      document tree, but there is no model for handling concurrent access. The
+      WG also recognises that in some situations, a document, or some of its
+      components, will not be modifiable, and a method for dealing with such
+      situations needs to be defined. </P>
+    <HR ALIGN="CENTER">
+    
+    <H1>Overall type hierarchy</H1>
+    
+    <P>The Document Object Model defines a representation of a hierarchy of
+      objects (i.e. a tree, or &quot;structure model&quot;), called &quot;nodes&quot;.
+      The object hierarchy is typically created from a source representation
+      such as HTML or XML via some implementation-specific mechanism that falls
+      outside the scope of this specification. </P>
+    
+    <H3>Primary object model types</H3>
+
+<PRE><A HREF="#Node">Node</A>
+  |
+  +--<A HREF="#Document">Document</A>
+  |
+  +--<A HREF="#Element">Element</A>
+  |
+  +--<A HREF="#Attribute">Attribute</A>
+  |
+  +--<A HREF="#Text">Text</A>
+  |
+  +--<A HREF="#Comment">Comment</A> 
+  |
+  +--<A HREF="#PI">PI</A> 
+  
+</PRE>
+    
+    <H3>Auxiliary types</H3>
+    
+    <P>These types are &quot;helpers&quot; which can appear in various parts of
+      the DOM. Some of them occur quite frequently in common usage; others are
+      limited to the Document Type Definition section of the document, and thus
+      may be of little interest to typical DOM users. Those types are marked
+      accordingly. </P>
+    <DL>
+      <DT><A HREF="#NodeList">NodeList</A></DT>
+      <DD>Represents a (possibly) lazily evaluated set of nodes. </DD>
+      <DT><A HREF="#EditableNodeList">EditableNodeList</A></DT>
+      <DD>A subtype of NodeList which allows for its set of nodes to be
+        changed. </DD>
+      <DT><A HREF="#NodeEnumerator">NodeEnumerator</A></DT>
+      <DD>Used for iterating over (enumerating) a set of nodes. </DD>
+      <DT><A HREF="#AttributeList">AttributeList</A></DT>
+      <DD>Represents a collection of Attribute objects, indexed by attribute
+        name. </DD>
+      <DT><A HREF="#DocumentContext">DocumentContext</A></DT>
+      <DD>A repository for meta-data about a document, such as source, creation
+        date, and other creation context information. This object will be fully
+        specified in the level two DOM specification. </DD>
+      <DT><A HREF="#DOM">DOM</A></DT>
+      <DD>Provides document object model independent meta-operations such as
+        retrieving the object factory or making inquiries about specific
+        supported versions of HTML and XML within a particular document object
+        model implementation. </DD>
+      <DT><A HREF="#DOMFactory">DOMFactory</A></DT>
+      <DD>The mechanism for creating new DOM objects to populate a specific
+        object model with. </DD>
+      <DT>Range</DT>
+      <DD><B>[Being discussed for possible inclusion in a later draft of level
+        one]</B> Ranges represent a part of the document, potentially including
+        markup. </DD>
+    </DL>
+    
+    <H3>Entities and the DOM Core</H3>
+    
+    <P> In the DOM core, there are no objects representing entities. Numeric
+      character references and references to the pre-defined entities in HTML
+      and XML, are replaced by the single character that makes up the entities
+      replacement. For example, in:</P>
+
+<PRE>   &lt;p&gt;This is a dog &amp;amp; a cat&lt;/p&gt;</PRE>
+    
+    <P>the &quot;&amp;amp;&quot; will be replaced by the character &quot;&amp;&quot;,
+      and the text in the &lt;p&gt; element will form a single continuous
+      sequence of characters. The representation of general entities, both
+      internal and external, are defined within the XML-specific portion of the
+      level one specification. </P>
+    
+    <P> Note: When a DOM representation of a document is converted to its
+      textual form as XML or HTML, applications will need to check each
+      character in text data to see if it needs to be escaped using a numeric or
+      pre-defined entity. Failing to do so could result in invalid HTML or XML.
+    </P>
+    <HR ALIGN="CENTER">
+    
+    <H2>IDL Issues</H2>
+    
+    <P>The primary Document Object Model type definitions are presented using
+      the Object Management Group's Interface Definition Language (IDL, ISO
+      standard 14750). While a complete tutorial on the IDL language is beyond
+      the scope of this document, a few key items deserve explicit mentioning:
+    </P>
+    <UL>
+      <LI>In the DOM's IDL definition, within each interface there are
+        primarily two kinds of things:
+        <OL>
+          <LI>Attribute definitions </LI>
+          <LI>Method (IDL calls them &quot;operation&quot;) definitions </LI>
+        </OL></LI>
+      <LI>Attribute definitions are a <STRONG>shorthand</STRONG> notation for
+        a pair of &quot;get/set&quot; or accessor/mutator methods, and should
+        <STRONG>not</STRONG> be thought of, nor mapped in a particular language
+        binding to, data members directly. </LI>
+      <LI>The &quot;constructor&quot; methods for the various IDL objects are
+        not specified explicitly. Specific programming language implementations
+        of the DOM will provide suitable object creation methods; typically
+        these will be simple with no argument constructors, although this is not
+        a requirement. </LI>
+      <LI>IDL's <CODE>long</CODE> datatype represents 32 signed bit integers.
+        In other language bindings, for example Java, this would be mapped to
+        the Java <CODE>int</CODE> datatype. </LI>
+    </UL>
+    
+    <P>More information on IDL is available from <A HREF="http://www.omg.org">OMG</A>
+      and in chapter 3 of the <A HREF="http://www.omg.org/corba/corbiiop.htm">CORBA
+        2.0</A> specification.</P>
+    
+    <P>Note: The Object Management Group Interface Definition Language (OMG
+      IDL) was chosen as it was designed for specifying language and
+      implementation-neutral interfaces. Various other IDLs could be used; the
+      use of OMG IDL does not imply a requirement to use a specific object
+      binding runtime. </P>
+    <HR ALIGN="CENTER">
+    
+    <H1>Primary API Types</H1>
+    
+    <P>The types described in this section are those that application
+      programmers using the DOM will encounter most frequently. A good working
+      knowledge of these types will be sufficient to accomplish most tasks. </P>
+    
+    <H2><A NAME="Node_primary">Node</A></H2>
+    
+    <P><A HREF="#Node">Node</A> is the base type of most objects in the
+      Document Object Model. It may have an arbitrary number (including zero) of
+      sequentially ordered child nodes. It usually has a parent Node; the
+      exception being that the root Node in a document hierarchy has no parent.
+    </P>
+    
+    <H2><A NAME="Element_primary">Element</A></H2>
+    
+    <P><A HREF="#Element">Element</A> objects represent the elements in the
+      HTML or XML document. Elements contain, as child nodes, all the content
+      between the start tag, and the end tag of an element. Additionally,
+      Element objects have a list of Attribute objects which represent the
+      combination of those attributes explicitly specified in the document, and
+      those defined in the document type definition which have default values.
+    </P>
+    
+    <H2><A NAME="Document_primary">Document</A></H2>
+    
+    <P>The <A HREF="#Document">Document</A> object represents the root node of
+      a document. It typically<A HREF="#doc-node-parent"><SUP>1</SUP></A> has
+      no parent; the <CODE>getParentNode()</CODE> method will return <CODE>null</CODE>.
+    </P>
+    
+    <H1>Typical operation</H1>
+    
+    <P>Normally, a DOM-compliant implementation will make the main Document
+      instance available to the application<A HREF="#application-footnote"><SUP>2</SUP></A>
+      through some implementation-specific mechanism. For example, a typical
+      implementation would pass the application a reference to a DocumentContext
+      object. From the DocumentContext, the application may retrieve the
+      Document object, which is the root of the document object hierarchy.</P>
+    
+    <P>Once the application has access to the root of the document object
+      hierarchy, it can use the methods defined herein for accessing individual
+      nodes, selection of specific node types such as all images, and so on.
+    </P>
+    
+    <H1>Document Object Model APIs</H1>
+    
+    <P>This section defines the complete set of objects and methods which are
+      defined by the Document Object Model. The general structure of these
+      object definitions is: </P>
+    <UL>
+      <LI>A brief overview of the semantics of the object and how it relates to
+        other objects in the DOM. </LI>
+      <LI>A sequence of &lt;method signature, description&gt; pairs for each
+        method that is defined for the object. </LI>
+    </UL>
+    
+    <H2><A NAME="Document">Document</A></H2>
+    
+    <P>The Document object represents the entire HTML or XML document.
+      Conceptually, it is the root of the document tree, and provides the
+      primary access to the document's data. </P>
+    <DL>
+      <DT><CODE>Node documentType</CODE></DT>
+      <DD>For XML, this provides access to the Document Type Definition (see
+        <A HREF="#DocumentType">DocumentType</A>) associated with this XML
+        document. For HTML documents and XML documents without a document type
+        definition this returns the value <CODE>null</CODE>. </DD>
+      <DT><CODE>Element documentElement</CODE></DT>
+      <DD>The element that's the root element for the given document. For HTML,
+        this will be an Element instance whose tagName is <CODE>&quot;HTML&quot;</CODE>;
+        for XML this is the outermost element, i.e. the <VAR>element</VAR>
+        non-terminal in production <B>[41]</B> in
+        <A HREF="http://www.w3.org/TR/PR-xml.html#sec3">Section 3</A> of the
+        XML-lang specification. </DD>
+    </DL>
+    <DL>
+      <DT><CODE>NodeEnumerator getElementsByTagName(wstring name)</CODE></DT>
+      <DD>Produces an enumerator which iterates over all of the Element nodes
+        that are contained within the document whose <CODE>tagName</CODE>
+        matches the given <VAR>name</VAR>. The iteration order is a depth first
+        enumeration of the elements as they occurred in the original document.
+        
+        <P>Note: a future version of the DOM will provide a more generalized
+          querying mechanism for Nodes. One such query involves obtaining all
+          the Elements in a subtree with a given tagName. A convenience method
+          for this query has been included in the core document. This method
+          might be removed at a later date in favor of a more comprehensive
+          querying mechanism. </P></DD>
+    </DL>
+    
+    <H2><A NAME="DOM">DOM</A></H2>
+    
+    <P>The &quot;DOM&quot; interface provides a number of methods for
+      performing operations that are independent of any particular instance of
+      the document object model. The only operations currently supported is to
+      retrieve the factory object. It is expected, however, that other
+      operations such as querying for the version number of a particular DOM
+      implementation, or asking about the versions of HTML or XML supported by a
+      particular DOM implementation would also be present on this interface. 
+      Although IDL does not provide a mechanism for expressing the concept, the
+      methods supplied by the DOM interface will be implemented as &quot;static&quot;,
+      or instance independent, methods. This means that a client application
+      using the DOM does not have to locate a specific instance of the DOM
+      object; rather, the methods are will be available directly on the DOM
+      class itself and so are directly accessible from any execution context.
+    </P>
+    <DL>
+      <DT><CODE>DOMFactory getFactory()</CODE></DT>
+      <DD>Returns an object that implements the DOMFactory interface. Note that
+        by providing an accessor function for retrieving the factory object, DOM
+        implementations are empowered to return different factory instances
+        under different conditions.
+        
+        <P>Note that in the future it is expected that there will be additional
+          static methods on the DOM itself to allow for specification of which
+          factory object to be returned. </P></DD>
+    </DL>
+    
+    <H2><A NAME="DOMFactory">DOMFactory</A></H2>
+    
+    <P>The methods on the DOMFactory interface allow DOM clients to create new
+      DOM objects. An application developer who needed to create an entire
+      document object model programmatically would use the methods on a
+      DOMFactory object to build the individual objects that comprise the object
+      model, and use the operations on the objects themselves to connect the
+      objects into an overall document object model.</P>
+    <DL>
+      <DT><CODE>Document createDocument()</CODE></DT>
+      <DD>Create and return a new empty Document object. </DD>
+      <DT><CODE>DocumentContext createDocumentContext()</CODE></DT>
+      <DD>Create and return a new DocumentContext. </DD>
+      <DT><CODE>Element createElement(in wstring tagName, in AttributeList
+      attributes)</CODE></DT>
+      <DD>Create an element based on the tagName. Note that the instance
+        returned may implement an interface derived from Element. The attributes
+        parameter can be null if no attributes are specified for the new
+        Element. </DD>
+      <DT><CODE>Text createTextNode(in wstring data)</CODE></DT>
+      <DD>Create a Text node given the specified string. </DD>
+      <DT><CODE>Comment createComment(in wstring data)</CODE></DT>
+      <DD>Create a Comment node given the specified string. </DD>
+      <DT><CODE>PI createPI(in wstring name, in wstring data)</CODE></DT>
+      <DD>Create a PI node with the specified name and data string. </DD>
+      <DT><CODE>Attribute createAttribute(in wstring name, in NodeList value)</CODE></DT>
+      <DD>Create an Attribute of the given name and specified value. Note that
+        the Attribute instance can then be set on an Element using the
+        setAttribute method. </DD>
+    </DL>
+    
+    <H2><A NAME="DocumentContext">DocumentContext</A></H2>
+    
+    <P>The DocumentContext object represents information that is not strictly
+      related to a document's content; rather, it provides the information about
+      where the document came from, and any additional meta-data about the
+      document. For example, the DocumentContext for a document retrieved using
+      HTTP would provide access to the HTTP headers which were retrieved with
+      the document, the URL that the document came from, etc.</P>
+    
+    <P>For documents which were not retrieved via HTTP, or for those which were
+      created directly in memory, there may be no DocumentContext.</P>
+    
+    <P><B>NOTE:</B> The DocumentContext interface described here is expected
+      to be significantly expanded in the level two specification of the
+      Document Object Model. </P>
+    <DL>
+      <DT><CODE>Document document</CODE></DT>
+      <DD>This is the root node of a Document Object Model. Any iteration,
+        enumeration or other traversal of the entire document's content should
+        begin with this node. </DD>
+    </DL>
+    
+    <H2><A NAME="Node">Node</A></H2>
+    
+    <P>The Node object is the primary datatype for the entire Document Object
+      Model. It represents a single node in the document tree. Nodes may have,
+      but are not required to have, an arbitrary number of child nodes. </P>
+    <DL>
+      <DT><CODE>NodeType getNodeType()</CODE></DT>
+      <DD>Returns an indication of the underlying Node object's type. The
+        actual type of the returned data is language binding dependent; the IDL
+        specification uses an <CODE>enum</CODE>, and it is expected that most
+        language bindings will represent this runtime-queryable Node type using
+        an integral data type. The names of the node type enumeration literals
+        are straightforwardly derived from the names of the actual Node
+        subtypes, and are fully specified in the IDL definition of Node in the
+        IDL definition in <A HREF="#core_idl_definitions">Appendix A</A>. </DD>
+      <DT><CODE>Node getParentNode()</CODE></DT>
+      <DD>Returns the parent of the given Node instance. If this node is the
+        root of the document object tree, <CODE>null</CODE> is returned. [Note:
+        because in ECMAScript get/set method pairs are surfaced as properties,
+        Parent would conflict with the pre-defined Parent property, so we
+        disambiguate this with &quot;ParentNode&quot; even though it is
+        inconsistent with the naming convention of the other methods that do not
+        include &quot;Node&quot;]. </DD>
+      <DT><CODE>NodeList getChildren()</CODE></DT>
+      <DD>Returns a NodeList object containing the children of this node. If
+        there are no children, <CODE>null</CODE> is returned. The content of
+        the returned NodeList is &quot;live&quot; in the sense that changes to
+        the children of the Node object that it was created from will be
+        immediately reflected in the set of Nodes the NodeList contains; it is
+        not a static snapshot of the content of the Node. Similarly, changes
+        made to the NodeList will be immediately reflected in the set of
+        children of the Node that the NodeList was created from. </DD>
+      <DT><CODE>boolean hasChildren()</CODE></DT>
+      <DD>Returns <CODE>true</CODE> if the node has any children, <CODE>false</CODE>
+        if the node has no children at all. This method exists both for
+        convenience as well as to allow implementations to be able to bypass
+        object allocation, which may be required for implementing <CODE>getChildren()</CODE>.
+      </DD>
+      <DT><CODE>Node getFirstChild()</CODE></DT>
+      <DD>Returns the first child of a node. If there is no such node, <CODE>null</CODE>
+        is returned. </DD>
+      <DT><CODE>Node getPreviousSibling()</CODE></DT>
+      <DD>Returns the node immediately preceding the current node in a
+        breadth-first traversal of the tree. If there is no such node, <CODE>null</CODE>
+        is returned. </DD>
+      <DT><CODE>Node getNextSibling()</CODE></DT>
+      <DD>Returns the node immediately following the current node in a
+        breadth-first traversal of the tree. If there is no such node, <CODE>null</CODE>
+        is returned. </DD>
+      <DT><CODE>Node insertBefore(in Node newChild, in Node refChild) raises
+      (NotMyChildException)</CODE></DT>
+      <DD><CODE></CODE> </DD>
+      <DD>Inserts a child node (<VAR>newChild</VAR>before the existing child
+        node <VAR>refChild</VAR>. If <VAR>refChild</VAR> is <CODE>null</CODE>,
+        insert <VAR>newChild</VAR> at the end of the list of children. If
+        <VAR>refChild</VAR> is not a child of the Node that <CODE>insertBefore</CODE>
+        is being invoked on, a <CODE>NotMyChildException</CODE> is thrown.
+      </DD>
+      <DT><CODE>Node replaceChild(in Node oldChild, in Node newChild) raises
+      (NotMyChildException)</CODE></DT>
+      <DD>Replaces the child node <VAR>oldChild</VAR> with <VAR>newChild</VAR>
+        in the set of children of the given node, and return the <VAR>oldChild</VAR>
+        node. If <VAR>oldChild</VAR> was not already a child of the node that
+        the <CODE>replaceChild</CODE> method is being invoked on, a <CODE>NotMyChildException</CODE>
+        is thrown. </DD>
+      <DT><CODE>Node removeChild(in Node oldChild) raises
+      (NotMyChildException)</CODE></DT>
+      <DD>Removes the child node indicated by <VAR>oldChild</VAR> from the
+        list of children and returns it. If <VAR>oldChild</VAR> was not a child
+        of the given node, a <CODE>NotMyChildException</CODE> is thrown. </DD>
+    </DL>
+    
+    <H2><A NAME="NodeList">NodeList</A></H2>
+    
+    <P>The NodeList object provides the abstraction of an immutable ordered
+      collection of Nodes, without defining or constraining how this collection
+      is implemented, allowing different DOM implementations to be tuned for
+      their specific environments.</P>
+    
+    <P>The items in the NodeList are accessible via an integral index, starting
+      from 0. A NodeEnumerator object may be created to allow simple sequential
+      traversal over the members of the list. </P>
+    <DL>
+      <DT><CODE>NodeEnumerator getEnumerator()</CODE></DT>
+      <DD>Creates and returns an object which allows traversal of the nodes in
+        the list in an iterative fashion. Note this method may be very efficient
+        in some implementations; that is, they can return the enumerator
+        instance even before the first node in the set has been located. </DD>
+      <DT><CODE>Node item(in unsigned long index) raises(NoSuchNodeException)</CODE></DT>
+      <DD>Returns the <VAR>index</VAR>th item in the collection. If <VAR>index</VAR>
+        is greater than or equal to the number of nodes in the list, a <CODE>NoSuchNodeException</CODE>
+        is thrown. </DD>
+      <DT><CODE>unsigned long getLength()</CODE></DT>
+      <DD>Returns the number of nodes in the NodeList instance. The range of
+        valid child node indices is 0 to <CODE>getLength()-1</CODE> inclusive.
+      </DD>
+    </DL>
+    
+    <H2><A NAME="EditableNodeList">EditableNodeList</A></H2>
+    
+    <P>EditableNodeList is a subtype of NodeList that adds operations that
+      modify the list of nodes, such as adding, deleting and replacing Node
+      instances in the list. </P>
+    <DL>
+      <DT><CODE>Node replace(in unsigned long index, in Node replacedNode)
+      raises (NoSuchNodeException)</CODE></DT>
+      <DD>Replace the <VAR>index</VAR>th item the list with <VAR>replacedNode</VAR>,
+        and return the old node object at that index (<CODE>null</CODE> is
+        returned if the index is equal to the previous number of nodes in the
+        list). If <VAR>index</VAR> is greater than the number of nodes in the
+        list, a <CODE>NoSuchNodeException</CODE> is thrown. </DD>
+      <DT><CODE>void insert(in unsigned long index, in Node newNode) raises
+      (NoSuchNodeException)</CODE></DT>
+      <DD>Inserts a child node into the list BEFORE zero-based location <VAR>index</VAR>.
+        Nodes from <VAR>index</VAR> to the end of list are moved up by one. If
+        index is 0, the node is added at the beginning of the list; if index is
+        <CODE>self.getLength()</CODE>, the node is added at the end of the
+        list. </DD>
+      <DT><CODE>Node remove(in unsigned long index) raises
+      (NoSuchNodeException)</CODE></DT>
+      <DD>Removes the node at <VAR>index</VAR> from the list and returns it.
+        The indices of the members of the list which followed this node are
+        decremented by one following the removal. If the <VAR>index</VAR> is
+        provided is larger than the number of nodes in the list, the <CODE>NoSuchNodeException</CODE>
+        is thrown. </DD>
+    </DL>
+    
+    <H2><A NAME="NodeEnumerator">NodeEnumerator</A></H2>
+    
+    <P>This class provides a generic iteration mechanism over an arbitrary
+      collection of nodes. The nodes may be enumerated in either forward or
+      reverse order, and the direction of enumeration may be changed at any
+      time. The enumerator behaves as though it had an internal &quot;pointer&quot;
+      to the current node, and provides methods for abstractly changing the
+      notion of what the current node is.</P>
+    
+    <P>Typical usage (in some C++ like language) might look like:</P>
+
+<PRE>    NodeEnumerator nodeEnum = document.getChildren().getEnumerator();
+
+    for (Node node = nodeEnum.first(); node != null; node = nodeEnum.next()) {
+
+	// ... do some computation on that node
+    }
+
+</PRE>
+    
+    <DL>
+      <DT><CODE>Node getFirst()</CODE></DT>
+      <DD>Returns the first node that the enumeration refers to, and resets the
+        enumerator to reference the first node. If there are no nodes in the
+        enumeration, <CODE>null</CODE> is returned.
+        
+        <P>NOTE: in some implementations this may or may not be a fast
+          operation; it may be the case that the enumeration finds the requested
+          node on demand, and for very large document object, this may take some
+          time. </P></DD>
+      <DT><CODE>Node getNext()</CODE></DT>
+      <DD>Return the next node in the enumeration, and advances the
+        enumeration. Returns <CODE>null</CODE> after the last node in the list
+        has been passed, and leaves the current pointer at the last node. </DD>
+      <DT><CODE>Node getPrevious()</CODE></DT>
+      <DD>Return the previous node in the enumeration, and regresses the
+        enumeration. Returns <CODE>null</CODE> after the first node in the
+        enumeration has been returned, and leaves the current pointer at the
+        first node. </DD>
+      <DT><CODE>Node getLast()</CODE></DT>
+      <DD>Returns the last node in the enumeration, and sets the enumerator to
+        reference the last node in the enumeration. If the enumeration is empty,
+        this method will return <CODE>null</CODE>. Doing a <CODE>getNext()</CODE>
+        immediately after this operation will return <CODE>null</CODE>. </DD>
+      <DT><CODE>Node getCurrent()</CODE></DT>
+      <DD>This returns the node that the enumeration is currently referring to,
+        without affecting the state of the enumeration object in any way. When
+        invoked before any of the enumeration positioning methods above, the
+        node returned will be the first node in the enumeration, or <CODE>null</CODE>
+        if the enumeration is empty. </DD>
+      <DT><CODE>boolean atStart()</CODE></DT>
+      <DD>Returns true if the enumeration's &quot;pointer&quot; is positioned
+        at the start of the set of nodes, i.e. if <CODE>getCurrent()</CODE>
+        will return the same node as <CODE>getFirst()</CODE> would return. For
+        empty enumerations, true is always returned. Does not affect the state
+        of the enumeration in any way. </DD>
+      <DT><CODE>boolean atEnd()</CODE></DT>
+      <DD>Returns true if the enumeration's &quot;pointer&quot; is positioned
+        at the end of the set of nodes, i.e. if <CODE>getCurrent()</CODE> will
+        return the same node as <CODE>getLast()</CODE> would return. For empty
+        enumerations, true is always returned. Does not affect the state of the
+        enumeration in any way. </DD>
+    </DL>
+    
+    <H2><A NAME="AttributeList">AttributeList</A></H2>
+    
+    <P>AttributeList objects are used to represent collections of Attribute
+      objects which can be accessed by name. The Attribute objects contained in
+      a AttributeList may also be accessed by ordinal index. In most cases,
+      AttributeList objects are created from Element objects. </P>
+    <DL>
+      <DT><CODE>Attribute getAttribute(in wstring attrName)</CODE></DT>
+      <DD>Retrieve an Attribute instance from the list by its name. If it's not
+        present, <CODE>null</CODE> is returned. </DD>
+      <DT><CODE>Attribute setAttribute(in wstring attrName, in Attribute attr)</CODE></DT>
+      <DD>Add a new attribute to the end of the list and associate it with the
+        given name. If the name already exists, the previous Attribute object is
+        replaced, and returned. If no object of the same name exists, <CODE>null</CODE>
+        is returned, and the named Attribute is added to the end of the
+        AttributeList object; that is, it is accessible via the <CODE>item</CODE>
+        method using the index one less than the value returned by <CODE>getLength()</CODE>.
+      </DD>
+      <DT><CODE>Attribute remove(in wstring attrName) raises
+      (NoSuchAttributeException)</CODE></DT>
+      <DD>Removes the Attribute instance named <VAR>name</VAR> from the list
+        and returns it. If the name provided does not exist, the <CODE>NoSuchAttributeException</CODE>
+        is thrown. </DD>
+      <DT><CODE>Attribute item(in unsigned long index)
+      raises(NoSuchAttributeException)</CODE></DT>
+      <DD>Returns the (zero-based) <VAR>index</VAR>th Attribute item in the
+        collection. If <VAR>index</VAR> is greater than or equal to the number
+        of nodes in the list, a <CODE>NoSuchAttributeException</CODE> is
+        thrown. </DD>
+      <DT><CODE>unsigned long getLength()</CODE></DT>
+      <DD>Returns the number of Attributes in the AttributeList instance. </DD>
+    </DL>
+    
+    <H2><A NAME="Element">Element</A></H2>
+    
+    <P>By far the vast majority (apart from text) of node types that authors
+      will generally encounter when traversing a document will be Element nodes.
+      These objects represent both the element itself, as well as any contained
+      nodes.</P>
+    
+    <P>For example (in XML):</P>
+
+<PRE>&lt;elementExample id=&quot;demo&quot;&gt;
+    &lt;subelement1/&gt;
+    &lt;subelement2&gt;
+	&lt;subsubelement/&gt;
+    &lt;/subelement2&gt;
+&lt;/elementExample&gt;
+</PRE>
+    
+    <P>When represented using DOM, the top node would be &quot;elementExample&quot;,
+      which contains two child Element nodes (and some <A HREF="#xml-whitespace"><SUP>space</SUP></A>),
+      one for &quot;subelement1&quot; and one for &quot;subelement2&quot;. &quot;subelement1&quot;
+      contains no child nodes of its own. </P>
+    <DL>
+      <DT><CODE>wstring getTagName()</CODE></DT>
+      <DD>This method returns the string that is the element's name. For
+        example, in:
+
+<PRE>&lt;elementExample id=&quot;demo&quot;&gt;
+    ...
+&lt;/elementExample&gt;
+</PRE> This would have the value
+        <CODE>&quot;elementExample&quot;</CODE>. Note that this is
+        case-preserving, as are all of the operations of the DOM. See
+        <A HREF="#casing">Name case in the DOM</A> for a description of why the
+        DOM preserves case.</DD>
+      <DT><CODE>AttributeList attributes</CODE></DT>
+      <DD>The attributes for this element. In the <CODE>elementExample</CODE>
+        example above, the attributes list would consist of the <CODE>id</CODE>
+        attribute, as well as any attributes which were defined by the document
+        type definition for this element which have default values. </DD>
+      <DT><CODE>void setAttribute(in Attribute newAttr)</CODE></DT>
+      <DD>Adds a new attribute/value pair to an Element node object. If an
+        attribute by that name is already present in the element, it's value is
+        changed to be that of the Attribute instance.
+
+<!--
+
+<dt><code>ElementType  definition</code>
+<dd>Refers to the actual definition for this element in the document type
+definition; it will be
+<code>null</code> for for documents which have no explicit document type
+definition associated
+with them (such as HTML documents).
+-->
+        
+         </DD>
+      <DT><CODE>NodeEnumerator getElementsByTagName(wstring name)</CODE></DT>
+      <DD>Produces an enumerator which iterates over all of the Element nodes
+        that are descendants of the current node whose <CODE>tagName</CODE>
+        matches the given <VAR>name</VAR>. The iteration order is a depth first
+        enumeration of the elements as they occurred in the original document.
+        
+        <P>Note: a future version of the DOM will provide a more generalized
+          querying mechanism for Nodes. One such query involves obtaining all
+          the Elements in a subtree with a given tagName. A convenience method
+          for this query has been included in the core document. This method
+          might be removed at a later date in favor of a more comprehensive
+          querying mechanism. </P></DD>
+    </DL>
+    
+    <H2><A NAME="Attribute">Attribute</A></H2>
+    
+    <P>The Attribute object represents an attribute in an Element object.
+      Typically the allowable values for the attribute are defined in a document
+      type definition. </P>
+    <DL>
+      <DT><CODE>wstring getName()</CODE></DT>
+      <DD>Returns the name of this attribute. </DD>
+      <DT><CODE>NodeList value</CODE></DT>
+      <DD>The effective value of this attribute. (The attribute's effective
+        value is determined as follows: if this attribute has been explicitly
+        assigned any value, that value is the attribute's effective value;
+        otherwise, if there is a declaration for this attribute, and that
+        declaration includes a default value, then that default value is the
+        attribute's effective value; otherwise, the attribute has no effective
+        value.) Note, in particular, that an effective value of the null string
+        would be returned as a Text node instance whose <CODE>toString()</CODE>
+        method will return a zero length string (as will <CODE>toString()</CODE>
+        invoked directly on this Attribute instance). If the attribute has no
+        effective value, then this method will return <CODE>null</CODE>. Note
+        the <CODE>toString()</CODE> method on the Attribute instance can also
+        be used to retrieve the string version of the attribute's value(s).
+
+<!--
+The value of this attribute.  For attributes with simple string values, the
+value is more easily retrieved using the <code>toString()</code> method on the
+Attribute instance.
+-->
+        
+         </DD>
+      <DT><CODE>boolean specified</CODE></DT>
+      <DD>If this attribute was explicitly given a value in the original
+        document, this will be true; otherwise, it will be false.
+
+<!--
+<dt><code>Node  definition</code>
+<dd>If not <code>null</code>, refers to the part of the document type definition
+that defined the
+attribute.  
+-->
+        
+         </DD>
+      <DT><CODE>wstring toString()</CODE></DT>
+      <DD>Returns the value of the attribute as a string. Character and general
+        entity references will have been replaced wit their values in the
+        returned string. </DD>
+    </DL>
+    
+    <H2><A NAME="Comment">Comment</A></H2>
+    
+    <P>Represents the content of a comment, i.e. all the characters between the
+      starting '<CODE>&lt;!--</CODE>' and ending '<CODE>--&gt;</CODE>'. Note
+      that this is the definition of a comment in XML, and, in practice, HTML,
+      although some HTML tools may implement the full SGML comment structure.
+    </P>
+    <DL>
+      <DT><CODE>wstring data</CODE></DT>
+      <DD>The content of the comment, exclusive of the comment begin and end
+        sequence. </DD>
+    </DL>
+    
+    <H2><A NAME="PI">PI (Processing Instruction)</A></H2>
+    
+    <P>A PI node is a &quot;processing instruction&quot;. The content of the PI
+      node is the entire content between the delimiters of the processing
+      instruction </P>
+    <DL>
+      <DT><CODE>wstring name</CODE></DT>
+      <DD>XML defines a name as the first token following the markup that
+        begins the processing instruction, and this attribute returns that name.
+        For HTML, the returned value is <CODE>null</CODE>. </DD>
+      <DT><CODE>wstring data</CODE></DT>
+      <DD>The content of the processing instruction, from the character
+        immediately after the <CODE>&lt;?</CODE> (after the name in XML) to the
+        character immediately preceding the <CODE>?&gt;</CODE>. </DD>
+    </DL>
+    
+    <H2><A NAME="Text">Text</A> </H2>
+    
+    <P>The Text object contains the non-markup portion of a document. For XML
+      documents, all whitespace between markup results in Text nodes being
+      created. </P>
+    <DL>
+      <DT><CODE>wstring data</CODE> </DT>
+      <DD>This holds the actual content of the text node. Text nodes contain
+        just plain text, without markup and without entities, both of which are
+        manifest as separate objects in the DOM. </DD>
+      <DT><CODE>boolean isIgnorableWhitespace</CODE> </DT>
+      <DD>This is true if the Text node contains only whitespace, and if the
+        whitespace is ignorable by the application. Only XML processors will
+        make use of this, as HTML abides by SGML's rules for whitespace
+        handling. </DD>
+    </DL>
+    <HR>
+    
+    <H1>Footnotes</H1>
+    
+    <H2><A NAME="application-footnote">The term &quot;Application&quot;</A></H2>
+    
+    <P>This document uses the the term &quot;application&quot; to mean the set
+      of code that is using the DOM to inspect and manipulate the document
+      object; for example scripts and/or full-scale applications. </P>
+    
+    <H2><A NAME="doc-node-parent">Nested Documents</A></H2>
+    
+    <P>Sometimes it may make sense to have a document node be stored as child
+      of another node. For example, at some point during the creation of a
+      document that's representing XML links, it may be valuable to be able to
+      have the target document(s) directly accessible in the node hierarchy.
+    </P>
+    
+    <H2><A NAME="xml-whitespace">Whitespace in XML</A></H2>
+    
+    <P>Parsed XML includes text nodes for white space between elements, even if
+      there is nothing but whitespace present. The text node contains an
+      indication of whether or not the author of the document intended for the
+      whitespace to be ignored, but, according to the XML specification, white
+      space must be passed to the DOM verbatim. </P>
+    
+    <H2><A NAME="casing">Name case in the DOM</A></H2>
+    
+    <P>The Document Object Model does not change the case of any identifiers
+      present in a parsed document. XML preserves the case of identifiers (and
+      indeed recognizes upper and lower case versions of the same identifier as
+      distinct), and the HTML specification says that markup is handled
+      case-insensitively, and many implementations of HTML tools interpret this
+      to mean that element and attribute names are lowercased. So, in order to
+      not lose case information, the methods in the Document Object Model do not
+      alter the case of returned identifiers. </P>
+    
+    <P>Application developers using the DOM for HTML would be wise to use
+      case-insensitive comparisons when testing for equality. </P>
+    <HR>
+    
+    <H1><A NAME="core_idl_definitions">Appendix A: IDL Interface definitions</A></H1>
+    
+    <P>This section contains the IDL definitions for the objects in the core
+      Document Object Model. The HTML IDL definition is
+      <A HREF="level-one-html.html">here</A>, and the XML IDL definition,
+      including the types to represent the document type definition is
+      <A HREF="level-one-xml.html">here</A>. </P>
+
+<PRE>//hb////-*-Mode: C++-*-////////////////////////////////////////////////////////
+//                                                                           //
+// NAME        :                                                             //
+// DESCRIPTION :                                                             //
+// HISTORY     :                                                             //
+//                                                                           //
+//he///////////////////////////////////////////////////////////////////////////
+
+exception NoSuchNodeException {
+};
+exception NotMyChildException {
+};
+
+// Enumerator class for a node list
+interface NodeEnumerator {
+  Node getFirst();
+  Node getNext();
+  Node getPrevious();
+  Node getLast();
+
+  Node getCurrent();
+
+  // The rationale for their existence is that the enumerator may be used
+  // internally to a method, which may return some interesting value, and
+  // therefore cannot also indicate whether the start or end of enumeration
+  // was reached.  Any of the traversal methods affects the state, and
+  // so are not suitable for usage as predicates (unless possible state
+  // manipulation is acceptable).
+  boolean atStart();
+  boolean atEnd();
+};
+
+// Define the type for a sequence of nodes
+interface NodeList {
+  NodeEnumerator getEnumerator();
+
+  Node item(in unsigned long index)
+    raises(NoSuchNodeException);
+
+  // This may be expensive to compute
+  unsigned long getLength();
+};
+
+// Define the type for a sequence of nodes
+interface EditableNodeList : NodeList {
+  void replace(in unsigned long index, in Node replacedNode) 
+    raises (NoSuchNodeException);
+
+  void insert(in unsigned long index, in Node newNode) 
+    raises (NoSuchNodeException);
+
+  Node remove(in unsigned long index)
+    raises (NoSuchNodeException);
+};
+
+// Interface to a node in a grove
+interface Node {
+  enum NodeType {
+    DOCUMENT,
+    ELEMENT,
+    ATTRIBUTE,
+    PI,
+    COMMENT,
+    TEXT
+    };
+
+  NodeType getNodeType();
+
+  // Simple traversal interface
+  Node     getParentNode();
+  NodeList getChildren();
+  boolean  hasChildren();
+  Node     getFirstChild();
+  Node     getPreviousSibling();
+  Node     getNextSibling();
+
+  void insertBefore(in Node newChild, in Node refChild)
+    raises (NotMyChildException);
+
+  Node replaceChild(in Node oldChild, in Node newChild)
+    raises (NotMyChildException);
+
+  Node removeChild(in Node oldChild)
+    raises (NotMyChildException);
+};
+
+// Named node list
+interface NamedNodeList {
+  // Core get and set interface. Note that implementations may
+  // build the list lazily
+  Node getNode(in wstring name);
+  Node setNode(in wstring name, in Node node);
+ 
+  Node remove(in wstring name) raises (NoSuchNodeException);
+ 
+  Node item(in unsigned long index)
+    raises(NoSuchNodeException);
+ 
+  unsigned long getLength();
+ 
+  NodeEnumerator getEnumerator();
+};
+
+//////////////////////////////////////////////////////////////////////////
+//                                                                      //
+// OBJECTS RELATED TO THE DOM ITSELF                                    //
+//                                                                      //
+//////////////////////////////////////////////////////////////////////////
+
+interface DOM {
+  DOMFactory  getFactory();
+};
+
+interface DOMFactory {
+  Document          createDocument();
+  DocumentContext   createDocumentContext();
+  Element           createElement(in wstring tagName, 
+				  in AttributeList attributes);
+  Text              createTextNode(in wstring data);
+  Comment           createComment(in wstring data);
+  PI                createPI(in wstring name, in wstring data);
+  Attribute         createAttribute(in wstring name, in NodeList value);
+};
+
+interface DocumentContext {
+  attribute Document	document;
+};
+
+interface Document : Node {
+  attribute Node        documentType;
+  attribute Element 	documentElement;
+  NodeEnumerator        getElementsByTagName(in wstring name);
+};
+
+//////////////////////////////////////////////////////////////////////////
+//                                                                      //
+// OBJECTS RELATED TO THE INSTANCE                                      //
+//                                                                      //
+//////////////////////////////////////////////////////////////////////////
+
+interface Attribute : Node {
+  // 
+  attribute wstring   name;
+  attribute NodeList  value;
+  attribute boolean	specified;
+
+  // provides a connection to the DTD 
+  // attribute Node  	definition;
+
+  wstring toString();
+};
+
+// Attribute list
+interface AttributeList {
+  Attribute getAttribute(in wstring name);
+  Attribute setAttribute(in wstring name, in Attribute attr);
+
+  Attribute remove(in wstring name) 
+    raises (NoSuchNodeException);
+
+  Node item(in unsigned long index)
+    raises(NoSuchNodeException);
+
+  unsigned long getLength();
+};
+
+// Processing Instruction
+interface PI : Node {
+  attribute wstring 	name;
+  attribute wstring 	data;
+};
+
+interface Element : Node {
+  // 
+  attribute wstring	tagName;
+
+  attribute AttributeList  attributes;
+
+  void setAttribute(in Attribute newAttr);
+
+  NodeEnumerator getElementsByTagName(in wstring name);
+};
+
+// Represents the content of &lt;!-- ... --&gt;
+interface Comment : Node {
+  attribute wstring	data;
+};
+
+interface Text : Node {
+  attribute wstring    data;
+
+  attribute boolean isIgnorableWhitespace;
+};
+</PRE>
+    
+    <HR>
+    
+    <H1>Appendix B: Java Core API definitions</H1>
+
+<PRE>
+// Nodes, node lists, and enumerators for node lists
+
+public class NoSuchNodeException extends Exception {
+
+};
+
+public class NotMyChildException extends Exception {
+
+};
+
+
+// NodeEnumerator traverses the nodes in a NodeList.
+
+public interface NodeEnumerator {
+
+  Node getFirst();
+  Node getNext();
+  Node getPrevious();
+  Node getLast();
+
+  Node getCurrent();
+
+  // The rationale for their existence is that the enumerator may be used
+  // internally to a method, which may return some interesting value, and
+  // therefore cannot also indicate whether the start or end of enumeration
+  // was reached.  Any of the traversal methods affects the state, and
+  // so are not suitable for usage as predicates (unless possible state
+  // manipulation is acceptable).
+
+  boolean atStart();
+  boolean atEnd();
+
+};
+
+
+public interface NodeList {
+
+  NodeEnumerator getEnumerator();
+
+  Node item(long index)
+    throws NoSuchNodeException;
+
+  long getLength();
+
+};
+
+
+public interface EditableNodeList extends NodeList {
+
+  void replace(long index,Node replacedNode) 
+    throws NoSuchNodeException;
+
+  void insert(long index,Node newNode) 
+    throws NoSuchNodeException;
+
+  Node remove(long index)
+    throws NoSuchNodeException;
+
+};
+
+
+public interface Node {
+
+  public final class NodeType {
+    public final int DOCUMENT 	= 0;
+    public final int ELEMENT 	= 1;
+    public final int ATTRIBUTE 	= 2;
+    public final int PI 		= 3;
+    public final int COMMENT 	= 4;
+    public final int TEXT 		= 5;
+  };
+
+  // getNodeType() returns one of the NodeType constants
+  // defined above.
+
+  int getNodeType();
+
+  Node     getParentNode();
+  NodeList getChildren();
+  boolean  hasChildren();
+  Node     getFirstChild();
+  Node     getPreviousSibling();
+  Node     getNextSibling();
+
+  void insertBefore(Node newChild, Node refChild)
+    throws NotMyChildException;
+
+  Node replaceChild(Node oldChild, Node newChild)
+    throws NotMyChildException;
+
+  Node removeChild(Node oldChild)
+    throws NotMyChildException;
+};
+
+
+
+public interface NamedNodeList {
+
+  // Core get and set public interface. Note that implementations may
+  // build the list lazily
+
+  Node getNode(String name);
+  Node setNode(String name, Node node);
+ 
+  Node remove(String  name) 
+    throws NoSuchNodeException;
+ 
+  Node item(long index)
+    throws NoSuchNodeException;
+ 
+  long getLength();
+ 
+  NodeEnumerator getEnumerator();
+
+};
+
+
+public interface DOM {
+  DOMFactory  getFactory();
+};
+
+
+public interface DOMFactory {
+
+  Document          createDocument();
+  DocumentContext   createDocumentContext();
+  Element           createElement(String tagName, AttributeList attributes);
+  Text              createTextNode(String data);
+  Comment           createComment(String data);
+  PI                createPI(String name, String data);
+  Attribute         createAttribute(String name, NodeList value);
+
+};
+
+
+public interface DocumentContext {
+
+  void setDocument(Document document);
+  Document getDocument();
+
+};
+
+
+public interface Document extends Node {
+
+  void setDocumentType(Node documentType);
+  Node getDocumentType();
+
+  void setDocumentElement(Element documentElement);
+  Element getDocumentElement();
+
+  NodeEnumerator getElementsByTagName(String name);
+
+};
+
+
+public interface Attribute extends Node {
+
+  void setName(String name);
+  String getName();
+
+  void setValue(NodeList value);
+  NodeList getValue();
+
+  void setSpecified(boolean specified);
+  boolean getSpecified();
+
+  // provides a connection to the DTD 
+  // attribute Node definition;
+
+  String toString();
+
+};
+
+
+public interface AttributeList {
+
+  Attribute getAttribute(String name);
+  Attribute setAttribute(String name, Attribute attr);
+
+  Attribute remove(String name) 
+    throws NoSuchNodeException;
+
+  Node item(long index)
+    throws NoSuchNodeException;
+
+  long getLength();
+
+};
+
+
+// Processing Instruction
+
+public interface PI extends Node {
+
+  void setName(String name);
+  String getName();
+
+  void setData(String data);
+  String getData();
+
+};
+
+public interface Element extends Node {
+
+  void setTagName(String tagName);
+  String getTagName();
+
+  void setAttributes(AttributeList attributes);
+  AttributeList getAttributes();
+
+  void setAttribute(Attribute newAttr);
+
+  NodeEnumerator getElementsByTagName(String name);
+
+};
+
+
+// Represents the content of 
+&lt;!-- ... --&gt;
+public interface Comment extends Node {
+
+  void setData(String data);
+  String getData();
+
+};
+
+
+public interface Text extends Node {
+
+  void setData(String data);
+  String getData();
+
+  void setIsIgnorableWhitespace(boolean isIgnorableWhitespace);
+
+  boolean getIsIgnorableWhitespace();
+
+};
+</PRE>
+    
+    <HR>
+    
+    <H1>Appendix C: ECMAScript Core API definitions</H1>
+    
+    <P><B>Note:</B> This section will contain the complete DOM core bindings
+      for ECMAScript when they become available. We expect this to occur in the
+      very near future as the level one core specification reaches maturity.
+    </P>
+    <HR>
+    
+    <H1>Appendix D: Glossary</H1>
+    
+    <P>There are a large number of terms that the DOM uses which may not be
+      familiar to many of the readers. We suggest that you review the
+      <A HREF="glossary.html">glossary</A> if you encounter terms that aren't
+      familiar.</P>
+    <HR>
+  </BODY>
+</HTML>

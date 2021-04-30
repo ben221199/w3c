@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Mon Mar 16 22:11:03 PST 1998 -->
+<html>
+<head>
+  <title> Document Object Model (Core) Level 1: Section 2.3</title>
+</head>
+<body bgcolor='#FFFFFF'>
+<h1><font size='6'>2.  Document Object Model (Core) Level 1</font></h1>
+<hr>
+<h1>2.3 Design goals for the DOM Level One specification</h1><p>It is important to note that the DOM is an
+	"abstraction", or an idealized model of how
+	documents are represented and manipulated in the products that
+	support the DOM interfaces. Or, even more ideally, one might
+	think of the DOM as the "abstract base classes" that
+	products supporting the DOM actually implement.  Thus, in
+	general, HTML and XML products that support the DOM merely
+	"expose" the DOM as a means of accessing and
+	manipulating their (possibly proprietary) internal data
+	structures and operations; there is no assumption that they
+	are internally built on the DOM APIs or that they do not
+	expose proprietary APIs that have no relationship to the W3C
+	DOM. <p>The DOM objects and interfaces are designed to be:
+	<ul>
+<li>high-fidelity: sufficient for representing the
+	      content of parsed HTML and XML documents without loss of
+	      [significant] information. The supported HTML version is
+	      4.0; the supported XML version is 1.0. </li>
+<li>isomorphic with XML: The DOM should be sufficient
+	      to construct an entirely new document instance
+	      programmatically that is identical to the parsed form of
+	      a given HTML or XML document. This means that it has
+	      sufficient constructive power to build any useful
+	      document object hierarchy, and that an implementation
+	      could be written such that the external document parser
+	      merely calls the methods specified in the level one
+	      specification to build the object hierarchy. </li>
+<li>extensible: The DOM core is the foundation for the
+	      rest  of the document object model levels, which means
+	      it must be simple, flexible, and extensible. </li>
+<li>thread-safe: The operations supported by the DOM
+	      will not corrupt the document object or return corrupted
+	      state (as far as this API is concerned). Higher level
+	      consistency support mechanisms such as explicit locks or
+	      transactions are outside of the scope of the level one
+	      specification. For level one of the DOM, the assumption
+	      is that only one thread operates on the document at a
+	      time.
+	    </li>
+</ul>
+<i><b>Note: </b>In the current specification, some operations can
+	  modify the document tree, but there is no model for handling
+	  concurrent access. The WG also recognises that in some
+	  situations, a document, or some of its components, will not
+	  be modifiable, and a method for dealing with such situations
+	  needs to be defined in a subsequent revision level of the
+	  DOM.</i><br>
+<a name='ID-1066739061'></a>
+<h2>2.3.1 Entities and the DOM Core</h2><p>In the DOM core, there are no objects representing
+	  entities. Numeric character references and references to the
+	  pre-defined entities in HTML and XML, are replaced by the
+	  single character that makes up the entitity's replacement.
+	  For example, in:   
+<blockquote>
+<table border='1'>
+<tr><td bgcolor='#e9e9e9'><pre>
+   &lt;p&gt;This is a dog &amp;amp; a cat&lt;/p&gt;</pre></td></tr>
+</table>
+</blockquote>
+
+     
+         the "&amp;amp;"
+	  will be replaced by the character "&amp;", and the
+	  text in the &lt;p&gt; element will form a single continuous
+	  sequence of characters. The representation of general
+	  entities, both internal and external, are defined within the
+	  XML-specific portion of the level one specification. <i><b>Note: </b>When a DOM representation of a document is serialized
+	    as XML or HTML text, applications will need to check each
+	    character in text data to see if it needs to be escaped
+	    using a numeric or pre-defined entity. Failing to do so
+	    could result in invalid HTML or XML.
+	  </i><br><br><hr>
+</body>
+</html>

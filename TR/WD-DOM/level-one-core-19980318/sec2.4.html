@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Mon Mar 16 22:11:03 PST 1998 -->
+<html>
+<head>
+  <title> Document Object Model (Core) Level 1: Section 2.4</title>
+</head>
+<body bgcolor='#FFFFFF'>
+<h1><font size='6'>2.  Document Object Model (Core) Level 1</font></h1>
+<hr>
+<h1>2.4 IDL Issues</h1><p>The primary Document Object Model type definitions are
+	presented using the Object Management Group's Interface
+	Definition Language (IDL, ISO standard 14750). While a
+	complete tutorial on the IDL language is beyond the scope of
+	this document, a few key items deserve explicit mentioning:
+	<ul>
+<li>In the DOM's IDL definition, within each interface
+	      there are primarily two kinds of things:
+	      <ol>
+<li>Attribute definitions </li>
+<li>Method (IDL calls them "operation")
+		    definitions </li>
+</ol>
+</li>
+<li>Attribute definitions are a <em>shorthand</em>
+	      notation for a pair of "get/set" or
+	      accessor/mutator methods, and should <em>not</em> be
+	      thought of, nor mapped in a particular language binding
+	      to, data members directly. </li>
+<li>The "constructor" methods for the various
+	      IDL objects are not specified explicitly. Specific
+	      programming language implementations of the DOM will
+	      provide suitable object creation methods; typically
+	      these will be simple with no argument constructors,
+	      although this is not a requirement. </li>
+<li>IDL's <code>long</code> datatype represents 32
+	      signed bit integers. In other language bindings, for
+	      example Java, this would be mapped to the Java
+	      <code>int</code> datatype. </li>
+</ul>
+ 
+	More information on IDL is available from  <a href='http://www.omg.org/'>OMG</a>
+ and in chapter 3 of the  <a href='http://www.omg.org/corba/corbiiop.htm'>CORBA 2.0</a>
+ specification.<i><b>Note: </b>The Object Management Group Interface Definition
+	  Language (OMG IDL) was chosen as it was designed for
+	  specifying language and implementation-neutral interfaces.
+	  Various other IDLs could be used; the use of OMG IDL does
+	  not imply a requirement to use a specific object binding
+	  runtime.
+	</i><br><hr>
+</body>
+</html>

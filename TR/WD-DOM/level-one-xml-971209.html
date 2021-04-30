@@ -1,0 +1,1000 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!-- Generated: Fri Dec  5 09:29:21 EST 1997 -->
+
+<HTML>
+  
+  <HEAD>
+    <TITLE>Document Object Model (XML) Level 1</TITLE>
+  </HEAD>
+  
+  <BODY BGCOLOR="#ffffff">
+    
+    <H3 ALIGN="RIGHT"><A HREF="http://www.w3.org"><IMG SRC="http://www.w3.org/Icons/w3c_home.gif" ALIGN="LEFT" ALT="W3C" BORDER="0"></A>WD-DOM/WD-level-one-xml-971209</H3>
+    
+    <H1 ALIGN="center">Document Object Model (XML)
+    <BR> Level 1</H1>
+    
+    <H3 ALIGN="CENTER">W3C Working Draft 9-December-1997</H3>
+    
+    <DL>
+      <DT><CODE>This version:</CODE></DT>
+      <DD><A HREF="http://www.w3.org/TR/WD-DOM/level-one-xml-971209">http://www.w3.org/TR/WD-DOM/level-one-xml-971209</A></DD>
+      <DT><CODE>Latest version:</CODE></DT>
+      <DD><A HREF="http://www.w3.org/TR/WD-DOM/level-one-xml">http://www.w3.org/TR/WD-DOM/level-one-xml</A></DD>
+      <DT><CODE>Previous version:</CODE></DT>
+      <DD><A HREF="http://www.w3.org/TR/WD-DOM/level-one-xml-971009">http://www.w3.org/TR/WD-DOM/level-one-xml-971009</A></DD>
+      <DT><CODE>WG Chair:</CODE></DT>
+      <DD>Lauren Wood, SoftQuad, Inc.</DD>
+      <DT><CODE>Editors:</CODE></DT>
+      <DD>Gavin Nicol, INSO</DD>
+      <DD>Mike Champion, ArborText</DD>
+      <DT><CODE>Principal contributors:</CODE></DT>
+      <DD>Vidur Apparao, Netscape; Mike Champion, ArborText; Scott Isaacs,
+        Microsoft; Arnaud Le Hors, W3C; Gavin Nicol, INSO; Peter Sharpe,
+        SoftQuad, Inc.; Bill Smith, Sun Microsystems Inc; Jared Sorensen,
+        Novell; Bob Sutor, IBM</DD>
+    </DL>
+    
+    <H2>Status</H2>
+    
+    <P>This document is part of the <A HREF="cover.html">Document Object Model
+        Specification</A>; check the W3C web site for its
+      <A HREF="http://www.w3.org/DOM/Activity">current status</A>. It is a
+      draft document and may be updated, replaced or obsoleted by other
+      documents at any time. It is inappropriate to use W3C Working Drafts as
+      reference material or to cite them as other than &quot;work in progress&quot;.
+      Note: Since working drafts are subject to frequent change, you are advised
+      to check the <A HREF="http://www.w3.org/TR">list of current W3C working
+        drafts</A>.</P>
+    
+    <H2>Abstract</H2>
+    
+    <P>The Document Object Model (DOM) level one provides a mechanism for
+      software developers and web script authors to access and manipulate parsed
+      HTML and XML content. This document defines a set of objects that extends
+      the Document Object Model (Core) such that the combination can represent
+      all parts of a parsed XML document, and to allow XML validity checkers to
+      be written using the interfaces defined herein.</P>
+    
+    <H2>Languages used</H2>
+    
+    <P>As in the <A HREF="level-one-core.html">Core DOM specification</A>, the
+      primary Document Object Model type definitions are presented using the
+      Object Management Group's Interface Definition Language (IDL, ISO standard
+      14750).</P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H1>Section 1. Introduction</H1>
+    
+    <P>The DOM Level One (Core) specification defines a set of object
+      definitions that are sufficient to represent a document instance (the
+      objects that occur within the document itself). This specification extends
+      the DOM Level One (Core) specification such that document type
+      definitions, entities, CDATA marked sections, and conditional sections can
+      also be represented.</P>
+    
+    <P>The objects and interfaces defined within this document are sufficient
+      to allow validators and other applications that make use of a DTD (<EM>Document
+      Type Definition</EM>) to be written. For editors, the interfaces defined
+      here will probably be insufficient for fine-grained editing, where
+      information about the <EM>document type declaration</EM> may be
+      necessary, though structural isomorphism should be easily accomplished.</P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H1>Section 2. Document Type Definition support overview</H1>
+    
+    <P>A Document Type Definition (DTD) defines three things: </P>
+    <OL>
+      <LI>A definition of a grammar for a markup language.</LI>
+      <LI>A (possibly empty) set of entity declarations.</LI>
+      <LI>A (possibly empty) set of notation declarations.</LI>
+    </OL>
+    
+    <P>This specification gives access to all of these, though only in the
+      post-parse form.</P>
+    
+    <P>From a practical point of view, this means that while all the <EM>information</EM>
+      contained within a DTD is available, not all of the information about what
+      created it is. Parameter entity references, for example, are assumed to
+      have been already expanded, and hence, their boundaries are lost.</P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H1>Section 3. Descriptions of objects related to the Document Type
+    Definition</H1>
+    
+    <P>This section describes the objects that are used to represent the DTD of
+      a document. The objects are not specific to XML, although some attributes
+      are specific to the HTML DTD. Such cases are clearly marked.</P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H2>3.1. DocumentType</H2>
+    
+    <BLOCKQUOTE><TABLE BORDER="3">
+        <TR>
+          <TD BGCOLOR="#80fff">
+
+<PRE>interface DocumentType : Node {
+  attribute wstring  name;
+
+  attribute NodeEnumerator externalSubset;
+  attribute NodeEnumerator internalSubset;
+  
+  attribute NamedNodeList  generalEntities;
+  attribute NamedNodeList  parameterEntities;
+  attribute NamedNodeList  notations;
+  attribute NamedNodeList  elementTypes;
+};</PRE></TD>
+        </TR>
+      </TABLE> </BLOCKQUOTE>
+    
+    <P>Each document has a (possibly null) attribute that contains a reference
+      to a <CODE>DocumentType</CODE> object. The <CODE>DocumentType</CODE>
+      class provides an interface to access all of the entity declarations,
+      notation declarations, and all the element type declarations.</P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H3>3.1.1. Attributes</H3>
+    
+    <BLOCKQUOTE>
+      <DL>
+        <DT><B>name</B></DT>
+        <DD>
+          
+          <P>The <CODE>name</CODE> attribute is a <CODE>wstring</CODE> that
+            holds the name of the DTD; i.e. the name immediately following the
+            <CODE>DOCTYPE</CODE> keyword.</P> </DD>
+        <DT><B>externalSubset</B></DT>
+        <DD>
+          
+          <P>The <CODE>externalSubset</CODE> attribute is an enumerator that
+            allows iteration over the list of nodes (definitions) that occurred
+            in the external subset of a document. In this example: </P>
+          <BLOCKQUOTE><TABLE BORDER="0">
+              <TR>
+                <TD BGCOLOR="#cccccc">
+
+<PRE>&lt;!DOCTYPE ex SYSTEM &quot;ex.dtd&quot; &gt;
+&lt;ex/&gt;</PRE></TD>
+              </TR>
+            </TABLE> </BLOCKQUOTE>
+          
+          <P> it would iterate over all of the declarations that occurred
+            within the <CODE>ex.dtd</CODE> external entity. </P>
+          
+          <P><I><B>Note: </B>An iterator interface is used so as to not
+            constrain implementations</I> </P> </DD>
+        <DT><B>internalSubset</B></DT>
+        <DD>
+          
+          <P>The internal subset iterates over all the definitions that
+            occurred within the internal subset of a document (the part that
+            appears within the document instance). For example </P>
+          <BLOCKQUOTE><TABLE BORDER="0">
+              <TR>
+                <TD BGCOLOR="#cccccc">
+
+<PRE>&lt;!DOCTYPE ex SYSTEM &quot;ex.dtd&quot; [
+&lt;!ENTITY ex &quot;example&quot;&gt;
+]&gt;
+&lt;ex/&gt;</PRE></TD>
+              </TR>
+            </TABLE> </BLOCKQUOTE>
+          
+          <P> if would iterate over a single node: the definition of the
+            <CODE>ex</CODE> entity.
+            <BR><I><B>Note: </B>An iterator interface is used so as to not
+            constrain implementations</I> </P> </DD>
+        <DT><B>generalEntities</B></DT>
+        <DD>
+          
+          <P>This is a <CODE>NamedNodeList</CODE> providing an interface to
+            the list of general entities that were defined within the external
+            and the internal subset. For example in: </P>
+          <BLOCKQUOTE><TABLE BORDER="0">
+              <TR>
+                <TD BGCOLOR="#cccccc">
+
+<PRE>&lt;!DOCTYPE ex SYSTEM &quot;ex.dtd&quot; [
+&lt;!ENTITY foo &quot;foo&quot;&gt;
+&lt;!ENTITY bar &quot;bar&quot;&gt;
+&lt;!ENTITY % baz &quot;baz&quot;&gt;
+]&gt;
+&lt;ex/&gt;</PRE></TD>
+              </TR>
+            </TABLE> </BLOCKQUOTE>
+          
+          <P> the interface would provide access to <CODE>foo</CODE> and
+            <CODE>bar</CODE> but not <CODE>baz</CODE>. All objects supporting
+            the <CODE>Node</CODE> interface that are accessed though this
+            attribute, will also support the <CODE>Entity</CODE> interface
+            (defined below).</P> </DD>
+        <DT><B>parameterEntities</B></DT>
+        <DD>
+          
+          <P>This is a <CODE>NamedNodeList</CODE> providing an interface to
+            the list of parameter entities that were defined within the external
+            and the internal subset. In the example above, the interface would
+            provide access to <CODE>baz</CODE> but not <CODE>foo</CODE> or
+            <CODE>bar</CODE>. All objects supporting the <CODE>Node</CODE>
+            interface that are accessed though this attribute, will also support
+            the <CODE>Entity</CODE> interface (defined below).</P> </DD>
+        <DT><B>notations</B></DT>
+        <DD>
+          
+          <P>This is a <CODE>NamedNodeList</CODE> providing an interface to
+            the list of notations that were defined within the external and the
+            internal subset. All objects supporting the <CODE>Node</CODE>
+            interface that are accessed though this attribute, will also support
+            the <CODE>Notation</CODE> interface (defined below).</P> </DD>
+        <DT><B>elementTypes</B></DT>
+        <DD>
+          
+          <P>This is a <CODE>NamedNodeList</CODE> providing an interface to
+            the list of element types that were defined within the external and
+            the internal subset. All objects supporting the <CODE>Node</CODE>
+            interface that are accessed though this attribute, will also support
+            the <CODE>ElementDefinition</CODE> interface (defined below).</P>
+        </DD>
+      </DL></BLOCKQUOTE>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H2>3.2. ElementDefinition</H2>
+    
+    <BLOCKQUOTE><TABLE BORDER="3">
+        <TR>
+          <TD BGCOLOR="#80fff">
+
+<PRE>interface ElementDefinition : Node {
+  enum ContentType {
+    EMPTY,
+    ANY,
+    PCDATA,
+    MODEL_GROUP
+  };
+
+  attribute wstring        name;
+  attribute ContentType    contentType;
+  attribute ModelGroup     contentModel;
+
+  attribute NamedNodeList  attributeDefinitions;
+  attribute StringList     inclusions;
+  attribute StringList     exceptions;
+};</PRE></TD>
+        </TR>
+      </TABLE> </BLOCKQUOTE>
+    
+    <P>The definition of each element defined within the external or internal
+      subset (providing it is parsed), will be available through the <CODE>elementTypes</CODE>
+      attribute of the <CODE>DocumentType</CODE> object. The name, attribute
+      list, and content model are all available for inspection.</P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H3>3.2.1. Attributes</H3>
+    
+    <BLOCKQUOTE>
+      <DL>
+        <DT><B>name</B></DT>
+        <DD>
+          
+          <P>This is the name of the type of element being defined.</P> </DD>
+        <DT><B>contentType</B></DT>
+        <DD>
+          
+          <P>This attribute specifies the type of content of the element. The
+            different types are: </P>
+          <BLOCKQUOTE>
+            <DL>
+              <DT><B>EMPTY</B></DT>
+              <DD>
+                
+                <P>The element is an empty element, and cannot have content.</P>
+              </DD>
+              <DT><B>ANY</B></DT>
+              <DD>
+                
+                <P>The element may have character data, or any of the other
+                  elements defined within the DTD as content, in any order and
+                  sequence.</P> </DD>
+              <DT><B>PCDATA</B></DT>
+              <DD>
+                
+                <P>The element can have only PCDATA (<EM>Parsed Character Data</EM>)
+                  as content.</P> </DD>
+              <DT><B>MODEL_GROUP</B></DT>
+              <DD>
+                
+                <P>The element has a specific content model associated with it.
+                  The model is accessible through the <CODE>contentModel</CODE>
+                  attribute (below).</P> </DD>
+            </DL></BLOCKQUOTE> </DD>
+        <DT><B>contentModel</B></DT>
+        <DD>
+          
+          <P>If the <CODE>contentType</CODE> is <CODE>MODEL_GROUP</CODE>,
+            then this will provide access to a <CODE>ModelGroup</CODE> (below)
+            object that is the root of the content model object hierarchy for
+            this element. For other content types, this will be null.</P> </DD>
+        <DT><B>attributeDefinitions</B></DT>
+        <DD>
+          
+          <P>This <CODE>NamedNodeList</CODE> provides an interface for
+            accessing the list of attributes that were defined to be on an
+            <CODE>ElementDefinition</CODE>. Each object supporting the <CODE>Node</CODE>
+            interface that is accessed through this attribute will also support
+            the <CODE>AttributeDefinition</CODE> interface.</P> </DD>
+        <DT><B>inclusions</B></DT>
+        <DD>
+          
+          <P>This provides an interface to a list of element type names that
+            are included in the content model of this element by the SGML
+            inclusion/exception mechanism (not available from XML, but used in
+            HTML).</P> </DD>
+        <DT><B>exceptions</B></DT>
+        <DD>
+          
+          <P>This provides an interface to a list of element type names that
+            are excluded from the content model of this element by the SGML
+            inclusion/exception mechanism (not available from XML, but used in
+            HTML).</P> </DD>
+      </DL></BLOCKQUOTE>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H2>3.3. ModelGroup</H2>
+    
+    <BLOCKQUOTE><TABLE BORDER="3">
+        <TR>
+          <TD BGCOLOR="#80fff">
+
+<PRE>enum OccurrenceType {
+  OPT,     // ?
+  PLUS,    // +
+  REP      // *
+};
+
+interface PCDATAToken : Node {
+  // Token type for the string #PCDATA
+};
+
+interface ElementToken: Node {
+  attribute wstring          name;
+  attribute OccurrenceType   occurrence;
+};
+
+interface ModelGroup : Node {
+  enum ConnectionType {
+    OR,   // |
+    SEQ,  // ,
+    AND
+    };
+
+  attribute ConnectionType  connector;
+  attribute OccurrenceType  occurrence;
+  attribute NodeList        tokens;
+};</PRE></TD>
+        </TR>
+      </TABLE> </BLOCKQUOTE>
+    
+    <P>The <CODE>ModelGroup</CODE> object represents the content model of an
+      <CODE>ElementDefinition</CODE>. The content model is represented as a
+      tree, where each node specifies how its children are connected, and the
+      number of times that it can occur within its parent. Leaf nodes in the
+      tree are either <CODE>PCDATAToken</CODE> or <CODE>ElementToken</CODE>.</P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H3>3.3.1. Attributes for <CODE>ModelGroup</CODE></H3>
+    
+    <BLOCKQUOTE>
+      <DL>
+        <DT><B>connector</B></DT>
+        <DD>
+          
+          <P>This attribute specifies how the members of <CODE>tokens</CODE>
+            are joined together.</P> </DD>
+        <DT><B>occurrence</B></DT>
+        <DD>
+          
+          <P>This specifies how often this <CODE>ModelGroup</CODE> may occur
+            at its position in the content model.</P> </DD>
+        <DT><B>tokens</B></DT>
+        <DD>
+          
+          <P>This provides access to the list of tokens that are allowed within
+            this <CODE>ModelGroup</CODE>. Note that only <CODE>PCDATAToken</CODE>
+            and <CODE>ElementToken</CODE> may occur within the token list.</P>
+        </DD>
+      </DL></BLOCKQUOTE>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H3>3.3.2. Attributes on <CODE>ElementToken</CODE></H3>
+    
+    <BLOCKQUOTE>
+      <DL>
+        <DT><B>name</B></DT>
+        <DD>
+          
+          <P>This is the type name for the element.</P> </DD>
+        <DT><B>occurrence</B></DT>
+        <DD>
+          
+          <P>This indicates how many times this element can occur in its
+            position in the content model.</P> </DD>
+      </DL></BLOCKQUOTE>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H2>3.4. AttributeDefinition</H2>
+    
+    <BLOCKQUOTE><TABLE BORDER="3">
+        <TR>
+          <TD BGCOLOR="#80fff">
+
+<PRE>interface AttributeDefinition : Node {
+  enum DeclaredValueType {
+    CDATA,
+    ID,
+    IDREF,
+    IDREFS,
+    ENTITY,
+    ENTITIES,
+    NMTOKEN,
+    NMTOKENS,
+    NOTATION,
+    NAME_TOKEN_GROUP
+    };
+
+  enum DefaultValueType {
+    FIXED,
+    REQUIRED,
+    IMPLIED
+    };
+
+  attribute wstring            name;
+  attribute StringList         allowedTokens;
+  attribute DeclaredValueType  declaredType;
+  attribute DefaultValueType   defaultType;
+  attribute NodeList           defaultValue;
+};</PRE></TD>
+        </TR>
+      </TABLE> </BLOCKQUOTE>
+    
+    <P>The <CODE>AttributeDefinition</CODE> interface is used to access
+      information about a particular attribute definition on a given element.
+      Object supporting this interface are available from the <CODE>ElementDefinition</CODE>
+      object through the <CODE>attributeDefinitions</CODE> attribute.</P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H3>3.4.1. Attributes</H3>
+    
+    <BLOCKQUOTE>
+      <DL>
+        <DT><B>name</B></DT>
+        <DD>
+          
+          <P>The name of the attribute.</P> </DD>
+        <DT><B>allowedTokens</B></DT>
+        <DD>
+          
+          <P>The list of tokens that are allowed as values. For example, in
+          </P>
+          <BLOCKQUOTE><TABLE BORDER="0">
+              <TR>
+                <TD BGCOLOR="#cccccc">
+
+<PRE>&lt;!DOCTYPE ex [
+&lt;!ELEMENT ex (#PCDATA) &gt;
+&lt;!ATTLIST ex test (FOO|BAR) &quot;FOO&quot; &gt;
+]&gt;
+&lt;ex&gt;&lt;/ex&gt;</PRE></TD>
+              </TR>
+            </TABLE> </BLOCKQUOTE>
+          
+          <P> this would hold <CODE>FOO</CODE> and <CODE>BAR</CODE>.</P>
+        </DD>
+        <DT><B>declaredType</B></DT>
+        <DD>
+          
+          <P>This attribute indicates the type of values the attribute may
+            contain.</P> </DD>
+        <DT><B>defaultType</B></DT>
+        <DD>
+          
+          <P>This specifies whether the attribute must be specified in the
+            instance, and if it is not, what the attribute value will be if not
+            provided.</P> </DD>
+        <DT><B>defaultValue</B></DT>
+        <DD>
+          
+          <P>This provides an interface to a list of <CODE>Nodes</CODE> that
+            make up the default value for an attribute. This value is used if
+            the attribute was not given an explicit value in the document
+            instance. </P> </DD>
+      </DL></BLOCKQUOTE>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H2>3.5. Notation</H2>
+    
+    <BLOCKQUOTE><TABLE BORDER="3">
+        <TR>
+          <TD BGCOLOR="#80fff">
+
+<PRE>interface Notation : Node {
+  attribute wstring name;
+  
+  attribute boolean isPublic;
+
+  attribute string  publicIdentifier;
+  attribute string  systemIdentifier;
+};</PRE></TD>
+        </TR>
+      </TABLE> </BLOCKQUOTE>
+    
+    <P>The <CODE>Notation</CODE> object is used to represent the definition of
+      a notation within a DTD.</P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H3>3.5.1. Attributes</H3>
+    
+    <BLOCKQUOTE>
+      <DL>
+        <DT><B>name</B></DT>
+        <DD>
+          
+          <P>This is the name of the notation.</P> </DD>
+        <DT><B>isPublic</B></DT>
+        <DD>
+          
+          <P>If a public identifier was specified in the notation declaration,
+            this will be <CODE>TRUE</CODE>, and the <CODE>publicIdentifier</CODE>
+            attribute will contain the string for the public identifier.</P>
+        </DD>
+        <DT><B>publicIdentifier</B></DT>
+        <DD>
+          
+          <P>If a public identifier was specified in the notation declaration,
+            this will hold the public identifier string, otherwise it will be
+            null.</P> </DD>
+        <DT><B>systemIdentifier</B></DT>
+        <DD>
+          
+          <P>If a system identifier was specified in the notation declaration,
+            this will hold the system identifier string, otherwise it will be
+            null.</P> </DD>
+      </DL></BLOCKQUOTE>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H1>Section 4. Descriptions of objects related to Entities</H1>
+    
+    <P>To be written.</P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H1>Section 5. Descriptions of objects related to CDATA and Conditional
+    Sections</H1>
+    
+    <P>CDATA and conditional sections are objects specific to XML. CDATA
+      sections are used in the document instance, and conditional sections in
+      the DTD.
+      <BR> </P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H2>5.1. CDATA Sections</H2>
+    
+    <BLOCKQUOTE><TABLE BORDER="3">
+        <TR>
+          <TD BGCOLOR="#80fff">
+
+<PRE>interface CDATASection : Node {
+  attribute wstring content;
+};</PRE></TD>
+        </TR>
+      </TABLE> </BLOCKQUOTE>
+    
+    <P>CDATA sections are used in the document instance, and provide a region
+      in which most of the XML delimiter recognition does not take place. The
+      primary purpose is for including material such as XML fragments, without
+      needing to escape all the delimiters. </P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H3>5.1.1. Attributes</H3>
+    
+    <BLOCKQUOTE>
+      <DL>
+        <DT><B>content</B></DT>
+        <DD>
+          
+          <P>This holds the text that was contained by the CDATA section. Note
+            that this <EM>may</EM> contain characters that need to be escaped
+            outside of CDATA sections.</P> </DD>
+      </DL></BLOCKQUOTE>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H2>5.2. Conditional Sections</H2>
+    
+    <BLOCKQUOTE><TABLE BORDER="3">
+        <TR>
+          <TD BGCOLOR="#80fff">
+
+<PRE>interface ConditionalSection : Node {
+  attribute boolean    included;
+  attribute Node       condition;
+  attribute NodeList   content;
+};</PRE></TD>
+        </TR>
+      </TABLE> </BLOCKQUOTE>
+    
+    <P>Conditional sections are used in the DTD to provide a limited form of
+      control over inclusion or exclusion of DTD fragments.</P>
+    <HR WIDTH="400" SIZE="3" ALIGN="center">
+    
+    <H3>5.2.1. Attributes</H3>
+    
+    <BLOCKQUOTE>
+      <DL>
+        <DT><B>included</B></DT>
+        <DD>
+          
+          <P>This is a flag indicating whether this section was included during
+            parsing.</P> </DD>
+        <DT><B>condition</B></DT>
+        <DD>
+          
+          <P>This <CODE>Node</CODE> indicates the condition. Generally, it
+            will be a <CODE>Text</CODE> node containing either <CODE>INCLUDE</CODE>
+            or <CODE>IGNORE</CODE>.</P> </DD>
+        <DT><B>content</B></DT>
+        <DD>
+          
+          <P>The content of this section.</P> </DD>
+      </DL></BLOCKQUOTE>
+    
+    <H1>Appendix A. IDL Interface for Document Type Definitions</H1>
+    
+    <BLOCKQUOTE><TABLE BORDER="3">
+        <TR>
+          <TD BGCOLOR="#80fff">
+
+<PRE>typedef sequence&lt;wstring&gt; StringList;
+
+interface DocumentType : Node {
+  attribute wstring  name;
+
+  attribute NodeEnumerator externalSubset;
+  attribute NodeEnumerator internalSubset;
+  
+  attribute NamedNodeList  generalEntities;
+  attribute NamedNodeList  parameterEntities;
+  attribute NamedNodeList  notations;
+  attribute NamedNodeList  elementTypes;
+};
+
+enum OccurrenceType {
+  OPT,     // ?
+  PLUS,    // +
+  REP      // *
+};
+
+interface ModelGroup : Node {
+  enum ConnectionType {
+    OR,   // |
+    SEQ,  // ,
+    AND
+    };
+
+  attribute ConnectionType  connector;
+  attribute OccurrenceType  occurrence;
+  attribute NodeList        tokens;
+};
+
+interface ElementDefinition : Node {
+  enum ContentType {
+    EMPTY,
+    ANY,
+    PCDATA,
+    MODEL_GROUP
+  };
+
+  attribute wstring        name;
+  attribute ContentType    contentType;
+  attribute ModelGroup     contentModel;
+
+  attribute NamedNodeList  attributeDefinitions;
+  attribute StringList     inclusions;
+  attribute StringList     exceptions;
+};
+
+interface PCDATAToken : Node {
+  // Token type for the string #PCDATA
+};
+
+interface ElementToken: Node {
+  attribute wstring          name;
+  attribute OccurrenceType   occurrence;
+};
+
+interface AttributeDefinition : Node {
+  enum DeclaredValueType {
+    CDATA,
+    ID,
+    IDREF,
+    IDREFS,
+    ENTITY,
+    ENTITIES,
+    NMTOKEN,
+    NMTOKENS,
+    NOTATION,
+    NAME_TOKEN_GROUP
+    };
+
+  enum DefaultValueType {
+    VALUE, 
+    FIXED,
+    REQUIRED,
+    IMPLIED
+    };
+
+  attribute wstring            name;
+  attribute StringList         allowedTokens;
+  attribute DeclaredValueType  declaredType;
+  attribute DefaultValueType   defaultType;
+  attribute NodeList           defaultValue;
+};
+
+interface Notation : Node {
+  attribute wstring name;
+  
+  attribute boolean isPublic;
+
+  attribute string  publicIdentifier;
+  attribute string  systemIdentifier;
+};</PRE></TD>
+        </TR>
+      </TABLE> </BLOCKQUOTE>
+    
+    <H1>Appendix B. IDL Interface for Entities</H1>
+    
+    <BLOCKQUOTE><TABLE BORDER="3">
+        <TR>
+          <TD BGCOLOR="#80fff">
+
+<PRE>typedef sequence&lt;octet&amp;&gt; buffer;
+
+interface Entity : Node {
+  attribute wstring name;
+  attribute boolean isParameterEntity;
+};
+
+interface InternalEntity : Entity {
+  attribute wstring content;
+};
+
+interface ExternalEntity : Entity {
+  attribute boolean isNDATA;
+  attribute boolean isPublic;
+
+  attribute string  publicIdentifier;
+  attribute string  systemIdentifier;
+};
+
+interface ExternalTextEntity : ExternalEntity {
+  attribute wstring content;
+};
+
+interface ExternalNDATAEntity : ExternalEntity {
+  attribute Notation  notation;
+  attribute buffer    content;
+};
+
+interface NDATA : Node {
+  attribute buffer content;
+};</PRE></TD>
+        </TR>
+      </TABLE> </BLOCKQUOTE>
+    
+    <H1>Appendix C. IDL Interface for CDATA and Conditional Sections</H1>
+    
+    <BLOCKQUOTE><TABLE BORDER="3">
+        <TR>
+          <TD BGCOLOR="#80fff">
+
+<PRE>interface CDATASection : Node {
+  attribute wstring content;
+};
+
+interface ConditionalSection : Node {
+  attribute boolean    included;
+  attribute Node       condition;
+  attribute NodeList   content;
+};</PRE></TD>
+        </TR>
+      </TABLE> </BLOCKQUOTE>
+    
+    <H1>Appendix D. Java XML API definitions</H1>
+
+<PRE>
+//
+// Note: the IDL contains the following definition for a StringList:
+//
+// 	 typedef sequence&lt;String&gt; StringList;
+//
+// Because Java does not support templates, we are using a Vector for this.
+//
+
+public interface DocumentType extends Node {
+
+  void setName(String name);
+  String getName();
+
+  void setExternalSubset(NodeList externalSubset);
+  NodeList getExternalSubset();
+
+  void setInternalSubset(NodeList internalSubset);
+  NodeList getInternalSubset();
+  
+  void setNotations(NamedNodeList notations);
+  NamedNodeList getNotations();
+
+  void setElementTypes(NamedNodeList elementTypes);
+  NamedNodeList getElementTypes();
+
+};
+
+public final class OccurrenceType {
+  public final int OPT  = 0;    // ?
+  public final int PLUS = 1;    // +
+  public final int REP  = 2;    // *
+};
+
+public interface ElementDefinition extends Node {
+
+  public final class ContentType {
+    public final int EMPTY 		 = 0;
+    public final int ANY 		 = 1;
+    public final int PCDATA 	 = 2;
+    public final int MODEL_GROUP = 3;
+  };
+
+  void setName(String name);
+  String getName();
+
+  // The ints for the following two methods should be
+  // constants defined in the ContentType class.
+
+  void setContentType(int contentType);
+  int getContentType();
+
+  void setContentModel(ModelGroup contentModel);
+  ModelGroup getContentModel();
+
+  void setAttributeDefinitions(NamedNodeList attributeDefinitions);
+  NamedNodeList getAttributeDefinitions();
+
+  void setInclusions(Vector inclusions);
+  Vector getInclusions();
+
+  void setExceptions(Vector exceptions);
+  Vector getExceptions();
+
+};
+
+public interface ModelGroup extends Node {
+  
+  public final class ConnectionType {
+    public final int OR =  0;  // |
+    public final int SEQ = 1;  // ,
+    public final int AND = 2;
+  };
+
+  // The ints for the following two methods should
+  // be constants defined in the ConnectionType class.
+
+  void setConnector(int connector);
+  int getConnector();
+
+  // The ints for the two methods below should be
+  // constants defined in the OccurrenceType class.
+
+  void setOccurrence(int occurrence);
+  int getOccurrence();
+
+  void setTokens(NodeList tokens);
+  NodeList getTokens();
+
+};
+
+public interface PCDATAToken extends Node {
+  // Token type for the string #PCDATA
+};
+
+public interface ElementToken extends Node {
+
+  void setName(String name);
+  String getName();
+
+  // The ints for the following two methods should be
+  // constants defined in the OccurrenceType class.
+
+  void setOccurrence(int occurrence);
+  int getOccurrence();
+
+};
+
+public interface AttributeDefinition extends Node {
+
+  public final class DeclaredValueType {
+    public final int CDATA 				= 0;
+    public final int ID 				= 1;
+    public final int IDREF 				= 2;
+    public final int IDREFS 			= 3;
+    public final int ENTITY 			= 4;
+    public final int ENTITIES 			= 5;
+    public final int NMTOKEN 			= 6;
+    public final int NMTOKENS 			= 7;
+    public final int NOTATION 			= 8;
+    public final int NAME_TOKEN_GROUP 	= 9;
+  };
+
+  public final class DefaultValueType {
+    public final int VALUE 				= 0;
+    public final int FIXED 				= 1;
+    public final int REQUIRED 			= 2;
+    public final int IMPLIED 			= 3;
+  };
+
+  void setName(String name);
+  String getName();
+
+  void setAllowedTokens(Vector allowedTokens);
+  Vector getAllowedTokens();
+
+  // The ints for the following two methods should be
+  // constants declared in the DeclaredValueType class.
+
+  void setDeclaredType(int declaredType);
+  int getDeclaredType();
+
+  // The ints for the following two methods should be
+  // constants declared in the DefaultValueType class.
+
+  void setDefaultType(int defaultType);
+  int getDefaultType();
+
+  void setDefaultValue(NodeList defaultValue);
+  NodeList getDefaultValue();
+
+};
+
+public interface Notation extends Node {
+
+  void setName(String name);
+  String getName();
+
+  void setIsPublic(boolean isPublic);
+  boolean getIsPublic();
+
+  void setPublicIdentifier(String publicIdentifier);
+  String getPublicIdentifier();
+
+  void setSystemIdentifier(String systemIdentifier);
+  String getSystemIdentifier();
+
+};
+
+public interface CDATASection extends Node {
+
+  void setContent(String content);
+  String getContent();
+
+};
+</PRE>
+    
+    <H1>Appendix E. ECMAScript XML API definitions</H1>
+    
+    <P>(This section has yet to be written.)  </P>
+    
+    <H1>Appendix F: Glossary</H1>
+    
+    <P>There are a large number of terms that the DOM uses which may not be
+      familiar to many of the readers. We suggest that you review the
+      <A HREF="glossary.html">glossary</A> if you encounter terms that aren't
+      familiar.</P>
+  </BODY>
+</HTML>

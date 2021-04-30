@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML LANG="en">
+  
+  <HEAD>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+    <TITLE>Document Object Model Specification</TITLE>
+  </HEAD>
+  
+  <BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+    <P ALIGN="right"><A HREF="http://www.w3.org"><IMG SRC="http://www.w3.org/Icons/w3c_home.gif" ALT="W3C" ALIGN="left" BORDER="0" HSPACE="0"></A>WD-DOM-971209</P>
+    <H1 ALIGN="center">Document Object Model Specification</H1>
+    <P ALIGN="center"><STRONG>W3C Working Draft <I>09-Dec-1997</I></STRONG></P>
+    <DL>
+      <DT>This version is: </DT>
+      <DD><A HREF="http://www.w3.org/TR/WD-DOM-971209">http://www.w3.org/TR/WD-DOM-971209</A>
+      </DD>
+      <DT>Latest version: </DT>
+      <DD><A HREF="http://www.w3.org/TR/WD-DOM">http://www.w3.org/TR/WD-DOM</A>
+      </DD>
+      <DT>Previous version: </DT>
+      <DD><A HREF="http://www.w3.org/TR/WD-DOM-971009">http://www.w3.org/TR/WD-DOM-971009</A>
+      </DD>
+    </DL>
+    <H2>Abstract</H2>
+    <P>This specification defines the Document Object Model, a platform- and
+      language-neutral interface that will allow programs and scripts to
+      dynamically access and update the content, structure and style of
+      documents. The Document Object Model provides a standard set of objects
+      for representing HTML and XML documents, a standard model of how these
+      objects can be combined, and a standard interface for accessing and
+      manipulating them. Vendors can support the DOM as an interface to their
+      proprietary data structures and APIs, and content authors can write to the
+      standard DOM interfaces rather than product-specific APIs, thus increasing
+      interoperability on the Web.</P>
+
+    <H2>Status of this document</H2>
+    <P>This is a W3C Working Draft for review by W3C members and other
+      interested parties. It is a draft document and may be updated, replaced or
+      obsoleted by other documents at any time. It is inappropriate to use W3C
+      Working Drafts as reference material or to cite them as other than &quot;work
+      in progress&quot;. This is work in progress and does not imply endorsement
+      by, or the consensus of, either W3C or members of the DOM working group.
+    </P>
+    <P>This document has been produced as part of the
+      <A HREF="http://www.w3.org/DOM/Activity.html">W3C DOM Activity</A>, and
+      is intended as a draft of a proposed recommendation for the Document
+      Object Model. The authors of this document are the DOM WG members.
+      Different chapters of the Document Object Model may have different
+      editors. </P>
+    <P>The goal of the DOM group is to define a programmatic interface for XML
+      and HTML. The DOM is separated into three parts: Core, HTML, and XML. The
+      Core DOM provides a low-level set of objects that can represent any
+      structured document. While by itself this interface is capable of
+      representing any HTML or XML document, the core interface is a compact and
+      minimal design for manipulating the document's contents. Depending upon
+      the DOM's usage, the core DOM interface may not be convenient or
+      appropriate for all users. The HTML and XML specifications provide
+      additional, higher-level interfaces that are used with the core
+      specification to provide a more convenient view into the document. These
+      specifications consist of objects and methods that provide easier and more
+      direct access into the specific types of documents. </P>
+    <P>We will update this draft specification on a regular basis.</P>
+
+    <h2>Available formats</h2>
+    <p>The DOM specfication is also available in the following formats:
+
+    <dl>
+    <dt>HTML as a gzip'ed tar file:
+    <dd><a href=".http://www.w3.org/TR/WD-DOM/dom-971209.tgz">http://www.w3.org/TR/WD-DOM/dom-971209.tgz</a> (42K),
+    <dt>HTML as a zip file (this is a '.zip' file not an '.exe'):
+    <dd><a href="http://www.w3.org/TR/WD-DOM/dom-971209.zip">http://www.w3.org/TR/WD-DOM/dom-971209.zip</a> (49K).
+    </dl>
+
+
+    <H2>Comments</H2>
+    <P>Please send detailed comments on this document to
+      <A HREF="mailto:www-dom@w3.org">www-dom@w3.org</A>. We cannot guarantee a
+      personal response but we will try when it is appropriate. Public
+      discussion about the DOM also takes place on this mailing list. </P>
+
+    <H2>Structure of This Document</H2>
+    <P>The DOM specification is structured as a book. The various parts of the
+      specification are available as separate chapters of the book.</P>
+
+    <H2><A NAME="toc">Table of Contents</A></H2>
+    <OL>
+      <LI><A HREF="../WD-DOM/requirements-971009.html">The DOM
+          Requirements</A></LI>
+      <LI><A HREF="../WD-DOM/level-one-core-971209.html">Core
+          Document Structure and Navigation (level one core)</A></LI>
+      <LI><A HREF="../WD-DOM/level-one-html-971209.html">HTML
+          Document Structure and Navigation (level one HTML)</A></LI>
+      <LI><A HREF="../WD-DOM/level-one-xml-971209.html">XML
+          Document Structure and Navigation (level one XML)</A></LI>
+      <LI><A HREF="../WD-DOM/glossary-971209.html">Glossary</A></LI>
+      <LI><A HREF="../WD-DOM/contributors-971209.html">Contributors</A></LI>
+    </OL>
+    <ADDRESS> Chair of the W3C DOM WG: <A
+HREF="mailto:lauren@sqwest.bc.ca">Lauren Wood</A>
+    <BR> W3C staff contact: <A HREF="mailto:lehors@w3.org">Arnaud Le Hors</A>
+    </ADDRESS>
+  </BODY>
+</HTML>

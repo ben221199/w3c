@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Mon Mar 16 22:11:23 PST 1998 -->
+<html>
+<head>
+  <title> Document Object Model (Core) Level 1: Section 2.10</title>
+</head>
+<body bgcolor='#FFFFFF'>
+<h1><font size='6'>2.  Document Object Model (Core) Level 1</font></h1>
+<hr>
+<h1>2.10 Java Core API definitions</h1><blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+public interface DOM {
+   public Document          createDocument(String type);
+   public boolean           hasFeature(String feature);
+}
+
+public interface DocumentContext {
+   public Document          getDocument();
+   public void              setDocument(Document arg);
+
+}
+
+public interface DocumentFragment extends Node {
+   public Document          getMasterDoc();
+   public void              setMasterDoc(Document arg);
+
+}
+
+public interface Document extends DocumentFragment {
+   public Node              getDocumentType();
+   public void              setDocumentType(Node arg);
+
+   public Element           getDocumentElement();
+   public void              setDocumentElement(Element arg);
+
+   public DocumentContext   getContextInfo();
+   public void              setContextInfo(DocumentContext arg);
+
+   public DocumentContext   createDocumentContext();
+   public Element           createElement(String tagName, 
+                                          AttributeList attributes);
+   public Text              createTextNode(String data);
+   public Comment           createComment(String data);
+   public PI                createPI(String name, 
+                                     String data);
+   public Attribute         createAttribute(String name, 
+                                            Node value);
+   public AttributeList     createAttributeList();
+   public NodeIterator      getElementsByTagName();
+}
+
+public interface Node {
+   // NodeType
+   public static final int            DOCUMENT             = 1;
+   public static final int            ELEMENT              = 2;
+   public static final int            ATTRIBUTE            = 3;
+   public static final int            PI                   = 4;
+   public static final int            COMMENT              = 5;
+   public static final int            TEXT                 = 6;
+
+   public int               getNodeType();
+   public Node              getParentNode();
+   public NodeIterator      getChildNodes();
+   public boolean           hasChildNodes();
+   public Node              getFirstChild();
+   public Node              getPreviousSibling();
+   public Node              getNextSibling();
+   public Node              insertBefore(Node newChild, 
+                                         Node refChild);
+   public Node              replaceChild(Node newChild, 
+                                         Node oldChild);
+   public Node              removeChild(Node oldChild);
+}
+
+public interface NodeIterator {
+   public int               getLength();
+   public Node              getCurrent();
+   public Node              toNext();
+   public Node              toPrevious();
+   public Node              toFirst();
+   public Node              toLast();
+   public Node              toNth(int Nth);
+   public Node              toNode(Node destNode);
+}
+
+public interface TreeIterator extends NodeIterator {
+   public int               numChildren();
+   public int               numPreviousSiblings();
+   public int               numNextSiblings();
+   public Node              toParent();
+   public Node              toPreviousSibling();
+   public Node              toNextSibling();
+   public Node              toFirstChild();
+   public Node              toLastChild();
+   public Node              toNthChild();
+}
+
+public interface Attribute {
+   public String            getName();
+   public Node              getValue();
+   public void              setValue(Node arg);
+
+   public boolean           getSpecified();
+   public void              setSpecified(boolean arg);
+
+   public String            toString();
+}
+
+public interface AttributeList {
+   public Attribute         getAttribute(String attrName);
+   public Attribute         setAttribute(Attribute attr);
+   public Attribute         remove(String attrName);
+   public Attribute         item(int index);
+   public int               getLength();
+}
+
+public interface Element extends Node {
+   public String            getTagName();
+   public AttributeList     attributes();
+   public void              setAttribute(Attribute newAttr);
+   public void              normalize();
+   public NodeIterator      getElementsByTagName();
+}
+
+public interface Text extends Node {
+   public String            getData();
+   public void              setData(String arg);
+
+   public void              append(String data);
+   public void              insert(int offset, 
+                                   String data);
+   public void              delete(int offset, 
+                                   int count);
+   public void              replace(int offset, 
+                                    int count, 
+                                    String data);
+   public void              splice(Element element, 
+                                   int offset, 
+                                   int count);
+}
+
+public interface Comment extends Node {
+   public String            getData();
+   public void              setData(String arg);
+
+}
+
+public interface PI extends Node {
+   public String            getName();
+   public void              setName(String arg);
+
+   public String            getData();
+   public void              setData(String arg);
+
+}
+
+</pre></td></tr>
+</table>
+</blockquote>
+<hr>
+</body>
+</html>

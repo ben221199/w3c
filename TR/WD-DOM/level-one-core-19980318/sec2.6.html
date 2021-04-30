@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Mon Mar 16 22:11:04 PST 1998 -->
+<html>
+<head>
+  <title> Document Object Model (Core) Level 1: Section 2.6</title>
+</head>
+<body bgcolor='#FFFFFF'>
+<h1><font size='6'>2.  Document Object Model (Core) Level 1</font></h1>
+<hr>
+<h1>2.6 Auxiliary types</h1><p>These types are "helpers" which can appear in
+	various parts of the DOM. Some of them occur quite frequently
+	in common usage; others are limited to the Document Type
+	Definition section of the document, and thus may be of little
+	interest to typical DOM users. Those types are marked
+	accordingly. 
+<a name='ID-10420321803'></a>
+<h2>2.6.1 NodeIterator</h2><p>The NodeIterator
+	  object is used for iterating over a set of nodes specified
+	  by a "filter". Iterators are described in detail in the book
+	  <em>Design Patterns</em>, pages 257-271, from which the
+	  following sections are quoted:
+	  <dl>
+<dt><b>Intent</b></dt>
+<dd><p>Provide a way to access elements of an aggregate
+		  object sequentially without exposing its underlying
+		  representation.</dd><dt><b>Applicability</b></dt>
+<dd><p>Use the Iterator pattern
+		  <ul>
+<li>to access an aggregate object's content
+			without exposing its internal
+			representation.</li>
+<li>to support multiple traversals of
+			aggregate objects.</li>
+<li>to provide a uniform interface for
+			traversing different aggregate structures
+			(that is, to support polymorphic
+			iteration).</li>
+</ul>
+</dd></dl>
+
+	<br>
+<a name='ID-10420321804'></a>
+<h2>2.6.2 AttributeList</h2><p>The AttributeList object
+	  represents a collection  of Attribute objects, indexed by
+	  attribute name.
+	<br>
+<a name='ID-10420321805'></a>
+<h2>2.6.3 DocumentContext</h2><p>The DocumentContext object
+	  is repository for meta-data about a document, such as
+	  source, creation date, and other creation context
+	  information. This object will be fully specified in the
+	  level two DOM specification.
+	<br>
+<a name='ID-10420321806'></a>
+<h2>2.6.4 DOM</h2><p>The DOM object provides
+	  document  basic operations such as creating new top-level
+	  HTML or XML documents, or making inquiries about specific
+	  supported versions of HTML and XML within a particular
+	  document object model implementation.
+	<br>
+<a name='ID-10420321808'></a>
+<h2>2.6.5 Range</h2><p>The Range object
+	  <em>[Being discussed for possible inclusion in a later
+	    draft of level one]</em> represents a part of the
+	  document, potentially including markup.
+	<br><hr>
+</body>
+</html>

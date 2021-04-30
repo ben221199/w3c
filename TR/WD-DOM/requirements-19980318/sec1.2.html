@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Mon Mar 16 22:10:56 PST 1998 -->
+<html>
+<head>
+  <title> Document Object Model Requirements: Section 1.2</title>
+</head>
+<body bgcolor='#FFFFFF'>
+<h1><font size='6'>1.  Document Object Model Requirements</font></h1>
+<hr>
+<h1>1.2 Structure Navigation</h1><p>This refers to the navigation around a document, such as
+	finding the parent of a given element, or what children
+	elements a given parent element contains.
+      
+<a name='ID-2039524697'></a>
+<h2>1.2.1 General Requirements</h2><p><ol>
+<li>All document content, including elements and
+		attributes, will be programmatically accessible and
+		manipulable.</li>
+<li>Navigation from any element to any other
+		element will be possible, except where such
+		navigation would compromise security. </li>
+<li>There will be a way to uniquely and
+		reproducibly enumerate the structure of static
+		documents.</li>
+<li>There will be a way to query for elements and
+		attributes, subject to security and privacy
+		considerations.</li>
+<li>Basic low-level functions (get first, get next,
+		etc.) will be provided, along with convenience
+		functions that build upon them, but have a
+		consistent access method.</li>
+</ol>
+<br>
+<a name='ID-1398657898'></a>
+<h2>1.2.2 HTML Requirements</h2><p>These are specific to HTML documents.  	  <ol>
+<li>All elements known to the user agent are
+		exposed.</li>
+<li>Unknown tags and attributes are exposed.</li>
+<li>Implied elements are exposed even if not
+		explicitly defined in the document (e.g., HTML,
+		HEAD, BODY)</li>
+<li>There will be guidelines for the inclusion of
+		new elements and attributes in the object model</li>
+</ol>
+<br><hr>
+</body>
+</html>

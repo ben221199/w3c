@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad//DTD HoTMetaL PRO 4.0::19970916::extensions to HTML 4.0//EN"
+ "hmpro4.dtd">
+
+<HTML>
+  
+  <HEAD>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+    <TITLE>DOM Glossary</TITLE>
+  </HEAD>
+  
+  <BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+    
+    <H3 ALIGN="RIGHT"><A HREF="http://www.w3.org"><IMG SRC="http://www.w3.org/Icons/w3c_home.gif" ALT="W3C" BORDER="0" ALIGN="LEFT"></A>
+    WD-DOM/glossary-971209</H3>
+    
+    <H1 ALIGN="CENTER">Document Object Model Glossary</H1>
+    
+    <H3 ALIGN="CENTER">W3C Working Draft 9-December-1997</H3>
+    
+    <H2>Status</H2>
+    
+    <P>This document is part of the <A HREF="cover.html">Document Object Model
+        Specification</A>; check the W3C web site for its
+      <A HREF="http://www.w3.org/DOM/Activity">current status</A>. It is a
+      draft document and may be updated, replaced or obsoleted by other
+      documents at any time. It is inappropriate to use W3C Working Drafts as
+      reference material or to cite them as other than &quot;work in progress&quot;.
+      Note: Since working drafts are subject to frequent change, you are advised
+      to check the <A HREF="http://www.w3.org/TR">list of current W3C working
+        drafts</A>.</P>
+    
+    <P>Several of the following term definitions have been borrowed or modified
+      from similar definitions in other W3C documents. Links to these documents
+      follow the definitions. </P>
+    <DL>
+      <DT><A NAME="gloss_API"></A><B>API</B></DT>
+      <DD>An <I>API</I> is an application programming interface, a set of
+        functions or methods used to access some functionality.</DD>
+      <DT><A NAME="gloss_child"></A><B>child</B></DT>
+      <DD>A <I>child</I> is an immediate <A HREF="#gloss_descendant">descendant</A>
+        node of a node.</DD>
+      <DT><A NAME="gloss_application"></A><B>client application</B></DT>
+      <DD>A [client] application is any software that uses the Document Object
+        Model programming interfaces provided by the hosting implementation to
+        accomplish useful work. Some examples of client applications are scripts
+        within an HTML or XML document.</DD>
+      <DT><A NAME="gloss_contentModel"></A><B>content model</B></DT>
+      <DD>The <I>content model</I> is a simple grammar governing the allowed
+        types of the child elements and the order in which they appear. [<A HREF="http://www.w3.org/TR/PR-xml#sec3.2">XML</A>]</DD>
+      <DT><A NAME="gloss_context"></A><B>context</B></DT>
+      <DD>A <I>context </I>specifies an access pattern (or path): a set of
+        interfaces which give you a way to interact with a
+        <A HREF="#gloss_model">model</A>. For example, imagine a model with
+        different colored arcs connecting data nodes. A context might be a sheet
+        of colored acetate that is placed over the model allowing you a partial
+        view of the total information in the model.</DD>
+      <DT><A NAME="gloss_cookedModel"></A><B>cooked model</B></DT>
+      <DD>A <A HREF="#gloss_model">model</A> for a document that represents
+        the document after it has been manipulated in some way. For example, any
+        combination of any of the following transformations would create a
+        cooked model:
+        <OL>
+          <LI>Expansion of internal text entities.</LI>
+          <LI>Expansion of external entities.</LI>
+          <LI>Model augmentation with style-specified generated text.</LI>
+          <LI>Execution of style-specified reordering.</LI>
+          <LI>Execution of scripts.</LI>
+        </OL>
+        
+        <P>A browser might only be able to provide access to a cooked model,
+          while an editor might provide access to a cooked or the
+          <A HREF="#gloss_initialStructureModel">initial structure model</A>
+          (also known as the <I>uncooked model</I>) for a document. </P></DD>
+      <DT><A NAME="gloss_cursor"></A><B>cursor</B></DT>
+      <DD>A <I>cursor </I>is an object representation of a node. It may
+        possess information about <A HREF="#gloss_context">context</A> and the
+        path traversed to reach the node.</DD>
+      <DT><A NAME="gloss_deprecation"></A><B>deprecation</B></DT>
+      <DD>When new releases of specifications are released, some older features
+        may be marked as being <I>deprecated</I>. This means that new work
+        should not use the features and that although they are supported in the
+        current release, they may not be supported or available in future
+        releases.</DD>
+      <DT><A NAME="gloss_descendant"></A><B>descendant</B></DT>
+      <DD>A <I>descendant</I> node of any node <B>A</B> is any node below
+        <B>A</B> in a tree <A HREF="#gloss_model">model</A> of a document.</DD>
+      <DT><A NAME="gloss_ECMAScript"></A><B>ECMAScript</B></DT>
+      <DD>The programming language defined by the
+        <A HREF="http://www.ecma.ch/stand/ecma-262.htm">ECMA-262 standard</A>.
+        As stated in the standard, the originating technology for ECMAScript was
+        <A HREF="http://developer.netscape.com/one/javascript/resources.html">JavaScript</A>.
+        Note that in the ECMAScript binding, the word &quot;property&quot; is
+        used in the same sense as the IDL term &quot;attribute.&quot;</DD>
+      <DT><A NAME="gloss_element"></A><B>element</B></DT>
+      <DD>Each document contains one or more elements, the boundaries of which
+        are either delimited by start-tags and end-tags, or, for empty elements
+        by an empty-element tag. Each element has a type, identified by name,
+        and may have a set of attributes. Each attribute has a name and a value.
+        [<A HREF="http://www.w3.org/TR/PR-xml#sec-logical-struct">XML</A>]</DD>
+      <DT><A NAME="gloss_eventPropagation"></A><B>event propagation</B>, also
+      known as <A NAME="gloss_eventBubbling"></A><B>event bubbling</B></DT>
+      <DD>This is the idea that an event can affect one object and a set of
+        related objects. Any of the potentially affected objects can block the
+        event or substitute a different one (upward event propagation). The
+        event is broadcast from the node at which it originates to every parent
+        node.</DD>
+      <DT><A NAME="gloss_implementation"></A><B>hosting implementation</B></DT>
+      <DD>A [hosting] implementation is a software module that provides an
+        implementation of the DOM interfaces so that a client application can
+        use them. Some examples of hosting implementations are browsers, editors
+        and document repositories.</DD>
+      <DT><A NAME="gloss_HTML"></A><B>HTML</B></DT>
+      <DD>The HyperText Markup Language (<I>HTML</I>) is a simple markup
+        language used to create hypertext documents that are portable from one
+        platform to another. HTML documents are SGML documents with generic
+        semantics that are appropriate for representing information from a wide
+        range of applications. [<A HREF="http://www.w3.org/TR/REC-html32">HTML
+          3.2</A>] [<A HREF="http://www.w3.org/TR/WD-html40/">HTML 4.0</A>]</DD>
+      <DT><A NAME="gloss_IDL"></A><B>IDL</B></DT>
+      <DD>An Interface Definition Language (<I>IDL</I>) is used to define the
+        interfaces for accessing and operating upon objects. Examples of IDLs
+        are the <A HREF="http://www.omg.org">Object Management Group's</A> IDL,
+        <A HREF="http://premium.microsoft.com/msd  n/library/sdkdoc/mi-laref_49v0.htm">Microsoft's
+          IDL</A>, and Sun's
+        <A HREF="http://java.sun.com/products/jdk/preview/docs/ext/idl/">Java
+          IDL</A>.</DD>
+      <DT><A NAME="gloss_implementor"></A><B>implementor</B></DT>
+      <DD>Companies, organizations, and individuals that claim to support the
+        Document Object Model as an <A HREF="#gloss_API">API</A> for their
+        products.</DD>
+      <DT><A NAME="gloss_initialStructureModel"></A><B>initial structure
+      model</B></DT>
+      <DD>Also known as the <I>raw structure model</I> or the <I>uncooked
+        model</I>, this represents the document before it has been modified by
+        entity expansions, generated text, style-specified reordering, or the
+        execution of scripts. In some implementations, this might correspond to
+        the &quot;initial parse tree&quot; for the document, if it ever exists.
+        Note that a given implementation might not be able to provide access to
+        the initial structure model for a document, though an editor probably
+        would.</DD>
+      <DT><A NAME="gloss_languageBinding"></A><B>language binding</B></DT>
+      <DD>A programming <I>language binding</I> for an IDL specification is an
+        implementation of the interfaces in the specification for the given
+        language. For example, a Java language binding for the Document Object
+        Model IDL specification would implement the concrete Java classes that
+        provide the functionality exposed by the interfaces.</DD>
+      <DT><A NAME="gloss_model"></A><B>model</B></DT>
+      <DD>A <I>model</I> is the actual data representation for the information
+        at hand. Examples are the structural model and the style model
+        representing the parse structure and the style information associated
+        with a document. The model might be a tree, or a directed graph, or
+        something else.</DD>
+      <DT><A NAME="gloss_rootNode"></A><B>root node</B></DT>
+      <DD>The <I>root node</I> is the unique node that is not a child of any
+        other node. All other nodes are children or other descendents of the
+        root node. [<A HREF="http://www.w3.org/TR/PR-xml#sec2.1">XML</A>]</DD>
+      <DT><A NAME="gloss_stringComparison"></A><B>string comparison</B></DT>
+      <DD>When string matching is required, it is to occur as though the
+        comparison was between 2 sequences of code points from the Unicode 2.0
+        standard.</DD>
+      <DT><A NAME="gloss_tagValid"></A><B>tag valid document</B></DT>
+      <DD>A document is <I>tag valid</I> if all begin and end tags are
+        properly balanced and nested.</DD>
+      <DT><A NAME="gloss_typeValidDocument"></A><B>type valid document</B></DT>
+      <DD>A document is <I>type valid</I> if it conforms to an explicit DTD.</DD>
+      <DT><A NAME="gloss_uncookedModel"></A><B>uncooked model</B></DT>
+      <DD>See <A HREF="#gloss_initialStructureModel">initial structure model</A>.</DD>
+      <DT><A NAME="gloss_wellFormedDocument"></A><B>well-formed document</B></DT>
+      <DD>A document is <I>well-formed</I> if it is <A HREF="#gloss_tagValid">tag
+          valid</A> and entities are limited to single elements (i.e., single
+        sub-trees).</DD>
+      <DT><A NAME="gloss_XML"></A><B>XML</B></DT>
+      <DD>Extensible Markup Language (<I>XML</I>) is an extremely simple
+        dialect of SGML which is completely described in this document. The goal
+        is to enable generic SGML to be served, received, and processed on the
+        Web in the way that is now possible with HTML. XML has been designed for
+        ease of implementation and for interoperability with both SGML and HTML.
+        (<A HREF="http://www.w3.org/TR/PR-xml">XML</A>)</DD>
+    </DL>
+    <HR>
+    <ADDRESS>Editor: Robert S. Sutor</ADDRESS>
+    
+    <P>Chair: Lauren Wood
+      <BR>W3C staff contact: Arnaud Le Hors
+      <BR>$Date: 1997/12/09 06:22:55 $ </P>
+  </BODY>
+</HTML>

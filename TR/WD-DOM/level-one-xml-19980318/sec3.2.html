@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Mon Mar 16 22:11:30 PST 1998 -->
+<html>
+<head>
+  <title> Document Object Model (XML) Level 1: Section 3.2</title>
+</head>
+<body bgcolor='#FFFFFF'>
+<h1><font size='6'>3.  Document Object Model (XML) Level 1</font></h1>
+<hr>
+<h1>3.2 Descriptions of the basic XML objects</h1><p>This section describes the XML specialization of the Node objects.
+	used throughout the DOM.</p><a name='ID-A7C3192'></a>
+<font size='4'><b>Interface <i>XMLNode</i></b></font>
+<blockquote>
+<p>The XML implementation of the Node interface adds some methods
+  that are needed to manipulate specific features of XML documents<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface XMLNode {
+  Node                getParentXMLNode(in boolean expandEntities);
+  NodeIterator        getChildXMLNodes(in boolean expandEntities);
+  boolean             hasChildXMLNodes(in boolean expandEntities);
+  Node                getFirstXMLChild(in boolean expandEntities);
+  Node                getPreviousXMLSibling(in boolean expandEntities);
+  Node                getNextXMLSibling(in boolean expandEntities);
+  EntityReference     getEntityReference();
+  EntityDeclaration   getEntityDeclaration();
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-39CB84BE'></a>
+<h4>Method <code><i>getParentXMLNode()</i></code></h4>
+<blockquote>
+<p>Returns the parent of the given Node instance. If this
+	node is the root of the document object tree, or if this node
+        is not part of a document tree,
+	<code>null</code> is returned. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>expandEntities</b><td><p>TRUE if the view of the tree with parsed entities expanded 
+	should be navigated, FALSE if the view without parsed entities 
+	expanded should be navigated</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The parent of the node.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-408D94D6'></a>
+<h4>Method <code><i>getChildXMLNodes()</i></code></h4>
+<blockquote>
+<p>Returns a NodeIterator object that will enumerate all children of
+	this node. If there are no children, an iterator that will return
+        no nodes is
+	returned. The content of the returned NodeIterator is
+	"live" in the sense that changes to the children of
+	the Node object that it was created from will be immediately
+	reflected in the nodes returned by the iterator; it is not
+	a static snapshot of the content of the Node. Similarly,
+	changes made to the nodes returned by the iterator will be
+        immediately reflected in the tree, including
+	the set of children of the Node that the NodeIterator was created
+	from. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>expandEntities</b><td><p>TRUE if the view of the tree with parsed entities expanded 
+	should be navigated, FALSE if the view without parsed entities 
+	expanded should be navigated</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>NodeIterator</b></td><td>
+<p>An iterator through the children of the node.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-A58B84AA'></a>
+<h4>Method <code><i>hasChildXMLNodes()</i></code></h4>
+<blockquote>
+<p>Returns <code>true</code> if the node has any children,
+	<code>false</code> if the node has no children at all. This
+	method exists both for convenience as well as to allow
+	implementations to be able to bypass object allocation, which
+	may be required for implementing <code>getChildNodes()</code>.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>expandEntities</b><td><p>TRUE if the view of the tree with parsed entities expanded 
+	should be navigated, FALSE if the view without parsed entities 
+	expanded should be navigated</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>boolean</b></td><td>
+<p>True if the node has children.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-15C9849B'></a>
+<h4>Method <code><i>getFirstXMLChild()</i></code></h4>
+<blockquote>
+<p>Returns the first child of a node. If there is no such
+	node, <code>null</code> is returned. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>expandEntities</b><td><p>TRUE if the view of the tree with parsed entities expanded 
+	should be navigated, FALSE if the view without parsed entities 
+	expanded should be navigated</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The first child of the node, or null.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-35CB84B5'></a>
+<h4>Method <code><i>getPreviousXMLSibling()</i></code></h4>
+<blockquote>
+<p>Returns the node immediately preceding the current node
+	in a breadth-first traversal of the tree. If there is no such
+	node, <code>null</code> is returned. <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>expandEntities</b><td><p>TRUE if the view of the tree with parsed entities expanded 
+	should be navigated, FALSE if the view without parsed entities 
+	expanded should be navigated</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The the node immediately preceeding, or
+	  null.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-3C4F9C86'></a>
+<h4>Method <code><i>getNextXMLSibling()</i></code></h4>
+<blockquote>
+<p>Returns the node immediately following the current node
+	in a  breadth-first traversal of the tree. If there is no such
+	node, <code>null</code> is returned.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>expandEntities</b><td><p>TRUE if the view of the tree with parsed entities expanded 
+	should be navigated, FALSE if the view without parsed entities 
+	expanded should be navigated</tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>Node</b></td><td>
+<p>The node immediately following, or null.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-AB2B9E8B'></a>
+<h4>Method <code><i>getEntityReference()</i></code></h4>
+<blockquote>
+<p>When navigating XML trees with expandedEntities set to TRUE,
+      the DOM programmer will on occasion get Nodes returned that are 
+      part of the expansion of an entity rather than actual nodes in the
+      tree.  This method returns the entity reference that generated
+      a particular node, or NULL if it was not part of an entity reference
+      expansion.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>EntityReference</b></td><td>
+<p>The entity reference whose expansion yields a given node,
+       or NULL if the node is not part of an entity expansion.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-232B9E81'></a>
+<h4>Method <code><i>getEntityDeclaration()</i></code></h4>
+<blockquote>
+<p>When navigating XML trees with expandedEntities set to TRUE,
+      the DOM programmer will on occasion get Nodes returned that are 
+      part of the expansion of an entity rather than actual nodes in the
+      tree.  This method returns the declaration for the entity
+      reference that generated
+      a particular node, or NULL if it was not part of an entity reference
+      expansion.
+      <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method has no parameters.</i>
+</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>EntityDeclaration</b></td><td>
+<p>The entity declaration for a reference whose expansion yields a given node,
+       or NULL if the node is not part of an entity expansion.</td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<hr>
+</body>
+</html>

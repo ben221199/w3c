@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Mon Mar 16 22:11:43 PST 1998 -->
+<html>
+<head>
+  <title> Document Object Model (XML) Level 1: Section 3.8</title>
+</head>
+<body bgcolor='#FFFFFF'>
+<h1><font size='6'>3.  Document Object Model (XML) Level 1</font></h1>
+<hr>
+<h1>3.8 Java XML API definitions</h1><blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+public interface XMLNode {
+   public Node              getParentXMLNode(boolean expandEntities);
+   public NodeIterator      getChildXMLNodes(boolean expandEntities);
+   public boolean           hasChildXMLNodes(boolean expandEntities);
+   public Node              getFirstXMLChild(boolean expandEntities);
+   public Node              getPreviousXMLSibling(boolean expandEntities);
+   public Node              getNextXMLSibling(boolean expandEntities);
+   public EntityReference   getEntityReference();
+   public EntityDeclaration getEntityDeclaration();
+}
+
+public interface DocumentType {
+   public String            getName();
+   public void              setName(String arg);
+
+   public Node              getExternalSubset();
+   public void              setExternalSubset(Node arg);
+
+   public Node              getInternalSubset();
+   public void              setInternalSubset(Node arg);
+
+   public Node              getGeneralEntities();
+   public void              setGeneralEntities(Node arg);
+
+   public Node              getParameterEntities();
+   public void              setParameterEntities(Node arg);
+
+   public Node              getNotations();
+   public void              setNotations(Node arg);
+
+   public Node              getElementTypes();
+   public void              setElementTypes(Node arg);
+
+}
+
+public interface ElementDefinition extends Node {
+   // ContentType
+   public static final int            EMPTY                = 1;
+   public static final int            ANY                  = 2;
+   public static final int            PCDATA               = 3;
+   public static final int            MODEL_GROUP          = 4;
+
+   public String            getName();
+   public void              setName(String arg);
+
+   public int               getContentType();
+   public void              setContentType(int arg);
+
+   public ModelGroup        getContentModel();
+   public void              setContentModel(ModelGroup arg);
+
+   public Node              getAttributeDefinitions();
+   public void              setAttributeDefinitions(Node arg);
+
+   public Node              getInclusions();
+   public void              setInclusions(Node arg);
+
+   public Node              getExceptions();
+   public void              setExceptions(Node arg);
+
+}
+
+public interface PCDATAToken extends Node {
+}
+
+public interface ElementToken extends Node {
+   // OccurrenceType
+   public static final int            OPT                  = 1;
+   public static final int            PLUS                 = 2;
+   public static final int            REP                  = 3;
+
+   public String            getName();
+   public void              setName(String arg);
+
+   public int               getOccurrence();
+   public void              setOccurrence(int arg);
+
+}
+
+public interface ModelGroup extends Node {
+   // OccurrenceType
+   public static final int            OPT                  = 1;
+   public static final int            PLUS                 = 2;
+   public static final int            REP                  = 3;
+
+   // ConnectionType
+   public static final int            OR                   = 1;
+   public static final int            SEQ                  = 2;
+   public static final int            AND                  = 3;
+
+   public int               getOccurrence();
+   public void              setOccurrence(int arg);
+
+   public int               getConnector();
+   public void              setConnector(int arg);
+
+   public Node              getTokens();
+   public void              setTokens(Node arg);
+
+}
+
+public interface AttributeDefinition extends Node {
+   // DeclaredValueType
+   public static final int            CDATA                = 1;
+   public static final int            ID                   = 2;
+   public static final int            IDREF                = 3;
+   public static final int            IDREFS               = 4;
+   public static final int            ENTITY               = 5;
+   public static final int            ENTITIES             = 6;
+   public static final int            NMTOKEN              = 7;
+   public static final int            NMTOKENS             = 8;
+   public static final int            NOTATION             = 9;
+   public static final int            NAME_TOKEN_GROUP     = 10;
+
+   // DefaultValueType
+   public static final int            FIXED                = 1;
+   public static final int            REQUIRED             = 2;
+   public static final int            IMPLIED              = 3;
+
+   public String            getName();
+   public void              setName(String arg);
+
+   public String            getAllowedTokens();
+   public void              setAllowedTokens(String arg);
+
+   public int               getDeclaredType();
+   public void              setDeclaredType(int arg);
+
+   public int               getDefaultType();
+   public void              setDefaultType(int arg);
+
+   public Node              getDefaultValue();
+   public void              setDefaultValue(Node arg);
+
+}
+
+public interface Notation extends Node {
+   public String            getName();
+   public void              setName(String arg);
+
+   public boolean           getIsPublic();
+   public void              setIsPublic(boolean arg);
+
+   public String            getPublicIdentifier();
+   public void              setPublicIdentifier(String arg);
+
+   public String            getSystemIdentifier();
+   public void              setSystemIdentifier(String arg);
+
+}
+
+public interface EntityDeclaration {
+   public String            getReplacementString();
+   public void              setReplacementString(String arg);
+
+   public DocumentFragment  getReplacementSubtree();
+   public void              setReplacementSubtree(DocumentFragment arg);
+
+}
+
+public interface EntityReference {
+   public boolean           getIsExpanded();
+   public void              setIsExpanded(boolean arg);
+
+   public void              expand( );
+}
+
+public interface CDATASection extends Text {
+}
+
+</pre></td></tr>
+</table>
+</blockquote>
+<hr>
+</body>
+</html>

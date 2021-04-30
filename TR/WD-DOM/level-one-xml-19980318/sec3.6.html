@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Mon Mar 16 22:11:38 PST 1998 -->
+<html>
+<head>
+  <title> Document Object Model (XML) Level 1: Section 3.6</title>
+</head>
+<body bgcolor='#FFFFFF'>
+<h1><font size='6'>3.  Document Object Model (XML) Level 1</font></h1>
+<hr>
+<h1>3.6 Descriptions of additional objects in instances</h1><p>XML adds to the range of objects that are available in
+	document instances. These objects defined below.</p><a name='ID-667469212'></a>
+<font size='4'><b>Interface <i>CDATASection</i></b></font>
+<blockquote>
+<p>CDATA sections are used in the document instance, and
+      provide a region in which most of the XML delimiter recognition
+      does not take  place. The primary purpose is for including
+      material such as XML  fragments, without needing to escape all
+      the delimiters.<p>The <em>wstring</em> attribute of the
+      Text node holds the text that was contained by the CDATA
+      section. Note that this <em>may</em> contain characters
+      that need to be escaped outside of CDATA sections.<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface CDATASection : Text {
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<hr>
+</body>
+</html>

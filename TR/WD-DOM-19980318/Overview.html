@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Mon Mar 16 22:10:54 PST 1998 -->
+<html>
+<head>
+  <title> Document Object Model Specification</title>
+</head>
+<body bgcolor='#FFFFFF'>
+<h3 align='right'>
+<a href='http://www.w3.org/Consortium/'>  <img src='http://www.w3.org/Icons/w3c_home.gif' width='72' height='48' align='left' alt='W3C' border='0'></a>
+ WD-DOM-19980318</h3><br>
+<h1 align=center><font size='6'>
+Document Object Model Specification</font></h1>
+
+<h3 align=center>W3C Working Draft</h3>
+<h3 align=center><i>18 March, 1998</i></h3>
+
+<h4>This version</h4>
+<blockquote>
+<a href='http://www.w3.org/TR/WD-DOM-19980318'>	
+	http://www.w3.org/TR/WD-DOM-19980318</a><br>
+<a href='http://www.w3.org/TR/WD-DOM/DOM-19980318.tgz'>	
+	http://www.w3.org/TR/WD-DOM/DOM-19980318.tgz</a><br>
+<a href='http://www.w3.org/TR/WD-DOM/DOM-19980318.zip'>	
+	http://www.w3.org/TR/WD-DOM/DOM-19980318.zip</a><br>
+<a href='http://www.w3.org/TR/WD-DOM/DOM-19980318.ps'>	
+	http://www.w3.org/TR/WD-DOM/DOM-19980318.ps</a> (chapter 4 not included)
+</blockquote>
+<h4>Previous versions</h4>
+<blockquote>
+<a href='http://www.w3.org/TR/WD-DOM-971209'>	http://www.w3.org/TR/WD-DOM-971209
+      </a><br>
+<a href='http://www.w3.org/TR/WD-DOM-971009'>	http://www.w3.org/TR/WD-DOM-971009
+      </a><br>
+</blockquote>
+<hr>
+<a name='ID-230738542'></a>
+<h2>Status</h2>
+<blockquote>
+<p>This is a W3C Working Draft for review by W3C members and
+	other interested parties. It is a draft document and may be
+	updated, replaced or obsoleted by other documents at any time.
+	It is inappropriate to use W3C Working Drafts as reference
+	material or to cite them as other than "work in progress".
+	This is work in progress and does not imply endorsement by, or
+	the consensus of, either W3C or members of the DOM working
+	group.<p>This document has been produced as part of the <a href='http://www.w3.org/DOM/Activity.html'> W3C DOM
+	  Activity</a>
+, and is intended as a draft of a proposed
+	recommendation for the Document Object Model. The authors of
+	this document are the DOM WG members. Different chapters of
+	the Document Object Model may have different editors.<p>We will update this draft specification on a regular
+	basis.<p>Please send detailed comments on this document to <a href='mailto:www-dom@w3.org'> www-dom@w3.org</a>
+. We
+	cannot guarantee a personal response but we will try when it
+	is appropriate. Public discussion about the DOM also takes
+	place on this mailing list. </blockquote>
+<hr>
+<a name='ID-622015212'></a>
+<h2>Abstract</h2>
+<blockquote>
+<p>This specification defines the Document Object Model, a
+	platform- and language-neutral interface that will allow
+	programs and scripts to dynamically access and update the
+	content, structure and style of documents. The Document Object
+	Model provides a standard set of objects for representing HTML
+	and XML documents, a standard model of how these objects can
+	be combined, and a standard interface for accessing and
+	manipulating them. Vendors can support the DOM as an interface
+	to their proprietary data structures and APIs, and content
+	authors can write to the standard DOM interfaces rather than
+	product-specific APIs, thus increasing interoperability on the
+	Web.<p>The goal of the DOM group is to define a programmatic
+	interface for XML and HTML. The DOM is separated into three
+	parts: Core, HTML, and XML. The Core DOM provides a low-level
+	set of objects that can represent any structured document.
+	While by itself this interface is capable of representing any
+	HTML or XML document, the core interface is a compact and
+	minimal design for manipulating the document's contents.
+	Depending upon the DOM's usage, the core DOM interface may not
+	be convenient or appropriate for all users. The HTML and XML
+	specifications provide additional, higher-level interfaces
+	that are used with the core specification to provide a more
+	convenient view into the document. These specifications
+	consist of objects and methods that provide easier and more
+	direct access into the specific types of documents.
+      </blockquote>
+<hr>
+<h2>Table of contents</h2>
+<blockquote>
+<b><a href='../WD-DOM/toc-19980318.html'> Expanded table of contents</a></b><br>
+<br>
+<a href='../WD-DOM/requirements-19980318'>Chapter 1:  Document Object Model Requirements</a><br>
+<a href='../WD-DOM/level-one-core-19980318'>Chapter 2:  Document Object Model (Core) Level 1</a><br>
+<a href='../WD-DOM/level-one-xml-19980318'>Chapter 3:  Document Object Model (XML) Level 1</a><br>
+<a href='../WD-DOM/level-one-html-971209'>Chapter 4:  Document Object Model (HTML) Level 1</a><br>
+<br>
+<a href='../WD-DOM/contributors-19980318.html'>Appendix A:  Document Object Model Contributors</a><br>
+<a href='../WD-DOM/glossary-19980318.html'>Appendix B:  Document Object Model Glossary</a><br>
+</blockquote>
+<P>
+<A href="http://www.w3.org/Consortium/Legal/ipr-notice.html#Copyright">
+Copyright</A> &nbsp;&copy;&nbsp; 1998 <A href="http://www.w3.org">W3C</A>
+(<A href="http://www.lcs.mit.edu">MIT</A>,
+<A href="http://www.inria.fr/">INRIA</A>,
+<A href="http://www.keio.ac.jp/">Keio</A> ), All Rights Reserved. W3C
+<A href="http://www.w3.org/Consortium/Legal/ipr-notice.html#Legal Disclaimer">liability,</A>
+<A href="http://www.w3.org/Consortium/Legal/ipr-notice.html#W3C Trademarks">trademark</A>,
+<A href="http://www.w3.org/Consortium/Legal/copyright-documents.html">document
+use </A>and
+<A href="http://www.w3.org/Consortium/Legal/copyright-software.html">software
+licensing </A>rules apply.
+<script src="https://www.w3.org/scripts/TR/fixup.js"></script></html>

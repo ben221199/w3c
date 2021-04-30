@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- Generated: Mon Mar 16 22:11:37 PST 1998 -->
+<html>
+<head>
+  <title> Document Object Model (XML) Level 1: Section 3.5</title>
+</head>
+<body bgcolor='#FFFFFF'>
+<h1><font size='6'>3.  Document Object Model (XML) Level 1</font></h1>
+<hr>
+<h1>3.5 Descriptions of objects related to Entities</h1><p>XML contains the notion of "entities" that are declared in
+	the DTD, defined in either internally in a document or in an
+	external file, and referenced one or more places  in the
+	document.  In any event, entities allow an abstract reference
+	to some arbitrarily large or complex piece of  text and
+	markup.</p><a name='ID-527DCFF2'></a>
+<font size='4'><b>Interface <i>EntityDeclaration</i></b></font>
+<blockquote>
+<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface EntityDeclaration {
+  attribute wstring        replacementString;
+  attribute DocumentFragment replacementSubtree;
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-D67DCFE0'></a>
+<h4>Attribute <code><i>replacementString</i></code></h4>
+<blockquote>
+<p>The string that a reference to this entity is replaced with.
+     It may contain markup and entity references.  It does not
+     apply to un-parsed entities.</blockquote>
+
+<a name='ID-4E3DCFE1'></a>
+<h4>Attribute <code><i>replacementSubtree</i></code></h4>
+<blockquote>
+<p>The parsed subtree that references to this entity would
+    logically point to. All markup in the replacement string
+    is represented as sub-trees, and
+    entity references are expanded.</blockquote>
+
+</blockquote>
+<a name='ID-11C98490'></a>
+<font size='4'><b>Interface <i>EntityReference</i></b></font>
+<blockquote>
+<p>EntityReference objects are inserted into the initial
+   structure model by the XML processor. XML does not mandate that a 
+   non-validating XML processor read and process entity declarations 
+   made in the external subset or that are declared in external 
+   parameter entities. This means that parsed entitiesthat are declared  
+   in the external subset need not be expanded by some classes of 
+   applications.<p>XML contains the notion of " parsed entities" that are declared in 
+   the DTD, defined in either internally in a document or in an external 
+   file, and referenced one or more places in the document. In any 
+   event, parsed entities allow an abstract reference to some 
+   arbitrarily large or complex piece of text and markup. Parsed 
+   entities are one type of general entity. The other type of general 
+   entity that XML defines is the unparsed entity, used for embedding 
+   data that is not in XML format in an XML document. it is commonly 
+   used for images.<p>Parameter entities are used in DTDs for similar purposes as parsed 
+  entities in document instances; namely they allow an abstract 
+  reference to some part of the DTD. XML defines a number of rules 
+  about the allowed content of a parameter entity; the reader is 
+  referred to the XML specification for details.
+<h4>IDL Definition</h4>
+<blockquote>
+<table width='80%' border='1'>
+<tr><td bgcolor='e9e9e9'><pre>
+interface EntityReference {
+  attribute boolean        isExpanded;
+  void                expand(in  );
+};
+
+</pre>
+</td></tr>
+</table>
+</blockquote>
+<a name='ID-767FCFD8'></a>
+<h4>Attribute <code><i>isExpanded</i></code></h4>
+<blockquote>
+<p>The default view of entities is to be expanded.</blockquote>
+
+<a name='ID-336B9E97'></a>
+<h4>Method <code><i>expand()</i></code></h4>
+<blockquote>
+<p> <br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Parameters</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b></b><td><p></tr></table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Return Values</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td width='30%'><b>void</b></td><td>
+<p></td></tr>
+</table>
+<br>
+<table width='80%' cellpadding=5 border=0>
+<tr><td bgcolor='#cfcfcf' colspan=2>
+<b>Exceptions</b></td></tr></table>
+<table width='80%' cellpadding=5 border=1>
+<tr><td align='center' colspan=2>
+<i>This method throws no exceptions.</i>
+</td></tr>
+</table>
+</blockquote>
+</blockquote>
+<hr>
+</body>
+</html>
