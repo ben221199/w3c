@@ -32,6 +32,24 @@ This repository contains Technical Reports made by W3C, including files that dis
 
 ### By specification
 
+#### DOM
+
+| Date | Specification | Status | Code |
+| --- | --- | --- | --- |
+| 1997-09-02 | DOM | WD (Working Draft) | [WD-dom-970902](pub/WWW/TR/WD-dom-970902.html) |
+| 1997-10-09 | DOM | WD (Working Draft) | [WD-DOM-971009](pub/WWW/TR/WD-DOM-971009/Overview.html) |
+| 1997-12-09 | DOM | WD (Working Draft) | [WD-DOM-971209](pub/WWW/TR/WD-DOM-971209/Overview.html) |
+| 1998-03-18 | DOM | WD (Working Draft) | [WD-DOM-19980318](pub/WWW/TR/WD-DOM-19980318/Overview.html) |
+| 1998-04-16 | DOM | WD (Working Draft) | [WD-DOM-19980416](pub/WWW/TR/1998/WD-DOM-19980416/cover.html) |
+| 1998-07-20 | DOM | WD (Working Draft) | [WD-DOM-19980720](pub/WWW/TR/1998/WD-DOM-19980720/cover.html) |
+
+#### DOM Level 1
+
+| Date | Specification | Status | Code |
+| --- | --- | --- | --- |
+| 1998-08-18 | DOM-Level-1 | PR (Proposed Recommendation) | [PR-DOM-Level-1-19980818](pub/WWW/TR/1998/PR-DOM-Level-1-19980818/cover.html) |
+| 1998-10-01 | DOM-Level-1 | REC (Recommendation) | [REC-DOM-Level-1-19981001](pub/WWW/TR/1998/REC-DOM-Level-1-19981001/cover.html) |
+
 #### HTML2
 
 | Date | Specification | Status | Code |
